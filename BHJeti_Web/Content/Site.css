@@ -1,0 +1,344 @@
+﻿body {
+    padding-top: 50px;
+}
+
+.body-content {
+    margin-top: 41px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+/* Menu  */
+#menu {
+    background-color: #ffeb3b;
+    padding: 20px;
+    transition: all 0.8s;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+}
+
+#menu li a{
+    color:rgba(0,0,0,0.5);
+}
+
+    #menu.navbar-default {
+        background-color: #fff;
+        border-color: rgba(231, 231, 231, 0);
+        box-shadow: 0 0 30px rgba(0,0,0,0.2)
+    }
+
+    #menu a.navbar-brand {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        color: rgba(0,0,0,0.5);
+        text-transform: uppercase;
+        letter-spacing: -1px;
+    }
+
+    #menu.navbar-default .navbar-nav > li > a {
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        color: #1f386e;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 8px 2px;
+        border-radius: 0;
+        margin: 9px 20px 0 20px;
+    }
+
+        #menu.navbar-default .navbar-nav > li > a:hover {
+            color: #ce2a36;
+        }
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #ce2a36 !important;
+    background-color: transparent;
+}
+
+#menu .phone {
+    font-family: 'Montserrat', sans-serif;
+    margin: 4px 0 0 120px;
+    float: left;
+    font-size: 16px;
+    font-weight: 400;
+    color: #999;
+}
+
+    #menu .phone span {
+        font-size: 14px;
+        display: block;
+        color: #1f386e;
+    }
+
+
+/* Introducao */
+.intro {
+    display: table;
+    width: 100%;
+    padding: 0;
+    background: url(Images/logisticaInicio.jpg) center center no-repeat;
+    /*background-color: #e5e5e5;*/
+    -webkit-background-size: inherit;
+    -moz-background-size: inherit;
+    background-size: inherit;
+    -o-background-size: inherit;
+}
+
+    .intro .overlay {
+        background: rgba(0,0,0,0.3);
+    }
+
+    .intro h1 {
+        font-family: 'Montserrat', sans-serif;
+        color: #fff;
+        font-size: 62px;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-shadow: 0 0 15px rgba(0,0,0,0.5)
+    }
+
+    .intro p {
+        color: #fff;
+        font-size: 17px;
+        line-height: 28px;
+        padding: 15px;
+        max-width: 600px;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        background: rgba(0,0,0,.45);
+    }
+
+header .intro-text {
+    text-align: center;
+}
+
+/* Cores */
+.bgJetColor {
+    background-color: #d6d616 !important;
+}
+
+
+/* Botoes  */
+.btn-custom {
+    /*margin: 30px 0;*/
+    background: transparent;
+    border: 2px solid #fff;
+}
+
+    .btn-custom:hover {
+        color: #1f386e;
+        background: #fff;
+    }
+
+/* Contato  */
+#contact {
+    padding: 100px 0 60px 0;
+    background: #1f386e;
+    color: rgba(255,255,255,.65);
+}
+
+    #contact .section-title {
+        margin-bottom: 5px;
+    }
+
+    #contact h2 {
+        color: #fff;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    #contact h4 {
+        color: #fff;
+        margin-top: 22px;
+        /*margin-bottom: 60px;*/
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    #contact form {
+        padding-top: 20px;
+    }
+
+    #contact h3 {
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    #contact .text-danger {
+        color: #cc0033;
+        text-align: left;
+    }
+
+/*#contact .btn-custom {
+        margin: 30px 0;
+        background: transparent;
+        border: 2px solid #fff;
+    }
+
+        #contact .btn-custom:hover {
+            color: #1f386e;
+            background: #fff;
+        }*/
+
+
+label {
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    float: left;
+}
+
+#contact .form-control {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 16px;
+    line-height: 1.42857143;
+    color: #444;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+    max-width: unset;
+    min-height: 50px;
+}
+
+    #contact .form-control:focus {
+        border-color: #999;
+        outline: 0;
+        -webkit-box-shadow: transparent;
+        box-shadow: transparent;
+    }
+
+.form-control::-webkit-input-placeholder {
+    color: #777;
+}
+
+.form-control:-moz-placeholder {
+    color: #777;
+}
+
+.form-control::-moz-placeholder {
+    color: #777;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #777;
+}
+
+#contact .contact-item {
+    margin: 20px 0;
+}
+
+    #contact .contact-item span {
+        color: rgba(255,255,255,1);
+        display: block;
+    }
+
+#contact .social {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 50px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+    #contact .social ul li {
+        display: inline-block;
+        margin: 0 20px;
+    }
+
+    #contact .social i.fa {
+        font-size: 24px;
+        padding: 10px;
+        color: rgba(255,255,255,0.6);
+        transition: all 0.3s;
+    }
+
+        #contact .social i.fa:hover {
+            color: #fff;
+        }
+
+/* Rodapé */
+footer {
+    background: #f6f6f6;
+    padding: 30px 0;
+}
+
+    footer p {
+        color: #888;
+        font-size: 14px;
+    }
+
+    footer a {
+        color: #1f386e;
+    }
+
+        footer a:hover {
+            color: #e52f3c;
+        }
+
+
+
+/* Bloco Solicitacao */
+#solicitacao {
+    background-color: white;
+    box-shadow: 0 0 100px rgba(0,0,0,0.2);
+    max-width: 350px;
+    min-width: 300px;
+    min-height: 450px;
+    margin: 40px;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    border: #b9b9b9;
+    border-style: double
+}
+
+    #solicitacao p {
+        background: rgba(0,0,0,0);
+    }
+
+    #solicitacao .titulo {
+        margin: 30px 0px 30px 0px;
+    }
+
+    #solicitacao .solicitacao-links  {
+        margin: 50px 0px 40px 0px;
+    }
+
+    #solicitacao .solicitacao-links i {
+        color: rgb(61, 125, 154);
+        cursor: pointer;
+    }
+
+        #solicitacao .solicitacao-links i a {
+            padding: 6px;
+            color: rgb(61, 125, 154);
+        }
+
+
+
+@media (max-width: 768px) {
+    #about img {
+        margin: 50px 0;
+    }
+}

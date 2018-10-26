@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - BHJet Express Logística</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="menu" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("BHJet", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Para Empresas", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Para Voçê", "About", "Home")</li>
+                    <li>@Html.ActionLink("Quem somos", "About", "Home")</li>
+                    <li><a href="#contact" class="page-scroll">Contato</a></li>
+                    <li>@Html.ActionLink("Trabalhe conosco", "Contact", "Home")</li>
+                    @*<li> <button type="submit" class="btn btn-custom btn-sm bgJetColor">Entrar</button></li>*@
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+    </div>
+
+    <div id="contact">
+        <div class="container">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="section-title">
+                        <h2>Entre em Contato</h2>
+                        <p>Preenche os dados abaixo para entrar em contato com a BHJet.</p>
+                    </div>
+                    <form name="sentMessage" id="contactForm" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" id="name" class="form-control" placeholder="Nome" required="required">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" id="email" class="form-control" placeholder="Email" required="required">
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Mensagem" required></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div id="success"></div>
+                        <button type="submit" class="btn btn-custom btn-lg">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-1 contact-info">
+                <div class="contact-item">
+                    <h4>Informações de Contato</h4>
+                    <p>
+                        <span>Endereço</span>Rua bhjets, 45<br>
+                        Belo Horizonte, MG - Brasil
+                    </p>
+                </div>
+                <div class="contact-item">
+                    <p><span>Telefone</span> (031) 2222-2222</p>
+                    <p><span>Celular</span> (031) 9222-2222</p>
+                </div>
+                <div class="contact-item">
+                    <p><span>Email</span> contato@bhjet.com</p>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="social">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container text-center">
+            <p>© 2018 BHJet Logística.</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
