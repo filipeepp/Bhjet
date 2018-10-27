@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BHJet_Admin.Models;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
@@ -12,7 +9,13 @@ namespace BHJet_Admin.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            return View();
+            return View(new ResumoModel()
+            {
+                CarrosDisponiveis = 999,
+                ChamadosAvulsosAguardandoCarro = 888,
+                ChamadosAvulsosAguardandoMoto = 777,
+                MotociclistasDisponiveis = 666
+            });
         }
     }
 }

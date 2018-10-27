@@ -6,36 +6,91 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/MenuAdmin.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid" style="margin-left: -15px; margin-right: -15px;">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+
+                @*<button id="menuLogisticaMobile" class="navbar-brand menuMobile visible-xs visible-sm visible-md" type="button">*@
+                <button id="menuLogisticaMobile" class="navbar-brand menuMobile" type="button">
+                    <i class="fa fa-tasks"></i>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <a class="navbar-brand" href="#">
+                    <img src="~/Images/logoLogisticaPreto.jpg" class="logo" />
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
-            </div>
+
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    </nav>
+
+    <div class="main-sidebar">
+
+        <section id="menuLateral" class="sidebar" style="height: auto;">
+            <ul class="sidebar-menu tree" data-widget="tree">
+                <li class="header">Painel Administrativo</li>
+                <li class="active treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-bar-chart"></i> <span>Faturamento</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "ChamadoMotociclista" )">
+                        <i class="fa fa-address-book"></i> <span>Clientes</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-address-card"></i> <span>Cliente Avulso</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-motorcycle"></i> <span>Motociclista / Motorista</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-wrench"></i> <span>Área de atuação</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-users"></i> <span>Usuários</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    <div class="content-wrapper" style="width: 1200px;">
+        @RenderBody()
+    </div>
+
+
+    <footer id="footer">
+        <strong>Copyright © 2018 - BHJet Express, Logística e serviços.</strong>
+    </footer>
+
+
+
+
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+
 </body>
 </html>

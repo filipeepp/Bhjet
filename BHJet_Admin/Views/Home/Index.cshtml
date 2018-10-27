@@ -1,24 +1,130 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿@using System.Web.Http
+@using BHJet_Admin.Models
+@model ResumoModel
+
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#"></a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Dashboard BHJet - arrumar width contentwraper</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <a href="@Url.Action("ChamadoAvulsoEspera", "Dashboard", new { tipoSolicitacao = BHJet_Core.Enum.DashboardTipoDisponivelEnum.ChamadoAguardandoMotociclista })">
+                <div class="small-box bg-light-gray">
+                    <div class="inner">
+                        <h3><span class="counter"> @Html.Label(Model.ChamadosAvulsosAguardandoMoto.ToString())</span></h3>
+                        <h6>Chamados avulsos aguardando motociclistas</h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <span class="small-box-footer">Ver detalhes <i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+            <a href="@Url.Action("ChamadoAvulsoEspera", "Dashboard", new { tipoSolicitacao = BHJet_Core.Enum.DashboardTipoDisponivelEnum.ChamadoAguardandoCarros })">
+                <div class="small-box bg-light-gray">
+                    <div class="inner">
+                        <h3><span class="counter">@Html.Label(Model.ChamadosAvulsosAguardandoCarro.ToString())</span></h3>
+                        <h6>Chamados avulsos aguardando carros</h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <span class="small-box-footer">Ver detalhes <i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+            <a href="@Url.Action("ChamadoAvulsoEspera", "Dashboard", new { tipoSolicitacao = BHJet_Core.Enum.DashboardTipoDisponivelEnum.MotociclistaDisponivel })">
+                <div class="small-box bg-light-gray">
+                    <div class="inner">
+                        <h3><span class="counter">@Html.Label(Model.MotociclistasDisponiveis.ToString())</span></h3>
+                        <h6>Motociclistas disponíveis</h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <span class="small-box-footer">Ver detalhes <i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+            <a href="@Url.Action("ChamadoAvulsoEspera", "Dashboard", new { tipoSolicitacao = BHJet_Core.Enum.DashboardTipoDisponivelEnum.CarrosDisponiveis })">
+                <div class="small-box bg-light-gray">
+                    <div class="inner">
+                        <h3><span class="counter">@Html.Label(Model.CarrosDisponiveis.ToString())</span></h3>
+                        <h6>Carros disponíveis</h6>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <span class="small-box-footer">Ver detalhes <i class="fa fa-arrow-circle-right"></i></span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-5 text-center">
+            <div class="box">
+                <div class="box-title">
+                    <label for="exampleInputAmount">Serviço Avulso</label>
+                </div>
+                <button class="btn btn-default btn-sm" type="submit">Abrir uma OS avulsa</button>
+                <button class="btn btn-default btn-sm" type="submit">Diária Avulsa</button>
+                <button class="btn btn-default btn-sm" type="submit">Diária Avulsa</button>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+            <div class="box">
+                <label for="exampleInputAmount">Localizar OS / Cliente</label>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+                </form>
+
+                <label for="exampleInputAmount">Localizar Motociclista / Motorista</label>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+@*@section scripts {
+        @Scripts.Render("~/Scripts/jquery.counterup.min.js")
+        @Scripts.Render("~/Scripts/waypoints.min.js")
+        <script>
+            $(document).ready(function ($) {
+                $('.counter').counterUp({
+                    delay: 10,
+                    time: 1000
+                });
+            });
+        </script>
+    }*@
