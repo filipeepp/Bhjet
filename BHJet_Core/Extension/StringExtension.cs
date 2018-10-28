@@ -13,6 +13,7 @@ namespace BHJet_Core.Extension
         public static string UpperCaseSeparete(this string valor)
         {
             var teste = "521732131";
+            var teste2 = "1313";
             string[] split = Regex.Split(valor, @"(?<!^)(?=[A-Z])");
             return string.Join(" ", split);
         }
