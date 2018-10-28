@@ -1,6 +1,0 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs/BHJet_Web/v15/Server/sqlite3
-/BHJeti_Web/obj/Debug
