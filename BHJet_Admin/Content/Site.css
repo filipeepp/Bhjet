@@ -27,6 +27,10 @@ a{
 cursor:pointer;
 }
 
+input[type="radio"], input[type="checkbox"] {
+    display:inline-block !important;
+}
+
 .line {
     border-bottom: 1px dotted #e6cb0a;
 }
@@ -433,4 +437,9 @@ cursor:pointer;
 
         .timeline > li > .timeline-item > .timeline-body, .timeline > li > .timeline-item > .timeline-footer {
             padding: 10px;
-        }	
+        }
+
+
+.radio, .checkbox {
+     margin-top: 0px;
+}

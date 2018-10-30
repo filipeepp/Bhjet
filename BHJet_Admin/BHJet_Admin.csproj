@@ -189,6 +189,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ClienteModel.cs" />
+    <Compile Include="Models\Dashboard\DiariaModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

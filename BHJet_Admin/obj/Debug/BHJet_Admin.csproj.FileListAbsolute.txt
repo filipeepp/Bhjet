@@ -1,100 +1,3 @@
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\ApplicationInsights.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\BHJet_Admin.dll.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\BHJet_Admin.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\BHJet_Admin.pdb
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csc.exe
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csc.exe.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csc.rsp
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csi.exe
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csi.exe.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\csi.rsp
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.Managed.Core.targets
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.AppContext.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Collections.Immutable.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Console.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.IO.Compression.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.IO.FileSystem.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.IO.Pipes.AccessControl.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.IO.Pipes.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Reflection.Metadata.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.AccessControl.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Claims.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Security.Principal.Windows.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.ValueTuple.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Xml.XmlDocument.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Xml.XPath.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\vbc.exe
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\vbc.exe.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\vbc.rsp
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\VBCSCompiler.exe
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\roslyn\VBCSCompiler.exe.config
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Antlr3.Runtime.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.Agent.Intercept.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.DependencyCollector.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.PerfCounterCollector.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.ServerTelemetryChannel.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.Web.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.WindowsServer.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.ApplicationInsights.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AspNet.TelemetryCorrelation.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.Web.Infrastructure.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Newtonsoft.Json.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Diagnostics.DiagnosticSource.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Net.Http.Formatting.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Helpers.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Http.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Http.WebHost.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Mvc.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Optimization.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Razor.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.Deployment.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.Razor.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\WebGrease.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Newtonsoft.Json.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Net.Http.Formatting.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Helpers.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Http.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Http.WebHost.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Mvc.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Optimization.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.Razor.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.Deployment.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Web.WebPages.Razor.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Antlr3.Runtime.pdb
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\System.Diagnostics.DiagnosticSource.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.DependencyCollector.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.WindowsServer.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.AI.Web.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projetos\BHJeti_Web\BHJet_Admin\obj\Debug\BHJet_Admin.csprojAssemblyReference.cache
-D:\Projetos\BHJeti_Web\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CoreCompileInputs.cache
-D:\Projetos\BHJeti_Web\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CopyComplete
-D:\Projetos\BHJeti_Web\BHJet_Admin\obj\Debug\BHJet_Admin.dll
-D:\Projetos\BHJeti_Web\BHJet_Admin\obj\Debug\BHJet_Admin.pdb
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\ApplicationInsights.config
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Admin.dll.config
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Admin.dll
@@ -146,6 +49,7 @@ D:\Projetos\BHJet_Web\BHJet_Admin\bin\roslyn\vbc.rsp
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\roslyn\VBCSCompiler.exe
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\roslyn\VBCSCompiler.exe.config
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\Antlr3.Runtime.dll
+D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Core.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\Microsoft.AI.Agent.Intercept.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\Microsoft.AI.DependencyCollector.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -169,6 +73,7 @@ D:\Projetos\BHJet_Web\BHJet_Admin\bin\System.Web.WebPages.Deployment.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\System.Web.WebPages.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\System.Web.WebPages.Razor.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\WebGrease.dll
+D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Core.pdb
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\Newtonsoft.Json.xml
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\System.Net.Http.Formatting.xml
 D:\Projetos\BHJet_Web\BHJet_Admin\bin\System.Web.Helpers.xml
@@ -192,104 +97,3 @@ D:\Projetos\BHJet_Web\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CoreCompileInputs
 D:\Projetos\BHJet_Web\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CopyComplete
 D:\Projetos\BHJet_Web\BHJet_Admin\obj\Debug\BHJet_Admin.dll
 D:\Projetos\BHJet_Web\BHJet_Admin\obj\Debug\BHJet_Admin.pdb
-D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Core.dll
-D:\Projetos\BHJet_Web\BHJet_Admin\bin\BHJet_Core.pdb
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\ApplicationInsights.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\BHJet_Admin.dll.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\BHJet_Admin.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\BHJet_Admin.pdb
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csc.exe
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csc.exe.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csc.rsp
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csi.exe
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csi.exe.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\csi.rsp
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.AppContext.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Console.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.IO.Compression.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.IO.Pipes.AccessControl.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.IO.Pipes.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.AccessControl.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Claims.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Security.Principal.Windows.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.ValueTuple.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Xml.XPath.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\vbc.exe
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\vbc.exe.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\vbc.rsp
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\VBCSCompiler.exe
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Antlr3.Runtime.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\BHJet_Core.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.Agent.Intercept.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.DependencyCollector.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.PerfCounterCollector.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.ServerTelemetryChannel.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.Web.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.WindowsServer.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.ApplicationInsights.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AspNet.TelemetryCorrelation.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Newtonsoft.Json.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Diagnostics.DiagnosticSource.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Net.Http.Formatting.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Helpers.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Http.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Http.WebHost.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Mvc.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Optimization.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Razor.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.Razor.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\WebGrease.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\BHJet_Core.pdb
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Newtonsoft.Json.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Net.Http.Formatting.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Helpers.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Http.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Http.WebHost.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Mvc.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Optimization.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.Razor.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Web.WebPages.Razor.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Antlr3.Runtime.pdb
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.DependencyCollector.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.WindowsServer.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.AI.Web.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\obj\Debug\BHJet_Admin.csprojAssemblyReference.cache
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CoreCompileInputs.cache
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\obj\Debug\BHJet_Admin.csproj.CopyComplete
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\obj\Debug\BHJet_Admin.dll
-C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Admin\obj\Debug\BHJet_Admin.pdb
