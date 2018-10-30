@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace BHJet_Admin.Models
 {
-    public class ClientesModel
+    public class TabelaClienteModel
     {
-        public List<ClienteModel> ListModel { get; set; }
+        public List<LinhaClienteModel> ListModel { get; set; }
     }
 
-    public class ClienteModel
+    public class LinhaClienteModel
     {
         public int ClienteID { get; set; }
         public string NomeRazaoSocial { get; set; }

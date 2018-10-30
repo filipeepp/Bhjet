@@ -1,0 +1,97 @@
+﻿@using System.Web.Http
+@using BHJet_Admin.Models
+@model ClienteModel
+
+<ol class="breadcrumb">
+	<li><a onclick="history.go(-1);">Home</a></li>
+	<li><a href="#map_canvas">@ViewBag.TituloSolicitacao</a></li>
+</ol>
+
+<div id="form1-Novo-cliente">
+	<div class="container-fluid">
+		<div class="row cst-form1-Novo-Cliente">
+			<form>
+				<div class="form-row">
+					<div class="form-group col-md-2">
+						<label for="txtCodigo">Código</label>
+						<input id="txtCodigo" name="txtCodigo" type="text" class="form-control input-sm" value="@Model.Codigo"disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="txtNome">Nome / Razão Social</label>
+						<input id="txtNome" name="txtNome" type="text" class="form-control" value="@Model.NomeRazaoSocial" disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="txtNomeFantasia">Nome Fantasia</label>
+						<input id="txtNomeFantasia" name="txtNomeFantasia" type="text" class="form-control" value="@Model.NomeFantasia" disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="txtCpfCnpj">CPF / CNPJ</label>
+						<input id="txtCpfCnpj" name="txtCpfCnpj" type="text" class="form-control" value="@Model.CPFCNPJ" disabled />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="txtInscricaoEstadual">Inscrição Estadual</label>
+						<input id="txtInscricaoEstadual" name="txtInscricaoEstadual" type="text" class="form-control" value="@Model.InscricaoEstadual" disabled />
+					</div>
+					<div class="form-group col-md-2">
+						<label for="ckbIss">Retém ISS</label>
+						<div class="input-group">
+							<input id="ckbIss" name="ckbIss" class="cst-ckb-Novo-Cliente" type="checkbox" checked="@Model.ISS"  disabled />
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="txtEndereco">Endereço</label>
+						<input id="txtEndereco" name="txtEndereco" type="text" class="form-control" value="@Model.Endereco"  disabled />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="txtNumeroEndereco">Nº</label>
+						<input id="txtNumeroEndereco" name="txtNumeroEndereco" type="text" class="form-control" value="@Model.NumeroEndereco"  disabled />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="txtComplemento">Complemento</label>
+						<input id="txtComplemento" name="txtComplemento" type="text" class="form-control" value="@Model.Complemento"  disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="txtBairro">Bairro</label>
+						<input id="txtBairro" name="txtBairro" type="text" class="form-control" value="@Model.Bairro"  disabled />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="txtCidade">Cidade</label>
+						<input id="txtCidade" name="txtCidade" type="text" class="form-control" value="@Model.Cidade"  disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="txtEstado">Estado</label>
+						<input id="txtEstado" name="txtEstado" type="text" class="form-control" value="@Model.Estado"  disabled />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="txtCep">CEP</label>
+						<input id="txtCep" name="txtCep" type="text" class="form-control" value="@Model.CEP"  disabled />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="txaObservacoes">Observações</label>
+						<textarea id="txaObservacoes" name="txaObservacoes" class="form-control" disabled>@Model.Observacoes</textarea>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="txtHomePage">Home Page</label>
+						<input id="txtHomePage" name="txtHomePage" type="text" class="form-control" value="@Model.HomePage"  disabled />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
