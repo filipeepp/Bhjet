@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
@@ -80,9 +81,32 @@ namespace BHJet_Admin.Controllers
 
         public ActionResult CadastroDiariaAvulsa()
         {
-            return View();
+            var ListaClientes = new System.Collections.Generic.Dictionary<long, string>();
+            ListaClientes.Add(1, "teste");
+
+            return View(new DiariaModel()
+            {
+                ListaClientes = ListaClientes,
+                ListaProfissionais = ListaClientes,
+                 Observacao = null
+            });
         }
 
+        [HttpPost]
+        public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
+        {
+            var teste = modelo;
+
+            if (ModelState.IsValid)
+            {
+
+                //write code to update student 
+
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("CadastroDiariaAvulsa");
+        }
 
     }
 }

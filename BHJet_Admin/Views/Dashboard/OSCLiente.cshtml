@@ -7,104 +7,108 @@
 </ol>
 
 <div class="container-fluid">
+
     <div class="row">
-        <div class="col-md-12">
-            <h4>
-                <a onclick=" history.go(-1);">
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                </a>
-                <b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
-            </h4>
-        </div>
-    </div>
+        <div class="col-xs-4 col-sm-7 col-md-12 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
 
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-xs-4 col-sm-5 bg-light-gray text-center">
-                    <i class="fa fa-map-marker" aria-hidden="true"></i>Origem
-                </label>
-            </div>
-        </div>
-
-        <ul class="timeline">
-            <li>
-                <i class="fa fa-map-marker bg-blue"></i>
-                <div class="timeline-item">
-                    <div class="col-md-12">
-                        <label class="control-label labelChave bg-light-gray ">Origem:</label>
-                        <label class="control-label labelValor">@Model.Origem.EnderecoOrigem</label>
+                    <div class="row">
+                        <div class="col-md-12 text-left">
+                            <div class="titulo">
+                                <h2>
+                                    <a onclick=" history.go(-1);">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    </a>
+                                    <b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
+                                </h2>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-12">
-                        <label class="control-label labelChave bg-light-gray">Procurar por:</label>
-                        <label class="control-label labelValor">@Model.Origem.ProcurarPessoa</label>
+                    <div class="row">
+                        <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>Origem
+                        </h5>
                     </div>
 
-                    <div class="col-md-12">
-                        <label class="control-label labelChave bg-light-gray">Realizar:</label>
-                        <label class="control-label labelValor">@Model.Origem.Realizar</label>
+                    <ul class="timeline">
+                        <li>
+                            <i class="fa fa-map-marker bg-blue"></i>
+                            <div class="timeline-item">
+                                <div class="col-md-12">
+                                    <label class="control-label labelChave bg-light-gray ">Origem:</label>
+                                    <label class="control-label labelValor">@Model.Origem.EnderecoOrigem</label>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Procurar por:</label>
+                                    <label class="control-label labelValor">@Model.Origem.ProcurarPessoa</label>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Realizar:</label>
+                                    <label class="control-label labelValor">@Model.Origem.Realizar</label>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Status:</label>
+                                    <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                    <label class="control-label labelValor">@Model.Origem.Espera</label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="row">
+                        <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>Destinos
+                        </h5>
                     </div>
 
-                    <div class="col-md-12">
-                        <label class="control-label labelChave bg-light-gray">Status:</label>
-                        <label class="control-label labelValor">@Model.Origem.Observacao</label>
-                    </div>
+                    <ul class="timeline">
 
-                    <div class="col-md-12">
-                        <label class="control-label labelChave bg-light-gray">Espera:</label>
-                        <label class="control-label labelValor">@Model.Origem.Espera</label>
-                    </div>
+                        @foreach (OSClienteEnderecoModel dest in @Model.Desinos)
+                        {
+                            <li>
+                                <i class="fa fa-location-arrow bg-blue"></i>
+                                <div class="timeline-item">
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray ">Origem:</label>
+                                        <label class="control-label labelValor">@dest.EnderecoOrigem</label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Procurar por:</label>
+                                        <label class="control-label labelValor">@dest.ProcurarPessoa</label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Realizar:</label>
+                                        <label class="control-label labelValor">@dest.Realizar</label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Status:</label>
+                                        <label class="control-label labelValor">@dest.Observacao</label>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                        <label class="control-label labelValor">@dest.Espera</label>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <hr />
+                        }
+                    </ul>
                 </div>
-            </li>
-        </ul>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="control-label col-xs-4 col-sm-5 bg-light-gray text-center">
-                    <i class="fa fa-location-arrow" aria-hidden="true"></i>Destinos
-                </label>
             </div>
         </div>
-
-        <ul class="timeline">
-
-            @foreach (OSClienteEnderecoModel dest in @Model.Desinos)
-            {
-                <li>
-                    <i class="fa fa-location-arrow bg-blue"></i>
-                    <div class="timeline-item">
-                        <div class="col-md-12">
-                            <label class="control-label labelChave bg-light-gray ">Origem:</label>
-                            <label class="control-label labelValor">@dest.EnderecoOrigem</label>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="control-label labelChave bg-light-gray">Procurar por:</label>
-                            <label class="control-label labelValor">@dest.ProcurarPessoa</label>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="control-label labelChave bg-light-gray">Realizar:</label>
-                            <label class="control-label labelValor">@dest.Realizar</label>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="control-label labelChave bg-light-gray">Status:</label>
-                            <label class="control-label labelValor">@dest.Observacao</label>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="control-label labelChave bg-light-gray">Espera:</label>
-                            <label class="control-label labelValor">@dest.Espera</label>
-                        </div>
-                    </div>
-                </li>
-            }
-
-        </ul>
-
-
     </div>
 </div>

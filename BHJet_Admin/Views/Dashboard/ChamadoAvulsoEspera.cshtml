@@ -11,12 +11,26 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <h4><a onclick=" history.go(-1);"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>@ViewBag.TituloSolicitacao</h4>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+ 
+                            <div class="titulo">
+                                <h2>
+                                    <a onclick=" history.go(-1);">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    </a>
+                                    @ViewBag.TituloSolicitacao
+                                </h2>
+                            </div>
+                
+                        <div id="map_canvas">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="map_canvas">
-        </div>
+
     </div>
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>

@@ -23,12 +23,20 @@
     border-top: 1px solid #d0cdcd;
 }
 
-a{
-cursor:pointer;
+a {
+    cursor: pointer;
 }
 
+hr {
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px dashed #d6c93d;
+    width: 500px;
+}
+
+
 input[type="radio"], input[type="checkbox"] {
-    display:inline-block !important;
+    display: inline-block !important;
 }
 
 .line {
@@ -42,6 +50,7 @@ input[type="radio"], input[type="checkbox"] {
     .left div {
         float: left;
     }
+
 
 .height {
     height: 100%;
@@ -267,12 +276,11 @@ input[type="radio"], input[type="checkbox"] {
         animation-fill-mode: forwards;
     }
 
-    .small-box:hover .small-box-footer {
-        -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-        -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-        box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
-     
-    }
+        .small-box:hover .small-box-footer {
+            -webkit-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+            -moz-box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+            box-shadow: 10px 10px 5px -8px rgba(0,0,0,0.75);
+        }
 
 @-webkit-keyframes moveUpBox {
     from {
@@ -304,7 +312,7 @@ input[type="radio"], input[type="checkbox"] {
     position: relative;
     border-radius: 3px;
     background: #ffffff;
-    border-top: 3px solid #d2d6de;
+    border-top: 3px solid #c5ae06;
     margin-bottom: 20px;
     width: auto;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
@@ -322,7 +330,41 @@ input[type="radio"], input[type="checkbox"] {
     margin-right: 10px;
 }
 
+/* default styles here for older browsers. 
+       I tend to go for a 600px - 960px width max but using percentages
+    */
+@media only screen and (min-width:960px) {
+    /* styles for browsers larger than 960px; */
+}
+
+@media only screen and (min-width:1440px) {
+    /* styles for browsers larger than 1440px; */
+}
+
+@media only screen and (min-width:2000px) {
+    /* for sumo sized (mac) screens */
+}
+
+@media only screen and (max-device-width:480px) {
+    /* styles for mobile browsers smaller than 480px; (iPhone) */
+}
+
+@media only screen and (device-width:768px) {
+    /* default iPad screens */
+}
+/* different techniques for iPad screening */
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    /* For portrait layouts only */
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    /* For landscape layouts only */
+}
+
 @media (max-width: 1112px) {
+    hr {
+        width: 200px;
+    }
 
     .main-sidebar {
         transition: opacity 1s ease-out;
@@ -349,9 +391,7 @@ input[type="radio"], input[type="checkbox"] {
         bottom: unset;
         text-align: center;
     }
-
 }
-
 
 #map_canvas {
     width: 100%;
@@ -377,11 +417,11 @@ input[type="radio"], input[type="checkbox"] {
             font-size: 15px;
             line-height: 30px;
             position: absolute;
-            color: #666;
-            background: #d2d6de;
+            color: #000;
+            background: #d6c93d;
             border-radius: 50%;
             text-align: center;
-            left: 18px;
+            left: 320px;
             top: 0;
         }
 
@@ -441,5 +481,32 @@ input[type="radio"], input[type="checkbox"] {
 
 
 .radio, .checkbox {
-     margin-top: 0px;
+    margin-top: 0px;
 }
+
+
+.titulo {
+    margin-bottom: 30px;
+}
+
+    .titulo h2 {
+        font-size: 17px;
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+    }
+
+        .titulo h2::after {
+            position: absolute;
+            content: "";
+            background-color: #337ab7;
+            height: 3px;
+            width: 50px;
+            bottom: -1px;
+            left: 0;
+        }
+
+
+        
