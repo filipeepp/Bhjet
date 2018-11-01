@@ -183,6 +183,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\FaturamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Global.asax.cs">
@@ -192,6 +193,10 @@
     <Compile Include="Models\Dashboard\DiariaModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
+    <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
+    <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
+    <Compile Include="Models\Faturamento\FaturamentoNormal.cs" />
+    <Compile Include="Models\Faturamento\GerarFaturamantoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +241,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\GoogleMapsBHJet.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -243,6 +249,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\MenuAdmin.js" />
@@ -266,6 +273,11 @@
     <Content Include="Views\Clientes\Clientes.cshtml" />
     <Content Include="Views\Dashboard\CadastroDiariaAvulsa.cshtml" />
     <Content Include="Views\Dashboard\OSCLiente.cshtml" />
+    <Content Include="Views\Faturamento\Index.cshtml" />
+    <Content Include="Views\Faturamento\GerarFaturamento.cshtml" />
+    <Content Include="Views\Faturamento\FaturamentoAvulso.cshtml" />
+    <Content Include="Views\Faturamento\FaturamentoNormal.cshtml" />
+    <Content Include="Views\Faturamento\_DetalheFaturamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

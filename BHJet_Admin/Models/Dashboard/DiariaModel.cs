@@ -92,10 +92,10 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private decimal? _ValorDiaria;
+        private string _ValorDiaria;
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Valor(R$) Diária obrigatório.")]
-        public decimal? ValorDiaria
+        public string ValorDiaria
         {
             get
             {
@@ -107,10 +107,10 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private decimal? _ValorComissao;
+        private string _ValorComissao;
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Valor(R$) Comissão obrigatório.")]
-        public decimal? ValorComissao
+        public string ValorComissao
         {
             get
             {
@@ -121,7 +121,6 @@ namespace BHJet_Admin.Models.Dashboard
                 _ValorComissao = value;
             }
         }
-
 
         private string _Observacao;
         public string Observacao
