@@ -8,10 +8,10 @@ namespace BHJet_Admin.Models.Faturamento
 {
     public class FaturamentoAvulsoModel
     {
-        private DateTime _PeriodoInicial;
+        private DateTime? _PeriodoInicial;
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime PeriodoInicial
+        public DateTime? PeriodoInicial
         {
             get
             {
@@ -23,10 +23,10 @@ namespace BHJet_Admin.Models.Faturamento
             }
         }
 
-        private DateTime _PeriodoFinal;
+        private DateTime? _PeriodoFinal;
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime PeriodoFinal
+        public DateTime? PeriodoFinal
         {
             get
             {
@@ -51,7 +51,7 @@ namespace BHJet_Admin.Models.Faturamento
             }
         }
 
-        public IEnumerable<int> ClientesSelecionados { get; set; }
+        public IEnumerable<int?> ClientesSelecionados { get; set; }
 
         private Dictionary<int, string> _ListaTipoContrato;
         public Dictionary<int, string> ListaTipoContrato
@@ -78,5 +78,8 @@ namespace BHJet_Admin.Models.Faturamento
                 _TipoContratoSelecionado = value;
             }
         }
+
+        private IEnumerable<FaturamentoModel> _listaFaturamento = null;
+        public IEnumerable<FaturamentoModel> ListaFaturamento { get => _listaFaturamento; set => _listaFaturamento = value; }
     }
 }

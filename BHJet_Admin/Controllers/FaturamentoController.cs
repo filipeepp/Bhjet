@@ -67,9 +67,30 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult FaturamentoNormal(FaturamentoAvulsoModel model)
+        public ActionResult FaturamentoNormal(FaturamentoNormal model)
         {
-            return View();
+            var cli = new System.Collections.Generic.Dictionary<int, string>();
+            cli.Add(1, "Mercado Teste");
+            cli.Add(2, "Loja Teste");
+
+            return View(new FaturamentoNormal()
+            {
+                ListaClientes = cli,
+                ListaTipoContrato = new System.Collections.Generic.Dictionary<int, string>()
+                {
+
+                },
+                ListaFaturamento = new System.Collections.Generic.List<FaturamentoModel>()
+                 {
+                    new FaturamentoModel()
+                     {
+                      Cliente = "Cliente A",
+                      Apuração = DateTime.Now,
+                       DescContrato = "Avulso",
+                       Valor = 1541m
+                    }
+                 }
+            });
         }
         #endregion
 
@@ -94,7 +115,28 @@ namespace BHJet_Admin.Controllers
         [HttpPost]
         public ActionResult FaturamentoAvulso(FaturamentoAvulsoModel model)
         {
-            return View();
+            var cli = new System.Collections.Generic.Dictionary<int, string>();
+            cli.Add(1, "Mercado Teste");
+            cli.Add(2, "Loja Teste");
+
+            return View(new FaturamentoAvulsoModel()
+            {
+                ListaClientes = cli,
+                ListaTipoContrato = new System.Collections.Generic.Dictionary<int, string>()
+                {
+
+                },
+                ListaFaturamento = new System.Collections.Generic.List<FaturamentoModel>()
+                 {
+                    new FaturamentoModel()
+                     {
+                      Cliente = "Cliente A",
+                      Apuração = DateTime.Now,
+                       DescContrato = "Avulso",
+                       Valor = 1541m
+                    }
+                 }
+            });
         }
         #endregion
     }

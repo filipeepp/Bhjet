@@ -8,8 +8,8 @@ namespace BHJet_Admin.Models.Faturamento
     public class FaturamentoNormal
     {
 
-        private int _MesSelecionado = 0;
-        public int MesSelecionado
+        private int? _MesSelecionado = 1;
+        public int? MesSelecionado
         {
             get
             {
@@ -90,5 +90,8 @@ namespace BHJet_Admin.Models.Faturamento
                 _TipoContratoSelecionado = value;
             }
         }
+
+        private IEnumerable<FaturamentoModel> _listaFaturamento = null;
+        public IEnumerable<FaturamentoModel> ListaFaturamento { get => _listaFaturamento; set => _listaFaturamento = value; }
     }
 }

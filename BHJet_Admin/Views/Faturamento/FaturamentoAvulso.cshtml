@@ -68,6 +68,15 @@
 
                     </div>
 
+                    <div class="row">
+                        @{
+                            if (Model.ListaFaturamento != null && Model.ListaFaturamento.Any()) 
+                            {
+                                Html.RenderPartial("_DetalheFaturamento", Model.ListaFaturamento);
+                            }
+                        }
+                    </div>
+
                 </div>
             </div>
         </div>
