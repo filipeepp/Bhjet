@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Models\Clientes\ClienteModel.cs" />
     <Compile Include="Models\Clientes\TabelaClienteModel.cs" />
+    <Compile Include="Models\Dashboard\DiariaModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
