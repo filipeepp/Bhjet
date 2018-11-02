@@ -1,2 +1,11 @@
 ﻿/.vs/BHJet_Web/v15/Server/sqlite3
 /BHJeti_Web/obj/Debug
+/BHJet_Web/BHJeti_Web/bin
+/BHJet_Web/BHJeti_Web/obj
+/BHJet_Web/BHJet_Admin/bin
+/BHJet_Web/BHJet_Admin/obj
+/BHJet_Web/BHJet_Core/bin
+/BHJet_Web/BHJet_Core/obj
+/BHJet_Web/BHJet_Repositorio/bin
+/BHJet_Web/BHJet_Repositorio/obj
+/packages/
