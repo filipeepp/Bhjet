@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHJet_Cliente", "BHJeti_Web\BHJet_Cliente.csproj", "{C415905D-7102-4B9C-A942-B220EBA31567}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHJet_Admin", "BHJet_Admin\BHJet_Admin.csproj", "{1A1A98FE-DD48-457E-A2C1-B473396D1315}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Componentes", "Componentes", "{C55DF594-CFAA-4BE0-BC0E-A1EA557512AA}"
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C415905D-7102-4B9C-A942-B220EBA31567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C415905D-7102-4B9C-A942-B220EBA31567}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C415905D-7102-4B9C-A942-B220EBA31567}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C415905D-7102-4B9C-A942-B220EBA31567}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A1A98FE-DD48-457E-A2C1-B473396D1315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A1A98FE-DD48-457E-A2C1-B473396D1315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A1A98FE-DD48-457E-A2C1-B473396D1315}.Release|Any CPU.ActiveCfg = Release|Any CPU
