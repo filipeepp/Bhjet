@@ -10,38 +10,42 @@
 .btn-Novo-Cliente {
     padding-bottom: 10px;
 }
+
 .cst-ckb-Novo-Cliente {
-	width: 5.25rem;
-	height: 1.65rem !important;
-}
-.cst-form1-Novo-Cliente {
-	padding: 15px;
-	border: 1px solid #222d32;
-	border-radius: 10px;
-}
-.cst-form1-Novo-Cliente input{
-	height:25px;
-	font-size: 12px;
-}
-.cst-form1-Novo-Cliente textarea {
-	font-size: 12px;
+    width: 5.25rem;
+    height: 1.65rem !important;
 }
 
-#form1-Novo-cliente{
-	padding-left: 120px;
-	padding-right: 120px;
+.cst-form1-Novo-Cliente {
+    padding: 15px;
+    border: 1px solid #222d32;
+    border-radius: 10px;
+}
+
+    .cst-form1-Novo-Cliente input {
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .cst-form1-Novo-Cliente textarea {
+        font-size: 12px;
+    }
+
+#form1-Novo-cliente {
+    padding-left: 120px;
+    padding-right: 120px;
 }
 /*************************************END DIOGO***********************************/
 #footer {
-	position: relative;
-	bottom: 0;
-	width: 100%;
-	height: 40px;
-	background: #e7e7e7;
-	padding: 13px;
-	text-align: right;
-	/* margin-left: 230px; */
-	border-top: 1px solid #d0cdcd;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: #e7e7e7;
+    padding: 13px;
+    text-align: right;
+    /* margin-left: 230px; */
+    border-top: 1px solid #d0cdcd;
 }
 
 a {
@@ -86,31 +90,44 @@ input[type="radio"], input[type="checkbox"] {
     text-align: center;
     background-color: transparent;
     border: unset;
-    font-size: 25px;
+    font-size: 20px;
     vertical-align: middle;
     padding: 5px 25px !important;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
     .menuMobile .fa {
         margin-right: 0px;
-        color: #000;
+        color: #24211d;
+        font-size: 22px;
+    }
+
+    .menuMobile :focus > .fa :focus {
+        outline: 0px solid blue;
     }
 
 
-.main-sidebar {
-    position: relative;
-    display: inline-block;
-    top: 0;
-    left: 0;
-    min-height: 100%;
-    width: 230px;
-    z-index: 900;
-    -webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
-    -moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
-    -o-transition: -o-transform .3s ease-in-out,width .3s ease-in-out;
-    transition: transform .3s ease-in-out,width .3s ease-in-out;
-    background-color: #222d32;
-}
+    .main-sidebar {
+        position: relative;
+        display: inline-block;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        width: 230px;
+        z-index: 900;
+        -webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
+        -moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
+        -o-transition: -o-transform .3s ease-in-out,width .3s ease-in-out;
+        transition: transform .3s ease-in-out,width .3s ease-in-out;
+        background-color: #222d32;
+        border-right: 2px solid #e6cb0a;
+        -webkit-box-shadow: 10px 0px 26px -8px rgba(0,0,0,0.75);
+        -moz-box-shadow: 10px 0px 26px -8px rgba(0,0,0,0.75);
+        box-shadow: 10px 0px 22px -8px rgba(0,0,0,0.75);
+    }
 
 .logo {
     width: 100%;
@@ -133,7 +150,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .navbar-default {
     border: unset;
-    background-color: #e6cb0a;
+    background-color: #e6cb0a !important;
     background-image: unset;
 }
 
@@ -168,7 +185,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .sidebar-menu > li.active > a {
-    border-left-color: #f39c12;
+    border-left-color: #e6cb0a;
 }
 
 .sidebar-menu > li > a > .fas, .sidebar-menu > li > a > .glyphicon, .sidebar-menu > li > a > .ion {
@@ -394,6 +411,9 @@ input[type="radio"], input[type="checkbox"] {
         width: 100%;
         min-height: 0px;
         display: none;
+        border-bottom: 2px solid #e6cb0a;
+        border-right: none;
+        box-shadow: 0px 10px 22px -8px rgba(0,0,0,0.75);
     }
 
     .content-wrapper {
@@ -405,7 +425,7 @@ input[type="radio"], input[type="checkbox"] {
     }
 
     .navbar-default {
-        background-image: linear-gradient(to bottom,#f5ed00 0,#c6de44 100%);
+        background-image: linear-gradient(#f5ed00 0,#c6de44 100%);
     }
 
     #footer {
@@ -529,4 +549,194 @@ input[type="radio"], input[type="checkbox"] {
             left: 0;
         }
 
+.inline {
+    display: inline;
+}
 
+.whatsapp {
+    color: green;
+    font-size: 20px !important;
+    display: inline;
+    box-shadow: 2px 2px 2px 2px rgba(87, 222, 56, 0.05);
+}
+
+input[type="radio"] {
+    margin-left: 15px;
+}
+
+
+
+
+/* CHECKBBOX CUSTOM */
+.label-cbx {
+    user-select: none;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+    .label-cbx input:checked + .checkbox {
+        border-color: #20C2E0;
+    }
+
+        .label-cbx input:checked + .checkbox svg path {
+            fill: #20C2E0;
+        }
+
+        .label-cbx input:checked + .checkbox svg polyline {
+            stroke-dashoffset: 0;
+        }
+
+    .label-cbx:hover .checkbox svg path {
+        stroke-dashoffset: 0;
+    }
+
+    .label-cbx .checkbox {
+        position: relative;
+        top: 2px;
+        float: left;
+        margin-right: 8px;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #C8CCD4;
+        border-radius: 3px;
+        min-height: unset;
+    }
+
+        .label-cbx .checkbox svg {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+        }
+
+            .label-cbx .checkbox svg path {
+                fill: none;
+                stroke: #20C2E0;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 71px;
+                stroke-dashoffset: 71px;
+                transition: all 0.6s ease;
+            }
+
+            .label-cbx .checkbox svg polyline {
+                fill: none;
+                stroke: #FFF;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-dasharray: 18px;
+                stroke-dashoffset: 18px;
+                transition: all 0.3s ease;
+            }
+
+    .label-cbx > span {
+        pointer-events: none;
+        vertical-align: middle;
+    }
+
+.cntr {
+    text-align: center;
+}
+
+.invisible {
+    position: absolute;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+/* -----------   */
+
+
+
+/* RADIO */
+
+@keyframes click-wave {
+    0% {
+        height: 40px;
+        width: 40px;
+        opacity: 0.35;
+        position: relative;
+    }
+
+    100% {
+        height: 200px;
+        width: 200px;
+        margin-left: -80px;
+        margin-top: -80px;
+        opacity: 0;
+    }
+}
+
+.option-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 13.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 40px;
+    transition: all 0.15s ease-out 0s;
+    background: #cbd1d8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    position: relative;
+    z-index: 1000;
+}
+
+    .option-input:hover {
+        background: #9faab7;
+    }
+
+    .option-input:checked {
+        background: #20C2E0;
+    }
+
+        .option-input:checked::before {
+            height: 20px;
+            width: 25px;
+            position: absolute;
+            content: '✔';
+            display: inline-block;
+            font-size: 20.66667px;
+            text-align: center;
+            line-height: 27px;
+        }
+
+        .option-input:checked::after {
+            -webkit-animation: click-wave 0.65s;
+            -moz-animation: click-wave 0.65s;
+            animation: click-wave 0.65s;
+            background: #40e0d0;
+            content: '';
+            display: block;
+            position: relative;
+            z-index: 100;
+        }
+
+    .option-input.radio {
+        border-radius: 50%;
+        padding-top: unset;
+        margin: 0px 5px 0;
+        height: 10px;
+        width: 25px;
+        min-height: 25px;
+    }
+
+        .option-input.radio::after {
+            border-radius: 50%;
+        }
+
+
+/* ------ */

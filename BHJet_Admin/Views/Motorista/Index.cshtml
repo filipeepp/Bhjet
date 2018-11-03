@@ -1,0 +1,58 @@
+﻿@using System.Web.Http
+
+<ol class="breadcrumb">
+    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a href="#map_canvas">Motoristas, Motociclistas</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-4 col-sm-7 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a onclick=" history.go(-1);">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Motoristas / Motociclistas
+                        </h2>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-7 col-lg-3">
+                            <a href="@Url.Action("Novo", "Motorista")">
+                                <div class="small-box bg-light-gray">
+                                    <div class="inner">
+                                        <h3><i class="fa fa-plus-circle" aria-hidden="true"></i></h3>
+                                        <h6>Novo Motorista / Motociclista</h6>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <span class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-7 col-lg-3">
+                            <a href="@Url.Action("FaturamentoNormal", "Faturamento")">
+                                <div class="small-box bg-light-gray">
+                                    <div class="inner">
+                                        <h3><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
+                                        <h6>Manutenção Cadastro</h6>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <span class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></span>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -186,6 +186,7 @@
     <Compile Include="Controllers\FaturamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\MotoristaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +199,7 @@
     <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoNormal.cs" />
     <Compile Include="Models\Faturamento\GerarFaturamantoModel.cs" />
+    <Compile Include="Models\Motorista\NovoMotoristaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +282,8 @@
     <Content Include="Views\Faturamento\Index.cshtml" />
     <Content Include="Views\Faturamento\_DetalheFaturamento.cshtml" />
     <Content Include="Views\Clientes\NovoCliente.cshtml" />
+    <Content Include="Views\Motorista\Index.cshtml" />
+    <Content Include="Views\Motorista\Novo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

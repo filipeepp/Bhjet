@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\DashboardTipos.cs" />
+    <Compile Include="Enum\RegimeContratacao.cs" />
+    <Compile Include="Enum\TipoCarteira.cs" />
     <Compile Include="Enum\TipoContrato.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
