@@ -17,5 +17,19 @@ namespace BHJet_Admin.Controllers
                 MotociclistasDisponiveis = 666
             });
         }
+
+        public ActionResult Login()
+        {
+            return View(new LoginModel());
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -199,6 +199,8 @@
     <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoNormal.cs" />
     <Compile Include="Models\Faturamento\GerarFaturamantoModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Motorista\EditarMotoristaModel.cs" />
     <Compile Include="Models\Motorista\NovoMotoristaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,6 +216,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\bgLogin.jpg" />
     <Content Include="Images\logoLogisticaPreto.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -284,6 +287,9 @@
     <Content Include="Views\Clientes\NovoCliente.cshtml" />
     <Content Include="Views\Motorista\Index.cshtml" />
     <Content Include="Views\Motorista\Novo.cshtml" />
+    <Content Include="Views\Motorista\_DetalheMotorista.cshtml" />
+    <Content Include="Views\Motorista\Listar.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

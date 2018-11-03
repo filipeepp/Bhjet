@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-4 col-sm-7 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -27,14 +27,14 @@
                         {
                             <div class="form-group ">
                                 <label class="control-label col-sm-5" for="email">Selecione a data INÍCIO:</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     @Html.TextBoxFor(model => model.PeriodoInicial, new { type = "date", @class = "form-control" })
                                 </div>
                             </div>
 
                             <div class="form-group ">
                                 <label class="control-label col-sm-5" for="email">Selecione a data FIM:</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     @Html.TextBoxFor(model => model.PeriodoFinal, new { type = "date", @class = "form-control" })
                                 </div>
                             </div>
