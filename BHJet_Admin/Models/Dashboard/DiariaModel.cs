@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHJet_Core.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -135,9 +136,9 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private string _TipoVeiculo;
+        private TipoVeiculo _TipoVeiculo;
         [Required(ErrorMessage = "Tipo de veículo obrigatório.")]
-        public string TipoVeiculo
+        public TipoVeiculo TipoVeiculo
         {
             get
             {

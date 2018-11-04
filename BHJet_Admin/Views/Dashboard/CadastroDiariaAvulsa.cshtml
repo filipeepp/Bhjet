@@ -3,6 +3,7 @@
 }
 
 @using BHJet_Admin.Models.Dashboard
+@using BHJet_Core.Enum
 @model DiariaModel
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
@@ -50,12 +51,15 @@
 
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione o tipo de veículo:</label>
-                            <div class="col-sm-4">
-                                @Html.RadioButtonFor(m => m.TipoVeiculo, "Male", false)
-                                Moto
-                                @Html.RadioButtonFor(m => m.TipoVeiculo, "Male", false)
-                                Carro
+                            <div class="col-sm-4" style="margin-top: -10px;">
+                                @foreach (var tipoEnum in Enum.GetValues(typeof(TipoVeiculo)))
+                                {
+                                    var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoVeiculo), tipoEnum));
+                                    @Html.RadioButtonFor(s => s.TipoVeiculo, tipoEnum, new { id, @class = "option-input radio" })
+                                    @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+                                }
                                 @Html.ValidationMessageFor(model => model.TipoVeiculo, null, new { @class = "text-danger" })
+
                             </div>
                         </div>
 

@@ -1,0 +1,82 @@
+﻿@using BHJet_Admin.Models.Faturamento
+@model FaturamentoNormal
+
+<ol class="breadcrumb">
+    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a href="#map_canvas">Faturamento</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="titulo">
+                        <h2>
+                            <a onclick="history.go(-1);">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Consultar Faturamento
+                        </h2>
+                    </div>
+
+                    <div class="row">
+
+                        @using (Html.BeginForm("FaturamentoNormal", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            <div class="form-group ">
+                                <label class="control-label col-sm-5" for="email">Selecione o mês e ano:</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(m => m.MesSelecionado, Model.Meses, "Todos os meses", new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(m => m.AnoSelecionado, new SelectList(Model.ListaAno, @Model.AnoSelecionado)
+                                     , "", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="control-label col-sm-5" for="email">Selecione o(s) cliente(s):</label>
+                                <div class="col-sm-4">
+                                    @Html.ListBoxFor(m => m.ClientesSelecionados,
+                                            new SelectList(Model.ListaClientes, "Key", "Value"), new { @class = "form-control" })
+                                    <b><small>(Ctrl + Click) Para selecionar vários.</small></b>
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="control-label col-sm-5" for="email">Tipo de Contrato:</label>
+                                <div class="col-sm-4">
+                                    @Html.DropDownListFor(m => m.TipoContratoSelecionado,
+                                                     new SelectList(Model.ListaTipoContrato, "Key", "Value"),
+                                                                "Todos", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 text-center">
+                                    <button type="submit" class="btn btn-default" value="Pesquisar">
+                                        <i class="fa fa-search" aria-hidden="true"></i>Consultar Faturamento
+                                    </button>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="row">
+                        @{
+                            if (Model.ListaFaturamento != null && Model.ListaFaturamento.Any())
+                            {
+                                Html.RenderPartial("_DetalheFaturamento", Model.ListaFaturamento);
+                            }
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

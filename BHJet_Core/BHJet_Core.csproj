@@ -66,6 +66,7 @@
     <Compile Include="Enum\RegimeContratacao.cs" />
     <Compile Include="Enum\TipoCarteira.cs" />
     <Compile Include="Enum\TipoContrato.cs" />
+    <Compile Include="Enum\TipoVeiculo.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilitario\DataUtil.cs" />
