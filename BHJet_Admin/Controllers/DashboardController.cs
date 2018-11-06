@@ -1,15 +1,15 @@
-﻿using BHJet_Admin.Models.Dashboard;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
 {
     public class DashboardController : Controller
     {
-
         [HttpGet]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult ChamadoAvulsoEspera(DashboardTipoDisponivelEnum? tipoSolicitacao)
         {
             // Consiste Entrada
@@ -22,6 +22,7 @@ namespace BHJet_Admin.Controllers
             return View();
         }
 
+        [ValidacaoUsuarioAttribute()]
         public ActionResult ChamadoAvulsoEspera(DashboardTipoDisponivelEnum? tipoSolicitacao, long? idMotociclista)
         {
             // Consiste Entrada
@@ -34,6 +35,7 @@ namespace BHJet_Admin.Controllers
             return View();
         }
 
+        [ValidacaoUsuarioAttribute()]
         public ActionResult OSCliente(string NumeroOS)
         {
             // Consiste Entrada
@@ -79,6 +81,7 @@ namespace BHJet_Admin.Controllers
             });
         }
 
+        [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa()
         {
             var ListaClientes = new System.Collections.Generic.Dictionary<long, string>();
@@ -86,23 +89,53 @@ namespace BHJet_Admin.Controllers
 
             return View(new DiariaModel()
             {
-                ListaClientes = ListaClientes,
-                ListaProfissionais = ListaClientes,
-                 Observacao = null
+                ListaClientes = new SelectListItem[]
+                 {
+                   new  SelectListItem
+                   {
+                       Value = "1",
+                       Text = "Cliente XPTO"
+                   }
+                 },
+                ListaProfissionais = new SelectListItem[]
+                 {
+                   new  SelectListItem
+                   {
+                       Value = "1",
+                       Text = "Profissional XPTO"
+                   }
+                 },
+                Observacao = null
             });
         }
 
         [HttpPost]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
-            var teste = modelo;
-
             if (ModelState.IsValid)
             {
-
-                //write code to update student 
-
-                return RedirectToAction("Index");
+                ViewBag.MsgSucesso = "Sucesso";
+                return View(new DiariaModel()
+                {
+                    ListaClientes = new SelectListItem[]
+                 {
+                   new  SelectListItem
+                   {
+                       Value = "1",
+                       Text = "Cliente XPTO"
+                   }
+                 },
+                    ListaProfissionais = new SelectListItem[]
+                 {
+                   new  SelectListItem
+                   {
+                       Value = "1",
+                       Text = "Profissional XPTO"
+                   }
+                 },
+                    Observacao = null
+                });
             }
 
             return RedirectToAction("CadastroDiariaAvulsa");

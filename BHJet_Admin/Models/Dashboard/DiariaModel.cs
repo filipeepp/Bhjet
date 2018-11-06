@@ -1,7 +1,9 @@
 ﻿using BHJet_Core.Enum;
+using BHJet_Core.Utilitario;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace BHJet_Admin.Models.Dashboard
 {
@@ -9,7 +11,6 @@ namespace BHJet_Admin.Models.Dashboard
     {
         private DateTime _PeriodoInicial;
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required(ErrorMessage = "Período inicial obrigatório.")]
         public DateTime PeriodoInicial
         {
@@ -25,7 +26,6 @@ namespace BHJet_Admin.Models.Dashboard
 
         private DateTime _PeriodoFinal;
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [Required(ErrorMessage = "Período final obrigatório.")]
         public DateTime PeriodoFinal
         {
@@ -39,8 +39,8 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private Dictionary<long, string> _ListaClientes;
-        public Dictionary<long, string> ListaClientes
+        private IEnumerable<SelectListItem> _ListaClientes;
+        public IEnumerable<SelectListItem> ListaClientes
         {
             get
             {
@@ -66,8 +66,8 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private Dictionary<long, string> _ListaProfissionais;
-        public Dictionary<long, string> ListaProfissionais
+        private IEnumerable<SelectListItem> _ListaProfissionais;
+        public IEnumerable<SelectListItem> ListaProfissionais
         {
             get
             {

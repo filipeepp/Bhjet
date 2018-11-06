@@ -24,7 +24,6 @@
 
     <div class="ctnlogin" style="background-image: url('/./Images/bgLogin.jpg');">
 
-
         <div class="ctnLoginPainel text-center">
 
             <div class="row">
@@ -72,16 +71,22 @@
                         </div>
                     }
 
+                    <p class="text-danger">
+                        <b>
+                            @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
+                            {
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
+                            }
+                        </b>
+                    </p>
 
                 </div>
             </div>
 
-
-
-
         </div>
 
     </div>
+
 
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using BHJet_Admin.Models.Faturamento;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models.Faturamento;
 using System;
 using System.Web.Mvc;
 
@@ -6,12 +7,14 @@ namespace BHJet_Admin.Controllers
 {
     public class FaturamentoController : Controller
     {
+        [ValidacaoUsuarioAttribute()]
         public ActionResult Index()
         {
             return View();
         }
 
         #region Gerar Faturamento
+        [ValidacaoUsuarioAttribute()]
         public ActionResult GerarFaturamento()
         {
             return View(new GerarFaturamantoModel()
@@ -24,6 +27,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult GerarFaturamento(GerarFaturamantoModel model)
         {
             return View(new GerarFaturamantoModel()
@@ -49,6 +53,7 @@ namespace BHJet_Admin.Controllers
 
 
         #region Faturamento Avulso
+        [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoNormal()
         {
 
@@ -67,6 +72,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoNormal(FaturamentoNormal model)
         {
             var cli = new System.Collections.Generic.Dictionary<int, string>();
@@ -95,6 +101,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Faturamento Avulso
+        [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoAvulso()
         {
 
@@ -113,6 +120,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoAvulso(FaturamentoAvulsoModel model)
         {
             var cli = new System.Collections.Generic.Dictionary<int, string>();

@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 menu.css('opacity', '1');
                 $("#menuLogisticaMobile").find('i').removeClass();
                 $("#menuLogisticaMobile").find('i').addClass("fa fa-bars");
-                $("#menuLogisticaMobile").find('i').text('')
-                });
+                $("#menuLogisticaMobile").find('i').text('');
+
+            });
         }
         else {
             menu.animate({
@@ -26,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }, 400, function () {
                 menu.css('display', 'none');
                 menu.css('opacity', '1');
-
                 $("#menuLogisticaMobile").find('i').removeClass();
                 $("#menuLogisticaMobile").find('i').addClass("fa fa-angle-double-down");
                 $("#menuLogisticaMobile").find('i').text(' menu')

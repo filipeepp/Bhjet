@@ -1,4 +1,5 @@
-﻿using BHJet_Admin.Models.Motorista;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models.Motorista;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -6,12 +7,14 @@ namespace BHJet_Admin.Controllers
 {
     public class MotoristaController : Controller
     {
+        [ValidacaoUsuarioAttribute()]
         public ActionResult Index()
         {
             return View();
         }
 
         #region Novo/Edicao Motorista
+        [ValidacaoUsuarioAttribute()]
         public ActionResult Novo(bool? Edicao, long? ID)
         {
             if (ID != null)
@@ -34,6 +37,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
+        [ValidacaoUsuarioAttribute()]
         public ActionResult Novo(NovoMotoristaModel model)
         {
             return View(new NovoMotoristaModel() { CelularWhatsapp = false });
@@ -41,6 +45,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Listar Motoristas
+        [ValidacaoUsuarioAttribute()]
         public ActionResult Listar(string palavraChave)
         {
             var nListaMotorista = new MotoristaSimplesModel[]
