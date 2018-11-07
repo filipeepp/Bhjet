@@ -1,8 +1,9 @@
 ﻿
 document.addEventListener("DOMContentLoaded", function (event) {
 
-    $("#menuLogisticaMobile").click(function () {
+    alteraMenu();
 
+    $("#menuLogisticaMobile").click(function () {
         var menu = $(".main-sidebar");
         if (menu.css("display") === "none" || menu.css("display") == undefined) {
 
@@ -13,10 +14,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }, 400, function () {
                 menu.css('display', 'inline-block');
                 menu.css('opacity', '1');
-                $("#menuLogisticaMobile").find('i').removeClass();
-                $("#menuLogisticaMobile").find('i').addClass("fa fa-bars");
-                $("#menuLogisticaMobile").find('i').text('');
-
+                if ($(window).width() > 1112) {
+                    $(".content-wrapper").first().css('padding-left', "230px")
+                }
+                else {
+                    $(".content-wrapper").first().css('padding-left', "0px")
+                }
             });
         }
         else {
@@ -27,11 +30,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }, 400, function () {
                 menu.css('display', 'none');
                 menu.css('opacity', '1');
-                $("#menuLogisticaMobile").find('i').removeClass();
-                $("#menuLogisticaMobile").find('i').addClass("fa fa-angle-double-down");
-                $("#menuLogisticaMobile").find('i').text(' menu')
+                if ($(window).width() > 1112) {
+                    $(".content-wrapper").first().css('padding-left', "0px")
+                }
+                else {
+                    $(".content-wrapper").first().css('padding-left', "0px")
+                }
             });
         }
     })
 
 });
+
+function alteraMenu() {
+
+    $(".sidebar-menu").find("li").each(function () {
+        $(this).removeClass("active")
+        if ($(this)[0].textContent.indexOf(window.location.href.split('/')[3]) !== -1) {
+            $(this).addClass("active")
+            return false;
+        }
+    });
+
+}

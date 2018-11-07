@@ -23,6 +23,7 @@
 
                 <a class="navbar-brand" href="#">
                     <img src="~/Images/logoLogisticaPreto.jpg" class="logo" />
+
                 </a>
             </div>
 
@@ -33,7 +34,7 @@
 
         <section id="menuLateral" class="sidebar" style="height: auto;">
             <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="header">Painel Administrativo</li>
+                <li class="header">Painel Administrativo, <b style="color:#667c8a">@HttpContext.Current.User.Identity.Name</b></li>
                 <li class="active treeview">
                     <a href="@Url.Action("Index", "Faturamento")">
                         <i class="fa fa-bar-chart"></i> <span>Faturamento</span>
@@ -69,25 +70,25 @@
                         <i class="fa fa-users"></i> <span>Usuários</span>
                     </a>
                 </li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Logoff", "Home")">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> <span>Sair</span>
+                    </a>
+                </li>
             </ul>
         </section>
 
     </div>
 
+
     <div class="content-wrapper">
         @RenderBody()
-
-
     </div>
 
     <footer id="footer">
         <strong>Copyright © 2018 - BHJet Express, Logística e serviços.</strong>
     </footer>
-
-
-
-
-
 
 
     @Scripts.Render("~/bundles/bootstrap")

@@ -3,6 +3,7 @@
 }
 
 @using BHJet_Admin.Models.Dashboard
+@using BHJet_Core.Enum
 @model DiariaModel
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
@@ -10,7 +11,7 @@
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 
 <ol class="breadcrumb">
-    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
     <li><a href="#map_canvas"> Diária Avulsa </a></li>
 </ol>
 
@@ -36,12 +37,13 @@
 
                     @using (Html.BeginForm("CadastroDiariaAvulsa", "Dashboard", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
+
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione o cliente:</label>
                             <div class="col-sm-4">
-                                @Html.DropDownListFor(m => m.ClienteSelecionado,
-                                                 new SelectList(Model.ListaClientes, "Key", "Value"),
+
+                                @Html.DropDownListFor(m => m.ClienteSelecionado, Model.ListaClientes,
                                                             "Lista de Cliente", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
 
@@ -50,12 +52,15 @@
 
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione o tipo de veículo:</label>
-                            <div class="col-sm-4">
-                                @Html.RadioButtonFor(m => m.TipoVeiculo, "Male", false)
-                                Moto
-                                @Html.RadioButtonFor(m => m.TipoVeiculo, "Male", false)
-                                Carro
+                            <div class="col-sm-4" style="margin-top: -10px;">
+                                @foreach (var tipoEnum in Enum.GetValues(typeof(TipoVeiculo)))
+                                {
+                                    var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoVeiculo), tipoEnum));
+                                    @Html.RadioButtonFor(s => s.TipoVeiculo, tipoEnum, new { id, @class = "option-input radio" })
+                                    @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+                                }
                                 @Html.ValidationMessageFor(model => model.TipoVeiculo, null, new { @class = "text-danger" })
+
                             </div>
                         </div>
 
@@ -79,8 +84,7 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione um profissional:</label>
                             <div class="col-sm-4">
-                                @Html.DropDownListFor(m => m.ProfissionalSelecionado,
-                                               new SelectList(Model.ListaProfissionais, "Key", "Value"),
+                                @Html.DropDownListFor(m => m.ProfissionalSelecionado, Model.ListaProfissionais,
                                                           "Lista de motociclistas ou motoristas", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
                             </div>

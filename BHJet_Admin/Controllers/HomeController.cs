@@ -53,7 +53,7 @@ namespace BHJet_Admin.Controllers
                     USUTOKEN = "dd"
                 };
 
-                if (usuario == null || model.Login != "123@bhjet" || model.Senha != "321@bhjet")
+                if (usuario == null || model.Login != "admin@bhjet" || model.Senha != "12345678")
                 {
                     ViewBag.ErroLogin = "USUÁRIO e/ou SENHA inválido(s)!";
                     return View(model);

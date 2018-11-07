@@ -1,4 +1,5 @@
 ﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
@@ -23,7 +24,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [ValidacaoUsuarioAttribute()]
-        public ActionResult ChamadoAvulsoEspera(DashboardTipoDisponivelEnum? tipoSolicitacao, long? idMotociclista)
+        public ActionResult ChamadoAvulsoEspera(DashboardTipoDisponivelEnum? tipoSolicitacao, ResumoModel model)
         {
             // Consiste Entrada
             if (tipoSolicitacao == null)
@@ -36,10 +37,10 @@ namespace BHJet_Admin.Controllers
         }
 
         [ValidacaoUsuarioAttribute()]
-        public ActionResult OSCliente(string NumeroOS)
+        public ActionResult OSCliente(ResumoModel model)
         {
             // Consiste Entrada
-            if (NumeroOS == null)
+            if (model == null)
                 return null;
 
             return View(new OSClienteModel()
