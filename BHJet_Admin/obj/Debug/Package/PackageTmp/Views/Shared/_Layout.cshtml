@@ -22,7 +22,7 @@
                 </button>
 
                 <a class="navbar-brand" href="#">
-                    <img src="~/Images/logoLogisticaPreto.jpg" class="logo" />
+                    <img src="~/Images/logoLogisticaPreto.jpg" class="logo" style="margin-left: 10px;" />
 
                 </a>
             </div>
@@ -35,7 +35,7 @@
         <section id="menuLateral" class="sidebar" style="height: auto;">
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="header">Painel Administrativo, <b style="color:#667c8a">@HttpContext.Current.User.Identity.Name</b></li>
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="@Url.Action("Index", "Faturamento")">
                         <i class="fa fa-bar-chart"></i> <span>Faturamento</span>
                     </a>
