@@ -1,5 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
+using BHJet_Core.Variaveis;
+using BHJet_Servico.Autorizacao;
 using Newtonsoft.Json;
 using System;
 using System.Web;
@@ -10,6 +12,13 @@ namespace BHJet_Admin.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAutorizacaoServico autorizacaoServico;
+
+        public HomeController(IAutorizacaoServico _autorizacaoServico)
+        {
+            autorizacaoServico = _autorizacaoServico;
+        }
+
         [ValidacaoUsuarioAttribute()]
         public ActionResult Index()
         {
@@ -38,38 +47,34 @@ namespace BHJet_Admin.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                // esta action trata o post (login)
-                var usuario = new UsuarioModel()
+                try
                 {
-                    USUNOME = "LeonardoSilva",
-                    USULOGIN = "11",
-                    USUSENHA = "1",
-                    USUTOKEN = "dd"
-                };
+                    // Autentica Usuario
+                    var modelUsu = autorizacaoServico.Autenticar(model.Login, model.Senha);
 
-                if (usuario == null || model.Login != "admin@bhjet" || model.Senha != "12345678")
-                {
-                    ViewBag.ErroLogin = "USUÁRIO e/ou SENHA inválido(s)!";
-                    return View(model);
+                    // Tickets
+                    var userData = JsonConvert.SerializeObject(model.Login);
+                    var ticket = new FormsAuthenticationTicket(1, model.Login, DateTime.Now, DateTime.Now.AddMinutes(120), false, userData, FormsAuthentication.FormsCookiePath);
+                    var encryptedCookie = FormsAuthentication.Encrypt(ticket);
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie) { Expires = DateTime.Now.AddHours(2) };
+
+                    // Cookies
+                    Response.Cookies.Add(cookie);
+
+                    // Session
+                    Session["IDTKUsuarioJet"] = modelUsu.access_token.ToString();
+
                 }
-
-                // Tickets
-                var userData = JsonConvert.SerializeObject(usuario);
-                var ticket = new FormsAuthenticationTicket(1, usuario.USUNOME, DateTime.Now, DateTime.Now.AddMinutes(120), false, userData, FormsAuthentication.FormsCookiePath);
-                var encryptedCookie = FormsAuthentication.Encrypt(ticket);
-                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedCookie) { Expires = DateTime.Now.AddHours(2) };
-
-                // Cookies
-                Response.Cookies.Add(cookie);
-
-                // Session
-                Session["IDTKUsuarioJet"] = usuario.USUTOKEN.ToString();
+                catch (Exception e)
+                {
+                    ViewBag.ErroLogin = e.Message ?? Mensagem.Validacao.UsuarioNaoEncontrato;
+                    return View(new LoginModel());
+                }
 
                 // Return
                 return RedirectToAction("Index", "Home");

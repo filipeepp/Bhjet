@@ -14,5 +14,7 @@ namespace BHJet_Admin.Models
 
         [Required(ErrorMessage = "Número do Motorista obrigatório.")]
         public string PesquisaMotociclista { get; set; }
+
+        public string Mensagem { get; set; }
     }
 }

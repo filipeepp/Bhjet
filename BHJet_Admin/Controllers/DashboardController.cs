@@ -116,7 +116,7 @@ namespace BHJet_Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.MsgSucesso = "Sucesso";
+                ViewBag.MsgCustomAlerta = "Sucesso";
                 return View(new DiariaModel()
                 {
                     ListaClientes = new SelectListItem[]

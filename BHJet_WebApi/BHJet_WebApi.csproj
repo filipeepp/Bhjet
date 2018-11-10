@@ -168,6 +168,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
+      <Project>{1d890afc-7ae5-45e4-a1e2-4161d00d46f3}</Project>
+      <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_Repositorio\BHJet_Repositorio.csproj">
+      <Project>{c4c90e6f-22f5-4af2-8df5-d67a9992e74e}</Project>
+      <Name>BHJet_Repositorio</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

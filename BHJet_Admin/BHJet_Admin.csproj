@@ -190,6 +190,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
     <Compile Include="Models\Clientes\ClienteModel.cs" />
     <Compile Include="Models\Clientes\TabelaClienteModel.cs" />
@@ -328,6 +329,10 @@
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1D890AFC-7AE5-45E4-A1E2-4161D00D46F3}</Project>
       <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_Servico\BHJet_Servico.csproj">
+      <Project>{0310B10F-5E51-455A-ACB7-7FDE01E0EE0B}</Project>
+      <Name>BHJet_Servico</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
