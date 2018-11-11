@@ -27,6 +27,7 @@ namespace BHJet_Admin.Controllers
                 return null;
 
             // Titulo
+            TempData["TipoSolicitacao"] = tipoSolicitacao;
             ViewBag.TituloSolicitacao = tipoSolicitacao.Value.ToString().UpperCaseSeparete();
 
             return View();
@@ -54,46 +55,48 @@ namespace BHJet_Admin.Controllers
 
         [HttpGet]
         [ValidacaoUsuarioAttribute()]
-        public JsonResult BuscaLocalizacao(DashboardTipoDisponivelEnum? tipoSolicitacao)
+        public JsonResult BuscaLocalizacao()
         {
-            tipoSolicitacao = DashboardTipoDisponivelEnum.ChamadoAguardandoCarros;
-
             // Consiste Entrada
-            if (tipoSolicitacao == null)
+            if (TempData["TipoSolicitacao"] == null)
                 return null;
-            
+
             // Modelo
             ExibeLocalizacaoModel[] localizacao = new ExibeLocalizacaoModel[] { };
 
             // Busca Localizacao
-            switch (tipoSolicitacao)
+            switch (TempData["TipoSolicitacao"])
             {
                 case DashboardTipoDisponivelEnum.MotociclistaDisponivel:
                     localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
                     {
                         id = x.idColaboradorEmpresaSistema,
-                        geoPosicao = x.geoPosicao
+                        geoPosicao = x.geoPosicao,
+                        psCorrida = false
                     }).ToArray();
                     break;
                 case DashboardTipoDisponivelEnum.MotoristaDisponivel:
                     localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
                     {
                         id = x.idColaboradorEmpresaSistema,
-                        geoPosicao = x.geoPosicao
+                        geoPosicao = x.geoPosicao,
+                        psCorrida = false
                     }).ToArray();
                     break;
                 case DashboardTipoDisponivelEnum.ChamadoAguardandoCarros:
                     localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
                     {
                         id = x.idCorrida,
-                        geoPosicao = x.geoPosicao
+                        geoPosicao = x.geoPosicao,
+                        psCorrida = true
                     }).ToArray();
                     break;
                 case DashboardTipoDisponivelEnum.ChamadoAguardandoMotociclista:
                     localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
                     {
                         id = x.idCorrida,
-                        geoPosicao = x.geoPosicao
+                        geoPosicao = x.geoPosicao,
+                        psCorrida = true
                     }).ToArray();
                     break;
             }

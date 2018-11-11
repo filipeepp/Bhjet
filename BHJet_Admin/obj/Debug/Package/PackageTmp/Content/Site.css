@@ -419,7 +419,7 @@ input[type="radio"], input[type="checkbox"] {
     .main-sidebar {
         transition: opacity 1s ease-out;
         overflow: hidden;
-        height: 280px;
+        height: unset;
         width: 100%;
         min-height: 0px;
         display: none;
@@ -468,7 +468,7 @@ input[type="radio"], input[type="checkbox"] {
 
 #map_canvas {
     width: 100%;
-    height: 532px;
+    height: 732px;
 }
 
 .timeline {

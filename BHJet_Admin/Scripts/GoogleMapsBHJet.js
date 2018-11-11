@@ -20,7 +20,7 @@ function carregaMapa() {
     map.setCenter(new google.maps.LatLng(-19.878946, -43.933877));
 }
 
-function FazMarcacao(lat, long) {
+function FazMarcacao(lat, long, bcarro) {
 
     var latlong = lat + "," + long;//colocando na conficuracao necessaria (lat,long)
     var myLatLgn = new google.maps.LatLng(lat, long);
@@ -35,7 +35,7 @@ function FazMarcacao(lat, long) {
     var marker = new google.maps.Marker({
         position: myLatLgn,
         map: map,
-        icon: '/./Images/carBhJet.png',
+        icon: bcarro == true ? '/./Images/mapCorrida.png' : '/./Images/mapCar.png',
         animation: google.maps.Animation.DROP
     });
 
