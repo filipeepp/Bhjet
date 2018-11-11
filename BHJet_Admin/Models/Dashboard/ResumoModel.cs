@@ -4,10 +4,10 @@ namespace BHJet_Admin.Models
 {
     public class ResumoModel
     {
-        public int ChamadosAvulsosAguardandoMoto { get; set; }
-        public int ChamadosAvulsosAguardandoCarro { get; set; }
-        public int MotociclistasDisponiveis { get; set; }
-        public int CarrosDisponiveis { get; set; }
+        public long ChamadosAvulsosAguardandoMoto { get; set; }
+        public long ChamadosAvulsosAguardandoCarro { get; set; }
+        public long MotociclistasDisponiveis { get; set; }
+        public long CarrosDisponiveis { get; set; }
 
         [Required(ErrorMessage = "Número da OS obrigatório.")]
         public string PesquisaOSCliente { get; set; }

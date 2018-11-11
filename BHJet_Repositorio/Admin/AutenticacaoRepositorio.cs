@@ -38,8 +38,5 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
-
-
-
     }
 }

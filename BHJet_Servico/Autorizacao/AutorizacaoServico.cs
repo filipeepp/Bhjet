@@ -1,5 +1,4 @@
 ﻿using BHJet_Core.Utilitario;
-using BHJet_Servico.Autorizacao.Filtro;
 using BHJet_Servico.Autorizacao.Model;
 using Newtonsoft.Json;
 using System;

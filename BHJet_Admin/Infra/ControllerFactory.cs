@@ -1,4 +1,5 @@
 ﻿using BHJet_Servico.Autorizacao;
+using BHJet_Servico.Dashboard;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -29,6 +30,8 @@ namespace BHJet_Admin.Infra
         {
             if (tipo == typeof(IAutorizacaoServico))
                 return Activator.CreateInstance(typeof(AutorizacaoServico));
+            else if (tipo == typeof(IResumoServico))
+                return Activator.CreateInstance(typeof(ResumoServico));
             else
                 return Activator.CreateInstance(tipo);
         }

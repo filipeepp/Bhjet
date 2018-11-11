@@ -195,6 +195,7 @@
     <Compile Include="Models\Clientes\ClienteModel.cs" />
     <Compile Include="Models\Clientes\TabelaClienteModel.cs" />
     <Compile Include="Models\Dashboard\DiariaModel.cs" />
+    <Compile Include="Models\Dashboard\ExibeLocalizacaoModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
@@ -219,6 +220,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\bgLogin.jpg" />
+    <Content Include="Images\carBhJet.png" />
     <Content Include="Images\logoLogisticaPreto.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -277,7 +279,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Dashboard\ChamadoAvulsoEspera.cshtml" />
+    <Content Include="Views\Dashboard\ExibeLocalizacao.cshtml" />
     <Content Include="Views\Clientes\Clientes.cshtml" />
     <Content Include="Views\Dashboard\CadastroDiariaAvulsa.cshtml" />
     <Content Include="Views\Dashboard\OSCLiente.cshtml" />

@@ -152,6 +152,10 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutenticacaoController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Model\Dashboard\LocalizacaoCorridaModel.cs" />
+    <Compile Include="Model\Dashboard\LocalizacaoProfissionalModel.cs" />
+    <Compile Include="Model\Dashboard\ResumoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AutorizacaoProvider.cs" />
     <Compile Include="Util\LogarExcecao.cs" />

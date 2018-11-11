@@ -5,7 +5,7 @@
         ChamadoAguardandoMotociclista = 1,
         ChamadoAguardandoCarros = 2,
         MotociclistaDisponivel = 3,
-        CarrosDisponiveis = 4,
-        MotoristaDisponivel = 5
+        MotoristaDisponivel = 4,
+        FuncionarioDisponivel = 5
     }
 }
