@@ -20,7 +20,7 @@ namespace BHJet_Repositorio.Admin
                 // Parametro
                 var senhaOrigem = CriptografiaUtil.Descriptografa(filtro.usuarioSenha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
                 var senhaEncryp = CriptografiaUtil.CriptografiaHash(senhaOrigem);
-                var senhaEncrypByte = Encoding.UTF8.GetBytes(filtro.usuarioSenha);
+                var senhaEncrypByte = Encoding.UTF8.GetBytes(senhaEncryp);
 
                 // Query
                 string query = @"select * from tblUsuarios where
@@ -33,7 +33,7 @@ namespace BHJet_Repositorio.Admin
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
                 {
                     usuemaillogin = filtro.usuarioEmail,
-                    usupass = senhaEncryp,
+                    usupass = senhaEncrypByte,
                     usutp = ((int)filtro.usuarioTipo)
                 });
             }
