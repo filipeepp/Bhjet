@@ -78,8 +78,8 @@ namespace BHJet_Admin.Controllers
 
         public ActionResult NovoCliente()
         {
-            return View(new ClienteModel()
-            {
+			return View();
+
                 /*Codigo = 14897,
 				NomeRazaoSocial = "Sarah Dias Martins",
 				NomeFantasia = "",
@@ -95,7 +95,6 @@ namespace BHJet_Admin.Controllers
 				CEP = "58070-570",
 				Observacoes = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
 				HomePage = "https://www.bhjet.com.br/"*/
-            });
         }
     }
 }

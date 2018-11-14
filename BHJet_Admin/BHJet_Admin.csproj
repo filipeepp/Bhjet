@@ -193,7 +193,10 @@
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
     <Compile Include="Models\Clientes\ClienteModel.cs" />
+    <Compile Include="Models\Clientes\DadosCadastraisModel.cs" />
+    <Compile Include="Models\Clientes\ContatoModel.cs" />
     <Compile Include="Models\Clientes\TabelaClienteModel.cs" />
+    <Compile Include="Models\Clientes\ValorModel.cs" />
     <Compile Include="Models\Dashboard\DiariaModel.cs" />
     <Compile Include="Models\Dashboard\ExibeLocalizacaoModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
