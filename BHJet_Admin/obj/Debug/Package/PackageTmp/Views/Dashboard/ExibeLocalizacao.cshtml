@@ -1,25 +1,7 @@
 ﻿@using System.Web.Http
 @using BHJet_Admin.Models
 
-<script type="text/javascript">
 
-    function atualizarMarcacoes() {
-        $.ajax({
-            dataType: "json",
-            type: "GET",
-            url: "/Dashboard/BuscaLocalizacao",
-            success: function (dados) {
-                $(dados).each(function (i) {
-                    var lat = dados[i].geoPosicao.split(';')[0]
-                    var long = dados[i].geoPosicao.split(';')[1]
-                    FazMarcacao(lat, long, dados[i].psCorrida)
-                });
-            }
-        });
-    }
-</script>
-
-<body onload="carregaMapa(); atualizarMarcacoes();">
     <ol class="breadcrumb">
         <li><a href="@Url.Action("Index", "Home")">Home</a></li>
         <li><a href="#map_canvas">@ViewBag.TituloSolicitacao</a></li>
@@ -51,4 +33,4 @@
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
     <script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
-</body>
+    <script type="text/javascript" src="~/Scripts/ExibeLocalizacao.js"></script>

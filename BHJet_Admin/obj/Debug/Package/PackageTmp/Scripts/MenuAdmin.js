@@ -50,6 +50,10 @@ function alteraMenu() {
             $(this).addClass("active")
             return false;
         }
+        else if ($(this)[0].textContent.indexOf("Início") !== -1 && window.location.href.split('/')[3] == "Home" && window.location.href.split('/')[4] == "Index") {
+            $(this).addClass("active")
+            return false;
+        }
     });
 
 }

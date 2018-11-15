@@ -10,6 +10,7 @@
       "BHJet_Servico/1.0.0": {
         "dependencies": {
           "BHJet_Core": "1.0.0",
+          "BHJet_DTO": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "11.0.2"
         },
@@ -42,6 +43,14 @@
         },
         "runtime": {
           "BHJet_Core.dll": {}
+        }
+      },
+      "BHJet_DTO/1.0.0": {
+        "dependencies": {
+          "BHJet_Core": "1.0.0"
+        },
+        "runtime": {
+          "BHJet_DTO.dll": {}
         }
       },
       "System.Web.Mvc.Reference/5.2.4.0": {
@@ -122,6 +131,11 @@
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
     "BHJet_Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BHJet_DTO/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

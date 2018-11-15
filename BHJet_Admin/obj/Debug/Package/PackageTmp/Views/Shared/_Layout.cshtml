@@ -20,7 +20,7 @@
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
 
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <img src="~/Images/logoLogisticaPreto.jpg" class="logo" style="margin-left: 10px;" />
 
                 </a>
@@ -34,6 +34,13 @@
         <section id="menuLateral" class="sidebar" style="height: auto;">
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="header">Painel Administrativo, <b style="color:#667c8a">@HttpContext.Current.User.Identity.Name</b></li>
+
+                <li class="treeview">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-home"></i> <span>Início</span>
+                    </a>
+                </li>
+
                 <li class="treeview">
                     <a href="@Url.Action("Index", "Faturamento")">
                         <i class="fa fa-bar-chart"></i> <span>Faturamento</span>

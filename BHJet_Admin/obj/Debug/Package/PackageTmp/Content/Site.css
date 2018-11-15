@@ -12,8 +12,7 @@
 }
 
 .cst-ckb-Novo-Cliente {
-    width: 5.25rem;
-    height: 1.65rem !important;
+    margin-top: 20px;
 }
 
 .cst-form1-Novo-Cliente {
@@ -22,18 +21,24 @@
     border-radius: 10px;
 }
 
-    .cst-form1-Novo-Cliente input {
+    /*.cst-form1-Novo-Cliente input {
         height: 25px;
         font-size: 12px;
-    }
+    }*/
 
     .cst-form1-Novo-Cliente textarea {
         font-size: 12px;
     }
 
 #form1-Novo-cliente {
-    padding-left: 120px;
-    padding-right: 120px;
+    padding-left: 150px;
+    display: table;
+    width: 90%;
+}
+
+.formTab {
+    position: relative;
+    display: grid;
 }
 /*************************************END DIOGO***********************************/
 #footer {
@@ -409,6 +414,15 @@ input[type="radio"], input[type="checkbox"] {
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
     /* For landscape layouts only */
+    #form1-Novo-cliente {
+        width: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .cst-ckb-Novo-Cliente {
+        margin-top: 0;
+    }
 }
 
 @media (max-width: 1112px) {
@@ -461,7 +475,7 @@ input[type="radio"], input[type="checkbox"] {
 
     .timeline > li > .fa, .timeline > li > .glyphicon, .timeline > li > .ion {
         left: 0 !important;
-        z-index: 5 ;
+        z-index: 5;
     }
 }
 /* ---------------- */
@@ -871,7 +885,19 @@ input[type="radio"] {
 
 
 
-/*  Loading */
+/*  Overrides */
+#tabs > li :active {
+    border: 1px solid #000000 !important;
+}
 
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    background: #e6cb0a !important;
+    border: 1px solid #000000 !important;
+}
+
+    .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+        color: black !important;
+    }
 
 /* ------- */
+

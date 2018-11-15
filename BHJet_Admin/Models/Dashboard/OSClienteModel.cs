@@ -2,9 +2,9 @@
 {
     public class OSClienteModel
     {
-        public int? NumeroOS { get; set; }
-        public int? Cliente { get; set; }
-        public int? Motorista { get; set; }
+        public long NumeroOS { get; set; }
+        public long Cliente { get; set; }
+        public long Motorista { get; set; }
         public OSClienteEnderecoModel Origem { get; set; }
         public OSClienteEnderecoModel[] Desinos { get; set; }
     }

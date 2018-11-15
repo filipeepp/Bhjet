@@ -5,11 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Autorizacao\Model\**" />
+    <Compile Remove="Corrida\Model\**" />
+    <Compile Remove="Dashboard\Model\**" />
+    <EmbeddedResource Remove="Autorizacao\Model\**" />
+    <EmbeddedResource Remove="Corrida\Model\**" />
+    <EmbeddedResource Remove="Dashboard\Model\**" />
+    <None Remove="Autorizacao\Model\**" />
+    <None Remove="Corrida\Model\**" />
+    <None Remove="Dashboard\Model\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj" />
+    <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj" />
   </ItemGroup>
 
 </Project>

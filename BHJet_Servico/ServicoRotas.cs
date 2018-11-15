@@ -6,15 +6,24 @@
 
         public class Autenticacao
         {
-            public static readonly string PostAutenticar = "/token";
+            public const string PostAutenticar = "/token";
         }
 
         public class Dashboard
         {
-            public static readonly string GetResumo = "/api/Dashboard/resumo";
-            public static readonly string GetLocalizacaoFuncionario = "/api/Dashboard/profissional/{0}/localizacao";
-            public static readonly string GetLocalizacaoCorridas = "/api/Dashboard/corridas/{0}/profissional/{1}/localizacao";
+            public const string GetResumo = "/api/Dashboard/resumo";
         }
 
+        public class Corrida
+        {
+            public const string GetDetalheCorridas = "/api/Corrida/id/{0}/";
+            public const string GetLocalizacaoCorridas = "/api/Corrida/status/{0}/profissional/{1}/localizacao";
+        }
+
+        public class Profissional
+        {
+            public const string GetLocalizacoesProfissionais = "/api/Profissional/profissional/tipo/{0}/localizacao";
+            public const string GetLocalizacaoProfissional = "/api/Profissional/profissional/id/{0}/localizacao";
+        }
     }
 }

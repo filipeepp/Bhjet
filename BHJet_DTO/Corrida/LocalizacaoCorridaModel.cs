@@ -1,4 +1,4 @@
-﻿namespace BHJet_WebApi.Model.Dashboard
+﻿namespace BHJet_DTO.Corrida
 {
     public class LocalizacaoCorridaModel
     {

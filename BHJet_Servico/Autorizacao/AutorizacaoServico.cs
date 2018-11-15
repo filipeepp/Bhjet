@@ -1,5 +1,5 @@
 ﻿using BHJet_Core.Utilitario;
-using BHJet_Servico.Autorizacao.Model;
+using BHJet_DTO.Autenticacao;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

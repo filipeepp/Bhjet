@@ -256,6 +256,7 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GoogleMapsBHJet.js" />
+    <Content Include="Scripts\IndexAdmin.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -333,6 +334,10 @@
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1D890AFC-7AE5-45E4-A1E2-4161D00D46F3}</Project>
       <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj">
+      <Project>{79F2E840-B418-4CC0-B2E8-328E79760679}</Project>
+      <Name>BHJet_DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHJet_Servico\BHJet_Servico.csproj">
       <Project>{0310B10F-5E51-455A-ACB7-7FDE01E0EE0B}</Project>

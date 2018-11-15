@@ -1,4 +1,4 @@
-﻿namespace BHJet_Servico.Dashboard.Model
+﻿namespace BHJet_DTO.Dashboard
 {
     public class ResumoModel
     {

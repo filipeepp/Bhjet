@@ -152,10 +152,9 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutenticacaoController.cs" />
+    <Compile Include="Controllers\CorridaController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Model\Dashboard\LocalizacaoCorridaModel.cs" />
-    <Compile Include="Model\Dashboard\LocalizacaoProfissionalModel.cs" />
-    <Compile Include="Model\Dashboard\ResumoModel.cs" />
+    <Compile Include="Controllers\ProfissionalController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AutorizacaoProvider.cs" />
     <Compile Include="Util\LogarExcecao.cs" />
@@ -176,6 +175,10 @@
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1d890afc-7ae5-45e4-a1e2-4161d00d46f3}</Project>
       <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj">
+      <Project>{79F2E840-B418-4CC0-B2E8-328E79760679}</Project>
+      <Name>BHJet_DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHJet_Repositorio\BHJet_Repositorio.csproj">
       <Project>{c4c90e6f-22f5-4af2-8df5-d67a9992e74e}</Project>

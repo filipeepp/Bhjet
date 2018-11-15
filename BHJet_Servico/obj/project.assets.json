@@ -43,6 +43,19 @@
         "runtime": {
           "bin/placeholder/BHJet_Core.dll": {}
         }
+      },
+      "BHJet_DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "BHJet_Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BHJet_DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BHJet_DTO.dll": {}
+        }
       }
     }
   },
@@ -219,11 +232,17 @@
       "type": "project",
       "path": "../BHJet_Core/BHJet_Core.csproj",
       "msbuildProject": "../BHJet_Core/BHJet_Core.csproj"
+    },
+    "BHJet_DTO/1.0.0": {
+      "type": "project",
+      "path": "../BHJet_DTO/BHJet_DTO.csproj",
+      "msbuildProject": "../BHJet_DTO/BHJet_DTO.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "BHJet_Core >= 1.0.0",
+      "BHJet_DTO >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 11.0.2"
     ]
@@ -260,6 +279,9 @@
           "projectReferences": {
             "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
               "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
+            },
+            "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj": {
+              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj"
             }
           }
         }

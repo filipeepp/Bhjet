@@ -1,4 +1,4 @@
-﻿namespace BHJet_Servico.Autorizacao.Model
+﻿namespace BHJet_DTO.Autenticacao
 {
     public class TokenModel
     {

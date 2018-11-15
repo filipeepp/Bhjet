@@ -1,4 +1,4 @@
-﻿namespace BHJet_Servico.Dashboard.Model
+﻿namespace BHJet_DTO.Profissional
 {
     public class LocalizacaoProfissionalModel
     {

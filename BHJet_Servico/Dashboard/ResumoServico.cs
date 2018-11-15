@@ -1,5 +1,7 @@
 ﻿using BHJet_Core.Enum;
-using BHJet_Servico.Dashboard.Model;
+using BHJet_DTO.Corrida;
+using BHJet_DTO.Dashboard;
+using BHJet_DTO.Profissional;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +12,7 @@ namespace BHJet_Servico.Dashboard
         ResumoModel BuscaResumo();
         IEnumerable<LocalizacaoProfissionalModel> BuscaLocalizacaoProfissionais(TipoProfissional tipo);
         IEnumerable<LocalizacaoCorridaModel> BuscaLocalizacaoCorridas(StatusCorrida status, TipoProfissional tipo);
+        LocalizacaoProfissionalModel BuscaLocalizacaoProfissional(int idProfissional);
     }
 
     public class ResumoServico : ServicoBase, IResumoServico
@@ -20,7 +23,7 @@ namespace BHJet_Servico.Dashboard
         /// <returns>ResumoModel</returns>
         public ResumoModel BuscaResumo()
         {
-            return new BHJet_Servico.Dashboard.Model.ResumoModel()
+            return new ResumoModel()
             {
                 MotociclistaDisponiveis = 10,
                 ChamadosAguardandoMotorista = 23,
@@ -46,7 +49,22 @@ namespace BHJet_Servico.Dashboard
                 }
             };
 
-            return this.Get<LocalizacaoProfissionalModel[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Dashboard.GetLocalizacaoFuncionario, (int)tipo)}"));
+            return this.Get<LocalizacaoProfissionalModel[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Profissional.GetLocalizacoesProfissionais, (int)tipo)}"));
+        }
+
+        /// <summary>
+        /// Busca Localizacao Profissionais
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public LocalizacaoProfissionalModel BuscaLocalizacaoProfissional(int idProfissional)
+        {
+            return new LocalizacaoProfissionalModel()
+            {
+                idColaboradorEmpresaSistema = 1,
+                geoPosicao = "-19.8157;-43.9542",
+            };
+
+            return this.Get<LocalizacaoProfissionalModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Profissional.GetLocalizacaoProfissional, idProfissional)}"));
         }
 
         /// <summary>
@@ -70,7 +88,7 @@ namespace BHJet_Servico.Dashboard
             };
 
             return this.Get<LocalizacaoCorridaModel[]>(new Uri($"{ServicoRotas.Base}" +
-                $"{string.Format(ServicoRotas.Dashboard.GetLocalizacaoCorridas, (int)status, (int)tipo)}"));
+                $"{string.Format(ServicoRotas.Corrida.GetLocalizacaoCorridas, (int)status, (int)tipo)}"));
         }
 
     }
