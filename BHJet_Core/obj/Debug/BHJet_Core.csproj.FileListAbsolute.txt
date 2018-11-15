@@ -24,3 +24,17 @@ D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.csproj.CoreCompileInputs.c
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.csproj.CopyComplete
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.dll
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.pdb
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Helpers.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Mvc.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Razor.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Helpers.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Mvc.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.Razor.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Diogo Nominato\Source\Repos\Bhjet\BHJet_Core\obj\Debug\BHJet_Core.csproj.CopyComplete

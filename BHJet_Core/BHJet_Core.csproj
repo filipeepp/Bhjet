@@ -69,6 +69,7 @@
     <Compile Include="Enum\TipoCarteira.cs" />
     <Compile Include="Enum\TipoContrato.cs" />
     <Compile Include="Enum\TipoProfissional.cs" />
+    <Compile Include="Enum\TipoTarifa.cs" />
     <Compile Include="Enum\TipoUsuario.cs" />
     <Compile Include="Enum\TipoVeiculo.cs" />
     <Compile Include="Extension\StringExtension.cs" />
