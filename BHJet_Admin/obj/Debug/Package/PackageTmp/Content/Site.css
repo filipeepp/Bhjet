@@ -150,7 +150,8 @@ input[type="radio"], input[type="checkbox"] {
 
 .labelValor {
     padding: 5px;
-    min-width: 220px;
+    min-width: 400px;
+    max-width: 400px;
     background-color: #d6c93d;
 }
 
@@ -366,6 +367,7 @@ input[type="radio"], input[type="checkbox"] {
     width: auto;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
     padding: 10px;
+    min-height: 140px;
 }
 
     .box :before {
@@ -453,6 +455,13 @@ input[type="radio"], input[type="checkbox"] {
 
     .navbar-default {
         background-image: linear-gradient(#f5ed00 0,#c6de44 100%);
+    }
+
+    .labelValor {
+        padding: 5px;
+        min-width: 220px;
+        max-width: unset; 
+        background-color: #d6c93d;
     }
 
     #footer {
