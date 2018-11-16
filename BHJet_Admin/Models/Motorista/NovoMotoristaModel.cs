@@ -5,6 +5,8 @@ namespace BHJet_Admin.Models.Motorista
 {
     public class NovoMotoristaModel
     {
+        public long ID { get; set; }
+
         private bool _EdicaoCadastro;
         public bool EdicaoCadastro { get => _EdicaoCadastro; set => _EdicaoCadastro = value; }
 
@@ -25,10 +27,10 @@ namespace BHJet_Admin.Models.Motorista
         [Required(ErrorMessage = "Endereço obrigatório.")]
         public string Endereco { get; set; }
 
-        [RegularExpression(@"^(\(11\) [9][0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", ErrorMessage = "Formato de Telefone inválido")]
+        [RegularExpression(@"\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}", ErrorMessage = "Formato de Telefone inválido")]
         public string TelefoneResidencial { get; set; }
 
-        [RegularExpression(@"^(\(11\) [9][0-9]{4}-[0-9]{4})|(\(1[2-9]\) [5-9][0-9]{3}-[0-9]{4})|(\([2-9][1-9]\) [5-9][0-9]{3}-[0-9]{4})$", ErrorMessage = "Formato de Celular inválido")]
+        [RegularExpression(@"\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}", ErrorMessage = "Formato de Celular inválido")]
         public string TelefoneCelular { get; set; }
 
         public bool CelularWhatsapp { get; set; }

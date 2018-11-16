@@ -1,6 +1,7 @@
 ﻿using BHJet_Servico.Autorizacao;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
+using BHJet_Servico.Profissional;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -35,6 +36,8 @@ namespace BHJet_Admin.Infra
                 return Activator.CreateInstance(typeof(ResumoServico));
             else if (tipo == typeof(ICorridaServico))
                 return Activator.CreateInstance(typeof(CorridaServico));
+            else if (tipo == typeof(IProfissionalServico))
+                return Activator.CreateInstance(typeof(ProfissionalServico));
             else
                 return Activator.CreateInstance(tipo);
         }

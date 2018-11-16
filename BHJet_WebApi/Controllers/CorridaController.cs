@@ -18,7 +18,7 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
         [Authorize]
-        [Route("id/{idOS:long}")]
+        [Route("{idOS:long}")]
         [ResponseType(typeof(DetalheCorridaModel))]
         public IHttpActionResult GetCorrida(int idOS)
         {

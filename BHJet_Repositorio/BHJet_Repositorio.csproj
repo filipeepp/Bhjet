@@ -51,6 +51,7 @@
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\OSCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalDisponivelEntidade.cs" />
+    <Compile Include="Admin\Entidade\ProfissionalEntidade.cs" />
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />

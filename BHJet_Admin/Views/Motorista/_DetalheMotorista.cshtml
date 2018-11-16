@@ -5,14 +5,13 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 
-
-
 @using (Html.BeginForm("Novo", "Motorista", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     <div class="row form-group ">
 
         <div class="col-xs-12 col-sm-12 col-lg-12">
             @Html.HiddenFor(model => model.EdicaoCadastro);
+            @Html.HiddenFor(model => model.ID);
             <div class="col-md-12">
                 <label for="txtNome">Nome Completo</label>
                 @Html.TextBoxFor(model => model.NomeCompleto, new { @class = "form-control" })
@@ -110,3 +109,5 @@
     </div>
 }
 
+    <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+    <script src="~/Scripts/DetalheMotorista.js"></script>
