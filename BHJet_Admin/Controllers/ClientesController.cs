@@ -1,4 +1,6 @@
-﻿using BHJet_Admin.Models;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
+using BHJet_Admin.Models.Clientes;
 using BHJet_Core.Enum;
 using System;
 using System.Collections.Generic;
@@ -76,25 +78,25 @@ namespace BHJet_Admin.Controllers
 
         }
 
+
         public ActionResult NovoCliente()
         {
-			return View();
-
-                /*Codigo = 14897,
-				NomeRazaoSocial = "Sarah Dias Martins",
-				NomeFantasia = "",
-				CPFCNPJ = "834.748.174-18",
-				InscricaoEstadual = "10.4564.8889-00",
-				ISS = true,
-				Endereco = "Rua Valdemar",
-				NumeroEndereco = "332 A",
-				Complemento = "Casa",
-				Bairro = "Cristo Redentor",
-				Cidade = "João Pessoa",
-				Estado = "PB",
-				CEP = "58070-570",
-				Observacoes = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-				HomePage = "https://www.bhjet.com.br/"*/
+			return View( new ClienteModel()
+            {
+                DadosCadastrais = new DadosCadastraisModel() {},
+                Contato = new ContatoModel[] {},
+                Valor = new ValorModel() { }
+            });
         }
+
+        public ActionResult CarregarNovoContato()
+        {
+            return PartialView("_Contato");
+        }
+
+        /*public ActionResult NovoCliente(ClienteModel model)
+        {
+            return View(model);
+        }*/
     }
 }

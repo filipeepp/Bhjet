@@ -1,12 +1,17 @@
 ﻿using BHJet_Core.Enum;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Clientes
 {
 	public class DadosCadastraisModel
 	{
 		public int Codigo { get; set; }
-		public string NomeRazaoSocial { get; set; }
+
+        [Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
+        public string NomeRazaoSocial { get; set; }
+
+
 		public string NomeFantasia { get; set; }
 		public string CPFCNPJ { get; set; }
 		public string InscricaoEstadual { get; set; }
