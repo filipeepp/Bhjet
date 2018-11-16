@@ -24,8 +24,33 @@ namespace BHJet_Admin.Models.Motorista
         [Required(ErrorMessage = "Tipo de carteira obrigatório.")]
         public TipoCarteira TipoCarteiraMotorista { get; set; }
 
-        [Required(ErrorMessage = "Endereço obrigatório.")]
-        public string Endereco { get; set; }
+        #region Endereco
+        [Required(ErrorMessage = "CEP obrigatório.")]
+        [RegularExpression(@"[0-9]{5}-[0-9]{3}", ErrorMessage = "Formato de CEP inválido.")]
+        public string Cep { get; set; }
+
+        [Required(ErrorMessage = "Rua obrigatório.")]
+        public string Rua { get; set; }
+
+        [Required(ErrorMessage = "Número da rua obrigatório.")]
+        public string RuaNumero { get; set; }
+
+        public string Complemento { get; set; }
+
+        [Required(ErrorMessage = "Bairro obrigatório.")]
+        public string Bairro { get; set; }
+
+        [Required(ErrorMessage = "Cidade obrigatório.")]
+        public string Cidade { get; set; }
+
+        [Required(ErrorMessage = "Estado obrigatório.")]
+        [StringLength(2, ErrorMessage = "Preencher estado no formato: 'MG, SP, RJ'", MinimumLength = 2)]
+        public string UF { get; set; }
+
+        public bool EnderecoPrincipal { get; set; }
+
+        public string PontoReferencia { get; set; }
+        #endregion
 
         [RegularExpression(@"\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}", ErrorMessage = "Formato de Telefone inválido")]
         public string TelefoneResidencial { get; set; }

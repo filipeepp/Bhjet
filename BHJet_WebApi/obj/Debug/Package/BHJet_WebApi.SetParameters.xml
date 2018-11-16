@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <setParameter name="IIS Web Application Name" value="Default Web Site/" />
-  <setParameter name="DbBHJetCourier-Web.config Connection String" value="Data Source=bhjetbdprincipal.ctmsua3o6qoh.sa-east-1.rds.amazonaws.com;Initial Catalog=DBbhjet;User ID=bhjetbd;Password=Dell311290;" />
-</parameters>

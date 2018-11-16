@@ -87,7 +87,7 @@ namespace BHJet_WebApi.Controllers
             {
                 ID = pro.ID,
                 NomeCompleto = pro.NomeCompleto,
-                TipoRegime = pro.TipoContrato,
+                TipoRegime = pro.TipoRegime,
                 TipoProfissional = pro.TipoProfissional
             }));
         }
@@ -111,21 +111,68 @@ namespace BHJet_WebApi.Controllers
             // Return
             return Ok(new ProfissionalCompletoModel()
             {
+                ID = entidade.ID,
+                NomeCompleto = entidade.NomeCompleto,
                 CelularWpp = entidade.CelularWpp,
                 CNH = entidade.CNH,
                 ContratoCLT = entidade.ContratoCLT,
                 CPF = entidade.CPF,
                 Email = entidade.Email,
-                EnderecoCompleto = entidade.EnderecoCompleto,
-                ID = entidade.ID,
-                NomeCompleto = entidade.NomeCompleto,
+                Rua = entidade.Rua,
+                Bairro = entidade.Bairro,
+                Cidade = entidade.Cidade,
+                Complemento = entidade.Complemento,
+                PontoReferencia = entidade.PontoReferencia,
+                UF = entidade.UF,
+                Cep = entidade.Cep,
+                EnderecoPrincipal = entidade.EnderecoPrincipal,
+                RuaNumero = entidade.RuaNumero,
                 Observacao = entidade.Observacao,
                 TelefoneCelular = entidade.TelefoneCelular,
                 TelefoneResidencial = entidade.TelefoneResidencial,
                 TipoCNH = entidade.TipoCNH,
-                TipoRegime = entidade.TipoContrato,
+                TipoRegime = entidade.TipoRegime,
                 TipoProfissional = entidade.TipoProfissional
             });
+        }
+
+        /// <summary>
+        /// Atualiza profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("{idProfissional:long}")]
+        public IHttpActionResult PutProfissional(long idProfissional, [FromBody]ProfissionalCompletoModel model)
+        {
+            // Busca Dados resumidos
+            new ProfissionalRepositorio().AtualizaProfissional(new BHJet_Repositorio.Admin.Entidade.ProfissionalCompletoEntidade()
+            {
+                ID = idProfissional,
+                NomeCompleto = model.NomeCompleto,
+                CPF = model.CPF,
+                Email = model.Email,
+                Observacao = model.Observacao,
+                TipoCNH = model.TipoCNH,
+                CNH = model.CNH,
+                TipoProfissional = model.TipoProfissional,
+                TipoRegime = model.TipoRegime,
+                ContratoCLT = model.ContratoCLT,
+                TelefoneCelular = model.TelefoneCelular,
+                TelefoneResidencial = model.TelefoneResidencial,
+                CelularWpp = model.CelularWpp,
+                Cep = model.Cep,
+                Rua = model.Rua,
+                Bairro = model.Bairro,
+                Cidade = model.Cidade,
+                UF = model.UF,
+                RuaNumero = model.RuaNumero,
+                Complemento = model.Complemento,
+                EnderecoPrincipal = model.EnderecoPrincipal,
+                PontoReferencia = model.PontoReferencia
+            });
+
+            // Return
+            return Ok();
         }
 
         /// <summary>
@@ -133,35 +180,39 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
         [Authorize]
-        [Route("{idProfissional:long}")]
-        [ResponseType(typeof(ProfissionalCompletoModel))]
-        public IHttpActionResult PutProfissional([FromBody]ProfissionalCompletoModel model)
+        [Route("")]
+        public IHttpActionResult PostProfissional([FromBody]ProfissionalCompletoModel model, [FromUri]long idGestorInclusao)
         {
             // Busca Dados resumidos
-            var entidade = new ProfissionalRepositorio().BuscaProfissional(idProfissional);
-
-            // Validacao
-            if (entidade == null)
-                return StatusCode(System.Net.HttpStatusCode.NoContent);
+            new ProfissionalRepositorio().IncluirProfissional(new BHJet_Repositorio.Admin.Entidade.ProfissionalCompletoEntidade()
+            {
+                IDGestor = idGestorInclusao,
+                NomeCompleto = model.NomeCompleto,
+                CPF = model.CPF,
+                Email = model.Email,
+                Observacao = model.Observacao,
+                TipoCNH = model.TipoCNH,
+                CNH = model.CNH,
+                TipoProfissional = model.TipoProfissional,
+                TipoRegime = model.TipoRegime,
+                ContratoCLT = model.ContratoCLT,
+                TelefoneCelular = model.TelefoneCelular,
+                TelefoneResidencial = model.TelefoneResidencial,
+                CelularWpp = model.CelularWpp,
+                Cep = model.Cep,
+                Rua = model.Rua,
+                Bairro = model.Bairro,
+                Cidade = model.Cidade,
+                UF = model.UF,
+                RuaNumero = model.RuaNumero,
+                Complemento = model.Complemento,
+                EnderecoPrincipal = model.EnderecoPrincipal,
+                PontoReferencia = model.PontoReferencia
+            });
 
             // Return
-            return Ok(new ProfissionalCompletoModel()
-            {
-                CelularWpp = entidade.CelularWpp,
-                CNH = entidade.CNH,
-                ContratoCLT = entidade.ContratoCLT,
-                CPF = entidade.CPF,
-                Email = entidade.Email,
-                EnderecoCompleto = entidade.EnderecoCompleto,
-                ID = entidade.ID,
-                NomeCompleto = entidade.NomeCompleto,
-                Observacao = entidade.Observacao,
-                TelefoneCelular = entidade.TelefoneCelular,
-                TelefoneResidencial = entidade.TelefoneResidencial,
-                TipoCNH = entidade.TipoCNH,
-                TipoRegime = entidade.TipoContrato,
-                TipoProfissional = entidade.TipoProfissional
-            });
+            return Ok();
         }
+
     }
 }

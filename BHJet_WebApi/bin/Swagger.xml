@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BHJet_WebApi</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.CorridaController.GetCorrida(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.CorridaController.GetLocalizacaoCorridas(System.Int32,System.Int32)" -->
+        <member name="M:BHJet_WebApi.Controllers.DashboardController.GetResumoDashboard">
+            <summary>
+            Busca dados de resumo do dashboard da area interna
+            </summary>
+            <returns>ResumoModel</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.GetLocalizacaoMotoristasDisponiveis(System.Int32)" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.GetLocalizacaoMotoristaDisponiveil(System.Int64)" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.GetListaProfissionais" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.GetProfissional(System.Int64)" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.PutProfissional(System.Int64,BHJet_DTO.Profissional.ProfissionalCompletoModel)" -->
+        <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.PostProfissional(BHJet_DTO.Profissional.ProfissionalCompletoModel,System.Int64)" -->
+    </members>
+</doc>

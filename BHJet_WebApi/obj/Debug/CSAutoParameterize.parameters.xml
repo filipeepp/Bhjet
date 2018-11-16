@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="DbBHJetCourier-Web.config Connection String" description="DbBHJetCourier Connection String used in web.config by the application to access the database." defaultValue="Data Source=bhjetbdprincipal.ctmsua3o6qoh.sa-east-1.rds.amazonaws.com;Initial Catalog=DBbhjet;User ID=bhjetbd;Password=Dell311290;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\Projetos\\BHJet_Web\\BHJet_WebApi\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DbBHJetCourier']/@connectionString" />
-  </parameter>
-</parameters>

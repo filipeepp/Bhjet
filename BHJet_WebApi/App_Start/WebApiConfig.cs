@@ -23,6 +23,8 @@ namespace BHJet_WebApi
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            //SwaggerConfig.Register();
+
             config.Services.Add(
                 typeof(IExceptionLogger),
                 new LogarExcecao()

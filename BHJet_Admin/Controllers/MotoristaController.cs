@@ -44,20 +44,29 @@ namespace BHJet_Admin.Controllers
                     CNH = profissional.CNH,
                     CpfCnpj = profissional.CPF,
                     Email = profissional.Email,
-                    Endereco = profissional.EnderecoCompleto,
                     Observacao = profissional.Observacao,
                     TelefoneCelular = profissional.TelefoneCelular,
                     TelefoneResidencial = profissional.TelefoneResidencial,
                     TipoCarteiraMotorista = profissional.TipoCNH,
+                    Cep = profissional.Cep,
+                    Rua = profissional.Rua,
+                    Bairro = profissional.Bairro,
+                    Cidade = profissional.Cidade,
+                    Complemento = profissional.Complemento,
+                    EnderecoPrincipal = profissional.EnderecoPrincipal,
+                    PontoReferencia = profissional.PontoReferencia,
+                    RuaNumero = profissional.RuaNumero,
+                    UF = profissional.UF,
                     EdicaoCadastro = true
                 });
             }
             else
             {
+                // Clear erros
+                ModelState.Clear();
+
                 // Tipo de Execução
                 ViewBag.TipoAlteracao = "Novo";
-
-                ModelState.Clear();
 
                 // Return
                 return View(new NovoMotoristaModel()
@@ -71,9 +80,10 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult Novo(NovoMotoristaModel model)
         {
-            // Atualiza dados do profissional
-            profissionalServico.AtualizaDadosProfissional(new ProfissionalCompletoModel()
+            // Modelo entidade
+            var entidade = new ProfissionalCompletoModel()
             {
+                ID = model.ID,
                 NomeCompleto = model.NomeCompleto,
                 Email = model.Email,
                 CelularWpp = model.CelularWhatsapp,
@@ -83,11 +93,24 @@ namespace BHJet_Admin.Controllers
                 CNH = model.CNH,
                 ContratoCLT = model.TipoRegimeContratacao == BHJet_Core.Enum.RegimeContratacao.CLT ? true : false,
                 Observacao = model.Observacao,
-                EnderecoCompleto = model.Endereco,
-                ID = model.ID,
                 TipoCNH = model.TipoCarteiraMotorista,
-                TipoRegime = model.TipoRegimeContratacao
-            });
+                TipoRegime = model.TipoRegimeContratacao,
+                Cep = model.Cep,
+                Rua = model.Rua,
+                Bairro = model.Bairro,
+                Cidade = model.Cidade,
+                Complemento = model.Complemento,
+                EnderecoPrincipal = model.EnderecoPrincipal,
+                PontoReferencia = model.PontoReferencia,
+                RuaNumero = model.RuaNumero,
+                UF = model.UF,
+            };
+
+            // Alteração
+            if (model.EdicaoCadastro)
+                profissionalServico.AtualizaDadosProfissional(entidade); // Atualiza dados do profissional
+            else
+                profissionalServico.IncluirProfissional(entidade); // Atualiza dados do profissional
 
             // Return
             return View(model);
@@ -100,6 +123,19 @@ namespace BHJet_Admin.Controllers
         {
             // Busca Motoristas
             var entidade = profissionalServico.BuscaProfissionais();
+
+            return View(new EditarMotoristaModel()
+            {
+                MotoristaSelecionado = null,
+                ListaMotorista = new MotoristaSimplesModel[]
+                {
+                    new MotoristaSimplesModel()
+                    {
+                         NomeCompleto = "leo"
+                    }
+
+                }
+            });
 
             // Return
             return View(new EditarMotoristaModel()
