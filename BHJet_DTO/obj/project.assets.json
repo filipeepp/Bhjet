@@ -191,23 +191,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LEOZI\\.nuget\\packages\\": {},
+    "C:\\Users\\Diogo Nominato\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj",
+      "projectUniqueName": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj",
       "projectName": "BHJet_DTO",
-      "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj",
-      "packagesPath": "C:\\Users\\LEOZI\\.nuget\\packages\\",
-      "outputPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\obj\\",
+      "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj",
+      "packagesPath": "C:\\Users\\Diogo Nominato\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LEOZI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Diogo Nominato\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -220,8 +220,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
+            "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             }
           }
         }

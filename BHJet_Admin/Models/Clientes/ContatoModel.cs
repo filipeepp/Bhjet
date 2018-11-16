@@ -12,6 +12,6 @@ namespace BHJet_Admin.Models.Clientes
 		public string TelefoneComercial { get; set; }
 		public string TelefoneCelular { get; set; }
 		public string Setor { get; set; }
-		public string Aniversario { get; set; }
+		public DateTime DataNascimento { get; set; }
 	}
 }
