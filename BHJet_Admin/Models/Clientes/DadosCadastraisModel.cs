@@ -8,10 +8,10 @@ namespace BHJet_Admin.Models.Clientes
 	{
 		public int Codigo { get; set; }
 
-        //[Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
+        [Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
         public string NomeRazaoSocial { get; set; }
 
-		//[Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
+		[Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
 		public string NomeFantasia { get; set; }
 		public string CPFCNPJ { get; set; }
 		public string InscricaoEstadual { get; set; }
