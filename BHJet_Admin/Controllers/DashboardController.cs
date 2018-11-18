@@ -118,6 +118,28 @@ namespace BHJet_Admin.Controllers
             return Json(localizacao, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaResumoSituacaoChamados()
+        {
+            // Recupera dados
+            var entidade = resumoServico.BuscaResumoChamadosSituacao();
+
+            // Return
+            return Json(entidade, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaResumoAtendimentos()
+        {
+            // Recupera dados
+            var entidade = resumoServico.BuscaResumoAtendimentosSituacao();
+
+            // Return
+            return Json(entidade, JsonRequestBehavior.AllowGet);
+        }
+
         [ValidacaoUsuarioAttribute()]
         public ActionResult OSCliente(ResumoModel model)
         {

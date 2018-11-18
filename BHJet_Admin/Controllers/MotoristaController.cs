@@ -124,19 +124,6 @@ namespace BHJet_Admin.Controllers
             // Busca Motoristas
             var entidade = profissionalServico.BuscaProfissionais();
 
-            return View(new EditarMotoristaModel()
-            {
-                MotoristaSelecionado = null,
-                ListaMotorista = new MotoristaSimplesModel[]
-                {
-                    new MotoristaSimplesModel()
-                    {
-                         NomeCompleto = "leo"
-                    }
-
-                }
-            });
-
             // Return
             return View(new EditarMotoristaModel()
             {

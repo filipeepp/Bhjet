@@ -13,6 +13,8 @@ namespace BHJet_Servico.Dashboard
         IEnumerable<LocalizacaoProfissionalModel> BuscaLocalizacaoProfissionais(TipoProfissional tipo);
         IEnumerable<LocalizacaoCorridaModel> BuscaLocalizacaoCorridas(StatusCorrida status, TipoProfissional tipo);
         LocalizacaoProfissionalModel BuscaLocalizacaoProfissional(int idProfissional);
+        IEnumerable<ResumoChamadoModel> BuscaResumoChamadosSituacao();
+        IEnumerable<ResumoAtendimentoModel> BuscaResumoAtendimentosSituacao();
     }
 
     public class ResumoServico : ServicoBase, IResumoServico
@@ -32,6 +34,58 @@ namespace BHJet_Servico.Dashboard
             };
 
             return this.Get<ResumoModel>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Dashboard.GetResumo}"));
+        }
+
+
+        /// <summary>
+        /// Busca Resumo Chamados por situacao no ultimo ano
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public IEnumerable<ResumoChamadoModel> BuscaResumoChamadosSituacao()
+        {
+            // Separa chamados 
+            List<ResumoChamadoModel> ResumoMensal = new List<ResumoChamadoModel>();
+
+            // Percorre os meses
+            for (int i = 1; i <= 12; i++)
+            {
+                ResumoMensal.Add(new ResumoChamadoModel()
+                {
+                    Mes = i,
+                    ChamadosAdvertentes = i + 1,
+                    ChamadosConcluidos = i + 2
+                });
+            }
+
+            return ResumoMensal;
+
+            return this.Get<IEnumerable<ResumoChamadoModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Dashboard.GetResumoChamadosSit}"));
+        }
+
+        /// <summary>
+        /// Busca Resumo Dashboard
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public IEnumerable<ResumoAtendimentoModel> BuscaResumoAtendimentosSituacao()
+        {
+
+            // Separa chamados 
+            List<ResumoAtendimentoModel> ResumoMensal = new List<ResumoAtendimentoModel>();
+
+            // Percorre os meses
+            for (int i = 1; i <= 12; i++)
+            {
+                ResumoMensal.Add(new ResumoAtendimentoModel()
+                {
+                    Mes = i,
+                    QtdAtendimentoMotociclista = i + 2,
+                    QtdAtendimentoMotorista = i + 1,
+                });
+            }
+
+            return ResumoMensal;
+
+            return this.Get<IEnumerable<ResumoAtendimentoModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Dashboard.GetResumoAtendimentosCategoria}"));
         }
 
         /// <summary>

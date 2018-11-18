@@ -5,6 +5,7 @@ namespace BHJet_Admin.Models.Faturamento
 
     public class FaturamentoModel
     {
+        public long ID { get; set; }
         public string Cliente { get; set; }
         public DateTime Apuração { get; set; }
         public int TipoContrato { get; set; }

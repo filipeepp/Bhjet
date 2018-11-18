@@ -1,0 +1,87 @@
+﻿@using BHJet_Admin.Models.Faturamento
+@model  IEnumerable<DetalheCorridaFaturamentoModel>
+
+@foreach (DetalheCorridaFaturamentoModel fat in @Model)
+{
+    <div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <label for="txtNome">Mensageiro: </label>
+                @Html.Label(@fat.Mensageiro)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="bg-light-gray">
+                            <th>Data</th>
+                            <th class="hidden-xs">Ínicio Diária</th>
+                            <th class="hidden-xs">Ínicio Almoço</th>
+                            <th class="hidden-xs">Final Almoço</th>
+                            <th class="hidden-xs">Final Diária</th>
+                            <th>KM Rodados</th>
+                            <th>Valor transporte</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach (DetalheLogCorridaFaturamentoModel fatD in fat.LogCorrida)
+                            {
+                                <td>@fatD.Data</td>
+                                <td class="hidden-xs">@fatD.InicioDiaria</td>
+                                <td class="hidden-xs">@fatD.InicioAlmoco</td>
+                                <td class="hidden-xs">@fatD.FinalAlmoco</td>
+                                <td class="hidden-xs">@fatD.FinalDiaria</td>
+                                <td>@fatD.KMRodado</td>
+                                <td>@fatD.ValorTransporte</td>
+                                <td>@fatD.Tipo</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Total KM no período: </label>
+                @Html.Label(@fat.DetalheTotal.TotalKm.ToString())
+                <br />
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Franquia contratada: </label>
+                @Html.Label(@fat.DetalheTotal.FranquiaContratada.ToString())
+                <br />
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">KM Excedente: </label>
+                @Html.Label(@fat.DetalheTotal.KMExcedente.ToString())
+            </div>
+
+            <div class="col-sm-4">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Total diárias: </label>
+                @Html.Label(@fat.DetalheTotal.TotalDiarias.ToString())
+                <br />
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Valor da diária: </label>
+                @Html.Label(@fat.DetalheTotal.ValorDiaria.ToString("C"))
+            </div>
+
+
+            <div class="col-sm-4">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Valor diárias: </label>
+                @Html.Label(@fat.DetalheTotal.ValorDiarias.ToString("C"))
+                <br />
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <label for="txtNome">Valor excedente franquia: </label>
+                @Html.Label(@fat.DetalheTotal.ValorExcedente.ToString("C"))
+            </div>
+        </div>
+    </div>
+}
