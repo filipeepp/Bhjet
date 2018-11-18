@@ -146,7 +146,7 @@
                         </div>
                         <div class=" col-md-1 col-lg-1">
                             <label for="txtNomeFantasia">UF</label>
-                            @Html.TextBoxFor(model => model.UF, new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.UF, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.UF, null, new { @class = "text-danger" })
                         </div>
                         <div class=" col-md-3 col-lg-2">

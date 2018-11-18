@@ -11,19 +11,42 @@ namespace BHJet_Admin.Models.Clientes
         [Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
         public string NomeRazaoSocial { get; set; }
 
-		[Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
+		[Required(ErrorMessage = "Nome Fantasia orbigatório.")]
 		public string NomeFantasia { get; set; }
-		public string CPFCNPJ { get; set; }
-		public string InscricaoEstadual { get; set; }
-		public bool ISS { get; set; }
-		public string Endereco { get; set; }
-		public string NumeroEndereco { get; set; }
+
+        [Required(ErrorMessage = "CPF/CNPJ Completo obrigatório.")]
+        [StringLength(18, ErrorMessage = "Formato de CPF/CNPJ inválido.", MinimumLength = 14)]
+        [RegularExpression(@"([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})", ErrorMessage = "Formato de CPF/CNPJ inválido.")]
+        public string CPFCNPJ { get; set; }
+
+        [Required(ErrorMessage = "Inscrição Estadual obrigatória.")]
+        public string InscricaoEstadual { get; set; }
+
+        public bool ISS { get; set; }
+
+        [Required(ErrorMessage = "Nome da rua obrigatório.")]
+        public string Endereco { get; set; }
+
+        [Required(ErrorMessage = "Numero do endereço obrigatório.")]
+        public string NumeroEndereco { get; set; }
+
 		public string Complemento { get; set; }
-		public string Bairro { get; set; }
-		public string Cidade { get; set; }
-		public string Estado { get; set; }
-		public string CEP { get; set; }
+
+        [Required(ErrorMessage = "Bairro obrigatório.")]
+        public string Bairro { get; set; }
+
+        [Required(ErrorMessage = "Cidade obrigatório.")]
+        public string Cidade { get; set; }
+
+        [Required(ErrorMessage = "Estado obrigatório.")]
+        public string Estado { get; set; }
+
+        [Required(ErrorMessage = "CEP obrigatório.")]
+        [RegularExpression(@"[0-9]{5}-[0-9]{3}", ErrorMessage = "Formato de CEP inválido.")]
+        public string CEP { get; set; }
+
 		public string Observacoes { get; set; }
+
 		public string HomePage { get; set; }
 		
 
