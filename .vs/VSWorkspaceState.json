@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BHJet_Admin",
+    "\\BHJet_Admin\\Controllers",
+    "\\BHJet_Admin\\Views",
+    "\\BHJet_Admin\\Views\\Clientes"
   ],
-  "SelectedNode": "\\BHJet_WebApi",
+  "SelectedNode": "\\BHJet_Web.sln",
   "PreviewInSolutionExplorer": false
 }

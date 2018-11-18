@@ -44,7 +44,7 @@ namespace BHJet_Admin.Models.Motorista
         public string Cidade { get; set; }
 
         [Required(ErrorMessage = "Estado obrigatório.")]
-        [StringLength(2, ErrorMessage = "Preencher estado no formato: 'MG, SP, RJ'", MinimumLength = 2)]
+        //[StringLength(2, ErrorMessage = "Preencher estado no formato: 'MG, SP, RJ'", MinimumLength = 2)]
         public string UF { get; set; }
 
         public bool EnderecoPrincipal { get; set; }

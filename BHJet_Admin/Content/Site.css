@@ -15,31 +15,7 @@
     margin-top: 20px;
 }
 
-.cst-form1-Novo-Cliente {
-    padding: 15px;
-    border: 1px solid #222d32;
-    border-radius: 10px;
-}
 
-    /*.cst-form1-Novo-Cliente input {
-        height: 25px;
-        font-size: 12px;
-    }*/
-
-    .cst-form1-Novo-Cliente textarea {
-        font-size: 12px;
-    }
-
-#form1-Novo-cliente {
-    padding-left: 150px;
-    display: table;
-    width: 90%;
-}
-
-.formTab {
-    position: relative;
-    display: grid;
-}
 /*************************************END DIOGO***********************************/
 #footer {
     position: relative;
