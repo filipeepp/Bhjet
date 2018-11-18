@@ -7,18 +7,73 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<style type="text/css">
+	a {
+		text-decoration: none;
+		display: inline-block;
+		padding: 8px 16px;
+	}
+
+	a:hover {
+		background-color: #ddd;
+		color: black;
+	}
+
+	.previous {
+		background-color: #f1f1f1;
+		color: black;
+	}
+
+	.next {
+		background-color: #4CAF50;
+	}
+
+	.round {
+		border-radius: 50%;
+	}
+</style>
+
 <script type="text/javascript">
     $(function () {
-        $("#tabs").tabs();
+		$("#tabs").tabs({ disabled: [1, 2] });
 
+		$('#validate').click(function () {
+			$('form').valid()
+		});
+		
         $("#btnNovoContato").click(function () {
             $.get('@Url.Action("CarregarNovoContato")', {}, function (response) {
                 $("#divNovoContato").append(response);
             });
-        });
+		});
 
-    });
+	});
 
+	window.ProximaTab = function (tab1, tab2, tab3) {
+
+		if(tab1 && tab2)
+			$("#tabs").tabs({ disabled: [0, 1] });
+		else if (tab1 && tab3)
+			$("#tabs").tabs({ disabled: [0, 2] });
+		else if (tab2 && tab3)
+			$("#tabs").tabs({ disabled: [1, 2] });
+
+		var active = $("#tabs").tabs("option", "active");
+		$("#tabs").tabs("option", "active", active + 1);
+	}
+
+	window.AnteriorTab = function (tab1, tab2, tab3) {
+
+		if (tab1 && tab2)
+			$("#tabs").tabs({ disabled: [0, 1] });
+		else if (tab1 && tab3)
+			$("#tabs").tabs({ disabled: [0, 2] });
+		else if (tab2 && tab3)
+			$("#tabs").tabs({ disabled: [1, 2] });
+
+		var active = $("#tabs").tabs("option", "active");
+		$("#tabs").tabs("option", "active", active - 1);
+	}
 </script>
 
 <ol class="breadcrumb">
@@ -44,182 +99,212 @@
                         <div id="tabs" style="display: grid; position: relative">
                             @using (Html.BeginForm("NovoCliente", "Clientes", FormMethod.Post))
                             {
-                                <ul>
-                                    <li><a href="#tabs-1"><i class="fa fa-user" aria-hidden="true"></i>Dados cadastrais</a></li>
-                                    <li><a href="#tabs-2"><i class="fa fa-file-text-o" aria-hidden="true"></i>Contatos</a></li>
-                                    <li><a href="#tabs-3"><i class="fa fa-money" aria-hidden="true"></i>Valores</a></li>
-                                </ul>
+							<ul>
+								<li><a href="#tabs-1"><i class="fa fa-user" aria-hidden="true"></i>Dados cadastrais</a></li>
+								<li><a href="#tabs-2"><i class="fa fa-file-text-o" aria-hidden="true"></i>Contatos</a></li>
+								<li><a href="#tabs-3"><i class="fa fa-money" aria-hidden="true"></i>Valores</a></li>
+							</ul>
 
-                                <div id="tabs-1">
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-4 col-md-2">
-                                            <label for="txtCodigo">Código</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Codigo, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Codigo, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-12">
-                                            <label for="txtNome">Nome / Razão Social</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.NomeRazaoSocial, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-12">
-                                            <label for="txtNomeFantasia">Nome Fantasia</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.NomeFantasia, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.NomeFantasia, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-5 col-md-4">
-                                            <label for="txtCpfCnpj">CPF / CNPJ</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-5 col-md-6">
-                                            <label for="txtInscricaoEstadual">Insc. Estadual</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-2 col-md-2">
-                                            <div class="cst-ckb-Novo-Cliente">
-                                                <label for="ckbIss" class="label-cbx">
-                                                    <span>ISS</span>
-                                                    <input id="ckbIss" type="checkbox" name="ckbIss" class="invisible">
-                                                    <div class="checkbox">
-                                                        <svg width="20px" height="20px" viewBox="0 0 20 20">
-                                                            <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
-                                                            <polyline points="4 11 8 15 16 6"></polyline>
-                                                        </svg>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-5 col-md-7">
-                                            <label for="txtEndereco">Endereço</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-4 col-md-3">
-                                            <label for="txtComplemento">Complemento</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Complemento, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Complemento, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-3 col-md-2">
-                                            <label for="txtNumeroEndereco">Nº</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-6 col-md-6">
-                                            <label for="txtBairro">Bairro</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Bairro, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Bairro, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-6 col-md-6">
-                                            <label for="txtCidade">Cidade</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Cidade, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-6 col-md-6">
-                                            <label for="txtEstado">Estado</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.Estado, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Estado, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-6 col-md-6">
-                                            <label for="txtCep">CEP</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.CEP, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.CEP, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-12">
-                                            <label for="txaObservacoes">Observações</label>
-                                            @Html.TextAreaFor(model => model.DadosCadastrais.Observacoes, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.Observacoes, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-6">
-                                            <label for="txtHomePage">Home Page</label>
-                                            @Html.TextBoxFor(model => model.DadosCadastrais.HomePage, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.DadosCadastrais.HomePage, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="tabs-2">
-                                    @{
-                                        Html.RenderPartial("_Contato", Model);
-                                    }
-                                    <div id="divNovoContato"></div>
-                                    <div class="form-row">
-                                        <button id="btnNovoContato" name="btnNovoContato" class="btn btn-primary pull-right" type="button"><i class="fa fa-plus" aria-hidden="true"></i>Novo Contato</button>
-                                    </div>
-                                </div>
-                                <div id="tabs-3">
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-3">
-                                            <label for="rdbTipoTarifa_BHJet_Core_Enum_TipoTarifa">Tipo Tarifa</label>
-                                            <br />
-                                            @foreach (var tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
-                                            {
-                                                var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}", "rdbTipoTarifa", typeof(TipoTarifa), tipoEnum));
-                                                @Html.RadioButtonFor(s => s.Valor.TipoTarifa, tipoEnum, new { id, @class = "option-input radio" })
-                                                @Html.Label(tipoEnum.ToString())
-                                                <br />
-                                            }
-                                            @Html.ValidationMessageFor(model => model.Valor.TipoTarifa, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-2">
-                                            <label for="txtValorUnitario">Valor Unitário</label>
-                                            @Html.TextBoxFor(model => model.Valor.ValorUnitario, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Valor.ValorUnitario, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-3">
-                                            <label>Vigência</label>
-                                            <div class="input-group input-daterange">
-                                                @Html.TextBoxFor(model => model.Valor.VigenciaInicio, new { type = "text", @class = "form-control" })
-                                                <div class="input-group-addon">a</div>
-                                                @Html.TextBoxFor(model => model.Valor.VigenciaFim, new { type = "text", @class = "form-control" })
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Valor.VigenciaInicio, null, new { @class = "text-danger" })
-                                            @Html.ValidationMessageFor(model => model.Valor.VigenciaFim, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-12 col-md-2">
-                                            <label for="txtFranquia">Franquia Km/mês</label>
-                                            @Html.TextBoxFor(model => model.Valor.Franquia, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Valor.Franquia, null, new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-xs-12 col-md-2">
-                                            <label for="txtFranquiaAdicional">Franquia Adicional</label>
-                                            @Html.TextBoxFor(model => model.Valor.FranquiaAdicional, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Valor.FranquiaAdicional, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-xs-12 col-md-6">
-                                            <label for="txaObservacoesValor">Observações</label>
-                                            @Html.TextAreaFor(model => model.Valor.Observacao, new { type = "text", @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Valor.Observacao, null, new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                         <div class="form-group col-xs-12 col-md-12">
-                                             <button id="btnEnviar" name="btnEnviar" class="btn btn-primary pull-right btn-lg" type="submit" style="padding: 8px 30px !important;"><i class="fa fa-share-square"></i>Enviar</button>
-                                        </div>
-                                    </div>
-                                </div>
+							<div id="tabs-1">
+								<div class="form-row">
+									<div class="form-group col-xs-4 col-md-1">
+										<label for="txtCodigo">Código</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Codigo, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Codigo, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<label for="txtNome">Nome / Razão Social</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeRazaoSocial, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<label for="txtNomeFantasia">Nome Fantasia</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.NomeFantasia, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeFantasia, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-5 col-md-4">
+										<label for="txtCpfCnpj">CPF / CNPJ</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-5 col-md-6">
+										<label for="txtInscricaoEstadual">Insc. Estadual</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-2 col-md-2">
+										<div class="cst-ckb-Novo-Cliente">
+											<label for="ckbIss" class="label-cbx">
+												<span>ISS</span>
+												<input id="ckbIss" type="checkbox" name="ckbIss" class="invisible">
+												<div class="checkbox">
+													<svg width="20px" height="20px" viewBox="0 0 20 20">
+														<path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
+														<polyline points="4 11 8 15 16 6"></polyline>
+													</svg>
+												</div>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-5 col-md-7">
+										<label for="txtEndereco">Endereço</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-4 col-md-3">
+										<label for="txtComplemento">Complemento</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Complemento, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Complemento, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-3 col-md-2">
+										<label for="txtNumeroEndereco">Nº</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-6 col-md-6">
+										<label for="txtBairro">Bairro</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Bairro, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Bairro, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-6 col-md-6">
+										<label for="txtCidade">Cidade</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Cidade, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-6 col-md-6">
+										<label for="txtEstado">Estado</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.Estado, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Estado, null, new { @class = "text-danger" })
+									</div>
+									<div class="form-group col-xs-6 col-md-6">
+										<label for="txtCep">CEP</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.CEP, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.CEP, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<label for="txaObservacoes">Observações</label>
+										@Html.TextAreaFor(model => model.DadosCadastrais.Observacoes, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.Observacoes, null, new { @class = "text-danger" })
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-6">
+										<label for="txtHomePage">Home Page</label>
+										@Html.TextBoxFor(model => model.DadosCadastrais.HomePage, new { type = "text", @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.DadosCadastrais.HomePage, null, new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<input type="button" value="Create" id="validate" class="btn btn-default" />
+									</div>
+								</div>
+		
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<a onclick="ProximaTab(true,false,true)" style="color: white" class="pull-right next">Próximo »</a>
+									</div>
+								</div>
+
+							</div>
+							<div id="tabs-2">
+								@{
+									Html.RenderPartial("_Contato", Model);
+								}
+								<div id="divNovoContato"></div>
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<button id="btnNovoContato" name="btnNovoContato" class="btn btn-primary pull-right" type="button"><i class="fa fa-plus" aria-hidden="true"></i>Novo Contato</button>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-xs-12 col-md-12">
+										<a onclick="AnteriorTab(false,true,true)" style="color: white" class="pull-left next">« Anterior</a>
+										<a onclick="ProximaTab(true,true,false)" style="color: white" class="pull-right next">Próximo »</a>
+									</div>
+								</div>
+
+							</div>
+								<div id="tabs-3">
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-3">
+											<label for="txtTipoTarifa">Tipo Tarifa</label>
+											<br />
+											@foreach (var tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+											{
+												var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoTarifa), tipoEnum));
+												@Html.RadioButtonFor(s => s.Valor.TipoTarifa, tipoEnum, new { id, @class = "option-input radio" })
+												@Html.Label(tipoEnum.ToString(), new { @for = id })
+												<br />
+											}
+											@Html.ValidationMessageFor(model => model.Valor.TipoTarifa, null, new { @class = "text-danger" })
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-2">
+											<label for="Valor_ValorUnitario">Valor Unitário</label>
+											@Html.TextBoxFor(model => model.Valor.ValorUnitario, new { @class = "form-control" })
+											@Html.ValidationMessageFor(model => model.Valor.ValorUnitario, null, new { @class = "text-danger" })
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-3">
+											<label>Vigência</label>
+											<div class="input-group input-daterange">
+												@Html.TextBoxFor(model => model.Valor.VigenciaInicio, new { type = "text", @class = "form-control" })
+												<div class="input-group-addon">a</div>
+												@Html.TextBoxFor(model => model.Valor.VigenciaFim, new { type = "text", @class = "form-control" })
+											</div>
+											@Html.ValidationMessageFor(model => model.Valor.VigenciaInicio, null, new { @class = "text-danger" })
+											@Html.ValidationMessageFor(model => model.Valor.VigenciaFim, null, new { @class = "text-danger" })
+										</div>
+										<div class="form-group col-xs-12 col-md-2">
+											<label for="txtFranquia">Franquia Km/mês</label>
+											@Html.TextBoxFor(model => model.Valor.Franquia, new { type = "text", @class = "form-control" })
+											@Html.ValidationMessageFor(model => model.Valor.Franquia, null, new { @class = "text-danger" })
+										</div>
+										<div class="form-group col-xs-12 col-md-2">
+											<label for="txtFranquiaAdicional">Franquia Adicional</label>
+											@Html.TextBoxFor(model => model.Valor.FranquiaAdicional, new { type = "text", @class = "form-control" })
+											@Html.ValidationMessageFor(model => model.Valor.FranquiaAdicional, null, new { @class = "text-danger" })
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-6">
+											<label for="txaObservacoesValor">Observações</label>
+											@Html.TextAreaFor(model => model.Valor.Observacao, new { type = "text", @class = "form-control" })
+											@Html.ValidationMessageFor(model => model.Valor.Observacao, null, new { @class = "text-danger" })
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-12">
+											<button id="btnEnviar" name="btnEnviar" class="btn btn-primary pull-right btn-lg" type="submit" style="padding: 8px 30px !important;"><i class="fa fa-share-square"></i>Enviar</button>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-xs-12 col-md-12">
+											<a onclick="AnteriorTab(true, false, true)" style="color: white" class="pull-left next">« Anterior</a>
+										</div>
+									</div>
+
+								</div>
                             }
                         </div>
                     </div>
