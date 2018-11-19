@@ -13,7 +13,7 @@ namespace BHJet_Admin.Controllers
 
         public MotoristaController(IProfissionalServico _profissional)
         {
-            _profissional = profissionalServico;
+            profissionalServico = _profissional;
         }
 
         [ValidacaoUsuarioAttribute()]
@@ -28,6 +28,8 @@ namespace BHJet_Admin.Controllers
         {
             if (ID != null)
             {
+                ModelState.Clear();
+
                 // Tipo de Execução
                 ViewBag.TipoAlteracao = "Editar";
 

@@ -258,6 +258,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Contato.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GoogleMapsBHJet.js" />
@@ -272,6 +273,9 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\MenuAdmin.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\NovoCliente.js" />
+    <Content Include="Scripts\Utilitario.js" />
+    <Content Include="Scripts\ViaCep.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Views\Clientes\_Contato.cshtml" />
     <Content Include="Web.config" />

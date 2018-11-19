@@ -1,0 +1,53 @@
+﻿@using BHJet_Admin.Models.Clientes
+@model ClienteModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="panel panel-default" style="margin:30px">
+    <div class="panel-body">
+        <div class="titulo">
+            <h2>
+                <a onclick="history.go(-1);">
+                    <i class="fa fa-hashtag" aria-hidden="true"></i>
+                </a>
+                Contato
+            </h2>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-xs-6 col-md-4">
+                <label for="txtContato">Contato</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().Contato, new { type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().Contato, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-xs-6 col-md-4">
+                <label for="txtEmail">E-mail</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().Email, new { type = "email", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().Email, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-xs-6 col-md-4">
+                <label for="txtTelefoneComercial">Tel. Comercial</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().TelefoneComercial, new { type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().TelefoneComercial, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-xs-6 col-md-4">
+                <label for="txtTelefoneCelular">Celular</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().TelefoneCelular, new { type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().TelefoneCelular, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-xs-6 col-md-4">
+                <label for="txtSetor">Setor</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().Setor, new { type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().Setor, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-xs-6 col-md-4">
+                <label>Aniversário</label>
+                @Html.TextBoxFor(model => model.Contato.FirstOrDefault().DataNascimento, new { type = "date", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Contato.FirstOrDefault().DataNascimento, null, new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
