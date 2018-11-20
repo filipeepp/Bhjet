@@ -28,7 +28,7 @@ namespace BHJet_Servico.Corrida
                     Realizar = "Pegar documento de transferência",
                     StatusCorrida = BHJet_Core.Enum.StatusCorrida.Concluida,
                     TempoEspera = new TimeSpan(0, 30, 0),
-                    Observacao = string.Empty
+                    Observacao = "Recebido por outra pessoa"
                 },
                 Destinos = new DetalheOSEnderecoModel[]
                  {

@@ -194,7 +194,7 @@
                                             @Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group col-xs-4 col-md-1">
+                                        <div class="form-group col-xs-4 col-md-2">
                                             <label for="txtNumeroEndereco">Nº</label>
                                             @Html.TextBoxFor(model => model.DadosCadastrais.NumeroEndereco, new { type = "text", @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.DadosCadastrais.NumeroEndereco, null, new { @class = "text-danger" })
@@ -216,7 +216,7 @@
                                             @Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { type = "text", @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.DadosCadastrais.Cidade, null, new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group col-xs-6 col-md-1">
+                                        <div class="form-group col-xs-6 col-md-2">
                                             <label for="txtEstado">Estado</label>
                                             @Html.DropDownListFor(s => s.DadosCadastrais.Estado, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.DadosCadastrais.Estado, null, new { @class = "text-danger" })

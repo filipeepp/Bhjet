@@ -51,18 +51,21 @@
                                     <label class="control-label labelValor">@Model.Origem.Realizar</label>
                                 </div>
 
-                                @if (!string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
-                                {
-                                    <div class="col-xs-12 col-md-12">
-                                        <label class="control-label labelChave bg-light-gray">Status:</label>
-                                        <label class="control-label labelValor">@Model.Origem.Observacao</label>
-                                    </div>
-                                }
+                                <div class="col-xs-12 col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Status:</label>
+                                    <label class="control-label labelValor">@Model.Origem.Status</label>
+                                </div>
+
+                                <div class="col-xs-12 col-md-12">
+                                    <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                    <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                </div>
 
                                 <div class="col-xs-12 col-md-12">
                                     <label class="control-label labelChave bg-light-gray">Espera:</label>
                                     <label class="control-label labelValor">@Model.Origem.Espera</label>
                                 </div>
+
                                 <div class="col-xs-12 col-md-12">
                                     <label class="control-label labelChave bg-light-gray">Foto Registro:</label>
                                     <label class="control-label labelValor"><i class="fa fa-camera" aria-hidden="true"> Clique aqui</i></label>
@@ -99,13 +102,15 @@
                                         <label class="control-label labelValor">@dest.Realizar</label>
                                     </div>
 
-                                    @if (!string.IsNullOrWhiteSpace(@dest.Observacao))
-                                    {
-                                        <div class="col-md-12">
-                                            <label class="control-label labelChave bg-light-gray">Status:</label>
-                                            <label class="control-label labelValor">@dest.Observacao</label>
-                                        </div>
-                                    }
+                                    <div class="col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Status:</label>
+                                        <label class="control-label labelValor">@dest.Status</label>
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                        <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                    </div>
 
                                     <div class="col-md-12">
                                         <label class="control-label labelChave bg-light-gray">Espera:</label>
