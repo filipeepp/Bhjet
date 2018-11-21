@@ -38,7 +38,9 @@ namespace BHJet_WebApi.Controllers
             return Ok(entidade.Select(pf => new LocalizacaoProfissionalModel()
             {
                 idColaboradorEmpresaSistema = pf.idColaboradorEmpresaSistema,
-                geoPosicao = $"{pf.vcLatitude};{pf.vcLongitude}"
+                geoPosicao = $"{pf.vcLatitude};{pf.vcLongitude}",
+                TipoColaborador = tipo,
+                NomeColaborador = pf.vcNomeCompleto
             }));
         }
 
@@ -62,7 +64,9 @@ namespace BHJet_WebApi.Controllers
             return Ok(new LocalizacaoProfissionalModel()
             {
                 idColaboradorEmpresaSistema = entidade.idColaboradorEmpresaSistema,
-                geoPosicao = $"{entidade.vcLatitude};{entidade.vcLongitude}"
+                geoPosicao = $"{entidade.vcLatitude};{entidade.vcLongitude}",
+                NomeColaborador = entidade.vcNomeCompleto,
+                TipoColaborador = (TipoProfissional)entidade.idTipoProfissional
             });
         }
 

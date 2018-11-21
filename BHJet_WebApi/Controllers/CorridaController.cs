@@ -42,17 +42,19 @@ namespace BHJet_WebApi.Controllers
                     Realizar = entidade.FirstOrDefault().Realizar,
                     StatusCorrida = entidade.FirstOrDefault().StatusCorrida,
                     TempoEspera = entidade.FirstOrDefault().TempoEspera,
-                    Observacao = entidade.FirstOrDefault().Observacao
+                    Observacao = entidade.FirstOrDefault().Observacao,
+                    CaminhoProtocolo = entidade.FirstOrDefault().CaminhoProtocolo
                 },
-                Destinos = entidade.Skip(1).Select(x => new DetalheOSEnderecoModel()
+                Destinos = entidade.Count() > 1 ? entidade.Skip(1).Select(x => new DetalheOSEnderecoModel()
                 {
                     EnderecoCompleto = x.EnderecoCompleto,
                     ProcurarPor = x.ProcurarPor,
                     Realizar = x.Realizar,
                     StatusCorrida = x.StatusCorrida,
                     TempoEspera = x.TempoEspera,
-                    Observacao = x.Observacao
-                }).ToArray()
+                    Observacao = x.Observacao,
+                    CaminhoProtocolo = x.CaminhoProtocolo
+                }).ToArray() : new DetalheOSEnderecoModel[] { }
             });
         }
 

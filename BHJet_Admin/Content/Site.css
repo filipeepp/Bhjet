@@ -18,15 +18,16 @@
 
 /*************************************END DIOGO***********************************/
 #footer {
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
-    height: 40px;
+    height: 30px;
     background: #e7e7e7;
-    padding: 13px;
+    padding: 8px;
     text-align: right;
     /* margin-left: 230px; */
     border-top: 1px solid #d0cdcd;
+    z-index: 850;
 }
 
 a {
@@ -129,6 +130,7 @@ input[type="radio"], input[type="checkbox"] {
     min-width: 400px;
     max-width: 400px;
     background-color: #d6c93d;
+    cursor:pointer;
 }
 
 .navbar-default {
@@ -244,6 +246,15 @@ input[type="radio"], input[type="checkbox"] {
     border-top: 1px solid #d2d6de;
 }
 
+.imgDetalhe {
+    visibility:hidden;
+}
+
+.popover {
+    max-width: 576px;
+    border: 5px solid rgba(226, 210, 18, 0.2);
+}
+
 .breadcrumb {
     background-color: #eeeeef;
 }
@@ -352,6 +363,8 @@ input[type="radio"], input[type="checkbox"] {
         box-shadow: 10px 10px 5px -6px rgba(0,0,0,0.75);
     }
 
+
+
 .box-title {
     display: block;
     margin: 0;
@@ -436,7 +449,7 @@ input[type="radio"], input[type="checkbox"] {
     .labelValor {
         padding: 5px;
         min-width: 220px;
-        max-width: unset; 
+        max-width: unset;
         background-color: #d6c93d;
     }
 
@@ -461,6 +474,10 @@ input[type="radio"], input[type="checkbox"] {
     .timeline > li > .fa, .timeline > li > .glyphicon, .timeline > li > .ion {
         left: 0 !important;
         z-index: 5;
+    }
+
+    .popover {
+        max-width: 376px;
     }
 }
 /* ---------------- */

@@ -73,6 +73,7 @@
     <Compile Include="Enum\TipoUsuario.cs" />
     <Compile Include="Enum\TipoVeiculo.cs" />
     <Compile Include="Enum\UF.cs" />
+    <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilitario\CriptografiaUtil.cs" />

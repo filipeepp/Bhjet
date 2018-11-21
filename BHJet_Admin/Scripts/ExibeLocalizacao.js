@@ -8,7 +8,8 @@
                 $(dados).each(function (i) {
                     var lat = dados[i].geoPosicao.split(';')[0]
                     var long = dados[i].geoPosicao.split(';')[1]
-                    FazMarcacao(lat, long, dados[i].psCorrida)
+                    var desc = dados[i].desc
+                    FazMarcacao(lat, long, dados[i].psCorrida, desc)
                 });
             }
         });

@@ -14,5 +14,6 @@ namespace BHJet_Repositorio.Admin.Entidade
         public StatusCorrida StatusCorrida { get; set; }
         public TimeSpan? TempoEspera { get; set; }
         public string Observacao { get; set; }
+        public byte[] CaminhoProtocolo { get; set; }
     }
 }

@@ -100,6 +100,8 @@ namespace BHJet_Servico.Dashboard
                 {
                      idColaboradorEmpresaSistema = 1,
                       geoPosicao = "-19.8157;-43.9542",
+                       NomeColaborador = "Filipe",
+                        TipoColaborador = tipo
                 }
             };
 
@@ -116,6 +118,8 @@ namespace BHJet_Servico.Dashboard
             {
                 idColaboradorEmpresaSistema = 1,
                 geoPosicao = "-19.8157;-43.9542",
+                NomeColaborador = "Diogo",
+                TipoColaborador = TipoProfissional.Motociclista
             };
 
             return this.Get<LocalizacaoProfissionalModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Profissional.GetLocalizacaoProfissional, idProfissional)}"));

@@ -15,9 +15,9 @@ namespace BHJet_Core.Enum
         EmRota = 5,
         [Display(Name = "Problemas no veículo")]
         ProblemasNoVeiculo = 6,
-        [Display(Name = "ClienteCancelou")]
+        [Display(Name = "Cliente Cancelou")]
         ClienteCancelou = 7,
-        [Display(Name = "PessoaAusente")]
+        [Display(Name = "Pessoa Ausente")]
         PessoaAusente = 8,
         [Display(Name = "Objeto não disponível")]
         ObjetoNaoDisponível = 9,
