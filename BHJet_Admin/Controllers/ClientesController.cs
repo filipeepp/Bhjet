@@ -2,6 +2,7 @@
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Clientes;
 using BHJet_Core.Enum;
+using BHJet_DTO.Cliente;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,25 +79,115 @@ namespace BHJet_Admin.Controllers
 
         }
 
+		public ActionResult NovoCliente()
+		{
+			return View(new BHJet_Admin.Models.Clientes.ClienteModel()
+			{
+				DadosCadastrais = new BHJet_Admin.Models.Clientes.DadosCadastraisModel() { },
+				Contato = new BHJet_Admin.Models.Clientes.ContatoModel[] { },
+				Valor = new BHJet_Admin.Models.Clientes.ValorModel[] { }
+			});
+		}
 
-        public ActionResult NovoCliente()
+
+		[HttpPost]
+        public ActionResult NovoCliente(ClienteModel model)
         {
-			return View( new ClienteModel()
-            {
-                DadosCadastrais = new DadosCadastraisModel() {},
-                Contato = new ContatoModel[] {},
-                Valor = new ValorModel() { }
-            });
-        }
+			var entidade = new ClienteDTO()
+			{
+				ID = model.ID,
+				DadosCadastrais = new BHJet_DTO.Cliente.DadosCadastraisModel()
+				{
+					Codigo = model.DadosCadastrais.Codigo,
+					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+					NomeFantasia = model.DadosCadastrais.NomeFantasia,
+					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+					ISS = model.DadosCadastrais.ISS,
+					Endereco = model.DadosCadastrais.Endereco,
+					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+					Complemento = model.DadosCadastrais.Complemento,
+					Bairro = model.DadosCadastrais.Bairro,
+					Cidade = model.DadosCadastrais.Cidade,
+					Estado = model.DadosCadastrais.Estado,
+					CEP = model.DadosCadastrais.CEP,
+					Observacoes = model.DadosCadastrais.Observacoes,
+					HomePage = model.DadosCadastrais.HomePage
+				},
+				Contato = model.Contato.Select(x => new BHJet_DTO.Cliente.ContatoModel(){
 
-        public ActionResult CarregarNovoContato()
+					Contato = x.Contato,
+					Email = x.Email,
+					TelefoneComercial = x.TelefoneComercial,
+					TelefoneCelular = x.TelefoneCelular,
+					Setor = x.Setor,
+					DataNascimento = x.DataNascimento
+
+				}).ToArray(),
+				Valor = model.Valor.Select(x => new BHJet_DTO.Cliente.ValorModel(){
+
+					ValorUnitario = x.ValorUnitario,
+					TipoTarifa = x.TipoTarifa,
+					VigenciaInicio = x.VigenciaInicio,
+					VigenciaFim = x.VigenciaFim,
+					Franquia = x.Franquia,
+					FranquiaAdicional = x.FranquiaAdicional,
+					Observacao = x.Observacao
+
+				}).ToArray()
+			};
+
+			return View(model);
+
+			/*    var entidade = new ProfissionalCompletoModel()
+            {
+                ID = model.ID,
+                NomeCompleto = model.NomeCompleto,
+                Email = model.Email,
+                CelularWpp = model.CelularWhatsapp,
+                CPF = model.CpfCnpj,
+                TelefoneResidencial = model.TelefoneResidencial,
+                TelefoneCelular = model.TelefoneCelular,
+                CNH = model.CNH,
+                ContratoCLT = model.TipoRegimeContratacao == BHJet_Core.Enum.RegimeContratacao.CLT ? true : false,
+                Observacao = model.Observacao,
+                TipoCNH = model.TipoCarteiraMotorista,
+                TipoRegime = model.TipoRegimeContratacao,
+                Cep = model.Cep,
+                Rua = model.Rua,
+                Bairro = model.Bairro,
+                Cidade = model.Cidade,
+                Complemento = model.Complemento,
+                EnderecoPrincipal = model.EnderecoPrincipal,
+                PontoReferencia = model.PontoReferencia,
+                RuaNumero = model.RuaNumero,
+                UF = model.UF,
+            };
+
+            // Alteração
+            if (model.EdicaoCadastro)
+                profissionalServico.AtualizaDadosProfissional(entidade); // Atualiza dados do profissional
+            else
+                profissionalServico.IncluirProfissional(entidade); // Atualiza dados do profissional
+
+            // Return
+            return View(model);
+        } */
+		}
+
+		public ActionResult CarregarNovoContato()
         {
             return PartialView("_Contato");
         }
 
-        /*public ActionResult NovoCliente(ClienteModel model)
+		/*public ActionResult NovoCliente(ClienteModel model)
         {
             return View(model);
         }*/
-    }
+
+		public ActionResult CarregarNovoValor()
+		{
+			return PartialView("_Valor");
+		}
+	}
 }
