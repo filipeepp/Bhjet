@@ -39,22 +39,22 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private IEnumerable<SelectListItem> _ListaClientes;
-        public IEnumerable<SelectListItem> ListaClientes
-        {
-            get
-            {
-                return _ListaClientes;
-            }
-            set
-            {
-                _ListaClientes = value;
-            }
-        }
+        //private IEnumerable<SelectListItem> _ListaClientes;
+        //public IEnumerable<SelectListItem> ListaClientes
+        //{
+        //    get
+        //    {
+        //        return _ListaClientes;
+        //    }
+        //    set
+        //    {
+        //        _ListaClientes = value;
+        //    }
+        //}
 
-        private long _ClienteSelecionado;
+        private string _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
-        public long ClienteSelecionado
+        public string ClienteSelecionado
         {
             get
             {
@@ -66,22 +66,22 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private IEnumerable<SelectListItem> _ListaProfissionais;
-        public IEnumerable<SelectListItem> ListaProfissionais
-        {
-            get
-            {
-                return _ListaProfissionais;
-            }
-            set
-            {
-                _ListaProfissionais = value;
-            }
-        }
+        //private IEnumerable<SelectListItem> _ListaProfissionais;
+        //public IEnumerable<SelectListItem> ListaProfissionais
+        //{
+        //    get
+        //    {
+        //        return _ListaProfissionais;
+        //    }
+        //    set
+        //    {
+        //        _ListaProfissionais = value;
+        //    }
+        //}
 
-        private long _ProfissionalSelecionado;
+        private string _ProfissionalSelecionado;
         [Required(ErrorMessage = "Profissional obrigatório.")]
-        public long ProfissionalSelecionado
+        public string ProfissionalSelecionado
         {
             get
             {

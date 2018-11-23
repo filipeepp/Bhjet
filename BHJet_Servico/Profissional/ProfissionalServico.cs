@@ -19,13 +19,27 @@ namespace BHJet_Servico.Profissional
         /// </summary>
         /// <returns>ResumoModel</returns>
         public IEnumerable<ProfissionalModel> BuscaProfissionais()
-        {
+       {
             return new List<ProfissionalModel>()
             {
                 new ProfissionalModel()
                 {
                      ID = 1,
                       NomeCompleto = "Fulano",
+                       TipoProfissional = BHJet_Core.Enum.TipoProfissional.Motociclista,
+                        TipoRegime = BHJet_Core.Enum.RegimeContratacao.CLT
+                },
+                new ProfissionalModel()
+                {
+                     ID = 1,
+                      NomeCompleto = "Jose da Silva",
+                       TipoProfissional = BHJet_Core.Enum.TipoProfissional.Motociclista,
+                        TipoRegime = BHJet_Core.Enum.RegimeContratacao.CLT
+                },
+                new ProfissionalModel()
+                {
+                     ID = 1,
+                      NomeCompleto = "Pedro",
                        TipoProfissional = BHJet_Core.Enum.TipoProfissional.Motociclista,
                         TipoRegime = BHJet_Core.Enum.RegimeContratacao.CLT
                 }

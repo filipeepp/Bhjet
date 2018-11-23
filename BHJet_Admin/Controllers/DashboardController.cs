@@ -5,6 +5,7 @@ using BHJet_Core.Enum;
 using BHJet_Core.Extension;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
+using BHJet_Servico.Profissional;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,11 +16,13 @@ namespace BHJet_Admin.Controllers
     {
         private readonly IResumoServico resumoServico;
         private readonly ICorridaServico corridaServico;
+        private readonly IProfissionalServico profissionalServico;
 
-        public DashboardController(IResumoServico _resumoServico, ICorridaServico _corridaServico)
+        public DashboardController(IResumoServico _resumoServico, ICorridaServico _corridaServico, IProfissionalServico _profServico)
         {
             resumoServico = _resumoServico;
             corridaServico = _corridaServico;
+            profissionalServico = _profServico;
         }
 
         [HttpGet]
@@ -186,6 +189,7 @@ namespace BHJet_Admin.Controllers
             });
         }
 
+        #region Diaria Avulsa
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa()
         {
@@ -194,22 +198,6 @@ namespace BHJet_Admin.Controllers
 
             return View(new DiariaModel()
             {
-                ListaClientes = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Cliente XPTO"
-                   }
-                 },
-                ListaProfissionais = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Profissional XPTO"
-                   }
-                 },
                 Observacao = null
             });
         }
@@ -223,27 +211,23 @@ namespace BHJet_Admin.Controllers
                 ViewBag.MsgCustomAlerta = "Sucesso";
                 return View(new DiariaModel()
                 {
-                    ListaClientes = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Cliente XPTO"
-                   }
-                 },
-                    ListaProfissionais = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Profissional XPTO"
-                   }
-                 },
                     Observacao = null
                 });
             }
 
             return RedirectToAction("CadastroDiariaAvulsa");
+        }
+        #endregion
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaProfissionais()
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaProfissionais();
+
+            // Return
+            return Json(entidade.Select(x => x.ID + " - " + x.NomeCompleto), JsonRequestBehavior.AllowGet);
         }
 
         private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)
@@ -252,4 +236,14 @@ namespace BHJet_Admin.Controllers
         }
 
     }
+
+
+    [Serializable]
+    public struct AutoCompleteProfissional
+    {
+        public string value { get; set; }
+        public string Matricula { get; set; }
+        public string Nome { get; set; }
+    }
+
 }
