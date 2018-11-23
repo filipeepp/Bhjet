@@ -311,6 +311,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Faturamento\DetalheFaturamento.cshtml" />
     <Content Include="Views\Faturamento\_DetalheCorrida.cshtml" />
+    <Content Include="Views\Clientes\_Valor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
