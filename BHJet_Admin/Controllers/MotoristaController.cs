@@ -124,7 +124,7 @@ namespace BHJet_Admin.Controllers
         public ActionResult Listar(string palavraChave)
         {
             // Busca Motoristas
-            var entidade = profissionalServico.BuscaProfissionais();
+            var entidade = profissionalServico.BuscaProfissionais("");
 
             // Return
             return View(new EditarMotoristaModel()

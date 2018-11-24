@@ -9,10 +9,10 @@ namespace BHJet_Admin.Models.Dashboard
 {
     public class DiariaModel
     {
-        private DateTime _PeriodoInicial;
+        private DateTime? _PeriodoInicial;
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Período inicial obrigatório.")]
-        public DateTime PeriodoInicial
+        public DateTime? PeriodoInicial
         {
             get
             {
@@ -24,10 +24,10 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private DateTime _PeriodoFinal;
+        private DateTime? _PeriodoFinal;
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Período final obrigatório.")]
-        public DateTime PeriodoFinal
+        public DateTime? PeriodoFinal
         {
             get
             {
@@ -52,6 +52,19 @@ namespace BHJet_Admin.Models.Dashboard
         //    }
         //}
 
+        private int? _IDClienteSelecionado;
+        public int? IDClienteSelecionado
+        {
+            get
+            {
+                return _IDClienteSelecionado;
+            }
+            set
+            {
+                _IDClienteSelecionado = value;
+            }
+        }
+
         private string _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
         public string ClienteSelecionado
@@ -63,6 +76,20 @@ namespace BHJet_Admin.Models.Dashboard
             set
             {
                 _ClienteSelecionado = value;
+            }
+        }
+
+        private int _TarifaCliente;
+        [Required(ErrorMessage = "Tarifa obrigatória.")]
+        public int TarifaCliente
+        {
+            get
+            {
+                return _TarifaCliente;
+            }
+            set
+            {
+                _TarifaCliente = value;
             }
         }
 
@@ -78,6 +105,20 @@ namespace BHJet_Admin.Models.Dashboard
         //        _ListaProfissionais = value;
         //    }
         //}
+
+        private int? _IDProfissionalSelecionado;
+        [Required(ErrorMessage = "Profissional obrigatório.")]
+        public int? IDProfissionalSelecionado
+        {
+            get
+            {
+                return _IDProfissionalSelecionado;
+            }
+            set
+            {
+                _IDProfissionalSelecionado = value;
+            }
+        }
 
         private string _ProfissionalSelecionado;
         [Required(ErrorMessage = "Profissional obrigatório.")]

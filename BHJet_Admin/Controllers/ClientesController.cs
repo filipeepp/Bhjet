@@ -96,45 +96,45 @@ namespace BHJet_Admin.Controllers
 			var entidade = new ClienteDTO()
 			{
 				ID = model.ID,
-				DadosCadastrais = new BHJet_DTO.Cliente.DadosCadastraisModel()
-				{
-					Codigo = model.DadosCadastrais.Codigo,
-					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
-					NomeFantasia = model.DadosCadastrais.NomeFantasia,
-					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
-					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-					ISS = model.DadosCadastrais.ISS,
-					Endereco = model.DadosCadastrais.Endereco,
-					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
-					Complemento = model.DadosCadastrais.Complemento,
-					Bairro = model.DadosCadastrais.Bairro,
-					Cidade = model.DadosCadastrais.Cidade,
-					Estado = model.DadosCadastrais.Estado,
-					CEP = model.DadosCadastrais.CEP,
-					Observacoes = model.DadosCadastrais.Observacoes,
-					HomePage = model.DadosCadastrais.HomePage
-				},
-				Contato = model.Contato.Select(x => new BHJet_DTO.Cliente.ContatoModel(){
+				//DadosCadastrais = new BHJet_DTO.Cliente.DadosCadastraisModel()
+				//{
+				//	Codigo = model.DadosCadastrais.Codigo,
+				//	NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+				//	NomeFantasia = model.DadosCadastrais.NomeFantasia,
+				//	CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+				//	InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+				//	ISS = model.DadosCadastrais.ISS,
+				//	Endereco = model.DadosCadastrais.Endereco,
+				//	NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+				//	Complemento = model.DadosCadastrais.Complemento,
+				//	Bairro = model.DadosCadastrais.Bairro,
+				//	Cidade = model.DadosCadastrais.Cidade,
+				//	Estado = model.DadosCadastrais.Estado,
+				//	CEP = model.DadosCadastrais.CEP,
+				//	Observacoes = model.DadosCadastrais.Observacoes,
+				//	HomePage = model.DadosCadastrais.HomePage
+				//},
+				//Contato = model.Contato.Select(x => new BHJet_DTO.Cliente.ContatoModel(){
 
-					Contato = x.Contato,
-					Email = x.Email,
-					TelefoneComercial = x.TelefoneComercial,
-					TelefoneCelular = x.TelefoneCelular,
-					Setor = x.Setor,
-					DataNascimento = x.DataNascimento
+				//	Contato = x.Contato,
+				//	Email = x.Email,
+				//	TelefoneComercial = x.TelefoneComercial,
+				//	TelefoneCelular = x.TelefoneCelular,
+				//	Setor = x.Setor,
+				//	DataNascimento = x.DataNascimento
 
-				}).ToArray(),
-				Valor = model.Valor.Select(x => new BHJet_DTO.Cliente.ValorModel(){
+				//}).ToArray(),
+				//Valor = model.Valor.Select(x => new BHJet_DTO.Cliente.ValorModel(){
 
-					ValorUnitario = x.ValorUnitario,
-					TipoTarifa = x.TipoTarifa,
-					VigenciaInicio = x.VigenciaInicio,
-					VigenciaFim = x.VigenciaFim,
-					Franquia = x.Franquia,
-					FranquiaAdicional = x.FranquiaAdicional,
-					Observacao = x.Observacao
+				//	ValorUnitario = x.ValorUnitario,
+				//	TipoTarifa = x.TipoTarifa,
+				//	VigenciaInicio = x.VigenciaInicio,
+				//	VigenciaFim = x.VigenciaFim,
+				//	Franquia = x.Franquia,
+				//	FranquiaAdicional = x.FranquiaAdicional,
+				//	Observacao = x.Observacao
 
-				}).ToArray()
+				//}).ToArray()
 			};
 
 			return View(model);

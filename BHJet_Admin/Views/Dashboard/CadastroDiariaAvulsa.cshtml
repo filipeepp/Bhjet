@@ -11,9 +11,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 
-
-
-
 <ol class="breadcrumb">
     <li><a href="@Url.Action("Index", "Home")">Home</a></li>
     <li><a href="#map_canvas"> Diária Avulsa </a></li>
@@ -41,14 +38,28 @@
 
                     @using (Html.BeginForm("CadastroDiariaAvulsa", "Dashboard", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
+                        <p class="bg-danger">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </p>
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione o cliente:</label>
                             <div class="col-sm-4">
-
-                                @Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente." })
+                                @Html.HiddenFor(model => model.IDClienteSelecionado)
+                                @Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente.", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email">Selecione a tirafa:</label>
+                            <div class="col-sm-4">
+
+                                @Html.DropDownListFor(model => model.TarifaCliente, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
+                                @Html.ValidationMessageFor(model => model.TarifaCliente, null, new { @class = "text-danger" })
 
                             </div>
                         </div>
@@ -68,17 +79,17 @@
                             </div>*@
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5">Data vigência início:</label>
+                            <label class="control-label col-sm-5">Data hora inicio do expediente:</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.PeriodoInicial, new { type = "date", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.PeriodoInicial, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoInicial, null, new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5">Data vigência fim</label>
+                            <label class="control-label col-sm-5">Data hora fim do expediente</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.PeriodoFinal, new { type = "date", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.PeriodoFinal, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoFinal, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -86,10 +97,11 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione um profissional:</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional." })
+                                @Html.HiddenFor(model => model.IDProfissionalSelecionado)
+                                @Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional.", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
-                                @*@Html.DropDownListFor(m => m.ProfissionalSelecionado, Model.ListaProfissionais,
-                                    "Lista de motociclistas ou motoristas", new { @class = "form-control" })*@
+
+                                @*@Html.DropDownListFor(m => m.ProfissionalSelecionado, Model.ListaProfissionais, "Lista de motociclistas ou motoristas", new { @class = "form-control" })*@
                             </div>
                         </div>
 
@@ -118,9 +130,14 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-md-12 text-center">
-                                <button type="submit" class="btn btn-default" value="Pesquisar">
+                                <button id="incluirDiaria" type="submit" class="btn btn-default" value="Pesquisar">
                                     <i class="fa fa-share"></i>Agendar Diária
                                 </button>
+
+                                @if (!string.IsNullOrWhiteSpace(ViewBag.MsgCustomAlerta))
+                                {
+                                   <p class="bg-success">@ViewBag.MsgCustomAlerta</p>
+                                }
                             </div>
                         </div>
                     }
@@ -131,11 +148,3 @@
 </div>
 
 <script src="~/Scripts/CadastroDiariaAvulsa.js"></script>
-<script>
-    $(document).ready(function () {
-
-        $("#ValorDiaria").mask('000.000.000.000.000,00', { reverse: true });
-        $("#ValorComissao").mask('000.000.000.000.000,00', { reverse: true });
-
-    });
-</script>

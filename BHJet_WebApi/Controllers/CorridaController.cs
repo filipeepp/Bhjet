@@ -10,7 +10,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Corrida")]
+    [RoutePrefix("Corrida")]
     public class CorridaController : ApiController
     {
         /// <summary>

@@ -192,6 +192,7 @@
     </Compile>
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
+    <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\Clientes\ClienteModel.cs" />
     <Compile Include="Models\Clientes\DadosCadastraisModel.cs" />
     <Compile Include="Models\Clientes\ContatoModel.cs" />

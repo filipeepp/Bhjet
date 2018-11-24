@@ -62,7 +62,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public IEnumerable<ProfissionalEntidade> BuscaProfissionais()
+        public IEnumerable<ProfissionalEntidade> BuscaProfissionais(string trecho)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -74,10 +74,16 @@ namespace BHJet_Repositorio.Admin
                                    WHEN  0 THEN 'CLT'
                                    WHEN 1 THEN 'MEI' END as TipoContrato
 										from tblColaboradoresEmpresaSistema as PRO
-    							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)";
+    							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
+                                     where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like {0}
+									       or
+									       PRO.vcNomeCompleto like {0}";
 
                 // Execução
-                return sqlConnection.Query<ProfissionalEntidade>(query);
+                return sqlConnection.Query<ProfissionalEntidade>(query, new
+                {
+                    valorPesquisa = "%" + trecho + "%",
+                });
             }
         }
 
@@ -222,7 +228,7 @@ namespace BHJet_Repositorio.Admin
                                            ,@EnderecoPrincipal)
                                            select @@identity;";
                         // Execute
-                        var idEndereco = trans.Connection.QueryFirstOrDefault<int?>(query, new
+                        var idEndereco = trans.Connection.ExecuteScalar<int?>(query, new
                         {
                             Rua = profissional.Rua,
                             RuaNumero = profissional.RuaNumero,
@@ -233,7 +239,7 @@ namespace BHJet_Repositorio.Admin
                             Cep = profissional.Cep,
                             PontoReferencia = profissional.PontoReferencia,
                             EnderecoPrincipal = profissional.EnderecoPrincipal
-                        });
+                        }, trans);
 
 
                         // Update tblColaboradoresEmpresaSistema
@@ -281,7 +287,7 @@ namespace BHJet_Repositorio.Admin
                             CLT = profissional.ContratoCLT,
                             Observacao = profissional.Observacao,
                             Email = profissional.Email
-                        });
+                        }, trans);
 
                         // Commit
                         trans.Commit();

@@ -57,3 +57,24 @@ function alteraMenu() {
     });
 
 }
+
+
+function AdicionarErroCampo(idField, message, tempoAtivo) {
+    var para = document.createElement("p");
+    var node = document.createTextNode(message);
+    para.appendChild(node);
+    para.id = "msgDigitacao";
+    para.style.position = 'relative';
+    para.style.fontSize = '12px';
+    para.style.color = '#c33939';
+    para.style.display = 'inline';
+    if ($("#" + idField) != undefined) {
+        $("#" + idField).after(para);
+    }
+    var removeAfter = tempoAtivo;
+    (function (removeAfter) {
+        setTimeout(function () {
+            $("#" + idField).next().remove();
+        }, removeAfter);
+    })(removeAfter)
+}

@@ -11,24 +11,39 @@
 
         public class Dashboard
         {
-            public const string GetResumo = "/api/Dashboard/resumo";
-            public const string GetResumoChamadosSit = "/api/Dashboard/resumo/chamado";
-            public const string GetResumoAtendimentosCategoria = "/api/Dashboard/resumo/atendimento";
+            public const string GetResumo = "/Dashboard/resumo";
+            public const string GetResumoChamadosSit = "/Dashboard/resumo/chamado";
+            public const string GetResumoAtendimentosCategoria = "/Dashboard/resumo/atendimento";
         }
 
         public class Corrida
         {
-            public const string GetDetalheCorridas = "/api/Corrida/{0}/";
-            public const string GetLocalizacaoCorridas = "/api/Corrida/status/{0}/profissional/{1}/localizacao";
+            public const string GetDetalheCorridas = "/Corrida/{0}/";
+            public const string GetLocalizacaoCorridas = "/Corrida/status/{0}/profissional/{1}/localizacao";
+        }
+
+        public class Diaria
+        {
+            public const string PostDiaria = "/Diaria/";
+        }
+
+        public class Cliente
+        {
+            public const string GetClientes = "/Cliente/";
+        }
+
+        public class Tarifa
+        {
+            public const string GetTarifaCliente = "/Tarifa/cliente/{0}";
         }
 
         public class Profissional
         {
-            public const string PutProfissional = "/api/Profissional/{0}";
-            public const string GetProfissional = "/api/Profissional/{0}";
-            public const string GetProfissionais = "/api/Profissional";
-            public const string GetLocalizacoesProfissionais = "/api/Profissional/profissional/tipo/{0}/localizacao";
-            public const string GetLocalizacaoProfissional = "/api/Profissional/profissional/{0}/localizacao";
+            public const string PutProfissional = "/Profissional/{0}";
+            public const string GetProfissional = "/Profissional/{0}";
+            public const string GetProfissionais = "/Profissional";
+            public const string GetLocalizacoesProfissionais = "/Profissional/profissional/tipo/{0}/localizacao";
+            public const string GetLocalizacaoProfissional = "/Profissional/profissional/{0}/localizacao";
         }
     }
 }

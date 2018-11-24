@@ -7,7 +7,9 @@ namespace BHJet_Repositorio
     {
         public SqlConnection InstanciaConexao()
         {
-            return new SqlConnection(ConfigurationManager.ConnectionStrings["DbBHJetCourier"].ToString());
+            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["DbBHJetCourier"].ToString());
+            con.Open();
+            return con;
         }
     }
 }

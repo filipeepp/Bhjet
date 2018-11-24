@@ -10,7 +10,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Profissional")]
+    [RoutePrefix("Profissional")]
     public class ProfissionalController : ApiController
     {
         /// <summary>
@@ -77,10 +77,10 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ProfissionalModel>))]
-        public IHttpActionResult GetListaProfissionais()
+        public IHttpActionResult GetListaProfissionais([FromUri]string trecho = "")
         {
             // Busca Dados resumidos
-            var entidade = new ProfissionalRepositorio().BuscaProfissionais();
+            var entidade = new ProfissionalRepositorio().BuscaProfissionais(trecho);
 
             // Validacao
             if (entidade == null)
