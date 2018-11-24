@@ -8,12 +8,12 @@ namespace BHJet_DTO.Cliente
 	public class ClienteDTO
 	{
 		public int? ID { get; set; }
-		public DadosCadastraisModel DadosCadastrais { get; set; }
-		public IEnumerable<ContatoModel> Contato { get; set; }
-		public IEnumerable<ValorModel> Valor { get; set; }
+		public ClienteDadosCadastraisDTO DadosCadastrais { get; set; }
+		public IEnumerable<ClienteContatoDTO> Contato { get; set; }
+		public IEnumerable<ClienteValorDTO> Valor { get; set; }
 	}
 
-	public class DadosCadastraisModel
+	public class ClienteDadosCadastraisDTO
 	{
 		public int Codigo { get; set; }
 		public string NomeRazaoSocial { get; set; }
@@ -33,7 +33,7 @@ namespace BHJet_DTO.Cliente
 
 	}
 
-	public class ContatoModel
+	public class ClienteContatoDTO
 	{
 
 		public string Contato { get; set; }
@@ -44,7 +44,7 @@ namespace BHJet_DTO.Cliente
 		public DateTime DataNascimento { get; set; }
 	}
 
-	public class ValorModel
+	public class ClienteValorDTO
 	{
 		public string ValorUnitario { get; set; }
 		public TipoTarifa TipoTarifa { get; set; }

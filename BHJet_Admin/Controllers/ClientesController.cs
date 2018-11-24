@@ -81,11 +81,17 @@ namespace BHJet_Admin.Controllers
 
 		public ActionResult NovoCliente()
 		{
-			return View(new BHJet_Admin.Models.Clientes.ClienteModel()
+			return View(new ClienteModel()
 			{
-				DadosCadastrais = new BHJet_Admin.Models.Clientes.DadosCadastraisModel() { },
-				Contato = new BHJet_Admin.Models.Clientes.ContatoModel[] { },
-				Valor = new BHJet_Admin.Models.Clientes.ValorModel[] { }
+				DadosCadastrais = new DadosCadastraisModel() { },
+				Contato = new ContatoModel[]
+                {
+                    new ContatoModel(){}
+                },
+				Valor = new ValorModel[]
+                {
+                    new ValorModel(){}
+                }
 			});
 		}
 
@@ -96,7 +102,7 @@ namespace BHJet_Admin.Controllers
 			var entidade = new ClienteDTO()
 			{
 				ID = model.ID,
-				DadosCadastrais = new BHJet_DTO.Cliente.DadosCadastraisModel()
+				DadosCadastrais = new ClienteDadosCadastraisDTO()
 				{
 					Codigo = model.DadosCadastrais.Codigo,
 					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
@@ -114,7 +120,7 @@ namespace BHJet_Admin.Controllers
 					Observacoes = model.DadosCadastrais.Observacoes,
 					HomePage = model.DadosCadastrais.HomePage
 				},
-				Contato = model.Contato.Select(x => new BHJet_DTO.Cliente.ContatoModel(){
+				Contato = model.Contato.Select(x => new ClienteContatoDTO(){
 
 					Contato = x.Contato,
 					Email = x.Email,
@@ -124,7 +130,7 @@ namespace BHJet_Admin.Controllers
 					DataNascimento = x.DataNascimento
 
 				}).ToArray(),
-				Valor = model.Valor.Select(x => new BHJet_DTO.Cliente.ValorModel(){
+				Valor = model.Valor.Select(x => new ClienteValorDTO(){
 
 					ValorUnitario = x.ValorUnitario,
 					TipoTarifa = x.TipoTarifa,
@@ -177,7 +183,11 @@ namespace BHJet_Admin.Controllers
 
 		public ActionResult CarregarNovoContato()
         {
-            return PartialView("_Contato");
+            var model = new ContatoModel[]
+            {
+                new ContatoModel(){ }
+            };
+            return PartialView("_Contato", model);
         }
 
 		/*public ActionResult NovoCliente(ClienteModel model)
@@ -187,7 +197,11 @@ namespace BHJet_Admin.Controllers
 
 		public ActionResult CarregarNovoValor()
 		{
-			return PartialView("_Valor");
+            var model = new ValorModel[]
+           {
+                new ValorModel(){ }
+           };
+            return PartialView("_Valor", model);
 		}
 	}
 }

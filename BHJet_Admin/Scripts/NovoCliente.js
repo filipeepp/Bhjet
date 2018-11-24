@@ -33,15 +33,15 @@
     $("#TelefoneCelular").mask("(00) 0000-00009");
 
     /*VALOR*/
-    $("#Valor_ValorUnitario").maskMoney({
+    $("#ValorUnitario").maskMoney({
         prefix: "R$:",
         decimal: ",",
         thousands: "."
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
-	$("#Valor_VigenciaInicio").mask("99/99/9999");
-	$("#Valor_VigenciaFim").mask("99/99/9999");
+    $("#VigenciaInicio").mask("99/99/9999");
+    $("#VigenciaFim").mask("99/99/9999");
 
     
 });
