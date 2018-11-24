@@ -13,7 +13,7 @@
 <script src="@Url.Content("~/Scripts/NovoCliente.js")"></script>
 
 <style type="text/css">
-    input, select {
+    input, select, textarea {
         font-size: 14px !important;
     }
 
@@ -45,14 +45,14 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#btnNovoContato").click(function () {
-			$.get('@Url.Action("CarregarNovoContato")', {}, function (response) {
+        $("#btnNovoContato").click(function () {
+            $.get('@Url.Action("CarregarNovoContato")', { }, function (response) {
 				$("#divNovoContato").append(response);
 			});
 		});
 
 		$("#btnNovoValor").click(function () {
-			$.get('@Url.Action("CarregarNovoValor")', {}, function (response) {
+			$.get('@Url.Action("CarregarNovoValor", Model.Valor)', {}, function (response) {
 				$("#divNovoValor").append(response);
 			});
 		});
@@ -229,7 +229,7 @@
 								</div>
 								<div id="tabs-2">
 									@{
-										Html.RenderPartial("_Contato", Model);
+										Html.RenderPartial("_Contato", Model.Contato);
 									}
 									<div id="divNovoContato"></div>
 									<div class="form-row">
@@ -246,30 +246,31 @@
 									</div>
 
 								</div>
-								<div id="tabs-3">
-									@{
-										Html.RenderPartial("_Valor", Model);
-									}
-									<div id="divNovoValor"></div>
-									<div class="form-row">
-										<div class="form-group col-xs-12 col-md-12">
-											<button id="btnNovoValor" name="btnNovoValor" class="btn btn-primary pull-right" type="button"><i class="fa fa-plus" aria-hidden="true"></i>Novo Valor</button>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-12 col-md-12 text-center">
-											<button type="submit" class="btn btn-default" value="Pesquisar">
-												<i class="fa fa-share"></i>Confirmar Solicitação
-											</button>
-										</div>
-									</div>
+                                <div id="tabs-3">
+                                    @{
+                                        Html.RenderPartial("_Valor", Model.Valor);
+                                    }
 
-									<div class="form-row">
-										<div class="form-group col-xs-12 col-md-12">
-											<a onclick="AnteriorTab(true, false, true)" style="color: white" class="pull-left next">« Anterior</a>
-										</div>
-									</div>
-								</div>
+                                    <div id="divNovoValor"></div>
+                                    <div class="form-row">
+                                        <div class="form-group col-xs-12 col-md-12">
+                                            <button id="btnNovoValor" name="btnNovoValor" class="btn btn-primary pull-right" type="button"><i class="fa fa-plus" aria-hidden="true"></i>Novo Valor</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12 text-center">
+                                            <button type="submit" class="btn btn-default" value="Enviar">
+                                                <i class="fa fa-share"></i>Confirmar Solicitação
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-xs-12 col-md-12">
+                                            <a onclick="AnteriorTab(true, false, true)" style="color: white" class="pull-left next">« Anterior</a>
+                                        </div>
+                                    </div>
+                                </div>
 							}
 						</div>
                     </div>
