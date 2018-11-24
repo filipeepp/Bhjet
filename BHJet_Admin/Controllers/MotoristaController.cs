@@ -13,7 +13,7 @@ namespace BHJet_Admin.Controllers
 
         public MotoristaController(IProfissionalServico _profissional)
         {
-            _profissional = profissionalServico;
+            profissionalServico = _profissional;
         }
 
         [ValidacaoUsuarioAttribute()]
@@ -28,6 +28,8 @@ namespace BHJet_Admin.Controllers
         {
             if (ID != null)
             {
+                ModelState.Clear();
+
                 // Tipo de Execução
                 ViewBag.TipoAlteracao = "Editar";
 
@@ -123,19 +125,6 @@ namespace BHJet_Admin.Controllers
         {
             // Busca Motoristas
             var entidade = profissionalServico.BuscaProfissionais();
-
-            return View(new EditarMotoristaModel()
-            {
-                MotoristaSelecionado = null,
-                ListaMotorista = new MotoristaSimplesModel[]
-                {
-                    new MotoristaSimplesModel()
-                    {
-                         NomeCompleto = "leo"
-                    }
-
-                }
-            });
 
             // Return
             return View(new EditarMotoristaModel()

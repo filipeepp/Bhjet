@@ -53,13 +53,37 @@
 
                                 <div class="col-xs-12 col-md-12">
                                     <label class="control-label labelChave bg-light-gray">Status:</label>
-                                    <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                    <label class="control-label labelValor">@Model.Origem.Status</label>
                                 </div>
 
-                                <div class="col-xs-12 col-md-12">
-                                    <label class="control-label labelChave bg-light-gray">Espera:</label>
-                                    <label class="control-label labelValor">@Model.Origem.Espera</label>
-                                </div>
+                                @if (string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
+                                {
+                                    <div class="col-xs-12 col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                        <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                    </div>
+                                }
+
+                                @if (@Model.Origem.Espera != null)
+                                {
+                                    <div class="col-xs-12 col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                        <label class="control-label labelValor">@Model.Origem.Espera</label>
+                                    </div>
+                                }
+
+                                @if (@Model.Origem.Foto.Length > 0)
+                                {
+                                    var base64 = Convert.ToBase64String(@Model.Origem.Foto);
+                                    var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
+
+                                    <div class="col-xs-12 col-md-12">
+                                        <label class="control-label labelChave bg-light-gray">Foto Registro:</label>
+                                        <label class="control-label labelValor" rel="popover" data-img="@imgSrc">
+                                            <i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
+                                        </label>
+                                    </div>
+                                }
                             </div>
                         </li>
                     </ul>
@@ -94,13 +118,37 @@
 
                                     <div class="col-md-12">
                                         <label class="control-label labelChave bg-light-gray">Status:</label>
-                                        <label class="control-label labelValor">@dest.Observacao</label>
+                                        <label class="control-label labelValor">@dest.Status</label>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <label class="control-label labelChave bg-light-gray">Espera:</label>
-                                        <label class="control-label labelValor">@dest.Espera</label>
-                                    </div>
+                                    @if (string.IsNullOrWhiteSpace(@dest.Observacao))
+                                    {
+                                        <div class="col-xs-12 col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                            <label class="control-label labelValor">@dest.Observacao</label>
+                                        </div>
+                                    }
+
+                                    @if (@dest.Espera != null)
+                                    {
+                                        <div class="col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                            <label class="control-label labelValor">@dest.Espera</label>
+                                        </div>
+                                    }
+
+                                    @if (@dest.Foto.Length > 0)
+                                    {
+                                        var base64 = Convert.ToBase64String(@dest.Foto);
+                                        var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
+
+                                        <div class="col-xs-12 col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Foto Registro:</label>
+                                            <label class="control-label labelValor" rel="popover" data-img="@imgSrc">
+                                                <i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
+                                            </label>
+                                        </div>
+                                    }
 
                                 </div>
                             </li>
@@ -112,3 +160,7 @@
         </div>
     </div>
 </div>
+
+
+
+<script src="~/Scripts/OSCliente.js"></script>

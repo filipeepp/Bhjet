@@ -20,5 +20,6 @@ namespace BHJet_DTO.Corrida
         public string Observacao { get; set; }
         public StatusCorrida StatusCorrida { get; set; }
         public TimeSpan? TempoEspera { get; set; }
+        public byte[] CaminhoProtocolo { get; set; }
     }
 }

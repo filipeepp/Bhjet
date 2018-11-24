@@ -115,7 +115,7 @@
                     </div>
                     <br class="hidden-sm" />
                     <div class="row">
-                        <div class=" col-md-3 col-lg-1">
+                        <div class=" col-md-3 col-lg-2">
                             <label for="txtNomeFantasia">CEP</label>
                             @Html.TextBoxFor(model => model.Cep, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Cep, null, new { @class = "text-danger" })
@@ -125,7 +125,7 @@
                             @Html.TextBoxFor(model => model.Rua, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Rua, null, new { @class = "text-danger" })
                         </div>
-                        <div class=" col-md-2 col-lg-1">
+                        <div class=" col-md-2 col-lg-2">
                             <label for="txtNomeFantasia">Número</label>
                             @Html.TextBoxFor(model => model.RuaNumero, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.RuaNumero, null, new { @class = "text-danger" })
@@ -144,7 +144,7 @@
                             @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Cidade, null, new { @class = "text-danger" })
                         </div>
-                        <div class=" col-md-1 col-lg-1">
+                        <div class=" col-md-1 col-lg-2">
                             <label for="txtNomeFantasia">UF</label>
                             @Html.DropDownListFor(model => model.UF, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.UF, null, new { @class = "text-danger" })

@@ -51,12 +51,14 @@ namespace BHJet_Repositorio.Admin
 		                            EC.vcPessoaContato as ProcurarPor,
 		                            LGCD.idStatusCorrida as StatusCorrida,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
-                                    EC.vcObservacao AS Observacao
+                                    EC.vcObservacao AS Observacao,
+                                    PT.vcCaminhoProtocolo as CaminhoProtocolo
 							    from tblCorridas CD
 								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
-								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
-								    join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
+								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+								    left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
+                                    left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
 						        where LGCD.idCorrida = @id";
 
                 // Execução

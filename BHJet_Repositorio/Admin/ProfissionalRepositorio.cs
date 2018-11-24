@@ -19,10 +19,11 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblColaboradoresEmpresaDisponiveis
-					                where bitDisponivel = 0 and
-					                     geoPosicao is not null and
-						                 idTipoProfissional = @TipoProfissional";
+                string query = @"select * from tblColaboradoresEmpresaDisponiveis CED
+                                        join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
+					                where CED.bitDisponivel = 0 and
+					                     CED.geoPosicao is not null and
+						                 CED.idTipoProfissional = @TipoProfissional";
 
                 // Execução
                 return sqlConnection.Query<ProfissionalDisponivelEntidade>(query, new
@@ -42,10 +43,11 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblColaboradoresEmpresaDisponiveis
-					                where bitDisponivel = 0 and
-					                     geoPosicao is not null and
-						                 idColaboradorEmpresaSistema = @id";
+                string query = @"select * from tblColaboradoresEmpresaDisponiveis CED
+                                        join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
+					                where CED.bitDisponivel = 0 and
+					                     CED.geoPosicao is not null and
+						                 CED.idColaboradorEmpresaSistema = @id";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<ProfissionalDisponivelEntidade>(query, new

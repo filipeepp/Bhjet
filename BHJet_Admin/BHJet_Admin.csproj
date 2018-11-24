@@ -201,6 +201,7 @@
     <Compile Include="Models\Dashboard\ExibeLocalizacaoModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
+    <Compile Include="Models\Faturamento\DetalheFaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoNormal.cs" />
@@ -257,6 +258,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Contato.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GoogleMapsBHJet.js" />
@@ -272,6 +274,8 @@
     <Content Include="Scripts\MenuAdmin.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NovoCliente.js" />
+    <Content Include="Scripts\OSCliente.js" />
+    <Content Include="Scripts\Utilitario.js" />
     <Content Include="Scripts\ViaCep.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Views\Clientes\_Contato.cshtml" />
@@ -297,13 +301,16 @@
     <Content Include="Views\Faturamento\FaturamentoNormal.cshtml" />
     <Content Include="Views\Faturamento\GerarFaturamento.cshtml" />
     <Content Include="Views\Faturamento\Index.cshtml" />
-    <Content Include="Views\Faturamento\_DetalheFaturamento.cshtml" />
+    <Content Include="Views\Faturamento\_ListaFaturamento.cshtml" />
     <Content Include="Views\Clientes\NovoCliente.cshtml" />
     <Content Include="Views\Motorista\Index.cshtml" />
     <Content Include="Views\Motorista\Novo.cshtml" />
     <Content Include="Views\Motorista\_DetalheMotorista.cshtml" />
     <Content Include="Views\Motorista\Listar.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Faturamento\DetalheFaturamento.cshtml" />
+    <Content Include="Views\Faturamento\_DetalheCorrida.cshtml" />
+    <Content Include="Views\Clientes\_Valor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,7 +20,7 @@ function carregaMapa() {
     map.setCenter(new google.maps.LatLng(-19.878946, -43.933877));
 }
 
-function FazMarcacao(lat, long, bcarro) {
+function FazMarcacao(lat, long, bcarro, bdesc) {
 
     var latlong = lat + "," + long;//colocando na conficuracao necessaria (lat,long)
     var myLatLgn = new google.maps.LatLng(lat, long);
@@ -41,7 +41,7 @@ function FazMarcacao(lat, long, bcarro) {
 
     marker.addListener('click', function () {
         var infowindow = new google.maps.InfoWindow();
-        infowindow.setContent("<b>BH Jet Express.</b>");
+        infowindow.setContent("-----------------------</br><b>BH Jet Express</b></br>-----------------------</br>" + bdesc);
         infowindow.open(map, marker);
     });
 

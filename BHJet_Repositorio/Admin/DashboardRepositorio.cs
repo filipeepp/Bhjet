@@ -1,6 +1,7 @@
 ﻿using BHJet_Core.Enum;
 using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BHJet_Repositorio.Admin
@@ -47,6 +48,52 @@ namespace BHJet_Repositorio.Admin
                         MotoristasDisponiveis = motoristasAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motorista) ?? 0
                     };
                 }
+            }
+        }
+
+        /// <summary>
+        /// Busca Resumo de chamados concluidos e advertentes
+        /// </summary>
+        /// <param name="filtro">ValidaUsuarioFiltro</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<ResumoChamados> BuscaResumoChamados()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select LGCD.idStatusCorrida as Status, 
+					count(CD.idCorrida) as Quantidade,
+					CD.dtDataHoraRegistroCorrida as DataRegistro
+							 from tblCorridas CD
+								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+									where LGCD.idStatusCorrida in (11, 7, 8, 9, 10)
+										group by CD.dtDataHoraRegistroCorrida,
+												 LGCD.idStatusCorrida";
+
+                return sqlConnection.Query<ResumoChamados>(query);
+            }
+        }
+
+        /// <summary>
+        /// Busca quantidade de chamados por cada profissional
+        /// </summary>
+        /// <param name="filtro">ValidaUsuarioFiltro</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<ResumoAtendimentoEntidade> BuscaResumoAtendimentosProfissionais()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select ES.idTipoProfissional as TipoProfissional,
+                					   count(CD.idUsuarioColaboradorEmpresa) as Quantidade,
+					                   CD.dtDataHoraRegistroCorrida as DataRegistro
+							    from tblCorridas CD
+								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								join tblColaboradoresEmpresaSistema ES on (cd.idUsuarioColaboradorEmpresa = ES.idColaboradorEmpresaSistema)
+									where LGCD.idStatusCorrida = 11
+										group by ES.idTipoProfissional,  CD.dtDataHoraRegistroCorrida";
+
+                return sqlConnection.Query<ResumoAtendimentoEntidade>(query);
             }
         }
     }

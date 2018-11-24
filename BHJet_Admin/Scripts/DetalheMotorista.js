@@ -3,6 +3,16 @@
     $("#TelefoneResidencial").mask("(00) 0000-0000");
     $("#TelefoneCelular").mask("(00) 0000-00009");
 
+    var cpfMascara = function (val) {
+        return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
+    },
+        cpfOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(cpfMascara.apply({}, arguments), options);
+            }
+        };
+    $('#CpfCnpj').mask(cpfMascara, cpfOptions);
+
     function limpaEndereco() {
         // Limpa valores do formulário de cep.
         $("#Rua").val("");

@@ -71,7 +71,8 @@ namespace BHJet_Admin.Controllers
                     {
                         id = x.idColaboradorEmpresaSistema,
                         geoPosicao = x.geoPosicao,
-                        psCorrida = false
+                        psCorrida = false,
+                        desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motociclista)
                     }).ToArray();
                     break;
                 case DashboardTipoDisponivelEnum.MotoristaDisponivel:
@@ -79,7 +80,8 @@ namespace BHJet_Admin.Controllers
                     {
                         id = x.idColaboradorEmpresaSistema,
                         geoPosicao = x.geoPosicao,
-                        psCorrida = false
+                        psCorrida = false,
+                        desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motorista)
                     }).ToArray();
                     break;
                 case DashboardTipoDisponivelEnum.FuncionarioDisponivel:
@@ -91,7 +93,8 @@ namespace BHJet_Admin.Controllers
                             {
                                 id = model.idColaboradorEmpresaSistema,
                                 geoPosicao = model.geoPosicao,
-                                psCorrida = false
+                                psCorrida = false,
+                                desc = MontaDescricaoProfissional(model.idColaboradorEmpresaSistema, model.NomeColaborador, model.TipoColaborador)
                             }
                         };
                     }
@@ -116,6 +119,28 @@ namespace BHJet_Admin.Controllers
 
             // Return
             return Json(localizacao, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaResumoSituacaoChamados()
+        {
+            // Recupera dados
+            var entidade = resumoServico.BuscaResumoChamadosSituacao();
+
+            // Return
+            return Json(entidade, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaResumoAtendimentos()
+        {
+            // Recupera dados
+            var entidade = resumoServico.BuscaResumoAtendimentosSituacao();
+
+            // Return
+            return Json(entidade, JsonRequestBehavior.AllowGet);
         }
 
         [ValidacaoUsuarioAttribute()]
@@ -145,7 +170,8 @@ namespace BHJet_Admin.Controllers
                     Observacao = entidade.Origem.Observacao,
                     ProcurarPessoa = entidade.Origem.ProcurarPor,
                     Realizar = entidade.Origem.Realizar,
-                    Status = entidade.Origem.StatusCorrida.ToString()
+                    Status = entidade.Origem.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
+                    Foto = System.IO.File.ReadAllBytes(@"C:\Users\LEOZI\Pictures\ctr.jpg")
                 },
                 Desinos = entidade.Destinos.Select(dest => new OSClienteEnderecoModel()
                 {
@@ -154,7 +180,8 @@ namespace BHJet_Admin.Controllers
                     Observacao = dest.Observacao,
                     ProcurarPessoa = dest.ProcurarPor,
                     Realizar = dest.Realizar,
-                    Status = dest.StatusCorrida.ToString()
+                    Status = dest.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
+                    Foto = System.IO.File.ReadAllBytes(@"C:\Users\LEOZI\Pictures\ctr.jpg")
                 }).ToArray()
             });
         }
@@ -217,6 +244,11 @@ namespace BHJet_Admin.Controllers
             }
 
             return RedirectToAction("CadastroDiariaAvulsa");
+        }
+
+        private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)
+        {
+            return $"<b>ID:</b> {id} <br/><b>Nome:</b> {nomeMotorista}</br><b>Tipo:</b> {tipo.RetornaDescricaoEnum(typeof(TipoProfissional))}";
         }
 
     }

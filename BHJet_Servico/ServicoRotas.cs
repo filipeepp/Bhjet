@@ -12,6 +12,8 @@
         public class Dashboard
         {
             public const string GetResumo = "/api/Dashboard/resumo";
+            public const string GetResumoChamadosSit = "/api/Dashboard/resumo/chamado";
+            public const string GetResumoAtendimentosCategoria = "/api/Dashboard/resumo/atendimento";
         }
 
         public class Corrida

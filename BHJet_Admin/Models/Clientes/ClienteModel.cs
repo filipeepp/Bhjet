@@ -7,8 +7,9 @@ namespace BHJet_Admin.Models.Clientes
 {
 	public class ClienteModel
 	{
+		public int? ID { get; set; }
 		public DadosCadastraisModel DadosCadastrais { get; set; }
 		public IEnumerable<ContatoModel> Contato { get; set; }
-		public ValorModel Valor { get; set; }
+		public IEnumerable<ValorModel> Valor { get; set; }
 	}
 }
