@@ -17,11 +17,11 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"select * from tblClientes where 
-									  convert(varchar(250), idCliente) like {0}
+									  convert(varchar(250), idCliente) like @valorPesquisa
 									  or
-									  vcNomeFantasia like {0}
+									  vcNomeFantasia like @valorPesquisa
 									  or
-									  vcNomeRazaoSocial like {0}";
+									  vcNomeRazaoSocial like @valorPesquisa";
 
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query, new

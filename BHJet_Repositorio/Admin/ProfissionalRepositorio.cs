@@ -75,9 +75,9 @@ namespace BHJet_Repositorio.Admin
                                    WHEN 1 THEN 'MEI' END as TipoContrato
 										from tblColaboradoresEmpresaSistema as PRO
     							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
-                                     where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like {0}
+                                     where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
 									       or
-									       PRO.vcNomeCompleto like {0}";
+									       PRO.vcNomeCompleto like @valorPesquisa";
 
                 // Execução
                 return sqlConnection.Query<ProfissionalEntidade>(query, new
