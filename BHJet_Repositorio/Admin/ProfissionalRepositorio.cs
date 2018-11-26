@@ -79,6 +79,9 @@ namespace BHJet_Repositorio.Admin
 									       or
 									       PRO.vcNomeCompleto like @valorPesquisa";
 
+                if (string.IsNullOrWhiteSpace(trecho))
+                    query.Replace("*", "top(50)");
+
                 // Execução
                 return sqlConnection.Query<ProfissionalEntidade>(query, new
                 {
@@ -161,13 +164,26 @@ namespace BHJet_Repositorio.Admin
 	                                    vcObservacoes = @Observacao,
 	                                    vcEmail = @Email
                                     where 
-                                        idColaboradorEmpresaSistema = @id";
+                                        idColaboradorEmpresaSistema = @ID";
                         // Execução 
-                        trans.Connection.Execute(query, profissional);
+                        trans.Connection.ExecuteScalar(query, new
+                        {
+                            NomeCompleto = profissional.NomeCompleto,
+                            CPF = profissional.CPF,
+                            CNH = profissional.CNH,
+                            TipoCNH = profissional.TipoCNH,
+                            TelefoneResidencial = profissional.TelefoneResidencial,
+                            TelefoneCelular = profissional.TelefoneCelular,
+                            CelularWpp = profissional.CelularWpp,
+                            TipoContrato = profissional.TipoRegime,
+                            Observacao = profissional.Observacao,
+                            Email = profissional.Email,
+                            ID = profissional.ID
+                        }, trans);
 
                         // Insert Novo Endereco
                         query = @"UPDATE [dbo].[tblEnderecos]
-   	                                    SET [vcRua] = @Rua>
+   	                                    SET [vcRua] = @Rua
       	                                    ,[vcNumero] = @RuaNumero
       	                                    ,[vcComplemento] = @Complemento
       	                                    ,[vcBairro] = @Bairro
@@ -178,7 +194,7 @@ namespace BHJet_Repositorio.Admin
       	                                    ,[bitPrincipal] = @EnderecoPrincipal
  	                                    WHERE idEndereco = (select idEndereco from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @id)";
                         // Execute
-                        var idEndereco = trans.Connection.Query<int>(query, profissional);
+                        var idEndereco = trans.Connection.Query<int>(query, profissional, trans);
                         
                         // Commit
                         trans.Commit();

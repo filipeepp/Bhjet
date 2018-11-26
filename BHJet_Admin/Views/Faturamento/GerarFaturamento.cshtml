@@ -1,6 +1,8 @@
 ﻿@using BHJet_Admin.Models.Faturamento
 @model GerarFaturamantoModel
 
+<script src="~/Scripts/GerarFaturamento.js"></script>
+
 <ol class="breadcrumb">
     <li><a href="@Url.Action("Index", "Home")">Home</a></li>
     <li><a href="#map_canvas">Gerar Faturamento</a></li>
@@ -38,8 +40,8 @@
                             <div class="form-group ">
                                 <label class="control-label col-sm-5" for="email">Selecione o(s) cliente(s):</label>
                                 <div class="col-sm-4">
-                                    @Html.DropDownListFor(m => m.ClienteSelecionado, new SelectList(Model.ListaClientes, "Key", "Value"),
-                                     "Lista de Cliente", new { @class = "form-control" })
+                                    <input id="pesquisaCliente" class="form-control input-sm" placeholder="Pesquisar por ID/Nome." />
+                                    @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
                                 </div>
                             </div>
 
@@ -55,12 +57,12 @@
                     </div>
 
                     <div class="row">
-                            @{
-                                if (Model.ClienteSelecionado != null)
-                                {
-                                    Html.RenderPartial("_ListaFaturamento", Model.ListaFaturamento);
-                                }
+                        @{
+                            if (Model.ClienteSelecionado != null)
+                            {
+                                Html.RenderPartial("_ListaFaturamento", Model.ListaFaturamento);
                             }
+                        }
                     </div>
                 </div>
             </div>

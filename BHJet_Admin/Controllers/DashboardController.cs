@@ -203,12 +203,12 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa()
         {
-            var ListaClientes = new System.Collections.Generic.Dictionary<long, string>();
-            ListaClientes.Add(1, "teste");
+
+            TempData["testmsg"] = " Requested Successfully ";
 
             return View(new DiariaModel()
             {
-                Observacao = null
+                Observacao = null,
             });
         }
 
@@ -216,20 +216,29 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
-
-            if (modelo.PeriodoFinal < modelo.PeriodoInicial)
+            if(modelo.PeriodoInicial.ToDate() == null)
+            {
+                ModelState.AddModelError("", "Data hora inicio do expediente.");
+                return View(modelo);
+            }
+            else if(modelo.PeriodoFinal.ToDate() == null)
+            {
+                ModelState.AddModelError("", "Data hora Fim do expediente.");
+                return View(modelo);
+            }
+            else if (modelo.PeriodoFinal.ToDate() < modelo.PeriodoInicial.ToDate())
             {
                 ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
                 return View(modelo);
             }
-            else if (modelo.IDClienteSelecionado == null)
+            else if (modelo.PeriodoFinal.ToDate().Value.Date != modelo.PeriodoInicial.ToDate().Value.Date)
             {
-                ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
+                ModelState.AddModelError("", "A dia de expediente deve ser o mesmo para inicio e fim de diaria, mudando apenas o horário.");
                 return View(modelo);
             }
-            else if (modelo.IDProfissionalSelecionado == null)
+            else if (modelo.ClienteSelecionado == null)
             {
-                ModelState.AddModelError("", "Favor selecionar um profissional na lista.");
+                ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
                 return View(modelo);
             }
 
@@ -238,12 +247,11 @@ namespace BHJet_Admin.Controllers
                 // Incluir diaria
                 diariaServico.IncluirDiaria(new BHJet_DTO.Diaria.DiariaAvulsaDTO()
                 {
-                    IDUsuarioSolicitacao = 3,
-                    IDCliente = modelo.IDClienteSelecionado ?? 0,
-                    IDColaboradorEmpresa = modelo.IDProfissionalSelecionado ?? 0,
+                    IDCliente = modelo.ClienteSelecionado ?? 0,
+                    IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
                     IDTarifario = modelo.TarifaCliente,
-                    DataHoraInicioExpediente = modelo.PeriodoInicial ?? DateTime.Now,
-                    DataHoraFimExpediente = modelo.PeriodoFinal,
+                    DataHoraInicioExpediente = modelo.PeriodoInicial.ToDate() ?? DateTime.Now,
+                    DataHoraFimExpediente = modelo.PeriodoFinal.ToDate(),
                     ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
                     ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
                 });
@@ -297,7 +305,7 @@ namespace BHJet_Admin.Controllers
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()
             {
-                label = x.ID + " - " + x.Descricao,
+                label = x.ID + " - " + x.Descricao + " - " + x.ValorDiaria.ToString(),
                 value = x.ID
             }), JsonRequestBehavior.AllowGet);
         }

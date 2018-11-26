@@ -941,3 +941,12 @@ input[type="radio"] {
     font-weight: bolder;
     font-size: 12px;
 }
+
+
+.ui-autocomplete-loading {
+    background: url('img/indicator.gif') no-repeat right center
+}
+
+.input-sm {
+    max-width: 240px;
+}

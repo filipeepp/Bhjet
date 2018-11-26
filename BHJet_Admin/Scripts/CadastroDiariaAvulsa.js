@@ -1,7 +1,7 @@
 ﻿
 function BuscaProfissionais() {
-    var jqVariavel = $("#ProfissionalSelecionado");
-
+    var jqVariavel = $("#pesquisaProfissional");
+    $("#ProfissionalSelecionado").find('option').remove().end();
     if (jqVariavel.val() != "" && jqVariavel.val() !== undefined) {
         $.ajax({
             dataType: "json",
@@ -9,33 +9,28 @@ function BuscaProfissionais() {
             url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val(),
             success: function (data) {
                 if (data !== "" && data !== undefined) {
-                    jqVariavel.autocomplete({
-                        source: data,
-                        select: function (el, ui) {
-                            $("#IDProfissionalSelecionado").val(ui.item.value);
-                            jqVariavel.val(ui.item.label);
-                            el.preventDefault();
-                        },
-                        focus: function (event, ui) {
-                            event.preventDefault();
-                            el.val(ui.item.label);
-                        }
+                    $("#ProfissionalSelecionado").find('option').remove().end();
+                    var div_data = "<option value=></option>";
+                    $(div_data).appendTo('#ProfissionalSelecionado');
+                    $.each(data, function (i, obj) {
+                        var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                        $(div_data).appendTo('#ProfissionalSelecionado');
                     });
+                    $("#ProfissionalSelecionado").mouseup();
                 }
                 else {
-                    jqVariavel.val("");
-                    AdicionarErroCampo('ProfissionalSelecionado', 'Não foi possível encotrar o profissional desejado.', 4000);
+                    AdicionarErroCampo('ProfissionalSelecionado', 'Não foi possível encontrar o profissional desejado.', 4000);
                 }
             }
         });
     }
 }
 
-function BuscaTarifas(idProfissional) {
+function BuscaTarifas(idCliente) {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaTarifas?idCliente=" + idProfissional,
+        url: "/Dashboard/BuscaTarifas?idCliente=" + idCliente,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#TarifaCliente").find('option').remove().end();
@@ -51,7 +46,9 @@ function BuscaTarifas(idProfissional) {
 }
 
 function BuscaClientes() {
-    var jqVariavel = $("#ClienteSelecionado");
+    var jqVariavel = $("#pesquisaCliente");
+    $("#ClienteSelecionado").find('option').remove().end();
+    $("#TarifaCliente").find('option').remove().end();
     if (jqVariavel.val() != "" && jqVariavel.val() !== undefined) {
         $.ajax({
             dataType: "json",
@@ -59,22 +56,16 @@ function BuscaClientes() {
             url: "/Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
             success: function (data) {
                 if (data !== "" && data !== undefined && data.length > 0) {
-                    jqVariavel.autocomplete({
-                        source: data,
-                        select: function (el, ui) {
-                            jqVariavel.val(ui.item.label);
-                            $("#IDClienteSelecionado").val(ui.item.value);
-                            BuscaTarifas(ui.item.value);
-                            el.preventDefault();
-                        },
-                        focus: function (event, ui) {
-                            event.preventDefault();
-                            el.val(ui.item.label);
-                        }
+                    $("#ClienteSelecionado").find('option').remove().end();
+                    var div_data = "<option value=></option>";
+                    $(div_data).appendTo('#ClienteSelecionado');
+                    $.each(data, function (i, obj) {
+                        var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                        $(div_data).appendTo('#ClienteSelecionado');
                     });
+                    $("#ClienteSelecionado").mouseup();
                 }
                 else {
-                    jqVariavel.val("");
                     AdicionarErroCampo('ClienteSelecionado', 'Não foi possível encotrar o cliente desejado.', 4000);
                 }
             },
@@ -82,14 +73,14 @@ function BuscaClientes() {
     }
 }
 
-function delay(callback, ms) {
-    var timer = 0;
-    return function () {
-        var context = this, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            callback.apply(context, args);
-        }, ms || 0);
+function validaDatePickerManual(id, valor) {
+    var dgtDatesp = valor.split("/");
+    var dgtDate = new Date(dgtDatesp[2].split(' ')[0], dgtDatesp[1] - 1, dgtDatesp[0]);
+    var todayDate = new Date();
+    if (dgtDate < todayDate) {
+        $("#" + id).val("")
+        $('#' + id).datepicker("hide");
+        AdicionarErroCampo(id, 'A data digitada não pode ser menor que a data atual.', 4000);
     };
 }
 
@@ -97,66 +88,79 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#ValorDiaria").mask('000.000.000.000.000,00', { reverse: true });
     $("#ValorComissao").mask('000.000.000.000.000,00', { reverse: true });
-    $("#PeriodoInicial").mask("00/00/0000", { placeholder: "__/__/____" });
 
-    $("#PeriodoFinal").mask("00/00/0000", { placeholder: "__/__/____" });
-    if ($('#IDClienteSelecionado').val() == "") {
-        $("#TarifaCliente").find('option').remove().end();
-    }
-    else {
-        BuscaTarifas($('#IDClienteSelecionado').val());
-    }
-    if ($('#IDProfissionalSelecionado').val() == "") {
-        $("#ProfissionalSelecionado").val("");
-    }
+    $("#PeriodoInicial").mask("00/00/0000 00:00", {
+        onComplete: function (a) {
+            validaDatePickerManual("PeriodoInicial", a)
+        },
+        placeholder: "__/__/____ 00:00"
+    });
+    $("#PeriodoFinal").mask("00/00/0000 00:00", {
+        onComplete: function (a) {
+            validaDatePickerManual("PeriodoFinal", a)
+        },
+        placeholder: "__/__/____ 00:00"
+    });
 
-    $('#ProfissionalSelecionado').click(function (event) {
+    $("#PeriodoInicial").datepicker({
+        dateFormat: "dd/mm/yy",
+        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        nextText: 'Próximo',
+        prevText: 'Anterior',
+        minDate: 0,
+        onSelect: function () {
+            $("#PeriodoInicial").val($("#PeriodoInicial").val() + " 09:00")
+        }
+    });
+
+    $("#PeriodoFinal").datepicker({
+        dateFormat: "dd/mm/yy",
+        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        nextText: 'Próximo',
+        prevText: 'Anterior',
+        minDate: 0,
+        onSelect: function () {
+            $("#PeriodoFinal").val($("#PeriodoFinal").val() + " 18:00")
+        }
+    });
+
+    $('#pesquisaCliente').click(function (event) {
         $(this).val("");
+        $("#TarifaCliente").find('option').remove().end();
         event.preventDefault();
         event.stopPropagation();
         return false;
     });
 
-    $('#ClienteSelecionado').click(function (event) {
-        $(this).val("");
-        $("#TarifaCliente").find('option').remove().end();
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
+    $("#pesquisaCliente").keyup(delay(function (e) {
+        BuscaClientes();
+    }, 500));
+
+    $("#pesquisaProfissional").keyup(delay(function (e) {
+       BuscaProfissionais();
+    }, 500));
+
+    $("#ClienteSelecionado").change(function () {
+        var $option = $(this).find('option:selected');
+        if ($option != undefined) {
+            var value = $option.val();
+            var text = $option.text();
+            if (value != undefined && value != "") {
+                BuscaTarifas(value)
+            }
+        }
     });
 
-    $("#ProfissionalSelecionado").keyup(delay(function (e) {
-        if (/^\d+$/.test($(this).val())) {
-            BuscaProfissionais();
-        }
-        else {
-            if ($(this).val().length >= 3) {
-                $(this).next().remove();
-                BuscaProfissionais();
-            }
-            else {
-                if ($(this).next().attr("id") != "msgDigitacao") {
-                    AdicionarErroCampo('ClienteSelecionado', 'Preencha no minímo 3 digitos para pesquisa.', 4000);
-                }
-            }
-        }
-    }, 500));
+    BuscaClientes();
+    BuscaProfissionais();
 
-    $("#ClienteSelecionado").keyup(delay(function (e) {
-        if (/^\d+$/.test($(this).val())) {
-            BuscaClientes();
-        }
-        else {
-            if ($(this).val().length >= 3) {
-                BuscaClientes();
-                $(this).next().remove();
-            }
-            else {
-                if ($(this).next().attr("id") != "msgDigitacao") {
-                    AdicionarErroCampo('ClienteSelecionado', 'Preencha no minímo 3 digitos para pesquisa.', 4000);
-                }
-            }
-        }
-    }, 500));
 });
 

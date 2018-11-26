@@ -2,7 +2,7 @@
 {
     public class ServicoRotas
     {
-        public static readonly string Base = @"http://apibhjetapi.sa-east-1.elasticbeanstalk.com/api/v1";
+        public static readonly string Base = @"http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
 
         public class Autenticacao
         {
@@ -18,18 +18,18 @@
 
         public class Corrida
         {
-            public const string GetDetalheCorridas = "/Corrida/{0}/";
+            public const string GetDetalheCorridas = "/Corrida/{0}";
             public const string GetLocalizacaoCorridas = "/Corrida/status/{0}/profissional/{1}/localizacao";
         }
 
         public class Diaria
         {
-            public const string PostDiaria = "/Diaria/";
+            public const string PostDiaria = "/Diaria";
         }
 
         public class Cliente
         {
-            public const string GetClientes = "/Cliente/";
+            public const string GetClientes = "/Cliente";
         }
 
         public class Tarifa
@@ -37,9 +37,15 @@
             public const string GetTarifaCliente = "/Tarifa/cliente/{0}";
         }
 
+        public class Faturamento
+        {
+            public const string PostFaturamento = "/Faturamento";
+        }
+
         public class Profissional
         {
             public const string PutProfissional = "/Profissional/{0}";
+            public const string PostProfissional = "/Profissional";
             public const string GetProfissional = "/Profissional/{0}";
             public const string GetProfissionais = "/Profissional";
             public const string GetLocalizacoesProfissionais = "/Profissional/profissional/tipo/{0}/localizacao";

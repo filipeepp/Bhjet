@@ -9,10 +9,10 @@ namespace BHJet_Admin.Models.Dashboard
 {
     public class DiariaModel
     {
-        private DateTime? _PeriodoInicial;
-        [DataType(DataType.Date)]
+        private string _PeriodoInicial;
         [Required(ErrorMessage = "Período inicial obrigatório.")]
-        public DateTime? PeriodoInicial
+        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
+        public string PeriodoInicial
         {
             get
             {
@@ -24,10 +24,10 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private DateTime? _PeriodoFinal;
-        [DataType(DataType.Date)]
+        private string _PeriodoFinal;
         [Required(ErrorMessage = "Período final obrigatório.")]
-        public DateTime? PeriodoFinal
+        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
+        public string PeriodoFinal
         {
             get
             {
@@ -52,22 +52,22 @@ namespace BHJet_Admin.Models.Dashboard
         //    }
         //}
 
-        private int? _IDClienteSelecionado;
-        public int? IDClienteSelecionado
-        {
-            get
-            {
-                return _IDClienteSelecionado;
-            }
-            set
-            {
-                _IDClienteSelecionado = value;
-            }
-        }
+        //private int? _IDClienteSelecionado;
+        //public int? IDClienteSelecionado
+        //{
+        //    get
+        //    {
+        //        return _IDClienteSelecionado;
+        //    }
+        //    set
+        //    {
+        //        _IDClienteSelecionado = value;
+        //    }
+        //}
 
-        private string _ClienteSelecionado;
+        private int? _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
-        public string ClienteSelecionado
+        public int? ClienteSelecionado
         {
             get
             {
@@ -106,23 +106,23 @@ namespace BHJet_Admin.Models.Dashboard
         //    }
         //}
 
-        private int? _IDProfissionalSelecionado;
-        [Required(ErrorMessage = "Profissional obrigatório.")]
-        public int? IDProfissionalSelecionado
-        {
-            get
-            {
-                return _IDProfissionalSelecionado;
-            }
-            set
-            {
-                _IDProfissionalSelecionado = value;
-            }
-        }
+        //private int? _IDProfissionalSelecionado;
+        //[Required(ErrorMessage = "Profissional obrigatório.")]
+        //public int? IDProfissionalSelecionado
+        //{
+        //    get
+        //    {
+        //        return _IDProfissionalSelecionado;
+        //    }
+        //    set
+        //    {
+        //        _IDProfissionalSelecionado = value;
+        //    }
+        //}
 
-        private string _ProfissionalSelecionado;
+        private int? _ProfissionalSelecionado;
         [Required(ErrorMessage = "Profissional obrigatório.")]
-        public string ProfissionalSelecionado
+        public int? ProfissionalSelecionado
         {
             get
             {

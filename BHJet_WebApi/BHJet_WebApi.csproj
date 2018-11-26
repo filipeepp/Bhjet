@@ -164,11 +164,13 @@
     <Compile Include="Controllers\CorridaController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DiariaController.cs" />
+    <Compile Include="Controllers\FaturamentoController.cs" />
     <Compile Include="Controllers\ProfissionalController.cs" />
     <Compile Include="Controllers\TarifaController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AutorizacaoProvider.cs" />
     <Compile Include="Util\LogarExcecao.cs" />
+    <Compile Include="Util\UsuarioLogado.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

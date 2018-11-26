@@ -1,14 +1,30 @@
-﻿using BHJet_DTO.Corrida;
+﻿using BHJet_Core.Extension;
 using BHJet_DTO.Diaria;
 using BHJet_Repositorio.Admin;
-using System.Linq;
+using BHJet_WebApi.Util;
 using System.Web.Http;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Diaria")]
+    [RoutePrefix("api/Diaria")]
     public class DiariaController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
+        public UsuarioLogado UsuarioAutenticado
+        {
+            get
+            {
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
+
+                return _usuarioAutenticado;
+            }
+        }
+
         /// <summary>
         /// Método para inclusão de diaria avulsa
         /// </summary>
@@ -30,7 +46,7 @@ namespace BHJet_WebApi.Controllers
                 DataHoraSolicitacao = model.DataHoraSolicitacao,
                 FaturarComoDiaria = model.FaturarComoDiaria,
                 FranquiaKMDiaria = model.FranquiaKMDiaria,
-                IDUsuarioSolicitacao = model.IDUsuarioSolicitacao,
+                IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
                 OdometroFimExpediente = model.OdometroFimExpediente,
                 OdometroInicioExpediente = model.OdometroInicioExpediente,
                 OdometroInicioIntervalo = model.OdometroInicioIntervalo,

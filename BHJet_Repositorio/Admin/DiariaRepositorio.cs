@@ -33,14 +33,16 @@ namespace BHJet_Repositorio.Admin
                                                ,[decValorKMAdicionalNegociado]
                                                ,[decFranquiaKMDiaria]
                                                ,[dtDataHoraSolicitacao]
-                                               ,[bitFaturarComoDiaria]
+                                               ,[timHoraInicioSolicitacao]
+                                               ,[timHoraFimSolicitacao]
+                                               ,[bitFaturarComoDiaria])
                                          VALUES
                                                (@IDCliente
                                                ,@IDTarifario
                                                ,@IDColaboradorEmpresa
                                                ,@IDUsuarioSolicitacao
                                                ,@DataHoraInicioExpediente
-                                               ,null
+                                               ,0
                                                ,null
                                                ,null
                                                ,null
@@ -51,6 +53,8 @@ namespace BHJet_Repositorio.Admin
                                                ,@ValorDiariaComissaoNegociado
                                                ,null
                                                ,null
+                                               ,GETDATE()
+                                               ,GETDATE()
                                                ,GETDATE()
                                                ,1)";
 

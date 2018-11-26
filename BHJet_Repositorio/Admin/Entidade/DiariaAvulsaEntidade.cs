@@ -7,7 +7,7 @@ namespace BHJet_Repositorio.Admin.Entidade
         public int IDCliente { get; set; }
         public int IDTarifario { get; set; }
         public int IDColaboradorEmpresa { get; set; }
-        public int IDUsuarioSolicitacao { get; set; }
+        public long IDUsuarioSolicitacao { get; set; }
         public DateTime DataHoraInicioExpediente { get; set; }
         public int? OdometroInicioExpediente { get; set; }
         public DateTime? DataHoraInicioIntervalo { get; set; }

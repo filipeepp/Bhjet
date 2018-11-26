@@ -52,6 +52,7 @@
     <Compile Include="Admin\DiariaRepositorio.cs" />
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />
+    <Compile Include="Admin\Entidade\ItemFaturamentoEntidade.cs" />
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\OSCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalDisponivelEntidade.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\TarifaEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
+    <Compile Include="Admin\FaturamentoRepositorio.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />
     <Compile Include="Admin\ProfissionalRepositorio.cs" />
     <Compile Include="Admin\TarifaRepositorio.cs" />

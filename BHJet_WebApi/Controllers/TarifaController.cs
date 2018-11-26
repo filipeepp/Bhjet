@@ -7,7 +7,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Tarifa")]
+    [RoutePrefix("api/Tarifa")]
     public class TarifaController : ApiController
     {
 

@@ -8,7 +8,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Dashboard")]
+    [RoutePrefix("api/Dashboard")]
     public class DashboardController : ApiController
     {
         /// <summary>

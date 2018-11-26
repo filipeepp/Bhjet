@@ -10,6 +10,11 @@ namespace BHJet_Servico.Cliente
 
     public class ClienteServico : ServicoBase, IClienteServico
     {
+        public ClienteServico(string token) : base(token)
+        {
+
+        }
+
         public ClienteDTO[] BuscaListaClientes(string trechoPesquisa)
         {
             //return new ClienteDTO[]
@@ -26,7 +31,7 @@ namespace BHJet_Servico.Cliente
             //    }
             //};
 
-            return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientes}&trecho={trechoPesquisa}"));
+            return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientes}?trecho={trechoPesquisa}"));
         }
     }
 }

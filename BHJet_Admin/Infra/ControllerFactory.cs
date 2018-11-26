@@ -9,6 +9,10 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
+using BHJet_Servico.Faturamento;
 
 namespace BHJet_Admin.Infra
 {
@@ -34,21 +38,28 @@ namespace BHJet_Admin.Infra
         private static object GetInstance(Type tipo)
         {
             if (tipo == typeof(IAutorizacaoServico))
-                return Activator.CreateInstance(typeof(AutorizacaoServico));
+                return Activator.CreateInstance(typeof(AutorizacaoServico), BuscaToken());
             else if (tipo == typeof(IResumoServico))
-                return Activator.CreateInstance(typeof(ResumoServico));
+                return Activator.CreateInstance(typeof(ResumoServico), BuscaToken());
             else if (tipo == typeof(ICorridaServico))
-                return Activator.CreateInstance(typeof(CorridaServico));
+                return Activator.CreateInstance(typeof(CorridaServico), BuscaToken());
             else if (tipo == typeof(IProfissionalServico))
-                return Activator.CreateInstance(typeof(ProfissionalServico));
-            else if(tipo == typeof(IDiariaServico))
-                return Activator.CreateInstance(typeof(DiariaServico));
+                return Activator.CreateInstance(typeof(ProfissionalServico), BuscaToken());
+            else if (tipo == typeof(IDiariaServico))
+                return Activator.CreateInstance(typeof(DiariaServico), BuscaToken());
             else if (tipo == typeof(IClienteServico))
-                return Activator.CreateInstance(typeof(ClienteServico));
+                return Activator.CreateInstance(typeof(ClienteServico), BuscaToken());
             else if (tipo == typeof(ITarifaServico))
-                return Activator.CreateInstance(typeof(TarifaServico));
+                return Activator.CreateInstance(typeof(TarifaServico), BuscaToken());
+            else if (tipo == typeof(IFaturamentoServico))
+                return Activator.CreateInstance(typeof(FaturamentoServico), BuscaToken());
             else
                 return Activator.CreateInstance(tipo);
+        }
+
+        private static string BuscaToken()
+        {
+            return System.Web.HttpContext.Current.Session["IDTKUsuarioJet"]?.ToString() ?? "";
         }
     }
 }

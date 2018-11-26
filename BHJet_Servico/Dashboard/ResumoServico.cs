@@ -19,6 +19,11 @@ namespace BHJet_Servico.Dashboard
 
     public class ResumoServico : ServicoBase, IResumoServico
     {
+        public ResumoServico(string token) : base(token)
+        {
+
+        }
+
         /// <summary>
         /// Busca Resumo Dashboard
         /// </summary>

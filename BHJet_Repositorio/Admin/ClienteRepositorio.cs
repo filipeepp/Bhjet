@@ -23,6 +23,9 @@ namespace BHJet_Repositorio.Admin
 									  or
 									  vcNomeRazaoSocial like @valorPesquisa";
 
+                if (string.IsNullOrWhiteSpace(trecho))
+                    query.Replace("*", "top(50)");
+
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query, new
                 {

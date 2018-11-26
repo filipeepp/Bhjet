@@ -14,6 +14,11 @@ namespace BHJet_Servico.Profissional
 
     public class ProfissionalServico : ServicoBase, IProfissionalServico
     {
+        public ProfissionalServico(string token) : base(token)
+        {
+
+        }
+
         /// <summary>
         /// Busca Lista de profissionais
         /// </summary>
@@ -45,7 +50,7 @@ namespace BHJet_Servico.Profissional
             //    }
             //};
 
-            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionais}&trecho={trechoPesquisa}"));
+            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionais}?trecho={trechoPesquisa}"));
         }
 
         /// <summary>
@@ -86,9 +91,7 @@ namespace BHJet_Servico.Profissional
         /// <returns>ResumoModel</returns>
         public void IncluirProfissional(ProfissionalCompletoModel proModel)
         {
-            long idUsuarioLogado = 1;
-
-            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.PutProfissional}{"?idGestorInclusao=" + idUsuarioLogado}"), proModel);
+            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.PostProfissional}"), proModel);
         }
     }
 }

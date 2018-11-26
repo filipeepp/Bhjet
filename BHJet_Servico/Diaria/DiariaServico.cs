@@ -1,5 +1,4 @@
 ﻿using BHJet_DTO.Diaria;
-using BHJet_Servico.Dashboard;
 using System;
 
 namespace BHJet_Servico.Diaria
@@ -11,6 +10,11 @@ namespace BHJet_Servico.Diaria
 
     public class DiariaServico : ServicoBase, IDiariaServico
     {
+        public DiariaServico(string token) : base(token)
+        {
+
+        }
+
         /// <summary>
         /// Incluir um Diaria
         /// </summary>

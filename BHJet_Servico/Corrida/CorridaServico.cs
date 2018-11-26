@@ -10,6 +10,11 @@ namespace BHJet_Servico.Corrida
 
     public class CorridaServico : ServicoBase, ICorridaServico
     {
+        public CorridaServico(string token) : base(token)
+        {
+
+        }
+
         /// <summary>
         /// Busca Detalhe Corrida
         /// </summary>

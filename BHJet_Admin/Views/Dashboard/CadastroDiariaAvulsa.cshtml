@@ -47,8 +47,10 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione o cliente:</label>
                             <div class="col-sm-4">
-                                @Html.HiddenFor(model => model.IDClienteSelecionado)
-                                @Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente.", autocomplete = "off" })
+                                @*@Html.HiddenFor(model => model.IDClienteSelecionado)*@
+                                @*@Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente.", autocomplete = "off" })*@
+                                <input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
+                                @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
                                 @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
 
                             </div>
@@ -97,11 +99,10 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email">Selecione um profissional:</label>
                             <div class="col-sm-4">
-                                @Html.HiddenFor(model => model.IDProfissionalSelecionado)
-                                @Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional.", autocomplete = "off" })
+                                <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
+                                @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
+                                @*@Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional.", autocomplete = "off" })*@
                                 @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
-
-                                @*@Html.DropDownListFor(m => m.ProfissionalSelecionado, Model.ListaProfissionais, "Lista de motociclistas ou motoristas", new { @class = "form-control" })*@
                             </div>
                         </div>
 

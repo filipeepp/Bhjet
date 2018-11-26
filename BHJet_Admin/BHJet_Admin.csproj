@@ -263,6 +263,7 @@
     <Content Include="Scripts\Contato.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
+    <Content Include="Scripts\GerarFaturamento.js" />
     <Content Include="Scripts\GoogleMapsBHJet.js" />
     <Content Include="Scripts\IndexAdmin.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
