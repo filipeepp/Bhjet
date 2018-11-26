@@ -1,71 +1,111 @@
 ﻿@using BHJet_Admin.Models.Clientes
 @using BHJet_Core.Enum
-@model IEnumerable<ValorModel>
+@model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
 
-@foreach (ValorModel valor in @Model)
-{
-    <div class="panel panel-default" style="margin:30px">
-        <div class="panel-body">
-            <div class="titulo">
-                <h2>
-                    <a onclick="history.go(-1);">
-                        <i class="fa fa-hashtag" aria-hidden="true"></i>
-                    </a>
-                    Valor
-                </h2>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-12 col-md-3">
-                    <label for="txtTipoTarifa">Tipo Tarifa</label>
-                    <br />
-                    @foreach (var tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
-                    {
-                        var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoTarifa), tipoEnum));
-                        @Html.RadioButton(Convert.ToString(valor.TipoTarifa), tipoEnum, new { id, @class = "option-input radio" })
-                        @Html.Label(tipoEnum.ToString(), new { @for = id })
-                        <br />
-                    }
-                    @Html.ValidationMessage(valor.TipoTarifa != null ? string.Empty : Convert.ToString(valor.TipoTarifa), null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-12 col-md-2">
-                    <label for="txtValorUnitario">Valor Unitário</label>
-                    @Html.TextBox("txtValorUnitario", valor.ValorUnitario, new { @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(valor.ValorUnitario) ? string.Empty : valor.ValorUnitario, null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-12 col-md-3">
-                    <label>Vigência</label>
-                    <div class="input-group input-daterange">
-                        @Html.TextBox("txtVigenciaInicio", valor.VigenciaInicio, new { type = "text", @class = "form-control" })
-                        <div class="input-group-addon">a</div>
-                        @Html.TextBox("txtVigenciaFim", valor.VigenciaFim, new { type = "text", @class = "form-control" })
-                    </div>
-                    @Html.ValidationMessage(valor.VigenciaInicio != null ? string.Empty : Convert.ToString(valor.VigenciaInicio), null, new { @class = "text-danger" })
-                    @Html.ValidationMessage(valor.VigenciaFim != null ? string.Empty : Convert.ToString(valor.VigenciaFim), new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-xs-12 col-md-2">
-                    <label for="txtFranquia">Franquia Km/mês</label>
-                    @Html.TextBox("txtFranquia", valor.Franquia, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(valor.Franquia) ? string.Empty : valor.Franquia, null, new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-xs-12 col-md-2">
-                    <label for="txtFranquiaAdicional">Franquia Adicional</label>
-                    @Html.TextBox("txtFranquiaAdicional", valor.Franquia, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(valor.FranquiaAdicional) ? string.Empty : valor.FranquiaAdicional, null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-12 col-md-6">
-                    <label for="txaObservacoesValor">Observações</label>
-                    @Html.TextArea("txaObservacoesValor", valor.Observacao, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(valor.Observacao) ? string.Empty : valor.Observacao, null, new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
+<script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(".mask-valor").maskMoney({
+			prefix: "R$:",
+			decimal: ",",
+			thousands: "."
+		});
+		//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
+
+		$(".mask-data").mask("99/99/9999");
+	});
+</script>
+<!--QUANTIDADE DE VALORES-->
+@{
+	#region Session
+	if (Session["QTDE_VALOR"] == null)
+	{
+		Session["QTDE_VALOR"] = 0;
+	}
+	else
+	{
+		Session["QTDE_VALOR"] = Convert.ToInt16(Session["QTDE_VALOR"]) + 1;
+	}
+	var count = Convert.ToInt16(Session["QTDE_VALOR"]);
+	#endregion
+
+	#region Instancia
+	//Instancia
+	Model.Valor = new List<ValorModel>()
+	{
+		new ValorModel()
+	};
+
+	for (int i = 0; i <= count; i++)
+	{
+		//Adiciona quantidade de instancias
+		Model.Valor.Add(new ValorModel());
+	}
+	#endregion
+
 }
+
+<div class="panel panel-default" style="margin:30px">
+	<div class="panel-body">
+		<div class="titulo">
+			<h2>
+				<a onclick="history.go(-1);">
+					<i class="fa fa-hashtag" aria-hidden="true"></i>
+				</a>
+				Valor
+			</h2>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-12 col-md-3">
+				<label for="txtTipoTarifa">Tipo Tarifa</label>
+				<br />
+				@foreach (var tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+				{
+					var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}_{3}", "rdbtn", typeof(TipoTarifa), tipoEnum, count));
+					@Html.RadioButtonFor(model => model.Valor[count].TipoTarifa, new { id, @class = "option-input radio" })
+					@Html.Label(tipoEnum.ToString(), new { @for = id })
+					<br />
+				}
+				@Html.ValidationMessageFor(model => model.Valor[count].TipoTarifa, null, new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-12 col-md-2">
+				<label for="txtValorUnitario">Valor Unitário</label>
+				@Html.TextBoxFor(model => model.Valor[count].ValorUnitario, new { @class = "form-control mask-valor" })
+				@Html.ValidationMessageFor(model => model.Valor[count].ValorUnitario, null, new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-12 col-md-3">
+				<label>Vigência</label>
+				<div class="input-group input-daterange">
+					@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "text", @class = "form-control mask-data" })
+					<div class="input-group-addon">a</div>
+					@Html.TextBoxFor(model => model.Valor[count].VigenciaFim, new { type = "text", @class = "form-control mask-data" })
+				</div>
+				@Html.ValidationMessageFor(model => model.Valor[count].VigenciaInicio, null, new { @class = "text-danger" })
+				@Html.ValidationMessageFor(model => model.Valor[count].VigenciaFim, null, new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-12 col-md-2">
+				<label for="txtFranquia">Franquia Km/mês</label>
+				@Html.TextBoxFor(model => model.Valor[count].Franquia, new { type = "text", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Valor[count].Franquia, null, new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-12 col-md-2">
+				<label for="txtFranquiaAdicional">Franquia Adicional</label>
+				@Html.TextBoxFor(model => model.Valor[count].FranquiaAdicional, new { type = "text", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Valor[count].FranquiaAdicional, null, new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-12 col-md-6">
+				<label for="txaObservacoesValor">Observações</label>
+				@Html.TextAreaFor(model => model.Valor[count].Observacao, new { type = "text", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Valor[count].Observacao, null, new { @class = "text-danger" })
+			</div>
+		</div>
+	</div>
+</div>

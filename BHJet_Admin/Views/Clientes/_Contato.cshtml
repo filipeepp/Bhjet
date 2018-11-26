@@ -1,56 +1,93 @@
 ﻿@using BHJet_Admin.Models.Clientes
-@model IEnumerable<ContatoModel>
+@model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
 
-@foreach (ContatoModel contato in @Model)
-{
-    <div class="panel panel-default" style="margin:30px">
-        <div class="panel-body">
-            <div class="titulo">
-                <h2>
-                    <a onclick="history.go(-1);">
-                        <i class="fa fa-hashtag" aria-hidden="true"></i>
-                    </a>
-                    Contato
-                </h2>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtContato">Contato</label>
-                    @Html.TextBox("txtContato", contato.Contato, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(contato.Contato) ? string.Empty : contato.Contato, null, new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtEmail">E-mail</label>
-                    @Html.TextBox("txtEmail", contato.Email, new { type = "email", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(contato.Contato) ? string.Empty : contato.Email, null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtTelefoneComercial">Tel. Comercial</label>
-                    @Html.TextBox("txtTelefoneComercial", contato.TelefoneComercial, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(contato.TelefoneComercial) ? string.Empty : contato.TelefoneComercial, null, new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtTelefoneCelular">Celular</label>
-                    @Html.TextBox("txtTelefoneCelular", contato.TelefoneCelular, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(contato.TelefoneCelular) ? string.Empty : contato.TelefoneCelular, null, new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtSetor">Setor</label>
-                    @Html.TextBox("txtSetor", contato.Setor, new { type = "text", @class = "form-control" })
-                    @Html.ValidationMessage(string.IsNullOrEmpty(contato.Setor) ? string.Empty : contato.Setor, null, new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-xs-6 col-md-4">
-                    <label for="txtDataNascimento">Aniversário</label>
-                    @Html.TextBox("txtDataNascimento", Convert.ToString(contato.DataNascimento), new { type = "date", @class = "form-control" })
-                    @Html.ValidationMessage(contato.DataNascimento != null ? string.Empty : Convert.ToString(contato.DataNascimento), null, new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-}	
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$(".mask-telefone").mask("(00) 0000-00009");
+		$(".mask-celular").mask("(00) 0000-00009");
+
+	});
+
+</script>
+
+<!--QUANTIDADE DE CONTATOS-->
+@{
+	#region Session
+	if (Session["QTDE_CONTATO"] == null)
+	{
+		Session["QTDE_CONTATO"] = 0;
+	}
+	else
+	{
+		Session["QTDE_CONTATO"] = Convert.ToInt16(Session["QTDE_CONTATO"]) + 1;
+	}
+	var count = Convert.ToInt16(Session["QTDE_CONTATO"]);
+	#endregion
+
+	#region Instancia
+	//Instancia 
+	Model.Contato = new List<ContatoModel>()
+	{
+		new ContatoModel()
+	};
+
+	for (int i = 0; i <= count; i++)
+	{
+		//Adiciona quantidade de instancias
+		Model.Contato.Add(new ContatoModel());
+	}
+	#endregion
+
+}
+
+<div class="panel panel-default" style="margin:30px">
+	<div class="panel-body">
+		<div class="titulo">
+			<h2>
+				<a onclick="history.go(-1);">
+					<i class="fa fa-hashtag" aria-hidden="true"></i>
+				</a>
+				Contato
+			</h2>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtContato">Contato</label>
+				@Html.TextBoxFor(model => model.Contato[count].Contato, new { type = "text", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Contato[count].Contato, null, new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtEmail">E-mail</label>
+				@Html.TextBoxFor(model => model.Contato[count].Email, new { type = "email", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Contato[count].Email, null, new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtTelefoneComercial">Tel. Comercial</label>
+				@Html.TextBoxFor(model => model.Contato[count].TelefoneComercial, new { type = "text", @class = "form-control mask-telefone" })
+				@Html.ValidationMessageFor(model => model.Contato[count].TelefoneComercial, null, new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtTelefoneCelular">Celular</label>
+				@Html.TextBoxFor(model => model.Contato[count].TelefoneCelular, new { type = "text", @class = "form-control mask-celular" })
+				@Html.ValidationMessageFor(model => model.Contato[count].TelefoneCelular, null, new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtSetor">Setor</label>
+				@Html.TextBoxFor(model => model.Contato[count].Setor, new { type = "text", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Contato[count].Setor, null, new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-6 col-md-4">
+				<label for="txtDataNascimento">Aniversário</label>
+				@Html.TextBoxFor(model => model.Contato[count].DataNascimento, new { type = "date", @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.Contato[count].DataNascimento, null, new { @class = "text-danger" })
+			</div>
+		</div>
+	</div>
+</div>

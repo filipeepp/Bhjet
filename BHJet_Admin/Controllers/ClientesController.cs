@@ -83,15 +83,7 @@ namespace BHJet_Admin.Controllers
 		{
 			return View(new ClienteModel()
 			{
-				DadosCadastrais = new DadosCadastraisModel() { },
-				Contato = new ContatoModel[]
-                {
-                    new ContatoModel(){}
-                },
-				Valor = new ValorModel[]
-                {
-                    new ValorModel(){}
-                }
+				DadosCadastrais = new DadosCadastraisModel() { }
 			});
 		}
 
@@ -120,7 +112,7 @@ namespace BHJet_Admin.Controllers
 					Observacoes = model.DadosCadastrais.Observacoes,
 					HomePage = model.DadosCadastrais.HomePage
 				},
-				Contato = model.Contato.Select(x => new ClienteContatoDTO(){
+				/*Contato = model.Contato.Select(x => new ClienteContatoDTO(){
 
 					Contato = x.Contato,
 					Email = x.Email,
@@ -129,7 +121,7 @@ namespace BHJet_Admin.Controllers
 					Setor = x.Setor,
 					DataNascimento = x.DataNascimento
 
-				}).ToArray(),
+				}).ToArray(),*/
 				Valor = model.Valor.Select(x => new ClienteValorDTO(){
 
 					ValorUnitario = x.ValorUnitario,
@@ -181,12 +173,8 @@ namespace BHJet_Admin.Controllers
         } */
 		}
 
-		public ActionResult CarregarNovoContato()
+		public ActionResult CarregarNovoContato(ClienteModel model)
         {
-            var model = new ContatoModel[]
-            {
-                new ContatoModel(){ }
-            };
             return PartialView("_Contato", model);
         }
 
@@ -195,12 +183,8 @@ namespace BHJet_Admin.Controllers
             return View(model);
         }*/
 
-		public ActionResult CarregarNovoValor()
+		public ActionResult CarregarNovoValor(ClienteModel model)
 		{
-            var model = new ValorModel[]
-           {
-                new ValorModel(){ }
-           };
             return PartialView("_Valor", model);
 		}
 	}

@@ -3,10 +3,14 @@
 @using BHJet_Core.Enum
 @model ClienteModel
 
+@{
+	Session["QTDE_CONTATO"] = null;
+	Session["QTDE_VALOR"] = null;
+}
+
 @Scripts.Render("~/bundles/jqueryval")
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
@@ -46,13 +50,13 @@
 <script type="text/javascript">
 	$(document).ready(function () {
         $("#btnNovoContato").click(function () {
-            $.get('@Url.Action("CarregarNovoContato")', { }, function (response) {
+            $.get('@Url.Action("CarregarNovoContato", Model)', { }, function (response) {
 				$("#divNovoContato").append(response);
 			});
 		});
 
 		$("#btnNovoValor").click(function () {
-			$.get('@Url.Action("CarregarNovoValor", Model.Valor)', {}, function (response) {
+			$.get('@Url.Action("CarregarNovoValor", Model)', {}, function (response) {
 				$("#divNovoValor").append(response);
 			});
 		});
@@ -229,7 +233,7 @@
 								</div>
 								<div id="tabs-2">
 									@{
-										Html.RenderPartial("_Contato", Model.Contato);
+										Html.RenderPartial("_Contato", Model);
 									}
 									<div id="divNovoContato"></div>
 									<div class="form-row">
@@ -248,7 +252,7 @@
 								</div>
                                 <div id="tabs-3">
                                     @{
-                                        Html.RenderPartial("_Valor", Model.Valor);
+                                        Html.RenderPartial("_Valor", Model);
                                     }
 
                                     <div id="divNovoValor"></div>
