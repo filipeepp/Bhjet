@@ -1,0 +1,106 @@
+﻿@using BHJet_Admin.Models.Motorista
+@using BHJet_Core.Enum
+@model EditarMotoristaModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+
+    function selecionarCliente(id) {
+
+        //var idd = id;
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Motorista/Selecionar?ID="+id,
+        //    success: function (r) {
+        //        //$("body").html(r);
+
+        //        $("#cat").load(r);
+        //    }
+        //});
+
+         //$("#dvCategoryResults").load('@(Url.Action("GetCategoryProducts","Motorista",null, Request.Url.Scheme))?categoryId=' + id);
+    }
+
+
+</script>
+
+<ol class="breadcrumb">
+    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a href="#map_canvas">Editar Motoristas, Motociclistas</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a onclick=" history.go(-1);">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Editar Motoristas / Motociclistas
+                        </h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="txtPesquisarCliente">Pesquisar Motorista</label>
+
+                            @using (Html.BeginForm("Listar", "Motorista", FormMethod.Get))
+                            {
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                        <input style="max-width: 400px;" class="form-control" type="text" id="palavraChave" name="palavraChave">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <br />
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="bg-light-gray">
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Profissional</th>
+                                            <th scope="col">Tipo Contrato</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var linha in Model.ListaMotorista)
+                                        {
+                                            <tr>
+                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.ID</a></td>
+                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })"> @linha.NomeCompleto </a></td>
+                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.TipoRegimeContratacao.ToString()</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="dvCategoryResults">
+                        @{
+                            if (Model.MotoristaSelecionado != null)
+                            {
+                                Html.RenderPartial("_DetalheMotorista", Model.MotoristaSelecionado);
+                            }
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
