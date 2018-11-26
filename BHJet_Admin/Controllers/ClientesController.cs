@@ -81,11 +81,9 @@ namespace BHJet_Admin.Controllers
 
 		public ActionResult NovoCliente()
 		{
-			return View(new BHJet_Admin.Models.Clientes.ClienteModel()
+			return View(new ClienteModel()
 			{
-				DadosCadastrais = new BHJet_Admin.Models.Clientes.DadosCadastraisModel() { },
-				Contato = new BHJet_Admin.Models.Clientes.ContatoModel[] { },
-				Valor = new BHJet_Admin.Models.Clientes.ValorModel[] { }
+				DadosCadastrais = new DadosCadastraisModel() { }
 			});
 		}
 
@@ -175,9 +173,9 @@ namespace BHJet_Admin.Controllers
         } */
 		}
 
-		public ActionResult CarregarNovoContato()
+		public ActionResult CarregarNovoContato(ClienteModel model)
         {
-            return PartialView("_Contato");
+            return PartialView("_Contato", model);
         }
 
 		/*public ActionResult NovoCliente(ClienteModel model)
@@ -185,9 +183,9 @@ namespace BHJet_Admin.Controllers
             return View(model);
         }*/
 
-		public ActionResult CarregarNovoValor()
+		public ActionResult CarregarNovoValor(ClienteModel model)
 		{
-			return PartialView("_Valor");
+			return PartialView("_Valor", model);
 		}
 	}
 }
