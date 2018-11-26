@@ -1,41 +1,29 @@
 ﻿using BHJet_Core.Enum;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BHJet_DTO.Cliente
 {
-	public class ClienteDTO
+    public class ClienteDTO
 	{
-		public int? ID { get; set; }
-		public ClienteDadosCadastraisDTO DadosCadastrais { get; set; }
-		public IEnumerable<ClienteContatoDTO> Contato { get; set; }
-		public IEnumerable<ClienteValorDTO> Valor { get; set; }
+		public long? ID { get; set; }
+        public int idEndereco { get; set; }
+        public int idUsuario { get; set; }
+        public string vcNomeRazaoSocial { get; set; }
+        public string vcNomeFantasia { get; set; }
+        public string vcCPFCNPJ { get; set; }
+        public string vcInscricaoMunicipal { get; set; }
+        public string vcInscricaoEstadual { get; set; }
+        public bool bitRetemISS { get; set; }
+        public string vcObservacoes { get; set; }
+        public string vcSite { get; set; }
+        public IEnumerable<ContatoModel> Contato { get; set; }
+		public IEnumerable<ValorModel> Valor { get; set; }
 	}
 
-	public class ClienteDadosCadastraisDTO
+
+	public class ContatoModel
 	{
-		public int Codigo { get; set; }
-		public string NomeRazaoSocial { get; set; }
-		public string NomeFantasia { get; set; }
-		public string CPFCNPJ { get; set; }
-		public string InscricaoEstadual { get; set; }
-		public bool ISS { get; set; }
-		public string Endereco { get; set; }
-		public string NumeroEndereco { get; set; }
-		public string Complemento { get; set; }
-		public string Bairro { get; set; }
-		public string Cidade { get; set; }
-		public string Estado { get; set; }
-		public string CEP { get; set; }
-		public string Observacoes { get; set; }
-		public string HomePage { get; set; }
-
-	}
-
-	public class ClienteContatoDTO
-	{
-
 		public string Contato { get; set; }
 		public string Email { get; set; }
 		public string TelefoneComercial { get; set; }
@@ -44,7 +32,7 @@ namespace BHJet_DTO.Cliente
 		public DateTime DataNascimento { get; set; }
 	}
 
-	public class ClienteValorDTO
+	public class ValorModel
 	{
 		public string ValorUnitario { get; set; }
 		public TipoTarifa TipoTarifa { get; set; }

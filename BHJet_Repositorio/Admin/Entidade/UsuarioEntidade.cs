@@ -4,8 +4,8 @@ namespace BHJet_Repositorio.Entidade
 {
     public class UsuarioEntidade
     {
-        long idUsuario { get; set; }
-        TipoUsuario idTipoUsuario { get; set; }
-        string vcEmail { get; set; }
+        public long idUsuario { get; set; }
+        public TipoUsuario idTipoUsuario { get; set; }
+        public string vcEmail { get; set; }
     }
 }

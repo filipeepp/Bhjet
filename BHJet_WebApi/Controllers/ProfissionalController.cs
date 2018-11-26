@@ -1,7 +1,9 @@
 ﻿using BHJet_Core.Enum;
+using BHJet_Core.Extension;
 using BHJet_Core.Variaveis;
 using BHJet_DTO.Profissional;
 using BHJet_Repositorio.Admin;
+using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,22 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Profissional")]
     public class ProfissionalController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
+        public UsuarioLogado UsuarioAutenticado
+        {
+            get
+            {
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
+
+                return _usuarioAutenticado;
+            }
+        }
+
         /// <summary>
         /// Busca localização de profissionais disponíveis
         /// </summary>
@@ -77,10 +95,10 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ProfissionalModel>))]
-        public IHttpActionResult GetListaProfissionais()
+        public IHttpActionResult GetListaProfissionais([FromUri]string trecho = "")
         {
             // Busca Dados resumidos
-            var entidade = new ProfissionalRepositorio().BuscaProfissionais();
+            var entidade = new ProfissionalRepositorio().BuscaProfissionais(trecho);
 
             // Validacao
             if (entidade == null)
@@ -185,12 +203,12 @@ namespace BHJet_WebApi.Controllers
         /// <returns>List<LocalizacaoProfissional></returns>
         [Authorize]
         [Route("")]
-        public IHttpActionResult PostProfissional([FromBody]ProfissionalCompletoModel model, [FromUri]long idGestorInclusao)
+        public IHttpActionResult PostProfissional([FromBody]ProfissionalCompletoModel model)
         {
             // Busca Dados resumidos
             new ProfissionalRepositorio().IncluirProfissional(new BHJet_Repositorio.Admin.Entidade.ProfissionalCompletoEntidade()
             {
-                IDGestor = idGestorInclusao,
+                IDGestor = UsuarioAutenticado.LoginID.ToLong(),
                 NomeCompleto = model.NomeCompleto,
                 CPF = model.CPF,
                 Email = model.Email,

@@ -1,13 +1,27 @@
 ﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using BHJet_Admin.Models.Faturamento;
+using BHJet_Servico.Cliente;
+using BHJet_Servico.Faturamento;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
 {
     public class FaturamentoController : Controller
     {
+        private readonly IClienteServico clienteServico;
+        private readonly IFaturamentoServico faturamentoServico;
+
+        public FaturamentoController(IClienteServico _clienteServico, IFaturamentoServico _faturamentoServico)
+        {
+            clienteServico = _clienteServico;
+            faturamentoServico = _faturamentoServico;
+        }
+
         [ValidacaoUsuarioAttribute()]
         public ActionResult Index()
         {
@@ -18,37 +32,53 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult GerarFaturamento()
         {
-            return View(new GerarFaturamantoModel()
-            {
-                ListaClientes = new System.Collections.Generic.Dictionary<int, string>()
-                {
-
-                }
-            });
+            return View(new GerarFaturamantoModel());
         }
 
         [HttpPost]
         [ValidacaoUsuarioAttribute()]
         public ActionResult GerarFaturamento(GerarFaturamantoModel model)
         {
+            // Datas
+            DateTime inicio = new DateTime(model.AnoSelecionado, model.MesSelecionado, 1);
+            DateTime fim = new DateTime(model.AnoSelecionado, model.MesSelecionado, DateTime.DaysInMonth(model.AnoSelecionado, model.MesSelecionado));
+
+            // Gera Faturamento
+            var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
+            {
+                IdCliente = model.ClienteSelecionado,
+                DataInicioFaturamento = inicio,
+                DataFimFaturamento = fim
+            });
+
+            // Return View
             return View(new GerarFaturamantoModel()
             {
-                ListaClientes = new System.Collections.Generic.Dictionary<int, string>()
+                ClienteSelecionado = model.ClienteSelecionado,
+                ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
                 {
-
-                },
-                ClienteSelecionado = 1,
-                ListaFaturamento = new System.Collections.Generic.List<FaturamentoModel>()
-                 {
-                    new FaturamentoModel()
-                     {
-                      Cliente = "Cliente A",
-                      Apuração = DateTime.Now,
-                       DescContrato = "Avulso",
-                       Valor = 1541m
-                    }
-                 }
+                    ID = x.ID,
+                    Cliente = x.NomeCliente,
+                    Apuração = x.Periodo,
+                    DescContrato = x.TipoContrato,
+                    Valor = x.Valor.ToString("C", new CultureInfo("pt-BR"))
+                })
             });
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaClientes(string trechoPesquisa)
+        {
+            // Recupera dados
+            var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.vcNomeFantasia,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -91,9 +121,9 @@ namespace BHJet_Admin.Controllers
                     new FaturamentoModel()
                      {
                       Cliente = "Cliente A",
-                      Apuração = DateTime.Now,
+                      Apuração = "",
                        DescContrato = "Avulso",
-                       Valor = 1541m
+                       Valor = ""
                     }
                  }
             });
@@ -139,9 +169,9 @@ namespace BHJet_Admin.Controllers
                     new FaturamentoModel()
                      {
                       Cliente = "Cliente A",
-                      Apuração = DateTime.Now,
+                      Apuração = "",
                        DescContrato = "Avulso",
-                       Valor = 1541m
+                       Valor = ""
                     }
                  }
             });

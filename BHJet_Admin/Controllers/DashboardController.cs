@@ -3,8 +3,12 @@ using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
+using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
+using BHJet_Servico.Diaria;
+using BHJet_Servico.Profissional;
+using BHJet_Servico.Tarifa;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,11 +19,20 @@ namespace BHJet_Admin.Controllers
     {
         private readonly IResumoServico resumoServico;
         private readonly ICorridaServico corridaServico;
+        private readonly IProfissionalServico profissionalServico;
+        private readonly IDiariaServico diariaServico;
+        private readonly IClienteServico clienteServico;
+        private readonly ITarifaServico tarifaServico;
 
-        public DashboardController(IResumoServico _resumoServico, ICorridaServico _corridaServico)
+        public DashboardController(IResumoServico _resumoServico, ICorridaServico _corridaServico,
+            IProfissionalServico _profServico, IDiariaServico _DiariaServico, IClienteServico _clienteServico, ITarifaServico _tarifaServico)
         {
             resumoServico = _resumoServico;
             corridaServico = _corridaServico;
+            profissionalServico = _profServico;
+            diariaServico = _DiariaServico;
+            clienteServico = _clienteServico;
+            tarifaServico = _tarifaServico;
         }
 
         [HttpGet]
@@ -186,31 +199,16 @@ namespace BHJet_Admin.Controllers
             });
         }
 
+        #region Diaria Avulsa
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa()
         {
-            var ListaClientes = new System.Collections.Generic.Dictionary<long, string>();
-            ListaClientes.Add(1, "teste");
+
+            TempData["testmsg"] = " Requested Successfully ";
 
             return View(new DiariaModel()
             {
-                ListaClientes = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Cliente XPTO"
-                   }
-                 },
-                ListaProfissionais = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Profissional XPTO"
-                   }
-                 },
-                Observacao = null
+                Observacao = null,
             });
         }
 
@@ -218,32 +216,98 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
+            if(modelo.PeriodoInicial.ToDate() == null)
+            {
+                ModelState.AddModelError("", "Data hora inicio do expediente.");
+                return View(modelo);
+            }
+            else if(modelo.PeriodoFinal.ToDate() == null)
+            {
+                ModelState.AddModelError("", "Data hora Fim do expediente.");
+                return View(modelo);
+            }
+            else if (modelo.PeriodoFinal.ToDate() < modelo.PeriodoInicial.ToDate())
+            {
+                ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
+                return View(modelo);
+            }
+            else if (modelo.PeriodoFinal.ToDate().Value.Date != modelo.PeriodoInicial.ToDate().Value.Date)
+            {
+                ModelState.AddModelError("", "A dia de expediente deve ser o mesmo para inicio e fim de diaria, mudando apenas o horário.");
+                return View(modelo);
+            }
+            else if (modelo.ClienteSelecionado == null)
+            {
+                ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
+                return View(modelo);
+            }
+
             if (ModelState.IsValid)
             {
-                ViewBag.MsgCustomAlerta = "Sucesso";
-                return View(new DiariaModel()
+                // Incluir diaria
+                diariaServico.IncluirDiaria(new BHJet_DTO.Diaria.DiariaAvulsaDTO()
                 {
-                    ListaClientes = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Cliente XPTO"
-                   }
-                 },
-                    ListaProfissionais = new SelectListItem[]
-                 {
-                   new  SelectListItem
-                   {
-                       Value = "1",
-                       Text = "Profissional XPTO"
-                   }
-                 },
-                    Observacao = null
+                    IDCliente = modelo.ClienteSelecionado ?? 0,
+                    IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
+                    IDTarifario = modelo.TarifaCliente,
+                    DataHoraInicioExpediente = modelo.PeriodoInicial.ToDate() ?? DateTime.Now,
+                    DataHoraFimExpediente = modelo.PeriodoFinal.ToDate(),
+                    ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
+                    ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
                 });
+
+                ViewBag.MsgCustomAlerta = "Sucesso";
+                ModelState.Clear();
+                return View();
             }
 
             return RedirectToAction("CadastroDiariaAvulsa");
+        }
+        #endregion
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaProfissionais(string trechoPesquisa)
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.NomeCompleto,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaClientes(string trechoPesquisa)
+        {
+            // Recupera dados
+            var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.vcNomeFantasia,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaTarifas(long idCliente)
+        {
+            // Recupera dados
+            var entidade = tarifaServico.BuscaTaritasCliente(idCliente);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.Descricao + " - " + x.ValorDiaria.ToString(),
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
         }
 
         private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)
@@ -252,4 +316,7 @@ namespace BHJet_Admin.Controllers
         }
 
     }
+
+
+
 }

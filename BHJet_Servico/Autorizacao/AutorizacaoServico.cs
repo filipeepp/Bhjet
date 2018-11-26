@@ -1,4 +1,5 @@
 ﻿using BHJet_Core.Utilitario;
+using BHJet_Core.Variaveis;
 using BHJet_DTO.Autenticacao;
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,11 @@ namespace BHJet_Servico.Autorizacao
 
     public class AutorizacaoServico : ServicoBase, IAutorizacaoServico
     {
+        public AutorizacaoServico(string token) : base(token)
+        {
+
+        }
+
         public TokenModel Autenticar(string usuario, string senha)
         {
             // HttpClient
@@ -52,7 +58,8 @@ namespace BHJet_Servico.Autorizacao
                     case System.Net.HttpStatusCode.Unauthorized:
                         throw new UnauthorizedAccessException();
                     default:
-                        throw new UnauthorizedAccessException("Serviço indisponível no momento.");
+                        var teste = DeserializaResponse(resposta, Mensagem.Erro.ErroPadrao); 
+                        throw new UnauthorizedAccessException(teste);
                 }
             }
             //return this.Post<TokenFiltro, TokenModel>(new Uri(ServicoRotas.Base + ServicoRotas.Autenticacao.PostAutenticar), new TokenFiltro()

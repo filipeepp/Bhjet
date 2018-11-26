@@ -11,11 +11,13 @@ namespace BHJet_Servico
 {
     public abstract class ServicoBase
     {
-        public ServicoBase()
+        public ServicoBase(string Token)
         {
             ValidateResult = null;
+            AuthorizationToken = Token;
         }
 
+        private string _AuthorizationToken;
         /// <summary>
         /// Token que será utilizado em todas as requisições
         /// </summary>
@@ -23,7 +25,11 @@ namespace BHJet_Servico
         {
             get
             {
-                return "";
+                return _AuthorizationToken;
+            }
+            private set
+            {
+                _AuthorizationToken = value;
             }
         }
 
@@ -187,7 +193,7 @@ namespace BHJet_Servico
             }
         }
 
-        private string DeserializaResponse(HttpResponseMessage response, string mensagemDefault)
+        protected string DeserializaResponse(HttpResponseMessage response, string mensagemDefault)
         {
             var retorno = response.Content.ReadAsStringAsync().Result;
             try
@@ -196,6 +202,8 @@ namespace BHJet_Servico
                     retorno = JsonConvert.DeserializeObject<ModelExcecao>(retorno).Excecao;
                 else if (retorno.Contains("Message"))
                     retorno = JsonConvert.DeserializeObject<ModelMessage>(retorno).Message;
+                else if (retorno.Contains("error_description"))
+                    retorno = JsonConvert.DeserializeObject<ModelExcecaoError>(retorno).error_description;
                 else if (!string.IsNullOrWhiteSpace(retorno))
                     retorno = retorno.Replace("\"", "");
                 else
@@ -250,6 +258,12 @@ namespace BHJet_Servico
             public string Excecao { get; set; }
             public string StackTrace { get; set; }
             public string Tipo { get; set; }
+        }
+
+        private class ModelExcecaoError
+        {
+            public string error { get; set; }
+            public string error_description { get; set; }
         }
     }
 }

@@ -9,10 +9,10 @@ namespace BHJet_Admin.Models.Dashboard
 {
     public class DiariaModel
     {
-        private DateTime _PeriodoInicial;
-        [DataType(DataType.Date)]
+        private string _PeriodoInicial;
         [Required(ErrorMessage = "Período inicial obrigatório.")]
-        public DateTime PeriodoInicial
+        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
+        public string PeriodoInicial
         {
             get
             {
@@ -24,10 +24,10 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private DateTime _PeriodoFinal;
-        [DataType(DataType.Date)]
+        private string _PeriodoFinal;
         [Required(ErrorMessage = "Período final obrigatório.")]
-        public DateTime PeriodoFinal
+        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
+        public string PeriodoFinal
         {
             get
             {
@@ -39,22 +39,35 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private IEnumerable<SelectListItem> _ListaClientes;
-        public IEnumerable<SelectListItem> ListaClientes
-        {
-            get
-            {
-                return _ListaClientes;
-            }
-            set
-            {
-                _ListaClientes = value;
-            }
-        }
+        //private IEnumerable<SelectListItem> _ListaClientes;
+        //public IEnumerable<SelectListItem> ListaClientes
+        //{
+        //    get
+        //    {
+        //        return _ListaClientes;
+        //    }
+        //    set
+        //    {
+        //        _ListaClientes = value;
+        //    }
+        //}
 
-        private long _ClienteSelecionado;
+        //private int? _IDClienteSelecionado;
+        //public int? IDClienteSelecionado
+        //{
+        //    get
+        //    {
+        //        return _IDClienteSelecionado;
+        //    }
+        //    set
+        //    {
+        //        _IDClienteSelecionado = value;
+        //    }
+        //}
+
+        private int? _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
-        public long ClienteSelecionado
+        public int? ClienteSelecionado
         {
             get
             {
@@ -66,22 +79,50 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private IEnumerable<SelectListItem> _ListaProfissionais;
-        public IEnumerable<SelectListItem> ListaProfissionais
+        private int _TarifaCliente;
+        [Required(ErrorMessage = "Tarifa obrigatória.")]
+        public int TarifaCliente
         {
             get
             {
-                return _ListaProfissionais;
+                return _TarifaCliente;
             }
             set
             {
-                _ListaProfissionais = value;
+                _TarifaCliente = value;
             }
         }
 
-        private long _ProfissionalSelecionado;
+        //private IEnumerable<SelectListItem> _ListaProfissionais;
+        //public IEnumerable<SelectListItem> ListaProfissionais
+        //{
+        //    get
+        //    {
+        //        return _ListaProfissionais;
+        //    }
+        //    set
+        //    {
+        //        _ListaProfissionais = value;
+        //    }
+        //}
+
+        //private int? _IDProfissionalSelecionado;
+        //[Required(ErrorMessage = "Profissional obrigatório.")]
+        //public int? IDProfissionalSelecionado
+        //{
+        //    get
+        //    {
+        //        return _IDProfissionalSelecionado;
+        //    }
+        //    set
+        //    {
+        //        _IDProfissionalSelecionado = value;
+        //    }
+        //}
+
+        private int? _ProfissionalSelecionado;
         [Required(ErrorMessage = "Profissional obrigatório.")]
-        public long ProfissionalSelecionado
+        public int? ProfissionalSelecionado
         {
             get
             {

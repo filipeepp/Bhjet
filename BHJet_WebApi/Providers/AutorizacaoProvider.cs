@@ -1,5 +1,6 @@
 ﻿using BHJet_Core.Variaveis;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Entidade;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Security.Claims;
@@ -20,13 +21,15 @@ namespace BHJet_WebApi.Providers
             {
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-                ValidaUsuario(ref context);
+                // Busca e valida usuario
+                var user = ValidaUsuario(ref context);
 
                 if (context.HasError)
                     return;
 
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                 identity.AddClaim(new Claim("sub", context.UserName));
+                identity.AddClaim(new Claim("id", user.idUsuario.ToString()));
                 identity.AddClaim(new Claim("role", "user"));
 
                 context.Validated(identity);
@@ -37,7 +40,7 @@ namespace BHJet_WebApi.Providers
             }
         }
 
-        private static void ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context)
+        private static UsuarioEntidade ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context)
         {
             // Válidar usuario aqui
             var user = new AutenticacaoRepositorio().BuscaUsuario(new BHJet_Repositorio.Filtro.ValidaUsuarioFiltro()
@@ -49,8 +52,10 @@ namespace BHJet_WebApi.Providers
 
             // Validacao
             if (user == null)
-             throw new Exception(Mensagem.Validacao.UsuarioNaoEncontrato);
+                throw new Exception(Mensagem.Validacao.UsuarioNaoEncontrato);
 
+            // Usuario OK
+            return user;
         }
     }
 }

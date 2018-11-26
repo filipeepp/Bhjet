@@ -2,7 +2,7 @@
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Autenticacao")]
+    [RoutePrefix("Autenticacao")]
     public class AutenticacaoController : ApiController
     {
         [Authorize]

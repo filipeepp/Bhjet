@@ -1,6 +1,7 @@
 ﻿using BHJet_Core.Utilitario;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Models.Faturamento
@@ -45,24 +46,12 @@ namespace BHJet_Admin.Models.Faturamento
         {
             get
             {
-                return DataUtil.BuscaProximosAnos(10);
-            }
-        }
-
-        private Dictionary<int, string> _ListaClientes;
-        public Dictionary<int, string> ListaClientes
-        {
-            get
-            {
-                return _ListaClientes;
-            }
-            set
-            {
-                _ListaClientes = value;
+                return new int[] { DateTime.Now.Year };
             }
         }
 
         private long? _ClienteSelecionado;
+        [Required(ErrorMessage = "Cliente obrigatório.")]
         public long? ClienteSelecionado
         {
             get
