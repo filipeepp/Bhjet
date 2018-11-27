@@ -83,7 +83,7 @@
 				@Html.TextBoxFor(model => model.Contato[count].Setor, new { type = "text", @class = "form-control" })
 				@Html.ValidationMessageFor(model => model.Contato[count].Setor, null, new { @class = "text-danger" })
 			</div>
-			<div class="form-group col-xs-6 col-md-4">
+			<div class="form-group col-xs-6 col-md-2">
 				<label for="txtDataNascimento">Aniversário</label>
 				@Html.TextBoxFor(model => model.Contato[count].DataNascimento, new { type = "date", @class = "form-control" })
 				@Html.ValidationMessageFor(model => model.Contato[count].DataNascimento, null, new { @class = "text-danger" })

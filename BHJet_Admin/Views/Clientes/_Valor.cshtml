@@ -1,5 +1,6 @@
 ﻿@using BHJet_Admin.Models.Clientes
 @using BHJet_Core.Enum
+@using BHJet_Core.Extension
 @model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -35,9 +36,9 @@
 	#region Instancia
 	//Instancia
 	Model.Valor = new List<ValorModel>()
-	{
-		new ValorModel()
-	};
+{
+new ValorModel()
+};
 
 	for (int i = 0; i <= count; i++)
 	{
@@ -62,11 +63,11 @@
 			<div class="form-group col-xs-12 col-md-3">
 				<label for="txtTipoTarifa">Tipo Tarifa</label>
 				<br />
-				@foreach (var tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+				@foreach (TipoTarifa tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
 				{
 					var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}_{3}", "rdbtn", typeof(TipoTarifa), tipoEnum, count));
 					@Html.RadioButtonFor(model => model.Valor[count].TipoTarifa, tipoEnum, new { id, @class = "option-input radio" })
-					@Html.Label(tipoEnum.ToString(), new { @for = id })
+					@Html.Label(tipoEnum.RetornaDisplayNameEnum(), new { @for = id })
 					<br />
 				}
 				@Html.ValidationMessageFor(model => model.Valor[count].TipoTarifa, null, new { @class = "text-danger" })
@@ -83,9 +84,9 @@
 			<div class="form-group col-xs-12 col-md-3">
 				<label>Vigência</label>
 				<div class="input-group input-daterange">
-					@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "text", @class = "form-control mask-data" })
+					@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data" })
 					<div class="input-group-addon">a</div>
-					@Html.TextBoxFor(model => model.Valor[count].VigenciaFim, new { type = "text", @class = "form-control mask-data" })
+					@Html.TextBoxFor(model => model.Valor[count].VigenciaFim, new { type = "date", style = "width: 160px;", @class = "form-control mask-data" })
 				</div>
 				@Html.ValidationMessageFor(model => model.Valor[count].VigenciaInicio, null, new { @class = "text-danger" })
 				@Html.ValidationMessageFor(model => model.Valor[count].VigenciaFim, null, new { @class = "text-danger" })

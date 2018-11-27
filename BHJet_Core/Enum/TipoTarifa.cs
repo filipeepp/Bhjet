@@ -10,10 +10,10 @@ namespace BHJet_Core.Enum
 {
 	public enum TipoTarifa
 	{
-		[Description("Avulso Mensal")]
+		[Display(Name ="Avulso Mensal")]
 		AvulsoMensal = 1,
 
-		[Description("Alocação Mensal")]
+		[Display(Name ="Alocação Mensal")]
 		AlocacaoMensal = 2
 
 	}
