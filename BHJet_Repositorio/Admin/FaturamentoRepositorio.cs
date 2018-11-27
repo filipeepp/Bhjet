@@ -13,7 +13,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ValidaUsuarioFiltro</param>
         /// <returns>UsuarioEntidade</returns>
-        public void GeraFaturamento(long? idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public void GeraFaturamento(long[] idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -78,10 +78,10 @@ namespace BHJet_Repositorio.Admin
                                               %clienteCondition2%";
 
                         // Busca por cliente
-                        if (idCliente != null)
+                        if (idCliente != null && idCliente.Any())
                         {
-                            query = query.Replace("%clienteCondition1%", " and  P.idCliente = @IDCliente");
-                            query = query.Replace("%clienteCondition2%", " and  CC.idCliente = @IDCliente");
+                            query = query.Replace("%clienteCondition1%", " and  P.idCliente in @IDCliente");
+                            query = query.Replace("%clienteCondition2%", " and  CC.idCliente in @IDCliente");
                         }
 
                         // Query Multiple
@@ -102,7 +102,7 @@ namespace BHJet_Repositorio.Admin
                             var servicosUnificados = new List<ItemFaturamentoEntidade>();
 
                             // Atualiza id periodo faturamento nas itens a faturar
-                            if (idCliente != null)
+                            if (idCliente != null && idCliente.Any())
                                 servicosUnificados = diarias.Union(corridas).ToList();
 
                             // Lista final a ser faturado
@@ -170,7 +170,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public IEnumerable<ItemFaturamentoResumidoEntidade> BuscaItemFaturamento(long? idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public IEnumerable<ItemFaturamentoResumidoEntidade> BuscaItemFaturamento(long[] idClientes, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -187,13 +187,17 @@ namespace BHJet_Repositorio.Admin
 		join tblColaboradoresCliente as CC on (CC.idUsuario = us.idUsuario) 
 		join tblClientes CLI on (CLI.idCliente = CC.idCliente)
 			where PF.dtDataInicioPeriodoFaturamento = @dataInicio 
-                    and PF.dtDataFimPeriodoFaturamento = @dataFim";
+                    and PF.dtDataFimPeriodoFaturamento = @dataFim  %clienteCondition1%";
+
+                if (idClientes != null && idClientes.Any())
+                    query = query.Replace("%clienteCondition1%", " and  CLI.idCliente in @IDCliente");
 
                 // Execução
                 return sqlConnection.Query<ItemFaturamentoResumidoEntidade>(query, new
                 {
                     dataInicio = periodoFatInico,
-                    dataFim = periodoFatFim
+                    dataFim = periodoFatFim,
+                    IDCliente = idClientes
                 });
             }
         }

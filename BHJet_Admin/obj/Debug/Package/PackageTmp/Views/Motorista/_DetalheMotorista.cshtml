@@ -48,14 +48,8 @@
                         </div>
                         <div class=" col-md-2">
                             <div style="margin-top:25px;">
-                                <label for="CelularWhatsapp" class="label-cbx">
-                                    <input id="CelularWhatsapp" type="checkbox" name="CelularWhatsapp" value="@Model.CelularWhatsapp" class="invisible">
-                                    <div class="checkbox">
-                                        <svg width="20px" height="20px" viewBox="0 0 20 20">
-                                            <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
-                                            <polyline points="4 11 8 15 16 6"></polyline>
-                                        </svg>
-                                    </div>
+                                <label class="label-cbx">
+                                    @Html.CheckBoxFor(model => model.CelularWhatsapp, new { @class = "checkbox" })
                                     <span>Whatsapp</span>
                                 </label>
                             </div>
@@ -100,15 +94,10 @@
 
                 <div class="col-xs-12 col-sm-12 col-lg-12">
                     <div class="row">
+                        @Html.HiddenFor(model => model.EnderecoPrincipal, new { @class = "invisible" })
                         <div class="col-md-3 col-lg-2">
-                            <label for="EnderecoPrincipal" class="label-cbx">
-                                <input id="EnderecoPrincipal" type="checkbox" name="EnderecoPrincipal" value="@Model.EnderecoPrincipal" class="invisible">
-                                <div class="checkbox">
-                                    <svg width="20px" height="20px" viewBox="0 0 20 20">
-                                        <path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
-                                        <polyline points="4 11 8 15 16 6"></polyline>
-                                    </svg>
-                                </div>
+                            <label class="label-cbx">
+                                @Html.CheckBoxFor(model => model.EnderecoPrincipal, new { @class = "checkbox" })
                                 <span>Endereço Principal</span>
                             </label>
                         </div>
@@ -205,6 +194,16 @@
     </div>
 }
 
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
 <script src="~/Scripts/DetalheMotorista.js"></script>

@@ -11,6 +11,12 @@
                     var desc = dados[i].desc
                     FazMarcacao(lat, long, dados[i].psCorrida, desc)
                 });
+
+                if (dados == "" || dados == undefined) {
+                    $("#msgModal").text("Não foram encontrados localizações para marcação no mapa.")
+                    $("#imgMensagem").attr("src", "..\\Images\\warming.png");
+                    $('#myModal').modal('show')
+                }
             }
         });
     }

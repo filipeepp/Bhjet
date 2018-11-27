@@ -12,6 +12,7 @@ using BHJet_Servico.Tarifa;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace BHJet_Admin.Controllers
 {
@@ -69,39 +70,41 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public JsonResult BuscaLocalizacao()
         {
-            // Consiste Entrada
-            if (TempData["TipoSolicitacao"] == null)
-                return null;
-
             // Modelo
             ExibeLocalizacaoModel[] localizacao = new ExibeLocalizacaoModel[] { };
 
-            // Busca Localizacao
-            switch (TempData["TipoSolicitacao"])
+            try
             {
-                case DashboardTipoDisponivelEnum.MotociclistaDisponivel:
-                    localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
-                    {
-                        id = x.idColaboradorEmpresaSistema,
-                        geoPosicao = x.geoPosicao,
-                        psCorrida = false,
-                        desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motociclista)
-                    }).ToArray();
-                    break;
-                case DashboardTipoDisponivelEnum.MotoristaDisponivel:
-                    localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
-                    {
-                        id = x.idColaboradorEmpresaSistema,
-                        geoPosicao = x.geoPosicao,
-                        psCorrida = false,
-                        desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motorista)
-                    }).ToArray();
-                    break;
-                case DashboardTipoDisponivelEnum.FuncionarioDisponivel:
-                    if (int.TryParse(TempData["idProfissional"]?.ToString(), out int idProfissional))
-                    {
-                        var model = resumoServico.BuscaLocalizacaoProfissional(idProfissional);
-                        localizacao = new ExibeLocalizacaoModel[]{
+                // Consiste Entrada
+                if (TempData["TipoSolicitacao"] == null)
+                    return null;
+
+                // Busca Localizacao
+                switch (TempData["TipoSolicitacao"])
+                {
+                    case DashboardTipoDisponivelEnum.MotociclistaDisponivel:
+                        localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
+                        {
+                            id = x.idColaboradorEmpresaSistema,
+                            geoPosicao = x.geoPosicao,
+                            psCorrida = false,
+                            desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motociclista)
+                        }).ToArray();
+                        break;
+                    case DashboardTipoDisponivelEnum.MotoristaDisponivel:
+                        localizacao = resumoServico.BuscaLocalizacaoProfissionais(TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
+                        {
+                            id = x.idColaboradorEmpresaSistema,
+                            geoPosicao = x.geoPosicao,
+                            psCorrida = false,
+                            desc = MontaDescricaoProfissional(x.idColaboradorEmpresaSistema, x.NomeColaborador, TipoProfissional.Motorista)
+                        }).ToArray();
+                        break;
+                    case DashboardTipoDisponivelEnum.FuncionarioDisponivel:
+                        if (int.TryParse(TempData["idProfissional"]?.ToString(), out int idProfissional))
+                        {
+                            var model = resumoServico.BuscaLocalizacaoProfissional(idProfissional);
+                            localizacao = new ExibeLocalizacaoModel[]{
                             new ExibeLocalizacaoModel()
                             {
                                 id = model.idColaboradorEmpresaSistema,
@@ -110,28 +113,33 @@ namespace BHJet_Admin.Controllers
                                 desc = MontaDescricaoProfissional(model.idColaboradorEmpresaSistema, model.NomeColaborador, model.TipoColaborador)
                             }
                         };
-                    }
-                    break;
-                case DashboardTipoDisponivelEnum.ChamadoAguardandoCarros:
-                    localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
-                    {
-                        id = x.idCorrida,
-                        geoPosicao = x.geoPosicao,
-                        psCorrida = true
-                    }).ToArray();
-                    break;
-                case DashboardTipoDisponivelEnum.ChamadoAguardandoMotociclista:
-                    localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
-                    {
-                        id = x.idCorrida,
-                        geoPosicao = x.geoPosicao,
-                        psCorrida = true
-                    }).ToArray();
-                    break;
-            }
+                        }
+                        break;
+                    case DashboardTipoDisponivelEnum.ChamadoAguardandoCarros:
+                        localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motorista)?.Select(x => new ExibeLocalizacaoModel()
+                        {
+                            id = x.idCorrida,
+                            geoPosicao = x.geoPosicao,
+                            psCorrida = true
+                        }).ToArray();
+                        break;
+                    case DashboardTipoDisponivelEnum.ChamadoAguardandoMotociclista:
+                        localizacao = resumoServico.BuscaLocalizacaoCorridas(StatusCorrida.AguardandoAtendimento, TipoProfissional.Motociclista)?.Select(x => new ExibeLocalizacaoModel()
+                        {
+                            id = x.idCorrida,
+                            geoPosicao = x.geoPosicao,
+                            psCorrida = true
+                        }).ToArray();
+                        break;
+                }
 
-            // Return
-            return Json(localizacao, JsonRequestBehavior.AllowGet);
+                // Return
+                return Json(localizacao, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(localizacao, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -159,44 +167,52 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult OSCliente(ResumoModel model)
         {
-            // Consiste Entrada
-            if (model == null)
-                return null;
-
-            // chamado pesquisado
-            if (!long.TryParse(model.PesquisaOSCliente, out long osCliente))
-                RedirectToAction("Index", "Home");
-
-            // Busca Dados da OS
-            var entidade = corridaServico.BuscaDetalheCorrida(osCliente);
-
-            // Return
-            return View(new OSClienteModel()
+            try
             {
-                Cliente = entidade.IDCliente,
-                Motorista = entidade.IDProfissional,
-                NumeroOS = entidade.NumeroOS,
-                Origem = new OSClienteEnderecoModel()
+                // Consiste Entrada
+                if (model == null)
+                    return null;
+
+                // chamado pesquisado
+                if (!long.TryParse(model.PesquisaOSCliente, out long osCliente))
+                    return RedirectToAction("Index", "Home");
+
+                // Busca Dados da OS
+                var entidade = corridaServico.BuscaDetalheCorrida(osCliente);
+
+                // Return
+                return View(new OSClienteModel()
                 {
-                    EnderecoOrigem = entidade.Origem.EnderecoCompleto,
-                    Espera = entidade.Origem.TempoEspera?.ToString(),
-                    Observacao = entidade.Origem.Observacao,
-                    ProcurarPessoa = entidade.Origem.ProcurarPor,
-                    Realizar = entidade.Origem.Realizar,
-                    Status = entidade.Origem.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
-                    Foto = System.IO.File.ReadAllBytes(@"C:\Users\LEOZI\Pictures\ctr.jpg")
-                },
-                Desinos = entidade.Destinos.Select(dest => new OSClienteEnderecoModel()
-                {
-                    EnderecoOrigem = dest.EnderecoCompleto,
-                    Espera = dest.TempoEspera?.ToString(),
-                    Observacao = dest.Observacao,
-                    ProcurarPessoa = dest.ProcurarPor,
-                    Realizar = dest.Realizar,
-                    Status = dest.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
-                    Foto = System.IO.File.ReadAllBytes(@"C:\Users\LEOZI\Pictures\ctr.jpg")
-                }).ToArray()
-            });
+                    Cliente = entidade.IDCliente,
+                    Motorista = entidade.IDProfissional,
+                    NumeroOS = entidade.NumeroOS,
+                    Origem = new OSClienteEnderecoModel()
+                    {
+                        EnderecoOrigem = entidade.Origem.EnderecoCompleto,
+                        Espera = entidade.Origem.TempoEspera?.ToString(),
+                        Observacao = entidade.Origem.Observacao,
+                        ProcurarPessoa = entidade.Origem.ProcurarPor,
+                        Realizar = entidade.Origem.Realizar,
+                        Status = entidade.Origem.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
+                        Foto = entidade.Origem.CaminhoProtocolo
+                    },
+                    Desinos = entidade.Destinos.Select(dest => new OSClienteEnderecoModel()
+                    {
+                        EnderecoOrigem = dest.EnderecoCompleto,
+                        Espera = dest.TempoEspera?.ToString(),
+                        Observacao = dest.Observacao,
+                        ProcurarPessoa = dest.ProcurarPor,
+                        Realizar = dest.Realizar,
+                        Status = dest.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
+                        Foto = dest.CaminhoProtocolo
+                    }).ToArray()
+                });
+            }
+            catch(Exception e)
+            {
+                this.TrataErro(e);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         #region Diaria Avulsa
@@ -216,12 +232,12 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
-            if(modelo.PeriodoInicial.ToDate() == null)
+            if (modelo.PeriodoInicial.ToDate() == null)
             {
                 ModelState.AddModelError("", "Data hora inicio do expediente.");
                 return View(modelo);
             }
-            else if(modelo.PeriodoFinal.ToDate() == null)
+            else if (modelo.PeriodoFinal.ToDate() == null)
             {
                 ModelState.AddModelError("", "Data hora Fim do expediente.");
                 return View(modelo);

@@ -25,6 +25,7 @@
                         </h2>
                     </div>
 
+
                     <div class="row">
                         <div class="col-xs-12 col-sm-10 col-md-12">
                             <div class="col-xs-12 col-sm-5 col-lg-3">
@@ -167,7 +168,16 @@
     </div>
 </div>
 
-
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>

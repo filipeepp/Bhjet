@@ -5,7 +5,7 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 <ol class="breadcrumb">
-    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a onclick="@Url.Action("Listar", "Home")">Home</a></li>
     <li><a href="#map_canvas">@ViewBag.TipoAlteracao Motorista, Motociclista</a></li>
 </ol>
 
@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <div class="titulo">
                         <h2>
-                            <a onclick=" history.go(-1);">
+                            <a href="@Url.Action("Listar", "Motorista")">
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
                             </a>
                             @ViewBag.TipoAlteracao Motorista / Motociclista

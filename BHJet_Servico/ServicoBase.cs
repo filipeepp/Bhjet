@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Variaveis;
+﻿using BHJet_Core.Utilitario;
+using BHJet_Core.Variaveis;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -169,27 +170,27 @@ namespace BHJet_Servico
                     switch (response.StatusCode)
                     {
                         case HttpStatusCode.NoContent:
-                            var msgResponse = DeserializaResponse(response, Mensagem.Erro.SemResultado);
-                            throw new Exception(msgResponse);
+                            var msgResponseNC = DeserializaResponse(response, Mensagem.Erro.SemResultado);
+                            throw new NoContentException(msgResponseNC);
                     }
                     break;
                 case 4:
                     switch (response.StatusCode)
                     {
                         case HttpStatusCode.NotFound:
-                            throw new Exception(Mensagem.Erro.SemResultado);
+                            throw new NoContentException(Mensagem.Erro.SemResultado);
                         case HttpStatusCode.Unauthorized:
                             throw new UnauthorizedAccessException();
                         case HttpStatusCode.BadRequest:
                         case HttpStatusCode.NotAcceptable:
                             var msgResponse = DeserializaResponse(response, Mensagem.Erro.ErroPadrao);
-                            throw new Exception(msgResponse ?? Mensagem.Erro.ErroPadrao);
+                            throw new WarningException(msgResponse ?? Mensagem.Erro.ErroPadrao);
                         default:
-                            throw new Exception(Mensagem.Erro.ErroPadrao);
+                            throw new ErrorException(Mensagem.Erro.ErroPadrao);
                     }
                 case 3:
                 case 5:
-                    throw new Exception(Mensagem.Erro.ErroPadrao);
+                    throw new ErrorException(Mensagem.Erro.ErroPadrao);
             }
         }
 

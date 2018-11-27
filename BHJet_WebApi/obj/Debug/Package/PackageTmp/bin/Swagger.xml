@@ -41,6 +41,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:BHJet_WebApi.Controllers.FaturamentoController">
+            <summary>
+            Controller de Faturamentos
+            </summary>
+        </member>
         <member name="M:BHJet_WebApi.Controllers.FaturamentoController.PostGerarFaturamento(BHJet_DTO.Faturamento.GerarFaturamentoDTO)">
             <summary>
             Método para inclusão de diaria avulsa

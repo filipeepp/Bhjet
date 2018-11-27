@@ -1,7 +1,7 @@
 ﻿@using System.Web.Http
 
 <ol class="breadcrumb">
-    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a onclick="@Url.Action("Index", "Home")">Home</a></li>
     <li><a href="#map_canvas">Motoristas, Motociclistas</a></li>
 </ol>
 
@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="titulo">
                         <h2>
-                            <a onclick=" history.go(-1);">
+                            <a href=" @Url.Action("Index", "Home")">
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
                             </a>
                             Motoristas / Motociclistas

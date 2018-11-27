@@ -70,9 +70,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select PRO.idColaboradorEmpresaSistema as ID,
 										PRO.vcNomeCompleto as NomeCompleto,
 										TP.idTipoProfissional as TipoProfissional,
-									    CASE (PRO.bitRegimeContratacaoCLT)
-                                   WHEN  0 THEN 'CLT'
-                                   WHEN 1 THEN 'MEI' END as TipoContrato
+									    PRO.bitRegimeContratacaoCLT TipoRegime
 										from tblColaboradoresEmpresaSistema as PRO
     							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
                                      where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
