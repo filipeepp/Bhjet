@@ -17,12 +17,12 @@ namespace BHJet_DTO.Cliente
         public bool bitRetemISS { get; set; }
         public string vcObservacoes { get; set; }
         public string vcSite { get; set; }
-        public IEnumerable<ContatoModel> Contato { get; set; }
-		public IEnumerable<ValorModel> Valor { get; set; }
+        public IEnumerable<ClienteContatoModel> Contato { get; set; }
+		public IEnumerable<ClienteValorModel> Valor { get; set; }
 	}
 
 
-	public class ContatoModel
+	public class ClienteContatoModel
 	{
 		public string Contato { get; set; }
 		public string Email { get; set; }
@@ -32,7 +32,7 @@ namespace BHJet_DTO.Cliente
 		public DateTime DataNascimento { get; set; }
 	}
 
-	public class ValorModel
+	public class ClienteValorModel
 	{
 		public string ValorUnitario { get; set; }
 		public TipoTarifa TipoTarifa { get; set; }

@@ -3,7 +3,7 @@
 	/*VALORES INICIAIS */
 	$("#tabs").tabs({ disabled: [1, 2] });
 
-    /*DADOS CADASTRAIS*/
+    /*MASCARAS*/
         //CPF e CNPJ
     var cpfMascara = function (val) {
         return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
@@ -25,23 +25,6 @@
         NumeroEndereco : $("#DadosCadastrais_NumeroEndereco")
     }
     $('#DadosCadastrais_CEP').mask('00000-000', GetOptionsViaCep(endereco));
-
-    /*CONTATO*/
-        //TELEFONE COMERCIAL
-    $("#TelefoneComercial").mask("(00) 0000-00009");    
-        //TELEFONE CELULAR
-    $("#TelefoneCelular").mask("(00) 0000-00009");
-
-    /*VALOR*/
-    $("#ValorUnitario").maskMoney({
-        prefix: "R$:",
-        decimal: ",",
-        thousands: "."
-	});
-	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
-
-    $("#VigenciaInicio").mask("99/99/9999");
-    $("#VigenciaFim").mask("99/99/9999");
 
     
 });

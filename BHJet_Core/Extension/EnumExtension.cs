@@ -24,5 +24,14 @@ namespace BHJet_Core.Extension
             }
             return displayName;
         }
-    }
+
+		public static string RetornaDisplayNameEnum(this System.Enum enumValue)
+		{
+			return enumValue.GetType()
+							.GetMember(enumValue.ToString())
+							.First()
+							.GetCustomAttribute<DisplayAttribute>()
+							.GetName();
+		}
+	}
 }

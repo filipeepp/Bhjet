@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Collections;
 
 namespace BHJet_Admin.Models.Clientes
 {
@@ -9,20 +10,13 @@ namespace BHJet_Admin.Models.Clientes
     {
         public int? ID { get; set; }
         public DadosCadastraisModel DadosCadastrais { get; set; }
-        public IEnumerable<ContatoModel> Contato { get; set; }
-        public IEnumerable<ValorModel> Valor { get; set; }
+		public List<ContatoModel> Contato { get; set; }
+		public List<ValorModel> Valor { get; set; }
+	
 
         public ClienteModel()
         {
-            DadosCadastrais = new DadosCadastraisModel() { };
-            Contato = new ContatoModel[]
-            {
-                new ContatoModel() { }
-            };
-            Valor = new ValorModel[]
-            {
-                new ValorModel(){ }
-            };
-        }
+			DadosCadastrais = new DadosCadastraisModel() { };
+		}
     }
 }
