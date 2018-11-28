@@ -16,12 +16,40 @@ namespace BHJet_Admin.Controllers
                      {
                           ID = 1,
                           Email ="teste@teste.com",
-                          Situacao = "Ativo",
+                          Situacao = true,
+                           SituacaoDesc = "Ativo",
                           TipoUser = BHJet_Core.Enum.TipoUsuario.Administrador
                      }
                  }
 
             });
         }
+
+        // POST: Usuario
+        [HttpPost]
+        public ActionResult Index(UsuariosModel model)
+        {
+            return View(new UsuariosModel()
+            {
+                usuarios = new UsuarioModel[]
+                 {
+                     new UsuarioModel()
+                     {
+                          ID = 1,
+                          Email ="teste@teste.com",
+                          Situacao = true,
+                           SituacaoDesc = "Ativo",
+                          TipoUser = BHJet_Core.Enum.TipoUsuario.Administrador
+                     }
+                 }
+
+            });
+        }
+
+
+
+
+
     }
+
 }
