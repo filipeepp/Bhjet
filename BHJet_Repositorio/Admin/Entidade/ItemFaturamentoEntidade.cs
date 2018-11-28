@@ -18,7 +18,7 @@
         public long ID { get; set; }
         public string NomeCliente { get; set; }
         public string Periodo { get; set; }
-        public string TipoContrato { get; set; }
+        public string TipoDescContrato { get; set; }
         public decimal Valor { get; set; }
     }
 }

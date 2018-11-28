@@ -206,6 +206,8 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+
+
         /// <summary>
         /// Inclui Profissional
         /// </summary>
@@ -315,5 +317,27 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        /// <summary>
+        /// Verifica se existe profissional
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="cpf"></param>
+        /// <returns></returns>
+        public IEnumerable<ValidaProfissionalExistente> VerificaProfissionalExistente(string email, string cpf)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT vcCPFCNPJ, vcEmail  FROM  tblColaboradoresEmpresaSistema
+			                        WHERE vcEmail = @Email OR vcCPFCNPJ = @CPF";
+
+                // Execução
+                return sqlConnection.Query<ValidaProfissionalExistente>(query, new
+                {
+                    Email = email,
+                    CPF = cpf
+                });
+            }
+        }
     }
 }

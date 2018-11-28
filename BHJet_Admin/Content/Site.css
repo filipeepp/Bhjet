@@ -963,7 +963,9 @@ input[type="radio"] {
     justify-content: center;
     position: absolute;
     z-index: 999;
-    visibility:hidden;
+    display: none;
+    text-align: center;
+    padding-top: 20%;
 }
 
 .car__body {

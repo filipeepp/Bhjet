@@ -67,7 +67,7 @@ namespace BHJet_Admin.Controllers
                 }
                 else
                 {
-                    // Clear erros
+
                     ModelState.Clear();
 
                     // Tipo de Execução
@@ -76,7 +76,10 @@ namespace BHJet_Admin.Controllers
                     // Return
                     return View(new NovoMotoristaModel()
                     {
-                        EdicaoCadastro = false
+                        EdicaoCadastro = false,
+                        ID = 0,
+                         Bairro = "",
+
                     });
                 }
             }
@@ -146,20 +149,28 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult Listar(string palavraChave)
         {
-            // Busca Motoristas
-            var entidade = profissionalServico.BuscaProfissionais("");
-
-            // Return
-            return View(new EditarMotoristaModel()
+            try
             {
-                MotoristaSelecionado = null,
-                ListaMotorista = entidade.Select(pf => new MotoristaSimplesModel()
+                // Busca Motoristas
+                var entidade = profissionalServico.BuscaProfissionais("");
+
+                // Return
+                return View(new EditarMotoristaModel()
                 {
-                    ID = pf.ID,
-                    NomeCompleto = pf.NomeCompleto,
-                    TipoRegimeContratacao = pf.TipoRegime
-                }).ToArray()
-            });
+                    MotoristaSelecionado = null,
+                    ListaMotorista = entidade.Select(pf => new MotoristaSimplesModel()
+                    {
+                        ID = pf.ID,
+                        NomeCompleto = pf.NomeCompleto,
+                        TipoRegimeContratacao = pf.TipoRegime
+                    }).ToArray()
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return RedirectToAction("Index", "Motorista");
+            }
         }
         #endregion
 

@@ -48,6 +48,8 @@ namespace BHJet_Servico
             }
         }
 
+     
+
         protected Uri ServiceUri
         {
             get
@@ -63,6 +65,7 @@ namespace BHJet_Servico
             var value = Get(url);
             return JsonConvert.DeserializeObject<T>(value);
         }
+
 
         protected Stream GetStream(Uri url)
         {

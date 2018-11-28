@@ -62,6 +62,7 @@
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\TarifaEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
+    <Compile Include="Admin\Entidade\ValidaProfissionalExistente.cs" />
     <Compile Include="Admin\FaturamentoRepositorio.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />
     <Compile Include="Admin\ProfissionalRepositorio.cs" />

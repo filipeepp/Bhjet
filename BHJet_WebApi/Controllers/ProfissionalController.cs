@@ -206,7 +206,30 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult PostProfissional([FromBody]ProfissionalCompletoModel model)
         {
             // Busca Dados resumidos
-            new ProfissionalRepositorio().IncluirProfissional(new BHJet_Repositorio.Admin.Entidade.ProfissionalCompletoEntidade()
+            var profRepositorio = new ProfissionalRepositorio();
+
+            // Verifica existencia
+            var entidade = profRepositorio.VerificaProfissionalExistente(model.Email, model.CPF);
+
+            // VALIDACAO
+            if (entidade.Any())
+            {
+                bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.CPF).Any();
+                bool existeEmail = entidade.Where(x => x.vcEmail == model.Email).Any();
+
+                string msg = "";
+                if (existeCPF && existeEmail)
+                    msg = "CPF e Email.";
+                else if (existeCPF)
+                    msg = "mesmo CPF.";
+                else if (existeEmail)
+                    msg = "mesmo Email.";
+
+                return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
+            }
+
+            // Inclui profissional
+            profRepositorio.IncluirProfissional(new BHJet_Repositorio.Admin.Entidade.ProfissionalCompletoEntidade()
             {
                 IDGestor = UsuarioAutenticado.LoginID.ToLong(),
                 NomeCompleto = model.NomeCompleto,

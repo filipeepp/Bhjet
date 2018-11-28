@@ -27,17 +27,31 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult Index()
         {
-            // Busca dados Resumo
-            var modelResumo = resumoServico.BuscaResumo();
-
-            // Return
-            return View(new ResumoModel()
+            try
             {
-                CarrosDisponiveis = modelResumo.MotoristasDisponiveis,
-                ChamadosAvulsosAguardandoCarro = modelResumo.ChamadosAguardandoMotorista,
-                ChamadosAvulsosAguardandoMoto = modelResumo.ChamadosAguardandoMotociclista,
-                MotociclistasDisponiveis = modelResumo.MotociclistaDisponiveis
-            });
+                // Busca dados Resumo
+                var modelResumo = resumoServico.BuscaResumo();
+
+                // Return
+                return View(new ResumoModel()
+                {
+                    CarrosDisponiveis = modelResumo.MotoristasDisponiveis,
+                    ChamadosAvulsosAguardandoCarro = modelResumo.ChamadosAguardandoMotorista,
+                    ChamadosAvulsosAguardandoMoto = modelResumo.ChamadosAguardandoMotociclista,
+                    MotociclistasDisponiveis = modelResumo.MotociclistaDisponiveis
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return View(new ResumoModel()
+                {
+                    CarrosDisponiveis = 0,
+                    ChamadosAvulsosAguardandoCarro = 0,
+                    ChamadosAvulsosAguardandoMoto = 0,
+                    MotociclistasDisponiveis = 0
+                });
+            }
         }
 
         public ActionResult Login()

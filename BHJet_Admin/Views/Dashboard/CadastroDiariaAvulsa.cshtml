@@ -137,7 +137,7 @@
 
                                 @if (!string.IsNullOrWhiteSpace(ViewBag.MsgCustomAlerta))
                                 {
-                                   <p class="bg-success">@ViewBag.MsgCustomAlerta</p>
+                                    <p class="bg-success">@ViewBag.MsgCustomAlerta</p>
                                 }
                             </div>
                         </div>
@@ -148,4 +148,14 @@
     </div>
 </div>
 
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}
 <script src="~/Scripts/CadastroDiariaAvulsa.js"></script>

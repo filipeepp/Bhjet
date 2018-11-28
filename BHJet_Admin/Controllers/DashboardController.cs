@@ -12,7 +12,6 @@ using BHJet_Servico.Tarifa;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace BHJet_Admin.Controllers
 {
@@ -208,7 +207,7 @@ namespace BHJet_Admin.Controllers
                     }).ToArray()
                 });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 this.TrataErro(e);
                 return RedirectToAction("Index", "Home");
@@ -219,9 +218,6 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa()
         {
-
-            TempData["testmsg"] = " Requested Successfully ";
-
             return View(new DiariaModel()
             {
                 Observacao = null,
@@ -232,52 +228,61 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
-            if (modelo.PeriodoInicial.ToDate() == null)
+            try
             {
-                ModelState.AddModelError("", "Data hora inicio do expediente.");
-                return View(modelo);
-            }
-            else if (modelo.PeriodoFinal.ToDate() == null)
-            {
-                ModelState.AddModelError("", "Data hora Fim do expediente.");
-                return View(modelo);
-            }
-            else if (modelo.PeriodoFinal.ToDate() < modelo.PeriodoInicial.ToDate())
-            {
-                ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
-                return View(modelo);
-            }
-            else if (modelo.PeriodoFinal.ToDate().Value.Date != modelo.PeriodoInicial.ToDate().Value.Date)
-            {
-                ModelState.AddModelError("", "A dia de expediente deve ser o mesmo para inicio e fim de diaria, mudando apenas o horário.");
-                return View(modelo);
-            }
-            else if (modelo.ClienteSelecionado == null)
-            {
-                ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
-                return View(modelo);
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Incluir diaria
-                diariaServico.IncluirDiaria(new BHJet_DTO.Diaria.DiariaAvulsaDTO()
+                if (modelo.PeriodoInicial.ToDate() == null)
                 {
-                    IDCliente = modelo.ClienteSelecionado ?? 0,
-                    IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
-                    IDTarifario = modelo.TarifaCliente,
-                    DataHoraInicioExpediente = modelo.PeriodoInicial.ToDate() ?? DateTime.Now,
-                    DataHoraFimExpediente = modelo.PeriodoFinal.ToDate(),
-                    ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
-                    ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
-                });
+                    ModelState.AddModelError("", "Data hora inicio do expediente.");
+                    return View(modelo);
+                }
+                else if (modelo.PeriodoFinal.ToDate() == null)
+                {
+                    ModelState.AddModelError("", "Data hora Fim do expediente.");
+                    return View(modelo);
+                }
+                else if (modelo.PeriodoFinal.ToDate() < modelo.PeriodoInicial.ToDate())
+                {
+                    ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
+                    return View(modelo);
+                }
+                else if (modelo.PeriodoFinal.ToDate().Value.Date != modelo.PeriodoInicial.ToDate().Value.Date)
+                {
+                    ModelState.AddModelError("", "A dia de expediente deve ser o mesmo para inicio e fim de diaria, mudando apenas o horário.");
+                    return View(modelo);
+                }
+                else if (modelo.ClienteSelecionado == null)
+                {
+                    ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
+                    return View(modelo);
+                }
 
-                ViewBag.MsgCustomAlerta = "Sucesso";
-                ModelState.Clear();
-                return View();
+                if (ModelState.IsValid)
+                {
+                    // Incluir diaria
+                    diariaServico.IncluirDiaria(new BHJet_DTO.Diaria.DiariaAvulsaDTO()
+                    {
+                        IDCliente = modelo.ClienteSelecionado ?? 0,
+                        IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
+                        IDTarifario = modelo.TarifaCliente,
+                        DataHoraInicioExpediente = modelo.PeriodoInicial.ToDate() ?? DateTime.Now,
+                        DataHoraFimExpediente = modelo.PeriodoFinal.ToDate(),
+                        ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
+                        ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
+                    });
+
+                    this.TrataSucesso("Diaria avulsa cadastrada com sucesso.");
+
+                    ModelState.Clear();
+                    return View();
+                }
+
+                return RedirectToAction("CadastroDiariaAvulsa");
             }
-
-            return RedirectToAction("CadastroDiariaAvulsa");
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return RedirectToAction("Index", "Home");
+            }
         }
         #endregion
 
@@ -330,9 +335,5 @@ namespace BHJet_Admin.Controllers
         {
             return $"<b>ID:</b> {id} <br/><b>Nome:</b> {nomeMotorista}</br><b>Tipo:</b> {tipo.RetornaDescricaoEnum(typeof(TipoProfissional))}";
         }
-
     }
-
-
-
 }
