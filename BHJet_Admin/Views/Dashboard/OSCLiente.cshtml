@@ -17,7 +17,7 @@
                         <div class="col-md-12 text-left">
                             <div class="titulo">
                                 <h2>
-                                    <a onclick=" history.go(-1);">
+                                    <a href="@Url.Action("Index", "Home")">
                                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                     </a>
                                     <b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
@@ -72,7 +72,7 @@
                                     </div>
                                 }
 
-                                @if (@Model.Origem.Foto.Length > 0)
+                                @if (@Model.Origem.Foto != null && @Model.Origem.Foto.Length > 0)
                                 {
                                     var base64 = Convert.ToBase64String(@Model.Origem.Foto);
                                     var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
@@ -137,7 +137,7 @@
                                         </div>
                                     }
 
-                                    @if (@dest.Foto.Length > 0)
+                                    @if (@dest.Foto != null && @dest.Foto.Length > 0)
                                     {
                                         var base64 = Convert.ToBase64String(@dest.Foto);
                                         var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
@@ -162,5 +162,14 @@
 </div>
 
 
-
+@if(TempData["mensagemGeral"] != null)
+{
+    < script type = "text/javascript" >
+             window.onload = function() {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </ script >
+}
 <script src="~/Scripts/OSCliente.js"></script>

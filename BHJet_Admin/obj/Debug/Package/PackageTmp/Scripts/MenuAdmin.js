@@ -1,8 +1,9 @@
 ﻿
+
 document.addEventListener("DOMContentLoaded", function (event) {
-
+    $("#loading").hide();
     alteraMenu();
-
+  
     $("#menuLogisticaMobile").click(function () {
         var menu = $(".main-sidebar");
         if (menu.css("display") === "none" || menu.css("display") == undefined) {
@@ -39,6 +40,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             });
         }
     })
+
+    $("#closeMsgGeral").click(function () {
+        $("#msgModal").text('')
+    })
+
+    $('a').click(function (event) {
+        $("#loading").show()
+    });
 
 });
 

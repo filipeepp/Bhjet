@@ -39,31 +39,41 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult GerarFaturamento(GerarFaturamantoModel model)
         {
-            // Datas
-            DateTime inicio = new DateTime(model.AnoSelecionado, model.MesSelecionado, 1);
-            DateTime fim = new DateTime(model.AnoSelecionado, model.MesSelecionado, DateTime.DaysInMonth(model.AnoSelecionado, model.MesSelecionado));
-
-            // Gera Faturamento
-            var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
+            try
             {
-                IdCliente = model.ClienteSelecionado,
-                DataInicioFaturamento = inicio,
-                DataFimFaturamento = fim
-            });
+                // Datas
+                DateTime inicio = new DateTime(model.AnoSelecionado, model.MesSelecionado, 1);
+                DateTime fim = new DateTime(model.AnoSelecionado, model.MesSelecionado, DateTime.DaysInMonth(model.AnoSelecionado, model.MesSelecionado));
 
-            // Return View
-            return View(new GerarFaturamantoModel()
-            {
-                ClienteSelecionado = model.ClienteSelecionado,
-                ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
+                // Gera Faturamento
+                var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
                 {
-                    ID = x.ID,
-                    Cliente = x.NomeCliente,
-                    Apuração = x.Periodo,
-                    DescContrato = x.TipoContrato,
-                    Valor = x.Valor.ToString("C", new CultureInfo("pt-BR"))
-                })
-            });
+                    IdCliente = model.ClienteSelecionado,
+                    DataInicioFaturamento = inicio,
+                    DataFimFaturamento = fim
+                });
+
+                this.TrataSucesso("Faturamento gerado com sucesso.");
+
+                // Return View
+                return View(new GerarFaturamantoModel()
+                {
+                    ClienteSelecionado = model.ClienteSelecionado,
+                    ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
+                    {
+                        ID = x.ID,
+                        Cliente = x.NomeCliente,
+                        Apuração = x.Periodo,
+                        DescContrato = x.TipoContrato,
+                        Valor = x.Valor.ToString("C", new CultureInfo("pt-BR"))
+                    })
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -82,22 +92,13 @@ namespace BHJet_Admin.Controllers
         }
         #endregion
 
-        #region Faturamento Avulso
+        #region Faturamento Normal
         [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoNormal()
         {
-
-            var cli = new System.Collections.Generic.Dictionary<int, string>();
-            cli.Add(1, "Mercado Teste");
-            cli.Add(2, "Loja Teste");
-
             return View(new FaturamentoNormal()
             {
-                ListaClientes = cli,
-                ListaTipoContrato = new System.Collections.Generic.Dictionary<int, string>()
-                {
-
-                }
+                ListaFaturamento = null
             });
         }
 
@@ -105,28 +106,39 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult FaturamentoNormal(FaturamentoNormal model)
         {
-            var cli = new System.Collections.Generic.Dictionary<int, string>();
-            cli.Add(1, "Mercado Teste");
-            cli.Add(2, "Loja Teste");
-
-            return View(new FaturamentoNormal()
+            try
             {
-                ListaClientes = cli,
-                ListaTipoContrato = new System.Collections.Generic.Dictionary<int, string>()
-                {
+                // Datas
+                DateTime inicio = new DateTime(model.AnoSelecionado, model.MesSelecionado, 1);
+                DateTime fim = new DateTime(model.AnoSelecionado, model.MesSelecionado, DateTime.DaysInMonth(model.AnoSelecionado, model.MesSelecionado));
 
-                },
-                ListaFaturamento = new System.Collections.Generic.List<FaturamentoModel>()
-                 {
-                    new FaturamentoModel()
-                     {
-                      Cliente = "Cliente A",
-                      Apuração = "",
-                       DescContrato = "Avulso",
-                       Valor = ""
-                    }
-                 }
-            });
+                // Gera Faturamento
+                var faturamentos = faturamentoServico.GetFaturamentoNormal(new BHJet_DTO.Faturamento.ConsultarFaturamentoDTO()
+                {
+                    DataInicioFaturamentoFiltro = inicio,
+                    DataFimFaturamentoFiltro = fim,
+                    IdClienteFiltro = model.ClienteSelecionado,
+                    TipoContratoFiltro = model.TipoContratoSelecionado
+                });
+
+                // Popula retorno
+                model.ListaFaturamento = faturamentos.Select(fat => new FaturamentoModel()
+                {
+                    ID = fat.ID,
+                    Cliente = fat.NomeCliente,
+                    Apuração = fat.Periodo,
+                    DescContrato = fat.TipoContrato,
+                    Valor = fat.Valor.ToString("C", new CultureInfo("pt-BR"))
+                });
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                model.ListaFaturamento = null;
+                return View(model);
+            }
         }
         #endregion
 

@@ -3,7 +3,8 @@
 
 <ol class="breadcrumb">
     <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-    <li><a href="#map_canvas">Detalhe Faturamento</a></li>
+    <li><a href="">Consultar Faturamento</a></li>
+    <li><a href="">Detalhe Faturamento</a></li>
 </ol>
 
 <div class="container-fluid">
@@ -124,3 +125,13 @@
         </div>
     </div>
 </div>
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}

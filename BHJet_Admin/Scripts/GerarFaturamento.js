@@ -1,7 +1,5 @@
 ﻿function BuscaClientes() {
     var jqVariavel = $("#pesquisaCliente");
-    $("#ClienteSelecionado").find('option').remove().end();
-    if (jqVariavel.val() != "" && jqVariavel.val() !== undefined) {
         $.ajax({
             dataType: "json",
             type: "GET",
@@ -22,7 +20,6 @@
                 }
             },
         });
-    }
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -31,4 +28,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }, 500));
 
     BuscaClientes();
+
+    $('#confirmaFaturamento').click(function (event) {
+        $("#loading").show()
+    });
+
 });

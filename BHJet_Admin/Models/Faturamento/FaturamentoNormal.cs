@@ -1,6 +1,8 @@
-﻿using BHJet_Core.Utilitario;
+﻿using BHJet_Core.Enum;
+using BHJet_Core.Utilitario;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Models.Faturamento
@@ -8,8 +10,8 @@ namespace BHJet_Admin.Models.Faturamento
     public class FaturamentoNormal
     {
 
-        private int? _MesSelecionado = 1;
-        public int? MesSelecionado
+        private int _MesSelecionado = 1;
+        public int MesSelecionado
         {
             get
             {
@@ -50,36 +52,30 @@ namespace BHJet_Admin.Models.Faturamento
             }
         }
 
-        private Dictionary<int, string> _ListaClientes;
-        public Dictionary<int, string> ListaClientes
+        private IEnumerable<long> _ClienteSelecionado;
+        public IEnumerable<long> ClienteSelecionado
         {
             get
             {
-                return _ListaClientes;
+                return _ClienteSelecionado;
             }
             set
             {
-                _ListaClientes = value;
+                _ClienteSelecionado = value;
             }
         }
 
-        public IEnumerable<int> ClientesSelecionados { get; set; }
-
-        private Dictionary<int, string> _ListaTipoContrato;
-        public Dictionary<int, string> ListaTipoContrato
+        private Dictionary<int?, string> _ListaTipoContrato;
+        public Dictionary<int?, string> ListaTipoContrato
         {
             get
             {
-                return _ListaTipoContrato;
-            }
-            set
-            {
-                _ListaTipoContrato = value;
+                return retornaListaTipoContrato();
             }
         }
 
-        private long? _TipoContratoSelecionado;
-        public long? TipoContratoSelecionado
+        private TipoContrato? _TipoContratoSelecionado;
+        public TipoContrato? TipoContratoSelecionado
         {
             get
             {
@@ -93,5 +89,17 @@ namespace BHJet_Admin.Models.Faturamento
 
         private IEnumerable<FaturamentoModel> _listaFaturamento = null;
         public IEnumerable<FaturamentoModel> ListaFaturamento { get => _listaFaturamento; set => _listaFaturamento = value; }
+
+
+
+        private Dictionary<int?, string> retornaListaTipoContrato()
+        {
+            var dic = new Dictionary<int?, string>();
+            dic.Add(1, "Chamado Avulso");
+            dic.Add(2, "Contrato Locacao");
+
+            return dic;
+        }
+
     }
 }

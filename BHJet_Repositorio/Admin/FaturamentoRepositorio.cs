@@ -1,4 +1,5 @@
-﻿using BHJet_Repositorio.Admin.Entidade;
+﻿using BHJet_Core.Enum;
+using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ValidaUsuarioFiltro</param>
         /// <returns>UsuarioEntidade</returns>
-        public void GeraFaturamento(long? idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public void GeraFaturamento(long[] idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -78,10 +79,10 @@ namespace BHJet_Repositorio.Admin
                                               %clienteCondition2%";
 
                         // Busca por cliente
-                        if (idCliente != null)
+                        if (idCliente != null && idCliente.Any())
                         {
-                            query = query.Replace("%clienteCondition1%", " and  P.idCliente = @IDCliente");
-                            query = query.Replace("%clienteCondition2%", " and  CC.idCliente = @IDCliente");
+                            query = query.Replace("%clienteCondition1%", " and  P.idCliente in @IDCliente");
+                            query = query.Replace("%clienteCondition2%", " and  CC.idCliente in @IDCliente");
                         }
 
                         // Query Multiple
@@ -102,7 +103,7 @@ namespace BHJet_Repositorio.Admin
                             var servicosUnificados = new List<ItemFaturamentoEntidade>();
 
                             // Atualiza id periodo faturamento nas itens a faturar
-                            if (idCliente != null)
+                            if (idCliente != null && idCliente.Any())
                                 servicosUnificados = diarias.Union(corridas).ToList();
 
                             // Lista final a ser faturado
@@ -170,36 +171,82 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public IEnumerable<ItemFaturamentoResumidoEntidade> BuscaItemFaturamento(long? idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public IEnumerable<ItemFaturamentoResumidoEntidade> BuscaItemFaturamento(long[] idClientes, TipoContrato? tipo, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select IT.idItemFaturamento AS ID, CLI.vcNomeFantasia as NomeCliente, 
-	                            concat(PF.dtDataInicioPeriodoFaturamento, ' - ', PF.dtDataInicioPeriodoFaturamento) as Periodo,
-                            	case when IT.idCorrida is null  
-			then 'Chamados Avulsos'
-			else 'Contrato Alocação' END AS TipoContrato,
-			IT.decValor as Valor
-   from tblItemFaturamento IT
-		join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-		join tblUsuarios as US on (IT.idUsuarioFaturado = us.idUsuario)
-		join tblColaboradoresCliente as CC on (CC.idUsuario = us.idUsuario) 
-		join tblClientes CLI on (CLI.idCliente = CC.idCliente)
-			where PF.dtDataInicioPeriodoFaturamento = @dataInicio 
-                    and PF.dtDataFimPeriodoFaturamento = @dataFim";
 
-                // Execução
-                return sqlConnection.Query<ItemFaturamentoResumidoEntidade>(query, new
+                string query = @"-- fatu registro diaria
+	                            select
+ 	                            IT.idItemFaturamento AS ID, 
+ 	                            CLI.vcNomeFantasia AS NomeCliente,
+ 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
+ 	                            'Chamados Avulsos' as TipoDescContrato,
+ 	                            IT.decValor as Valor
+   	                            from tblItemFaturamento IT
+						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+						left join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
+						left join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+				where PF.dtDataInicioPeriodoFaturamento = @dataInicio  
+						 and PF.dtDataFimPeriodoFaturamento = @dataFim  
+						 and it.idCorrida is null
+						 and IT.idRegistroDiaria is not null  %clienteCondition%
+
+                        -- fatu corridas
+	                            select
+ 	                            IT.idItemFaturamento AS ID, 
+ 	                            CLI.vcNomeFantasia AS NomeCliente,
+ 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,,
+ 	                            'Chamados Avulsos' as TipoDescContrato,
+ 	                            IT.decValor as Valor
+  	                             from tblItemFaturamento IT
+						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+						left join tblCorridas RG on (RG.idCorrida = it.idCorrida)
+						 join tblColaboradoresCliente as CC on (CC.idUsuario = RG.idUsuarioChamador)             
+		                 join tblClientes CLI on (CLI.idCliente = CC.idCliente)
+				where PF.dtDataInicioPeriodoFaturamento = @dataInicio 
+						 and PF.dtDataFimPeriodoFaturamento = @dataFim 
+						 and it.idRegistroDiaria is null
+						 and IT.idCorrida is not null  %clienteCondition%";
+
+                if (idClientes != null && idClientes.Any())
+                    query = query.Replace("%clienteCondition%", " and  CLI.idCliente in @IDCliente");
+                else
+                    query = query.Replace("%clienteCondition%", " ");
+
+                // Retorno
+                var retorno = new ItemFaturamentoResumidoEntidade[] { };
+
+                // Query Multiple
+                using (var multi = sqlConnection.QueryMultiple(query, new
                 {
                     dataInicio = periodoFatInico,
-                    dataFim = periodoFatFim
-                });
+                    dataFim = periodoFatFim,
+                    IDCliente = idClientes
+                }))
+                {
+                    // chamadosAguardando
+                    var fatDiaria = multi.Read<ItemFaturamentoResumidoEntidade>().AsList();
+
+                    // motoristasAguardando
+                    var fatContrato = multi.Read<ItemFaturamentoResumidoEntidade>().AsList();
+
+                    // Serpara por tipo
+                    if (tipo != null)
+                    {
+                        if (tipo == TipoContrato.ChamadosAvulsos)
+                            retorno = fatDiaria.ToArray();
+                        else
+                            retorno = fatContrato.ToArray();
+                    }
+                    else
+                        retorno = fatDiaria.Union(fatContrato).ToArray();
+                }
+                // Execução
+                return retorno;
             }
         }
 
     }
-
-
-
 }

@@ -15,7 +15,7 @@ namespace BHJet_Core.Utilitario
         public static IEnumerable<SelectListItem> ListaMesesAno()
         {
             var listaData = DateTimeFormatInfo
-                   .CurrentInfo
+                   .GetInstance(new CultureInfo("pt-BR"))
                    .MonthNames
                    .Select((monthName, index) => new SelectListItem
                    {

@@ -2,7 +2,6 @@
 function BuscaProfissionais() {
     var jqVariavel = $("#pesquisaProfissional");
     $("#ProfissionalSelecionado").find('option').remove().end();
-    if (jqVariavel.val() != "" && jqVariavel.val() !== undefined) {
         $.ajax({
             dataType: "json",
             type: "GET",
@@ -23,7 +22,6 @@ function BuscaProfissionais() {
                 }
             }
         });
-    }
 }
 
 function BuscaTarifas(idCliente) {
@@ -47,9 +45,8 @@ function BuscaTarifas(idCliente) {
 
 function BuscaClientes() {
     var jqVariavel = $("#pesquisaCliente");
-    $("#ClienteSelecionado").find('option').remove().end();
     $("#TarifaCliente").find('option').remove().end();
-    if (jqVariavel.val() != "" && jqVariavel.val() !== undefined) {
+    
         $.ajax({
             dataType: "json",
             type: "GET",
@@ -70,7 +67,7 @@ function BuscaClientes() {
                 }
             },
         });
-    }
+    
 }
 
 function validaDatePickerManual(id, valor) {

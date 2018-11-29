@@ -8,6 +8,10 @@ namespace BHJet_Admin.Models.Faturamento
 {
     public class GerarFaturamantoModel
     {
+        public GerarFaturamantoModel()
+        {
+        }
+
         private int _MesSelecionado = 1;
         public int MesSelecionado
         {
@@ -50,9 +54,9 @@ namespace BHJet_Admin.Models.Faturamento
             }
         }
 
-        private long? _ClienteSelecionado;
+        private IEnumerable<long> _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
-        public long? ClienteSelecionado
+        public IEnumerable<long> ClienteSelecionado
         {
             get
             {

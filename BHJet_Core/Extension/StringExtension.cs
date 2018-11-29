@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BHJet_Core.Extension
@@ -55,6 +56,11 @@ namespace BHJet_Core.Extension
             if (DateTime.TryParse(valor, out result))
                 return result;
             return null;
+        }
+
+        public static string ToAscii(this string valor)
+        {
+            return string.Join("", System.Text.Encoding.ASCII.GetChars(System.Text.Encoding.ASCII.GetBytes(valor.ToCharArray())));
         }
 
 

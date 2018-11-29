@@ -70,9 +70,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select PRO.idColaboradorEmpresaSistema as ID,
 										PRO.vcNomeCompleto as NomeCompleto,
 										TP.idTipoProfissional as TipoProfissional,
-									    CASE (PRO.bitRegimeContratacaoCLT)
-                                   WHEN  0 THEN 'CLT'
-                                   WHEN 1 THEN 'MEI' END as TipoContrato
+									    PRO.bitRegimeContratacaoCLT TipoRegime
 										from tblColaboradoresEmpresaSistema as PRO
     							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
                                      where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
@@ -208,6 +206,8 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+
+
         /// <summary>
         /// Inclui Profissional
         /// </summary>
@@ -317,5 +317,27 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        /// <summary>
+        /// Verifica se existe profissional
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="cpf"></param>
+        /// <returns></returns>
+        public IEnumerable<ValidaProfissionalExistente> VerificaProfissionalExistente(string email, string cpf)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT vcCPFCNPJ, vcEmail  FROM  tblColaboradoresEmpresaSistema
+			                        WHERE vcEmail = @Email OR vcCPFCNPJ = @CPF";
+
+                // Execução
+                return sqlConnection.Query<ValidaProfissionalExistente>(query, new
+                {
+                    Email = email,
+                    CPF = cpf
+                });
+            }
+        }
     }
 }

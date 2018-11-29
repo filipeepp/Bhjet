@@ -4,30 +4,8 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 
-<script type="text/javascript">
-
-    function selecionarCliente(id) {
-
-        //var idd = id;
-
-        //$.ajax({
-        //    type: "POST",
-        //    url: "/Motorista/Selecionar?ID="+id,
-        //    success: function (r) {
-        //        //$("body").html(r);
-
-        //        $("#cat").load(r);
-        //    }
-        //});
-
-         //$("#dvCategoryResults").load('@(Url.Action("GetCategoryProducts","Motorista",null, Request.Url.Scheme))?categoryId=' + id);
-    }
-
-
-</script>
-
 <ol class="breadcrumb">
-    <li><a onclick="history.go(-1);">Home</a></li>
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
     <li><a href="#map_canvas">Editar Motoristas, Motociclistas</a></li>
 </ol>
 
@@ -38,7 +16,7 @@
                 <div class="panel-body">
                     <div class="titulo">
                         <h2>
-                            <a onclick=" history.go(-1);">
+                            <a href="@Url.Action("Index", "Motorista")">
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
                             </a>
                             Editar Motoristas / Motociclistas
@@ -88,19 +66,19 @@
                         </div>
                     </div>
 
-
-                    <div class="row" id="dvCategoryResults">
-                        @{
-                            if (Model.MotoristaSelecionado != null)
-                            {
-                                Html.RenderPartial("_DetalheMotorista", Model.MotoristaSelecionado);
-                            }
-                        }
-                    </div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}
