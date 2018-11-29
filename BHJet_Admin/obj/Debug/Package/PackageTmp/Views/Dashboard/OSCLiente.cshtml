@@ -162,14 +162,14 @@
 </div>
 
 
-@if (TempData["mensagemGeral"] != null)
+@if(TempData["mensagemGeral"] != null)
 {
-    <script type="text/javascript">
-            window.onload = function () {
+    < script type = "text/javascript" >
+             window.onload = function() {
                 $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
                 $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
                 $('#myModal').modal('show')
             };
-    </script>
+    </ script >
 }
 <script src="~/Scripts/OSCliente.js"></script>

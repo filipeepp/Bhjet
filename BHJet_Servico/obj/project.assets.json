@@ -170,10 +170,11 @@
       ]
     },
     "Microsoft.Web.Infrastructure/1.0.0": {
-      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "sha512": "n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
       "type": "package",
       "path": "microsoft.web.infrastructure/1.0.0",
       "files": [
+        ".signature.p7s",
         "lib/net40/Microsoft.Web.Infrastructure.dll",
         "microsoft.web.infrastructure.1.0.0.nupkg.sha512",
         "microsoft.web.infrastructure.nuspec"
@@ -355,23 +356,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lhsilva\\.nuget\\packages\\": {},
+    "C:\\Users\\Diogo Nominato\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "projectUniqueName": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
       "projectName": "BHJet_Servico",
-      "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
-      "packagesPath": "C:\\Users\\lhsilva\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_Servico\\obj\\",
+      "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "packagesPath": "C:\\Users\\Diogo Nominato\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\lhsilva\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Diogo Nominato\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -379,19 +380,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://api.nuget.org/v3/index.json": {},
-        "http://nuget/nuget/dtp-debug/": {},
-        "http://nuget/nuget/dtp/": {},
-        "http://nuget/nuget/produtos-debug/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
+            "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             },
-            "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
+            "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
+              "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
             }
           }
         }

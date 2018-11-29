@@ -265,7 +265,7 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CadastroDiariaAvulsa.js" />
-    <Content Include="Scripts\Contato.js" />
+    <Content Include="Scripts\ClienteContato.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GerarFaturamento.js" />
@@ -284,6 +284,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NovoCliente.js" />
     <Content Include="Scripts\OSCliente.js" />
+    <Content Include="Scripts\Usuario.js" />
     <Content Include="Scripts\Utilitario.js" />
     <Content Include="Scripts\ViaCep.js" />
     <Content Include="Scripts\waypoints.min.js" />

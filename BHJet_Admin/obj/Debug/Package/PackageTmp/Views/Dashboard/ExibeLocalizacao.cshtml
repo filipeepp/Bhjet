@@ -31,12 +31,12 @@
 
 </div>
 
-@if (ViewBag.mensagemGeral != null)
+@if (TempData["mensagemGeral"] != null)
 {
     <script type="text/javascript">
             window.onload = function () {
-                $("#msgModal").text("@ViewBag.mensagemGeral.ToString()")
-                $("#imgMensagem").attr("src", "@ViewBag.mensagemGeral");
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
                 $('#myModal').modal('show')
             };
     </script>

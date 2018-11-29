@@ -1,7 +1,7 @@
 ﻿
 
 document.addEventListener("DOMContentLoaded", function (event) {
-
+    $("#loading").hide();
     alteraMenu();
   
     $("#menuLogisticaMobile").click(function () {
@@ -44,6 +44,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $("#closeMsgGeral").click(function () {
         $("#msgModal").text('')
     })
+
+    $('a').click(function (event) {
+        $("#loading").show()
+    });
 
 });
 

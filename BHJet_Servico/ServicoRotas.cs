@@ -32,6 +32,14 @@
             public const string GetClientes = "/Cliente";
         }
 
+        public class Usuario
+        {
+            public const string GetUsuarios = "/Usuarios";
+            public const string PostUsuario = "/Usuarios";
+            public const string DeleteUsuario = "/Usuarios/{0}";
+            public const string PutSituacao = "/Usuarios/situacao/{0}/usuario/{1}";
+        }
+
         public class Tarifa
         {
             public const string GetTarifaCliente = "/Tarifa/cliente/{0}";

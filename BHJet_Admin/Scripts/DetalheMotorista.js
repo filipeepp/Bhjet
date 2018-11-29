@@ -15,7 +15,7 @@
     $('#CpfCnpj').mask(cpfMascara, cpfOptions);
 
     $('#confirmaMotorista').click(function (event) {
-        $("#loading").show()
+        //$("#loading").show()
     });
 
     function limpaEndereco() {

@@ -245,7 +245,8 @@
 									<div class="form-row">
 										<div class="form-group col-xs-12 col-md-12">
 											<a onclick="AnteriorTab(false,true,true)" style="color: white" class="pull-left next">« Anterior</a>
-											<a onclick="Validar(true,true,false)" style="color: white" class="pull-right next">Próximo »</a>
+											<!-- <a id="lnkValidarContato" onclick="Validar(true,true,false)" style="color: white" class="pull-right next">Próximo »</a> -->
+											<a id="lnkValidarContato" onclick="ValidarContato()" style="color: white" class="pull-right next">Próximo »</a>
 										</div>
 									</div>
 
@@ -263,7 +264,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 text-center">
-                                            <button type="submit" class="btn btn-default" value="Enviar">
+                                            <button type="submit" class="btn btn-default" value="Enviar" disabled="true">
                                                 <i class="fa fa-share"></i>Confirmar Solicitação
                                             </button>
                                         </div>

@@ -28,4 +28,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }, 500));
 
     BuscaClientes();
+
+    $('#confirmaFaturamento').click(function (event) {
+        $("#loading").show()
+    });
+
 });

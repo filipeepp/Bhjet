@@ -1,4 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function (event) {
+    $("#loading").hide()
 
     $("#TelefoneResidencial").mask("(00) 0000-0000");
     $("#TelefoneCelular").mask("(00) 0000-00009");
@@ -12,6 +13,10 @@
             }
         };
     $('#CpfCnpj').mask(cpfMascara, cpfOptions);
+
+    $('#confirmaMotorista').click(function (event) {
+        //$("#loading").show()
+    });
 
     function limpaEndereco() {
         // Limpa valores do formulário de cep.
