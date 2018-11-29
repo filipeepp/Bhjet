@@ -25,18 +25,12 @@
           "Microsoft.AspNet.WebPages": "3.2.4"
         },
         "runtime": {
-          "lib/net45/System.Web.Mvc.dll": {
-            "assemblyVersion": "5.2.4.0",
-            "fileVersion": "5.2.60201.0"
-          }
+          "lib/net45/System.Web.Mvc.dll": {}
         }
       },
       "Microsoft.AspNet.Razor/3.2.4": {
         "runtime": {
-          "lib/net45/System.Web.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          }
+          "lib/net45/System.Web.Razor.dll": {}
         }
       },
       "Microsoft.AspNet.WebPages/3.2.4": {
@@ -45,31 +39,16 @@
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "runtime": {
-          "lib/net45/System.Web.Helpers.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.Deployment.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          }
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.Web.Infrastructure/1.0.0": {
         "runtime": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.20105.407"
-          }
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "NETStandard.Library/2.0.3": {
@@ -79,10 +58,7 @@
       },
       "Newtonsoft.Json/11.0.2": {
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "11.0.0.0",
-            "fileVersion": "11.0.2.21924"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "BHJet_Core/1.0.0": {
@@ -137,7 +113,7 @@
     "Microsoft.Web.Infrastructure/1.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
       "path": "microsoft.web.infrastructure/1.0.0",
       "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
     },

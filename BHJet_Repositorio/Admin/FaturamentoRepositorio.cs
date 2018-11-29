@@ -197,7 +197,7 @@ namespace BHJet_Repositorio.Admin
 	                            select
  	                            IT.idItemFaturamento AS ID, 
  	                            CLI.vcNomeFantasia AS NomeCliente,
- 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,,
+ 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
  	                            'Chamados Avulsos' as TipoDescContrato,
  	                            IT.decValor as Valor
   	                             from tblItemFaturamento IT

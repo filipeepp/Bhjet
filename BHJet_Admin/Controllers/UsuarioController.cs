@@ -69,6 +69,8 @@ namespace BHJet_Admin.Controllers
                     Senha = model.novo.Senha
                 });
 
+                this.TrataSucesso("Usuário cadastrado com sucesso.");
+
                 // Busca Usuarios
                 return BuscaUsuariosSemValidacao();
             }

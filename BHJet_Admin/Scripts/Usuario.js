@@ -8,8 +8,8 @@
             $("#loading").hide();
             $("#msgModal").text(dados)
             $("#imgMensagem").attr("src", "\\.\\Images\\sucesso.png");
-            $('#closeMsgGeral').click(function () {
-                location.reload();
+            $('#myModal button').click(function () {
+                window.location.href = '/Usuario/Index/';
             })
             $('#myModal').modal('show')
         },
@@ -32,8 +32,8 @@ function AlterarSituacao(idUser, situacao) {
             $("#loading").hide();
             $("#msgModal").text(dados)
             $("#imgMensagem").attr("src", "\\.\\Images\\sucesso.png");
-            $('#closeMsgGeral').click(function () {
-                location.reload();
+            $('#myModal button').click(function () {
+                window.location.href = '/Usuario/Index/';
             })
             $('#myModal').modal('show')
         },
@@ -48,6 +48,11 @@ function AlterarSituacao(idUser, situacao) {
 
 
 document.addEventListener("DOMContentLoaded", function (event) {
+
+    setTimeout(function afterTwoSeconds() {
+        $('#novo_Email').val("")
+        $('#novo_Senha').val("")
+    }, 1500)
 
 
 
