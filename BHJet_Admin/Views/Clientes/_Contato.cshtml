@@ -7,8 +7,8 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 
-		$(".mask-telefone").mask("(00) 0000-00009");
-		$(".mask-celular").mask("(00) 0000-00009");
+		$(".mask-telefone").mask("(00) 0000-0000");
+		$(".mask-celular").mask("(00) 00009-0000");
 
 	});
 
@@ -43,6 +43,16 @@
 	#endregion
 
 }
+
+<style type="text/css">
+	.isDisabled {
+		color: currentColor;
+		cursor: not-allowed;
+		opacity: 0.5;
+		text-decoration: none;
+		pointer-events: none;
+	}
+</style>
 
 <div class="panel panel-default" style="margin:30px">
 	<div class="panel-body">
