@@ -167,6 +167,7 @@
     <Compile Include="Controllers\FaturamentoController.cs" />
     <Compile Include="Controllers\ProfissionalController.cs" />
     <Compile Include="Controllers\TarifaController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AutorizacaoProvider.cs" />
     <Compile Include="Util\LogarExcecao.cs" />

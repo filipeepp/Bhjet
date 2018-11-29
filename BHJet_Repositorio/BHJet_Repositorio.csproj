@@ -67,6 +67,7 @@
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />
     <Compile Include="Admin\ProfissionalRepositorio.cs" />
     <Compile Include="Admin\TarifaRepositorio.cs" />
+    <Compile Include="Admin\UsuarioRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositorioBase.cs" />
   </ItemGroup>

@@ -125,3 +125,13 @@
         </div>
     </div>
 </div>
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}

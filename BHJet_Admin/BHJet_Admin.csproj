@@ -284,6 +284,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NovoCliente.js" />
     <Content Include="Scripts\OSCliente.js" />
+    <Content Include="Scripts\Usuario.js" />
     <Content Include="Scripts\Utilitario.js" />
     <Content Include="Scripts\ViaCep.js" />
     <Content Include="Scripts\waypoints.min.js" />

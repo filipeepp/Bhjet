@@ -70,6 +70,35 @@
         <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.PutProfissional(System.Int64,BHJet_DTO.Profissional.ProfissionalCompletoModel)" -->
         <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.ProfissionalController.PostProfissional(BHJet_DTO.Profissional.ProfissionalCompletoModel)" -->
         <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.TarifaController.GetTarifasCliente(System.Int64)" -->
+        <member name="M:BHJet_WebApi.Controllers.UsuarioController.GetUsuarios(System.String)">
+            <summary>
+            Busca lista de usuarios
+            </summary>
+            <param name="trecho"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BHJet_WebApi.Controllers.UsuarioController.PostUsuarios(BHJet_DTO.Usuario.UsuarioDTO)">
+            <summary>
+            Busca lista de usuarios
+            </summary>
+            <param name="model">UsuarioDTO</param>
+            <returns></returns>
+        </member>
+        <member name="M:BHJet_WebApi.Controllers.UsuarioController.DeleteSituacao(System.Int64)">
+            <summary>
+            Deleta usuario especifico
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BHJet_WebApi.Controllers.UsuarioController.PutSituacao(System.Int32,System.Int64)">
+            <summary>
+            Atualiza situação do usuario
+            </summary>
+            <param name="situacao"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:BHJet_WebApi.Util.UsuarioLogado">
             <summary>
             Usuario Logado no sistema
