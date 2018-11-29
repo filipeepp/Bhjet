@@ -1,5 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", function (event) {
-
+	
 	/*VALORES INICIAIS */
 	$("#tabs").tabs({ disabled: [1, 2] });
 
@@ -60,3 +60,5 @@ window.AnteriorTab = function (tab1, tab2, tab3) {
 	var active = $("#tabs").tabs("option", "active");
 	$("#tabs").tabs("option", "active", active - 1);
 }
+
+

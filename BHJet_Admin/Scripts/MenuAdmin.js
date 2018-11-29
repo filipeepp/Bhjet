@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#msgModal").text('')
     })
 
-    $('a').click(function (event) {
+    $('#menuLateral a').click(function (event) {
         $("#loading").show()
     });
 
