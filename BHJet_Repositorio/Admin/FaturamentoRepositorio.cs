@@ -84,6 +84,11 @@ namespace BHJet_Repositorio.Admin
                             query = query.Replace("%clienteCondition1%", " and  P.idCliente in @IDCliente");
                             query = query.Replace("%clienteCondition2%", " and  CC.idCliente in @IDCliente");
                         }
+                        else
+                        {
+                            query = query.Replace("%clienteCondition1%", "");
+                            query = query.Replace("%clienteCondition2%", "");
+                        }
 
                         // Query Multiple
                         using (var multi = sqlConnection.QueryMultiple(query, new

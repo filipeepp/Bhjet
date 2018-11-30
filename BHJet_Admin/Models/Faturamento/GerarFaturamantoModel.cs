@@ -55,7 +55,6 @@ namespace BHJet_Admin.Models.Faturamento
         }
 
         private IEnumerable<long> _ClienteSelecionado;
-        [Required(ErrorMessage = "Cliente obrigatório.")]
         public IEnumerable<long> ClienteSelecionado
         {
             get

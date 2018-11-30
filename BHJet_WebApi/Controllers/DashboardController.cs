@@ -46,7 +46,7 @@ namespace BHJet_WebApi.Controllers
             var entidade = new DashboardRepositorio().BuscaResumoChamados();
 
             // valida retorno
-            if (entidade != null && entidade.Any())
+            if (entidade != null && !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Separa chamados 
@@ -83,7 +83,7 @@ namespace BHJet_WebApi.Controllers
             var entidade = new DashboardRepositorio().BuscaResumoAtendimentosProfissionais();
 
             // valida retorno
-            if (entidade != null && entidade.Any())
+            if (entidade != null && !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Separa chamados 

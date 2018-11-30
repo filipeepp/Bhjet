@@ -28,7 +28,7 @@
                         @using (Html.BeginForm("GerarFaturamento", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
                         {
                             <div class="form-group ">
-                                <label class="control-label col-sm-5" for="email">Selecione o mês e ano:</label>
+                                <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o mês e ano:</label>
                                 <div class="col-sm-2">
                                     @Html.DropDownListFor(m => m.MesSelecionado, Model.Meses, new { @class = "form-control" })
                                 </div>

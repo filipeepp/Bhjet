@@ -19,7 +19,7 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"--- Quantidade de chamados abertos esperando profissional 
-		                               select CLB.idTipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
+		                               select CLB.idTipoProfissional AS TipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
 							                    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 							                    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								            where LGCD.idStatusCorrida = 4
@@ -27,11 +27,11 @@ namespace BHJet_Repositorio.Admin
 
 		                        --- Quantidade de motorista e motociclista disponiveis
 		                               select idTipoProfissional as TipoProfissional, count(*) as Quantidade from tblColaboradoresEmpresaDisponiveis
-			                                where bitDisponivel = 0
+			                                where bitDisponivel = 1
 				                      group by idTipoProfissional";
 
                 // Query Multiple
-                using (var multi = sqlConnection.QueryMultiple(query, new { InvoiceID = 1 }))
+                using (var multi = sqlConnection.QueryMultiple(query))
                 {
                     // chamadosAguardando
                     var chamadosAguardando = multi.Read<ResumoEntidade>().AsList();
@@ -90,7 +90,7 @@ namespace BHJet_Repositorio.Admin
 							    from tblCorridas CD
 								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								join tblColaboradoresEmpresaSistema ES on (cd.idUsuarioColaboradorEmpresa = ES.idColaboradorEmpresaSistema)
-									where LGCD.idStatusCorrida = 11
+									where LGCD.idStatusCorrida = 10
 										group by ES.idTipoProfissional,  CD.dtDataHoraRegistroCorrida";
 
                 return sqlConnection.Query<ResumoAtendimentoEntidade>(query);

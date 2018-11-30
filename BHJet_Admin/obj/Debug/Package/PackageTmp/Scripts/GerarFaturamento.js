@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     BuscaClientes();
 
     $('#confirmaFaturamento').click(function (event) {
-        $("#loading").show()
+        //$("#loading").show()
     });
 
 });

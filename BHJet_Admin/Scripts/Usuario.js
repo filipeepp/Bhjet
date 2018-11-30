@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     setTimeout(function afterTwoSeconds() {
         $('#novo_Email').val("")
         $('#novo_Senha').val("")
-    }, 1500)
+    }, 80)
 
 
 

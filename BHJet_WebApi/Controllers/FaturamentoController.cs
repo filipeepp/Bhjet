@@ -30,7 +30,7 @@ namespace BHJet_WebApi.Controllers
             var entidade = fatRepositosio.BuscaItemFaturamento(listaClientes, null, model.DataInicioFaturamento, model.DataFimFaturamento);
 
             // valida retorno
-            if (entidade != null && entidade.Any())
+            if (entidade != null && !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Return

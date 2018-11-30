@@ -44,23 +44,23 @@
                                         <div class="col-xs-12 col-sm-12 col-lg-12">
                                             <div class="row">
                                                 <div class=" col-md-4 col-lg-3">
-                                                    <label for="txtNomeFantasia">Email</label>
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
                                                     @Html.TextBoxFor(model => model.novo.Email, new { @class = "form-control", @autocomplete = "off" })
                                                     @Html.ValidationMessageFor(model => model.novo.Email, null, new { @class = "text-danger" })
                                                 </div>
                                                 <div class=" col-md-3 col-lg-2">
-                                                    <label for="txtNomeFantasia">Senha</label>
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
                                                     @Html.TextBoxFor(model => model.novo.Senha, new { @class = "form-control", @type = "password", @autocomplete = "off" })
                                                     @Html.ValidationMessageFor(model => model.novo.Senha, null, new { @class = "text-danger" })
                                                 </div>
 
                                                 <div class=" col-md-3 col-lg-3">
-                                                    <label for="txtNomeFantasia">Tipo Usuário</label>
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Tipo Usuário</label>
                                                     @Html.DropDownListFor(model => model.novo.TipoUser, new SelectList(Enum.GetValues(typeof(TipoUsuario))), new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.novo.TipoUser, null, new { @class = "text-danger" })
                                                 </div>
                                                 <div class=" col-md-2 col-lg-2">
-                                                    <label for="txtNomeFantasia">Situação:</label>
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Situação:</label>
                                                     <br />
                                                     <label class="label-cbx">
                                                         @Html.CheckBoxFor(model => model.novo.Situacao, new { @class = "checkbox" })

@@ -3,6 +3,7 @@
     public class LocalizacaoCorridaEntidade
     {
         public int idCorrida { get; set; }
-        public string GeoLocalizacao { get; set; }
+        public string vcLatitude { get; set; }
+        public string vcLongitude { get; set; }
     }
 }
