@@ -40,7 +40,7 @@ namespace BHJet_Core.Extension
         public static long ToLong(this string valor)
         {
             var result = default(long);
-            if (long.TryParse(valor.Replace(" ", ""), out result))
+            if (long.TryParse(valor.Replace(" ", ""), NumberStyles.None, new CultureInfo("pt-BR"), out result))
                 return result;
             return 0;
         }
@@ -53,7 +53,7 @@ namespace BHJet_Core.Extension
         public static DateTime? ToDate(this string valor)
         {
             var result = default(DateTime);
-            if (DateTime.TryParse(valor, out result))
+            if (DateTime.TryParse(valor, new CultureInfo("pt-BR"), DateTimeStyles.None, out result))
                 return result;
             return null;
         }

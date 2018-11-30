@@ -56,6 +56,7 @@ namespace BHJet_Admin.Models.Motorista
         public string TelefoneResidencial { get; set; }
 
         [RegularExpression(@"\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}", ErrorMessage = "Formato de Celular inválido")]
+        [Required(ErrorMessage = "Telefone celular obrigatório.")]
         public string TelefoneCelular { get; set; }
 
         public bool CelularWhatsapp { get; set; }

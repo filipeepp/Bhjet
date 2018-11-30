@@ -19,9 +19,11 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblColaboradoresEmpresaDisponiveis CED
+                string query = @"select  geoPosicao.STY  as vcLatitude, 
+       geoPosicao.STX  as vcLongitude,
+	   idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel from tblColaboradoresEmpresaDisponiveis CED
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
-					                where CED.bitDisponivel = 0 and
+					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
 						                 CED.idTipoProfissional = @TipoProfissional";
 
@@ -43,9 +45,11 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblColaboradoresEmpresaDisponiveis CED
+                string query = @"select geoPosicao.STY  as vcLatitude, 
+       geoPosicao.STX  as vcLongitude,
+	   idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel from tblColaboradoresEmpresaDisponiveis CED
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
-					                where CED.bitDisponivel = 0 and
+					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
 						                 CED.idColaboradorEmpresaSistema = @id";
 
@@ -257,6 +261,7 @@ namespace BHJet_Repositorio.Admin
                             EnderecoPrincipal = profissional.EnderecoPrincipal
                         }, trans);
 
+                        int tipoProfissional = profissional.TipoCNH == TipoCarteira.A ? 1 : 2;
 
                         // Update tblColaboradoresEmpresaSistema
                          query = @" INSERT INTO [dbo].[tblColaboradoresEmpresaSistema]
@@ -276,7 +281,7 @@ namespace BHJet_Repositorio.Admin
                                                VALUES
                                                      (@IDGestor
                                                      ,@idEndereco
-                                                     ,@TipoProfissional
+                                                     ,@TpProfissional
                                                      ,@NomeCompleto
                                                      ,@CPF
                                                      ,@CNH
@@ -292,7 +297,7 @@ namespace BHJet_Repositorio.Admin
                         {
                             IDGestor = profissional.IDGestor,
                             idEndereco = idEndereco,
-                            TipoProfissional = (profissional.TipoCNH == TipoCarteira.A ? 1 : 2),
+                            TpProfissional = tipoProfissional,
                             NomeCompleto = profissional.NomeCompleto,
                             CPF = profissional.CPF,
                             CNH = profissional.CNH,

@@ -1096,3 +1096,11 @@ input[type="radio"] {
         background-color: #192123;
         border-color: #ccc;
     }
+
+
+
+    .obrigatorio{
+        color:red;
+        margin-right:3px;
+        display:inline;
+    }

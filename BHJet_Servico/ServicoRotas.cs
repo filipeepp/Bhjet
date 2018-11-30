@@ -57,8 +57,8 @@
             public const string PostProfissional = "/Profissional";
             public const string GetProfissional = "/Profissional/{0}";
             public const string GetProfissionais = "/Profissional";
-            public const string GetLocalizacoesProfissionais = "/Profissional/profissional/tipo/{0}/localizacao";
-            public const string GetLocalizacaoProfissional = "/Profissional/profissional/{0}/localizacao";
+            public const string GetLocalizacoesProfissionais = "/Profissional/tipo/{0}/localizacao";
+            public const string GetLocalizacaoProfissional = "/Profissional/{0}/localizacao";
         }
     }
 }

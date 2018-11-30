@@ -2,6 +2,7 @@
 using BHJet_Core.Variaveis;
 using BHJet_DTO.Corrida;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Admin.Entidade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +40,9 @@ namespace BHJet_WebApi.Controllers
                 {
                     EnderecoCompleto = entidade.FirstOrDefault().EnderecoCompleto,
                     ProcurarPor = entidade.FirstOrDefault().ProcurarPor,
-                    Realizar = entidade.FirstOrDefault().Realizar,
+                    Realizar = Realizar(entidade.FirstOrDefault()),
                     StatusCorrida = entidade.FirstOrDefault().StatusCorrida,
-                    TempoEspera = entidade.FirstOrDefault().TempoEspera,
+                    TempoEspera = entidade.FirstOrDefault().TempoEspera?.TimeOfDay,
                     Observacao = entidade.FirstOrDefault().Observacao,
                     CaminhoProtocolo = entidade.FirstOrDefault().CaminhoProtocolo
                 },
@@ -49,13 +50,30 @@ namespace BHJet_WebApi.Controllers
                 {
                     EnderecoCompleto = x.EnderecoCompleto,
                     ProcurarPor = x.ProcurarPor,
-                    Realizar = x.Realizar,
+                    Realizar = Realizar(x),
                     StatusCorrida = x.StatusCorrida,
-                    TempoEspera = x.TempoEspera,
+                    TempoEspera = x.TempoEspera?.TimeOfDay,
                     Observacao = x.Observacao,
                     CaminhoProtocolo = x.CaminhoProtocolo
                 }).ToArray() : new DetalheOSEnderecoModel[] { }
             });
+        }
+
+        private string Realizar(OSCorridaEntidade entidade)
+        {
+            List<string> realizar = new List<string>();
+            if (entidade.bitColetarAssinatura)
+                realizar.Add("Coletar Assinatura");
+            if (entidade.bitEntregarDocumento)
+                realizar.Add("Entregar Documento");
+            if (entidade.bitEntregarObjeto)
+                realizar.Add("Entregar Objeto");
+            if (entidade.bitRetirarDocumento)
+                realizar.Add("Retirar Documento");
+            if (entidade.bitRetirarObjeto)
+                realizar.Add("Retirar Objeto");
+
+            return string.Join(", ", realizar.ToArray());
         }
 
         /// <summary>
@@ -89,7 +107,7 @@ namespace BHJet_WebApi.Controllers
             return Ok(entidade.Select(pf => new LocalizacaoCorridaModel()
             {
                 idCorrida = pf.idCorrida,
-                geoPosicao = pf.GeoLocalizacao,
+                geoPosicao = pf.vcLatitude + ";" + pf.vcLongitude,
             }));
         }
 

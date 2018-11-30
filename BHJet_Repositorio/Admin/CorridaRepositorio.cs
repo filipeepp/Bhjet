@@ -17,7 +17,9 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select CD.idCorrida , EC.geoPosicao
+                string query = @"select CD.idCorrida ,
+							EC.geoPosicao.STY  as vcLatitude, 
+							EC.geoPosicao.STX  as vcLongitude
 							 from tblCorridas CD
 								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
@@ -50,6 +52,11 @@ namespace BHJet_Repositorio.Admin
 	                                concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
 		                            EC.vcPessoaContato as ProcurarPor,
 		                            LGCD.idStatusCorrida as StatusCorrida,
+	                                EC.bitColetarAssinatura,
+									EC.bitEntregarDocumento,
+									EC.bitEntregarObjeto,
+									EC.bitRetirarDocumento,
+									EC.bitRetirarObjeto,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao AS Observacao,
                                     PT.vcCaminhoProtocolo as CaminhoProtocolo
