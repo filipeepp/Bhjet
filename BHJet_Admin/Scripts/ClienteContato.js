@@ -1,7 +1,9 @@
 ﻿$(document).ready(function () {
+	//MASCARAS
+	$(".mask-telefone").mask("(00) 0000-0000");
+	$(".mask-celular").mask("(00) 00009-0000");
 
-
-
+	//VARIÁVEIS INICIAIS
 	var aberturaSpan = '<span class="text-danger field-validation-error" data-valmsg-replace="true"><span>';
 	var fechamentoSpan = '</span></span></span>';
 
@@ -19,6 +21,13 @@
 				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 		});
 	
+	});
+
+	//Habilita botão avançar
+	$(document).change(function () {
+
+		if ($(document).find('span[id^="spanError_"]').length === 0)
+			$("#lnkValidarContato").removeClass("isDisabled");
 	});
 
 
@@ -96,3 +105,10 @@ window.ValidarContato = function () {
 	});
 
 };
+
+window.RemoverBlocoContato = function (divBlocoContato) {
+	var id = divBlocoContato.id;
+	$("#" + id).hide();
+	return true;
+
+}

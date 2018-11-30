@@ -25,12 +25,18 @@
           "Microsoft.AspNet.WebPages": "3.2.4"
         },
         "runtime": {
-          "lib/net45/System.Web.Mvc.dll": {}
+          "lib/net45/System.Web.Mvc.dll": {
+            "assemblyVersion": "5.2.4.0",
+            "fileVersion": "5.2.60201.0"
+          }
         }
       },
       "Microsoft.AspNet.Razor/3.2.4": {
         "runtime": {
-          "lib/net45/System.Web.Razor.dll": {}
+          "lib/net45/System.Web.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60201.0"
+          }
         }
       },
       "Microsoft.AspNet.WebPages/3.2.4": {
@@ -39,16 +45,31 @@
           "Microsoft.Web.Infrastructure": "1.0.0"
         },
         "runtime": {
-          "lib/net45/System.Web.Helpers.dll": {},
-          "lib/net45/System.Web.WebPages.Deployment.dll": {},
-          "lib/net45/System.Web.WebPages.Razor.dll": {},
-          "lib/net45/System.Web.WebPages.dll": {}
+          "lib/net45/System.Web.Helpers.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60201.0"
+          },
+          "lib/net45/System.Web.WebPages.Deployment.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60201.0"
+          },
+          "lib/net45/System.Web.WebPages.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60201.0"
+          },
+          "lib/net45/System.Web.WebPages.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60201.0"
+          }
         }
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.Web.Infrastructure/1.0.0": {
         "runtime": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
         }
       },
       "NETStandard.Library/2.0.3": {
@@ -58,7 +79,10 @@
       },
       "Newtonsoft.Json/11.0.2": {
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.2.21924"
+          }
         }
       },
       "BHJet_Core/1.0.0": {
@@ -85,28 +109,28 @@
     "Microsoft.AspNet.Mvc/5.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-aBSENa9s0KnB/Oh9D94l/g1BQKcjX3Ra6NFmWMWFmCW7diglEHoGOpSozX4lcYdTq/HDGLHfkEFbRLD/Pu6MMQ==",
+      "sha512": "sha512-Enl//Q98M1+A5o26GlPtbtfWiGVNrLvLSFRbfDc14CG6UQn7o4Xux4CXuMAJkDqaRfHXQWsssumsPofwJoiQVw==",
       "path": "microsoft.aspnet.mvc/5.2.4",
       "hashPath": "microsoft.aspnet.mvc.5.2.4.nupkg.sha512"
     },
     "Microsoft.AspNet.Razor/3.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-XIqwE6RU3Wx5lzxjHakGjZ6AxePlEY8oxAt99YOjY49tzjChZGDWia807YQr1w/sTtQo1cvfcQqvMs3yKWgXrg==",
+      "sha512": "sha512-yqSkHUZNjR01MO2NbpXIfjlUEFJqw3xcT57Fc5orJryZlzgAVMUluOsDW2jyGkDg8/Xv91/RQ+0NNz4kinfGhQ==",
       "path": "microsoft.aspnet.razor/3.2.4",
       "hashPath": "microsoft.aspnet.razor.3.2.4.nupkg.sha512"
     },
     "Microsoft.AspNet.WebPages/3.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JCFFKgRDcxyVEELCx/1D8AzF0j0N+hagGXXBmp+NFffF6O0pWA9aXugJqUm0SDvgOH9RCNU0YzyoHa4X+Lsw7w==",
+      "sha512": "sha512-lhYQ5ZeK/a+pgA2WN/Ci6Qb3WqnDOAJ3OmEdsLDH/pJwHqKYHYmjpl2Xeot9DUDZy4GP1MR9mYrr/3u6SAdrmQ==",
       "path": "microsoft.aspnet.webpages/3.2.4",
       "hashPath": "microsoft.aspnet.webpages.3.2.4.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "sha512-bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "path": "microsoft.netcore.platforms/1.1.0",
       "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
@@ -127,7 +151,7 @@
     "Newtonsoft.Json/11.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "sha512-znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
