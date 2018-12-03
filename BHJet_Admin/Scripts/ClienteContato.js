@@ -24,10 +24,12 @@
 	});
 
 	//Habilita botão avançar
-	$(document).change(function () {
+	$(document).on("change keyup mouseup mousemove", function () {
 
-		if ($(document).find('span[id^="spanError_"]').length === 0)
+		if ($(document).find('span[id^="spanError_"]').length === 0) {
 			$("#lnkValidarContato").removeClass("isDisabled");
+		}
+
 	});
 
 
@@ -54,7 +56,7 @@
 					$(this).append('<span id="spanError_' + aux[0].id + '" >');
 
 					if (!reTelefoneComercial.test(aux[0].value))
-						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Comercial inválido.' + fechamentoSpan);
+						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Comercial inválido. Deve ser fixo.' + fechamentoSpan);
 					else
 						$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 
@@ -63,7 +65,7 @@
 					$(this).append('<span id="spanError_' + aux[0].id + '" >');
 
 					if (!reTelefoneCelular.test(aux[0].value))
-						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Celular inválido.' + fechamentoSpan);
+						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Celular inválido. Deve conter 9 adicional.' + fechamentoSpan);
 					else
 						$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 
@@ -83,7 +85,7 @@ window.ValidarContato = function () {
 
 	$("div[id^='Contato']").each(function () {
 		var aux = $(this).children('input');
-		if (!aux[0].value) {
+		if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
 			//Contato
 			aux.hasClass("ctmErrorContato") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Nome do Contato obrigatório.' + fechamentoSpan) : "";
 			//Email
@@ -95,19 +97,31 @@ window.ValidarContato = function () {
 			//Setor
 			aux.hasClass("ctmErrorSetor") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Setor é obrigatório." + fechamentoSpan) : "";
 			//Data Nascimento
-			aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : "";
+			aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : ""
 
 		}
-
-		//Desabilita botão de avançar caso encontre erro
-		if ($(document).find('span[id^="spanError_"]').length > 0)
-			$("#lnkValidarContato").addClass("isDisabled");
 	});
+
+	//Desabilita botão de avançar caso encontre erro
+	if ($(document).find('span[id^="spanError_"]').length > 0) {
+		$("#lnkValidarContato").addClass("isDisabled");
+		return false;
+	}
+
+	return true;
+
 
 };
 
 window.RemoverBlocoContato = function (divBlocoContato) {
 	var id = divBlocoContato.id;
+
+	$("#" + id).addClass("div-contato-removido");
+
+	$('span', '#'+id).each(function () {
+		$(this).remove();
+	});
+
 	$("#" + id).hide();
 	return true;
 
