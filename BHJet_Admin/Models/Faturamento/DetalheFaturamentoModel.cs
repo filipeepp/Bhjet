@@ -44,4 +44,23 @@ namespace BHJet_Admin.Models.Faturamento
         public double ValorExcedente { get; set; }
         public double TotalFatura { get; set; }
     }
+
+    public class DetalheFaturamentoAvulso
+    {
+        public string Cliente { get; set; }
+        public string Contrato { get; set; }
+        public string PeriodoIntervalo { get; set; }
+        public DateTime DataRelatorio { get; set; }
+       public DetalheFaturamentoAvulsoRegistros[] Registros { get; set; }
+    }
+
+    public class DetalheFaturamentoAvulsoRegistros
+    {
+        public DateTime DataCorrida { get; set; }
+        public long NumeroOS { get; set; }
+        public TipoProfissional TipoProfissional { get; set; }
+        public int QuantidadeKM { get; set; }
+        public double Valor { get; set; }
+    }
+
 }

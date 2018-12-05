@@ -79,7 +79,13 @@ namespace BHJet_Admin.Controllers
                         EdicaoCadastro = false,
                         ID = 0,
                          Bairro = "",
+                          Comissao = new NovoMotoristaComissaoModel[]
+                          {
+                               new NovoMotoristaComissaoModel()
+                               {
 
+                               }
+                          }
                     });
                 }
             }

@@ -323,6 +323,8 @@
     <Content Include="Views\Clientes\_Valor.cshtml" />
     <Content Include="Views\Shared\_Loading.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Faturamento\DetalheFaturamentoAvulso.cshtml" />
+    <Content Include="Views\Faturamento\_DetalheChamadoAvulso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

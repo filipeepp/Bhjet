@@ -1,4 +1,5 @@
 ﻿using BHJet_Core.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Motorista
@@ -69,6 +70,16 @@ namespace BHJet_Admin.Models.Motorista
         [Required(ErrorMessage = "Tipo de contrato obrigatório.")]
         public RegimeContratacao TipoRegimeContratacao { get; set; }
 
+        public string Observacao { get; set; }
+
+        public NovoMotoristaComissaoModel[] Comissao { get; set; }
+    }
+
+    public class NovoMotoristaComissaoModel
+    {
+        public double ValorComissao { get; set; }
+        public DateTime VigenciaInicio { get; set; }
+        public DateTime VigenciaFim { get; set; }
         public string Observacao { get; set; }
     }
 }

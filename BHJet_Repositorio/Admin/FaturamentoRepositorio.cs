@@ -119,6 +119,9 @@ namespace BHJet_Repositorio.Admin
                                 return x;
                             }).ToList();
 
+                            if (servicosUnificados == null || !servicosUnificados.Any())
+                                throw new InvalidOperationException("Não existe item a faturar no período informado.");
+
                             // Cria Item Faturamento
                             string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
                                                          ([idCorrida]

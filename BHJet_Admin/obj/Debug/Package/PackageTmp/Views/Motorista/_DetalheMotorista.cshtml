@@ -189,6 +189,51 @@
             </div>
         </div>
 
+        <!-- Com -->
+        <div class="panel panel-default" style="margin:30px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-files-o" aria-hidden="true"></i>
+                        </a>
+                        Comissionamento
+                    </h2>
+
+                    <button id="btnNovoContato" style="margin-bottom:2px" name="btnNovoContato" class="btn btn-primary pull-right" type="button"><i class="fa fa-plus" aria-hidden="true"></i>Nova comissão</button>
+
+                </div>
+
+                @foreach (NovoMotoristaComissaoModel fat in @Model.Comissao)
+                {
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="txtNomeFantasia">Percentual</label>
+                                <br />
+                                @Html.TextBoxFor(model => model.PontoReferencia, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.TipoRegimeContratacao, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <label>Vigência</label>
+                                <div class="input-group input-daterange">
+                                    @Html.TextBoxFor(model => model.NomeCompleto, new { style = "width: 160px;", @class = "form-control mask-data" })
+                                    <div style="margin-left:-2px" class="input-group-addon">a</div>
+                                    @Html.TextBoxFor(model => model.NomeCompleto, new { style = "width: 160px;", @class = "form-control mask-data" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.NomeCompleto, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.NomeCompleto, null, new { @class = "text-danger" })
+                            </div>
+                            <div class=" col-md-5">
+                                <label for="txtNomeFantasia">Observações</label>
+                                @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
     </div>
 
     <div class="row">

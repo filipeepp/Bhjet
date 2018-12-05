@@ -1,0 +1,161 @@
+﻿@{
+    Html.EnableClientValidation(true);
+}
+
+@using BHJet_Admin.Models.Dashboard
+@using BHJet_Core.Enum
+@model DiariaModel
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#map_canvas"> Diária Avulsa </a></li>
+</ol>
+
+<div class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="titulo">
+                                <h2>
+                                    <a href="@Url.Action("Index", "Home")">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    </a>
+                                    Diária Avulsa
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("CadastroDiariaAvulsa", "Dashboard", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <p class="bg-danger">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </p>
+
+
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o cliente:</label>
+                            <div class="col-sm-4">
+                                @*@Html.HiddenFor(model => model.IDClienteSelecionado)*@
+                                @*@Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente.", autocomplete = "off" })*@
+                                <input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
+                                @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
+                                @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione a tirafa:</label>
+                            <div class="col-sm-4">
+
+                                @Html.DropDownListFor(model => model.TarifaCliente, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
+                                @Html.ValidationMessageFor(model => model.TarifaCliente, null, new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        @*<div class="form-group ">
+                                <label class="control-label col-sm-5" for="email">Selecione o tipo de veículo:</label>
+                                <div class="col-sm-4" style="margin-top: -10px;">
+                                    @foreach (var tipoEnum in Enum.GetValues(typeof(TipoVeiculo)))
+                                    {
+                                        var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoVeiculo), tipoEnum));
+                                        @Html.RadioButtonFor(s => s.TipoVeiculo, tipoEnum, new { id, @class = "option-input radio" })
+                                        @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+                                    }
+                                    @Html.ValidationMessageFor(model => model.TipoVeiculo, null, new { @class = "text-danger" })
+
+                                </div>
+                            </div>*@
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Data hora inicio do expediente:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.PeriodoInicial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PeriodoInicial, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Data hora fim do expediente</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.PeriodoFinal, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PeriodoFinal, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione um profissional:</label>
+                            <div class="col-sm-4">
+                                <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
+                                @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
+                                @*@Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional.", autocomplete = "off" })*@
+                                @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da diária:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.ValorDiaria, new { placeholder = "R$", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ValorDiaria, null, new { @class = "text-danger", title = "Mask: 99/99/9999" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da comissão:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "R$", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ValorComissao, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email">Observações:</label>
+                            <div class="col-sm-4">
+                                @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 text-center">
+                                <button id="incluirDiaria" type="submit" class="btn btn-default" value="Pesquisar">
+                                    <i class="fa fa-share"></i>Agendar Diária
+                                </button>
+
+                                @if (!string.IsNullOrWhiteSpace(ViewBag.MsgCustomAlerta))
+                                {
+                                    <p class="bg-success">@ViewBag.MsgCustomAlerta</p>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+    </script>
+}
+<script src="~/Scripts/CadastroDiariaAvulsa.js"></script>

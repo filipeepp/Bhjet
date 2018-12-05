@@ -245,6 +245,31 @@ namespace BHJet_Admin.Controllers
                 }
             });
         }
+
+        [ValidacaoUsuarioAttribute()]
+        public ActionResult DetalheFaturamentoAvulso()
+        {
+            return View(new DetalheFaturamentoAvulso()
+            {
+                Cliente = "Teste",
+                Contrato = "s",
+                DataRelatorio = new DateTime(),
+                PeriodoIntervalo = "",
+                Registros = new DetalheFaturamentoAvulsoRegistros[]
+                     {
+                         new DetalheFaturamentoAvulsoRegistros()
+                         {
+                              DataCorrida = new DateTime(),
+                               NumeroOS = 1,
+                                QuantidadeKM = 1515,
+                                 TipoProfissional = BHJet_Core.Enum.TipoProfissional.Motociclista,
+                                  Valor = 1545.55F
+
+                         }
+                     }
+
+            });
+        }
         #endregion
     }
 }

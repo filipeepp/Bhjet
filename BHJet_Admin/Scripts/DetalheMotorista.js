@@ -4,6 +4,26 @@
     $("#TelefoneResidencial").mask("(00) 0000-0000");
     $("#TelefoneCelular").mask("(00) 0000-00009");
 
+    $("#PeriodoInicial").mask("00/00/0000", {
+        onComplete: function (a) {
+            
+        },
+        placeholder: "__/__/____"
+    });
+
+    $("#PeriodoFinal").mask("00/00/0000", {
+        onComplete: function (a) {
+            
+        },
+        placeholder: "__/__/____"
+    });
+
+    $(".mask-valor").maskMoney({
+        prefix: "R$:",
+        decimal: ",",
+        thousands: "."
+    });
+
     var cpfMascara = function (val) {
         return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
     },

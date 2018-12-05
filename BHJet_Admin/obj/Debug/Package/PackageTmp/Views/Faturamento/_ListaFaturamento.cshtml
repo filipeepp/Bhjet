@@ -29,8 +29,8 @@
                     <tr>
                         <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Cliente<a/></td>
                         <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Apuração<a /></td>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.DescContrato<a /></td>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Valor<a /></td>
+                        <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.DescContrato<a /></td>
+                        <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Valor<a /></td>
                     </tr>
                 }
             </tbody>
