@@ -109,35 +109,35 @@
     "Microsoft.AspNet.Mvc/5.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-aBSENa9s0KnB/Oh9D94l/g1BQKcjX3Ra6NFmWMWFmCW7diglEHoGOpSozX4lcYdTq/HDGLHfkEFbRLD/Pu6MMQ==",
+      "sha512": "sha512-Enl//Q98M1+A5o26GlPtbtfWiGVNrLvLSFRbfDc14CG6UQn7o4Xux4CXuMAJkDqaRfHXQWsssumsPofwJoiQVw==",
       "path": "microsoft.aspnet.mvc/5.2.4",
       "hashPath": "microsoft.aspnet.mvc.5.2.4.nupkg.sha512"
     },
     "Microsoft.AspNet.Razor/3.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-XIqwE6RU3Wx5lzxjHakGjZ6AxePlEY8oxAt99YOjY49tzjChZGDWia807YQr1w/sTtQo1cvfcQqvMs3yKWgXrg==",
+      "sha512": "sha512-yqSkHUZNjR01MO2NbpXIfjlUEFJqw3xcT57Fc5orJryZlzgAVMUluOsDW2jyGkDg8/Xv91/RQ+0NNz4kinfGhQ==",
       "path": "microsoft.aspnet.razor/3.2.4",
       "hashPath": "microsoft.aspnet.razor.3.2.4.nupkg.sha512"
     },
     "Microsoft.AspNet.WebPages/3.2.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JCFFKgRDcxyVEELCx/1D8AzF0j0N+hagGXXBmp+NFffF6O0pWA9aXugJqUm0SDvgOH9RCNU0YzyoHa4X+Lsw7w==",
+      "sha512": "sha512-lhYQ5ZeK/a+pgA2WN/Ci6Qb3WqnDOAJ3OmEdsLDH/pJwHqKYHYmjpl2Xeot9DUDZy4GP1MR9mYrr/3u6SAdrmQ==",
       "path": "microsoft.aspnet.webpages/3.2.4",
       "hashPath": "microsoft.aspnet.webpages.3.2.4.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "sha512-bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "path": "microsoft.netcore.platforms/1.1.0",
       "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
     "Microsoft.Web.Infrastructure/1.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
+      "sha512": "sha512-FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
       "path": "microsoft.web.infrastructure/1.0.0",
       "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
     },
@@ -151,7 +151,7 @@
     "Newtonsoft.Json/11.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "sha512-znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },

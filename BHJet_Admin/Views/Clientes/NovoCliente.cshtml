@@ -83,7 +83,7 @@
                     </div>
                     <div class="container-fluid">
 						<div id="tabs" style="display: grid; position: relative">
-							@using (Html.BeginForm("NovoCliente", "Clientes", FormMethod.Post))
+							@using (Html.BeginForm("NovoCliente", "Clientes", FormMethod.Post, new { id = "formNovoCliente" }))
 							{
 								@Html.HiddenFor(model => model.ID);
 								<ul>
@@ -124,17 +124,17 @@
 											</div>
 										</div>
 										<div class="form-row">
-											<div class="form-group col-xs-5 col-md-4">
+											<div class="form-group col-xs-12 col-md-4">
 												<label for="txtCpfCnpj">CPF / CNPJ</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-5 col-md-6">
+											<div class="form-group col-xs-12 col-md-6">
 												<label for="txtInscricaoEstadual">Insc. Estadual</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-2 col-md-2">
+											<!--<div class="form-group col-xs-2 col-md-2">
 												<div class="cst-ckb-Novo-Cliente">
 													<label for="ckbIss" class="label-cbx">
 														<span>ISS</span>
@@ -145,6 +145,14 @@
 																<polyline points="4 11 8 15 16 6"></polyline>
 															</svg>
 														</div>
+													</label>
+												</div>
+											</div>-->
+											<div class="form-group col-xs-12 col-md-2">
+												<div class="cst-ckb-Novo-Cliente">
+													<label class="label-cbx">
+														@Html.CheckBoxFor(model => model.DadosCadastrais.ISS, new { @class = "checkbox" })
+														<span>ISS</span>
 													</label>
 												</div>
 											</div>
@@ -160,7 +168,7 @@
 											</h2>
 										</div>
 										<div class="form-row">
-											<div class="form-group col-xs-8 col-md-2">
+											<div class="form-group col-xs-12 col-md-2">
 												<label for="txtCep">CEP</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.CEP, new { @onchange = "if(this.length == 9)alert('ok');", type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.CEP, null, new { @class = "text-danger" })
@@ -170,29 +178,29 @@
 												@Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-4 col-md-2">
+											<div class="form-group col-xs-12 col-md-2">
 												<label for="txtNumeroEndereco">Nº</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.NumeroEndereco, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.NumeroEndereco, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-8 col-md-3">
+											<div class="form-group col-xs-12 col-md-3">
 												<label for="txtComplemento">Complemento</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Complemento, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Complemento, null, new { @class = "text-danger" })
 											</div>
 										</div>
 										<div class="form-row">
-											<div class="form-group col-xs-6 col-md-4">
+											<div class="form-group col-xs-12 col-md-4">
 												<label for="txtBairro">Bairro</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Bairro, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Bairro, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-6 col-md-4">
+											<div class="form-group col-xs-12 col-md-4">
 												<label for="txtCidade">Cidade</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Cidade, null, new { @class = "text-danger" })
 											</div>
-											<div class="form-group col-xs-6 col-md-2">
+											<div class="form-group col-xs-12 col-md-2">
 												<label for="txtEstado">Estado</label>
 												@Html.DropDownListFor(s => s.DadosCadastrais.Estado, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Estado, null, new { @class = "text-danger" })
@@ -246,7 +254,7 @@
 										<div class="form-group col-xs-12 col-md-12">
 											<a onclick="AnteriorTab(false,true,true)" style="color: white" class="pull-left next">« Anterior</a>
 											<!-- <a id="lnkValidarContato" onclick="Validar(true,true,false)" style="color: white" class="pull-right next">Próximo »</a> -->
-											<a id="lnkValidarContato" onclick="ValidarContato()" style="color: white" class="pull-right next">Próximo »</a>
+											<a id="lnkValidarContato" onclick="ValidarContato() == true ? ProximaTab(true, true, false) : null" style="color: white" class="pull-right next">Próximo »</a>
 										</div>
 									</div>
 
@@ -264,7 +272,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 text-center">
-                                            <button type="submit" class="btn btn-default" value="Enviar" disabled="true">
+                                            <button id="btnSubmitFormCliente" onclick="ValidarValor()" type="submit" class="btn btn-default" value="Enviar" disabled="true">
                                                 <i class="fa fa-share"></i>Confirmar Solicitação
                                             </button>
                                         </div>

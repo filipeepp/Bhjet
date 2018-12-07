@@ -111,10 +111,11 @@
   },
   "libraries": {
     "Microsoft.AspNet.Mvc/5.2.4": {
-      "sha512": "aBSENa9s0KnB/Oh9D94l/g1BQKcjX3Ra6NFmWMWFmCW7diglEHoGOpSozX4lcYdTq/HDGLHfkEFbRLD/Pu6MMQ==",
+      "sha512": "Enl//Q98M1+A5o26GlPtbtfWiGVNrLvLSFRbfDc14CG6UQn7o4Xux4CXuMAJkDqaRfHXQWsssumsPofwJoiQVw==",
       "type": "package",
       "path": "microsoft.aspnet.mvc/5.2.4",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "Content/Web.config.install.xdt",
         "Content/Web.config.uninstall.xdt",
@@ -125,10 +126,11 @@
       ]
     },
     "Microsoft.AspNet.Razor/3.2.4": {
-      "sha512": "XIqwE6RU3Wx5lzxjHakGjZ6AxePlEY8oxAt99YOjY49tzjChZGDWia807YQr1w/sTtQo1cvfcQqvMs3yKWgXrg==",
+      "sha512": "yqSkHUZNjR01MO2NbpXIfjlUEFJqw3xcT57Fc5orJryZlzgAVMUluOsDW2jyGkDg8/Xv91/RQ+0NNz4kinfGhQ==",
       "type": "package",
       "path": "microsoft.aspnet.razor/3.2.4",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "lib/net45/System.Web.Razor.dll",
         "lib/net45/System.Web.Razor.xml",
@@ -137,10 +139,11 @@
       ]
     },
     "Microsoft.AspNet.WebPages/3.2.4": {
-      "sha512": "JCFFKgRDcxyVEELCx/1D8AzF0j0N+hagGXXBmp+NFffF6O0pWA9aXugJqUm0SDvgOH9RCNU0YzyoHa4X+Lsw7w==",
+      "sha512": "lhYQ5ZeK/a+pgA2WN/Ci6Qb3WqnDOAJ3OmEdsLDH/pJwHqKYHYmjpl2Xeot9DUDZy4GP1MR9mYrr/3u6SAdrmQ==",
       "type": "package",
       "path": "microsoft.aspnet.webpages/3.2.4",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "Content/Web.config.install.xdt",
         "Content/Web.config.uninstall.xdt",
@@ -157,10 +160,12 @@
       ]
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -170,10 +175,11 @@
       ]
     },
     "Microsoft.Web.Infrastructure/1.0.0": {
-      "sha512": "n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
+      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
       "type": "package",
       "path": "microsoft.web.infrastructure/1.0.0",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "lib/net40/Microsoft.Web.Infrastructure.dll",
         "microsoft.web.infrastructure.1.0.0.nupkg.sha512",
@@ -308,10 +314,12 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -356,23 +364,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LEOZI\\.nuget\\packages\\": {},
+    "C:\\Users\\Diogo Nominato\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projetos\\BHJet_Web\\BHJet_Servico\\BHJet_Servico.csproj",
+      "projectUniqueName": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
       "projectName": "BHJet_Servico",
-      "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Servico\\BHJet_Servico.csproj",
-      "packagesPath": "C:\\Users\\LEOZI\\.nuget\\packages\\",
-      "outputPath": "D:\\Projetos\\BHJet_Web\\BHJet_Servico\\obj\\",
+      "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "packagesPath": "C:\\Users\\Diogo Nominato\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Servico\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LEOZI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Diogo Nominato\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -385,11 +393,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
+            "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             },
-            "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj": {
-              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj"
+            "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
+              "projectPath": "C:\\Users\\Diogo Nominato\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
             }
           }
         }
