@@ -3,7 +3,8 @@ using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
 using System;
 using System.Collections.Generic;
-
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace BHJet_Repositorio.Admin
 {
@@ -197,7 +198,7 @@ namespace BHJet_Repositorio.Admin
  	                                    WHERE idEndereco = (select idEndereco from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @id)";
                         // Execute
                         var idEndereco = trans.Connection.Query<int>(query, profissional, trans);
-                        
+
                         // Commit
                         trans.Commit();
                     }
@@ -206,7 +207,7 @@ namespace BHJet_Repositorio.Admin
                         trans.Rollback();
                         throw e;
                     }
-                }   
+                }
             }
         }
 
@@ -219,6 +220,9 @@ namespace BHJet_Repositorio.Admin
         /// <returns>UsuarioEntidade</returns>
         public void IncluirProfissional(ProfissionalCompletoEntidade profissional)
         {
+            int? idColaborador = null;
+            int? idEndereco = null;
+            List<int> Comissoes = new List<int>();
             using (var sqlConnection = this.InstanciaConexao())
             {
                 using (var trans = sqlConnection.BeginTransaction())
@@ -248,7 +252,7 @@ namespace BHJet_Repositorio.Admin
                                            ,@EnderecoPrincipal)
                                            select @@identity;";
                         // Execute
-                        var idEndereco = trans.Connection.ExecuteScalar<int?>(query, new
+                        idEndereco = trans.Connection.ExecuteScalar<int?>(query, new
                         {
                             Rua = profissional.Rua,
                             RuaNumero = profissional.RuaNumero,
@@ -264,7 +268,7 @@ namespace BHJet_Repositorio.Admin
                         int tipoProfissional = profissional.TipoCNH == TipoCarteira.A ? 1 : 2;
 
                         // Update tblColaboradoresEmpresaSistema
-                         query = @" INSERT INTO [dbo].[tblColaboradoresEmpresaSistema]
+                        query = @" INSERT INTO [dbo].[tblColaboradoresEmpresaSistema]
                                                      ([idUsuario]
                                                      ,[idEndereco]
                                                      ,[idTipoProfissional]
@@ -291,9 +295,9 @@ namespace BHJet_Repositorio.Admin
                                                      ,@WPP
                                                      ,@CLT
                                                      ,@Observacao
-                                                     ,@Email)";
+                                                     ,@Email) select @@identity;";
                         // Execução 
-                        trans.Connection.Execute(query, new
+                        idColaborador = trans.Connection.ExecuteScalar<int?>(query, new
                         {
                             IDGestor = profissional.IDGestor,
                             idEndereco = idEndereco,
@@ -312,14 +316,88 @@ namespace BHJet_Repositorio.Admin
 
                         // Commit
                         trans.Commit();
+
+                        // Insere comissões
+                        using (var sqlConnectionCom = this.InstanciaConexao())
+                        {
+                            if (profissional.Comissoes != null && profissional.Comissoes.Any())
+                            {
+                                string queryComissao = @"INSERT INTO [dbo].[tblComissaoColaboradorEmpresaSistema]
+                                                    ([idColaboradorEmpresaSistema]
+                                                    ,[decPercentualComissao]
+                                                    ,[dtDataInicioVigencia]
+                                                    ,[dtDataFimVigencia]
+                                                    ,[bitAtivo])
+                                                VALUES
+                                                        (@idCol
+                                                        ,@vlComissao
+                                                        ,@dtIni
+                                                        ,@dtFim
+                                                        ,1) select @@identity;";
+
+                                foreach (var com in profissional.Comissoes)
+                                {
+                                    if (!ValidaComissao(sqlConnectionCom, com, idColaborador))
+                                    {
+                                        var comissao = sqlConnectionCom.ExecuteScalar<int>(queryComissao, new
+                                        {
+                                            idCol = idColaborador,
+                                            vlComissao = com.decPercentualComissao,
+                                            dtIni = com.dtDataInicioVigencia,
+                                            dtFim = com.dtDataFimVigencia
+                                        }, trans);
+
+                                        Comissoes.Add(comissao);
+                                    }
+                                    else
+                                        throw new Exception("Você não pode incluir comissões com periodo de vigência já existentes. Favor preencher corretamente.");
+                                }
+                            }
+                        }
+
+                        // Commit
+                        trans.Commit();
                     }
                     catch (Exception e)
                     {
-                        trans.Rollback();
+                        if (trans.Connection != null)
+                            trans.Rollback();
+                        RoolbackColaborador(idEndereco, idColaborador, Comissoes.ToArray());
                         throw e;
                     }
                 }
             }
+        }
+
+        private void RoolbackColaborador(int? idEndereco, int? idColaborador, int[] comissoes)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                if (comissoes.Any())
+                    sqlConnection.ExecuteScalar($"delete from tblComissaoColaboradorEmpresaSistema where idComissaoColaboradorEmpresaSistema in ({string.Join(",", comissoes)})");
+                if (idColaborador != null)
+                    sqlConnection.ExecuteScalar($"delete from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = {idColaborador}");
+                if (idEndereco != null)
+                    sqlConnection.ExecuteScalar($"delete from tblEnderecos where idEndereco = {idEndereco}");
+            }
+        }
+
+        private bool ValidaComissao(SqlConnection con, ProfissionalComissaoEntidade comissao, int? colaboradorID)
+        {
+            // Query
+            string query = @"select cast(count(*) as bit) from 
+                                    [tblComissaoColaboradorEmpresaSistema]
+                                 where idColaboradorEmpresaSistema = @Col and
+		                                (dtDataFimVigencia <= @dtFim or dtDataInicioVigencia >= @dtFim) and
+		                                (dtDataInicioVigencia >= @dtIni or dtDataFimVigencia <= @dtIni)";
+
+            // Execução
+            return con.QueryFirstOrDefault<bool>(query, new
+            {
+                Col = colaboradorID,
+                dtFim = comissao.dtDataFimVigencia,
+                dtIni = comissao.dtDataInicioVigencia
+            });
         }
 
         /// <summary>

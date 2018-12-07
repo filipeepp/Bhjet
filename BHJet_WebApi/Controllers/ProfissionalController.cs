@@ -3,6 +3,7 @@ using BHJet_Core.Extension;
 using BHJet_Core.Variaveis;
 using BHJet_DTO.Profissional;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
@@ -252,7 +253,13 @@ namespace BHJet_WebApi.Controllers
                 RuaNumero = model.RuaNumero,
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
-                PontoReferencia = model.PontoReferencia
+                PontoReferencia = model.PontoReferencia,
+                Comissoes = model.Comissoes.Any() ? model.Comissoes.Select(x => new ProfissionalComissaoEntidade()
+                {
+                    decPercentualComissao = x.decPercentualComissao,
+                    dtDataFimVigencia = x.dtDataFimVigencia,
+                    dtDataInicioVigencia = x.dtDataInicioVigencia
+                }).ToArray() : new ProfissionalComissaoEntidade[] { }
             });
 
             // Return

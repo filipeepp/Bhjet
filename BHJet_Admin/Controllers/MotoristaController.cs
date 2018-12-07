@@ -1,9 +1,13 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models.Motorista;
+using BHJet_Core.Extension;
 using BHJet_DTO.Profissional;
 using BHJet_Servico.Profissional;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
@@ -25,10 +29,17 @@ namespace BHJet_Admin.Controllers
 
         #region Novo/Edicao Motorista
         [ValidacaoUsuarioAttribute()]
-        public ActionResult Novo(bool? Edicao, long? ID, NovoMotoristaModel model)
+        public ActionResult Novo(bool? Edicao, long? ID, NovoMotoristaModel model, bool? alteraComissao = false)
         {
             try
             {
+                if (alteraComissao == true && TempData["ModelAtual"] != null)
+                {
+                    ModelState.Clear();
+                    var results = Newtonsoft.Json.JsonConvert.DeserializeObject<NovoMotoristaModel>(TempData["ModelAtual"].ToString());
+
+                    return View(results);
+                }
                 if (ID != null)
                 {
                     ModelState.Clear();
@@ -62,7 +73,11 @@ namespace BHJet_Admin.Controllers
                         PontoReferencia = profissional.PontoReferencia,
                         RuaNumero = profissional.RuaNumero,
                         UF = profissional.UF,
-                        EdicaoCadastro = true
+                        EdicaoCadastro = true,
+                        Comissao = new NovoMotoristaComissaoModel[]
+                         {
+
+                         }
                     });
                 }
                 else
@@ -78,8 +93,8 @@ namespace BHJet_Admin.Controllers
                     {
                         EdicaoCadastro = false,
                         ID = 0,
-                         Bairro = "",
-                          Comissao = new NovoMotoristaComissaoModel[]
+                        Bairro = "",
+                        Comissao = new NovoMotoristaComissaoModel[]
                           {
                                new NovoMotoristaComissaoModel()
                                {
@@ -130,6 +145,12 @@ namespace BHJet_Admin.Controllers
                     PontoReferencia = model.PontoReferencia,
                     RuaNumero = model.RuaNumero,
                     UF = model.UF,
+                    Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
+                    {
+                        decPercentualComissao = x.ValorComissao.ToDecimalCurrency(),
+                        dtDataFimVigencia = x.VigenciaFim ?? new DateTime(),
+                        dtDataInicioVigencia = x.VigenciaInicio ?? new DateTime()
+                    }).ToArray() : new ProfissionalComissaoModel[] { }
                 };
 
                 // Alteração
@@ -143,10 +164,87 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return View(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 this.TrataErro(e);
                 return View(model);
+            }
+        }
+
+        private Stream GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
+
+        [ValidacaoUsuarioAttribute()]
+        [HttpPost]
+        public JsonResult AddComissao(NovoMotoristaModel data)
+        {
+            try
+            {
+                // Validação
+                if (data.Comissao.Where(c => c.ValorComissao == null || c.VigenciaFim == null || c.VigenciaInicio == null).Any())
+                    throw new Exception("Favor preencher todos os campos da comissão anterior antes de incluir uma nova.");
+
+                var listaNovaComissao = data.Comissao.ToList();
+                listaNovaComissao.Add(new NovoMotoristaComissaoModel());
+                data.Comissao = listaNovaComissao.ToArray();
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+                TempData["ModelAtual"] = json;
+
+                return Json(json);
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                TempData["ModelAtual"] = json;
+                return Json(json);
+
+            }
+        }
+
+        [ValidacaoUsuarioAttribute()]
+        [HttpPost]
+        public JsonResult ExcluirComissao(NovoMotoristaModel data, int numeroComissao)
+        {
+            try
+            {
+                if (data.Comissao.Count() == 1)
+                {
+                    data.Comissao[0] = new NovoMotoristaComissaoModel()
+                    {
+
+                    };
+                }
+                else
+                {
+                    var teste = data.Comissao.ToList();
+                    teste.RemoveAt(numeroComissao);
+                    data.Comissao = teste.ToArray();
+                }
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+                TempData["ModelAtual"] = json;
+
+                return Json(json);
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                TempData["ModelAtual"] = json;
+                return Json(json);
+
             }
         }
         #endregion

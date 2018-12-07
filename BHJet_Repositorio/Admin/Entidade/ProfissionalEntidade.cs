@@ -1,4 +1,5 @@
 ﻿using BHJet_Core.Enum;
+using System;
 
 namespace BHJet_Repositorio.Admin.Entidade
 {
@@ -35,5 +36,14 @@ namespace BHJet_Repositorio.Admin.Entidade
         public string Observacao { get; set; }
         public TipoProfissional TipoProfissional { get; set; }
         public RegimeContratacao TipoRegime { get; set; }
+        public ProfissionalComissaoEntidade[] Comissoes { get; set; }
+    }
+
+    public class ProfissionalComissaoEntidade
+    {
+        public long ID { get; set; }
+        public decimal decPercentualComissao { get; set; }
+        public DateTime dtDataInicioVigencia { get; set; }
+        public DateTime dtDataFimVigencia { get; set; }
     }
 }

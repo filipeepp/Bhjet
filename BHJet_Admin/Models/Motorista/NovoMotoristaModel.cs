@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Motorista
 {
+    [Serializable]
     public class NovoMotoristaModel
     {
         public long ID { get; set; }
@@ -77,9 +78,9 @@ namespace BHJet_Admin.Models.Motorista
 
     public class NovoMotoristaComissaoModel
     {
-        public double ValorComissao { get; set; }
-        public DateTime VigenciaInicio { get; set; }
-        public DateTime VigenciaFim { get; set; }
+        public string ValorComissao { get; set; }
+        public DateTime? VigenciaInicio { get; set; }
+        public DateTime? VigenciaFim { get; set; }
         public string Observacao { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BHJet_Core.Enum;
+using System;
 
 namespace BHJet_DTO.Profissional
 {
@@ -34,5 +35,16 @@ namespace BHJet_DTO.Profissional
         public string Observacao { get; set; }
         public TipoProfissional TipoProfissional { get; set; }
         public RegimeContratacao TipoRegime { get; set; }
+        public ProfissionalComissaoModel[] Comissoes { get; set; }
     }
+
+
+    public class ProfissionalComissaoModel
+    {
+        public long ID { get; set; }
+        public decimal decPercentualComissao { get; set; }
+        public DateTime dtDataInicioVigencia { get; set; }
+        public DateTime dtDataFimVigencia { get; set; }
+    }
+
 }
