@@ -16,28 +16,69 @@
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
-	//$(".mask-data").mask("99/99/9999");
+	$(".mask-data").value = "";
+
+	var aberturaSpan = '<span class="text-danger field-validation-error" data-valmsg-replace="true"><span>';
+	var fechamentoSpan = '</span></span></span>';
 
 	//Limpa erro do campo Vigencia início quando alterado
 	$("input[name$='VigenciaInicio']").change(function () {
 
 		$("div[id$='VigenciaInicio']").each(function () {
 			var aux = $(this).children('input');
-			if (aux[0].value)
-				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+
+			if (aux.length > 0) {
+				$(this).find("span[id^='spanError_']").remove();
+				if (aux[0].value) {
+
+					if (aux[0].value.length > 10) {
+						aux[0].value = "";
+						aux[0].blur();
+						$(this).append('<span id="spanError_" >' + aberturaSpan + "Data inválida" + fechamentoSpan);
+					}
+				}
+			}
 		});
 
 	});
 
-	//Limpa erro do campo Vigencia final quando alterado
+	//Confere campo vigência final
 	$("input[name$='VigenciaFim']").change(function () {
 
+		//Limpa erro do campo Vigencia final
 		$("div[id$='VigenciaFim']").each(function () {
+
 			var aux = $(this).children('input');
-			if (aux[0].value)
-				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+
+			if (aux.length > 0) {
+				$(this).find("span[id^='spanError_']").remove();
+				if (aux[0].value) {
+
+					if (aux[0].value.length > 10) {
+						aux[0].value = "";
+						aux[0].blur();
+						$(this).append('<span id="spanError_" >' + aberturaSpan + "Data inválida" + fechamentoSpan);
+					}
+				}
+					
+			}
 		});
 
+	});
+
+
+	//Confere se vigencia inicio é menor que a vigência final
+	$('input[id$="VigenciaFim"]').keyup(function () {
+		$("div[id^='date_range']").each(function () {
+
+			if ($(this).find("span[id^='spanError_']").length > 0)
+					$(this).find("span[id^='spanError_']").remove();
+
+			var vigenciaInicio = $(this).find('input[id$="VigenciaInicio"]');
+			var vigenciaFim = $(this).find('input[id$="VigenciaFim"]');
+
+			vigenciaInicio[0].value > vigenciaFim[0].value ? $(this).append('<span id="spanError_" >' + aberturaSpan + "A data final dever ser maior que a data inicial" + fechamentoSpan) : "";
+		});
 	});
 
 	//Habilita botão avançar
@@ -76,9 +117,9 @@ window.ValidarValor = function () {
 
 		if (aux.hasClass("ctmErrorTipoTarifa") && $(this).closest('.div-contato-removido').length <= 0) {
 			//Tipo de Tarifa
-			aux.is(":checked") ? "" : $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Tipo de tarifa é obrigatório.' + fechamentoSpan) ;
+			aux.is(":checked") ? "" : $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Tipo de tarifa é obrigatório.' + fechamentoSpan);
 
-		}else if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
+		} else if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
 			//Valor Unitário
 			aux.hasClass("ctmErrorValorUnitario") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Valor unitario é obrigatório." + fechamentoSpan) : "";
 			//Vigência Início
@@ -107,13 +148,25 @@ window.ValidarValor = function () {
 
 window.RemoverBlocoValor = function (divBlocoValor) {
 	var id = divBlocoValor.id;
+
+	//Adicionta classe para identificar que o valor foi removido
 	$("#" + id).addClass("div-contato-removido");
 
+	//Remove span de erro
 	$('span', '#' + id).each(function () {
 		$(this).remove();
 	});
 
+	//Adiciona true para model ValorRemovido
+	$("#" + id).find("input[id$='ValorRemovido']").attr("value", true);
+
+	//Exclui o bloco
 	$("#" + id).hide();
+
 	return true;
+
+}
+
+window.ComparaVigencias = function (vigenciaInicio, vigenciaFim) {
 
 }

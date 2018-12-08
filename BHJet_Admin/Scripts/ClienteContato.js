@@ -40,7 +40,7 @@
 			var aux = $(this).children('input');
 		
 			if (aux[0].value) {
-				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+				$(this).find("span[id^='spanError_']").remove();
 
 				if (aux.hasClass("ctmErrorEmail")) {
 
@@ -69,6 +69,12 @@
 					else
 						$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 
+				} else if (aux.hasClass("ctmErrorDataNascimento")) {
+					if (aux[0].value.length > 10) {
+						aux[0].value = "";
+						aux[0].blur();
+						$(this).append('<span id="spanError_" >' + aberturaSpan + "Data inválida" + fechamentoSpan);
+					}
 				}
 
 			}
@@ -116,13 +122,20 @@ window.ValidarContato = function () {
 window.RemoverBlocoContato = function (divBlocoContato) {
 	var id = divBlocoContato.id;
 
+	//Adicionta classe para identificar que o contato foi removido
 	$("#" + id).addClass("div-contato-removido");
 
+	//Remove span de erro
 	$('span', '#'+id).each(function () {
 		$(this).remove();
 	});
 
+	//Adiciona true para model ContatoRemovido
+	$("#" + id).find("input[id$='ContatoRemovido']").attr("value", true);
+
+	//Exclui o bloco
 	$("#" + id).hide();
+
 	return true;
 
 }

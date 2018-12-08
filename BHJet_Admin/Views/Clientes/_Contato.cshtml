@@ -46,6 +46,7 @@
 </style>
 
 <div class="panel panel-default cst-panel-contato" style="margin:30px" id="div_panel_contato_@Html.IdFor(model => model.Contato[count])">
+	@Html.HiddenFor(model => model.Contato[count].ContatoRemovido)
 	<div class="panel-body">
 		<div class="titulo">
 			<h2>
