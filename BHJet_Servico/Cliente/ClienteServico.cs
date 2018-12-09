@@ -6,6 +6,7 @@ namespace BHJet_Servico.Cliente
     public interface IClienteServico
     {
         ClienteDTO[] BuscaListaClientes(string trechoPesquisa);
+		void IncluirCliente(ClienteCompletoModel clienteModel);
     }
 
     public class ClienteServico : ServicoBase, IClienteServico
@@ -33,5 +34,10 @@ namespace BHJet_Servico.Cliente
 
             return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientes}?trecho={trechoPesquisa}"));
         }
+
+		public void IncluirCliente(ClienteCompletoModel clienteModel)
+		{
+			this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
+		}
     }
 }

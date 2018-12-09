@@ -4,7 +4,7 @@
 @model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
-<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>
+<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>>
 
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
@@ -50,6 +50,7 @@ new ValorModel()
 </style>
 
 <div class="panel panel-default cst-panel-valor" style="margin:30px" id="div_panel_valor_@Html.IdFor(model => model.Valor[count])">
+	@Html.HiddenFor(model => model.Valor[count].ValorRemovido)
 	<div class="panel-body">
 		<div class="titulo">
 			<h2>
@@ -94,9 +95,9 @@ new ValorModel()
 		<div class="form-row">
 			<div class="form-group col-xs-12 col-md-3">
 				<label>Vigência</label>
-				<div class="input-group input-daterange">
+				<div id="date_range_@Html.IdFor(model => model.Valor[count].VigenciaInicio)" class="input-group input-daterange">
 					<div id="@Html.IdFor(model => model.Valor[count].VigenciaInicio)">
-						@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio" })
+						@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value="digite" })
 					</div>
 					<div class="input-group-addon">a</div>
 					<div id="@Html.IdFor(model => model.Valor[count].VigenciaFim)">

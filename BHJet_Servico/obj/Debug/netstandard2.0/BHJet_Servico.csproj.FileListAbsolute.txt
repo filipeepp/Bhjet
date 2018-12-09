@@ -40,3 +40,17 @@ D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.Assem
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.deps.json
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csprojAssemblyReference.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CoreCompileInputs.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfoInputs.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfo.cs
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb

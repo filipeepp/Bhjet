@@ -8,6 +8,7 @@ namespace BHJet_Admin.Models.Clientes
 {
 	public class ContatoModel
 	{
+		public bool ContatoRemovido { get; set; }
 		public int? ID { get; set;}
 
         //[Required(ErrorMessage = "Nome do Contato obrigatório.")]

@@ -30,6 +30,7 @@
         public class Cliente
         {
             public const string GetClientes = "/Cliente";
+			public const string PostCliente = "/Cliente";
         }
 
         public class Usuario
