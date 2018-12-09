@@ -10,5 +10,6 @@ namespace BHJet_DTO.Usuario
         public bool Situacao { get; set; }
         public string SituacaoDesc { get; set; }
         public string Senha { get; set; }
+        public int? ClienteSelecionado { get; set; }
     }
 }

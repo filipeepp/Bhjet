@@ -155,7 +155,15 @@ namespace BHJet_WebApi.Controllers
                 TelefoneResidencial = entidade.TelefoneResidencial,
                 TipoCNH = entidade.TipoCNH,
                 TipoRegime = entidade.TipoRegime,
-                TipoProfissional = entidade.TipoProfissional
+                TipoProfissional = entidade.TipoProfissional,
+                Comissoes = entidade.Comissoes.Select(c => new ProfissionalComissaoModel()
+                {
+                    ID = c.idComissaoColaboradorEmpresaSistema,
+                    decPercentualComissao = c.decPercentualComissao,
+                    dtDataInicioVigencia = c.dtDataInicioVigencia,
+                    dtDataFimVigencia = c.dtDataFimVigencia,
+                    Observacao = c.vcObservacoes
+                }).ToArray()
             });
         }
 
@@ -191,7 +199,15 @@ namespace BHJet_WebApi.Controllers
                 RuaNumero = model.RuaNumero,
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
-                PontoReferencia = model.PontoReferencia
+                PontoReferencia = model.PontoReferencia,
+                Comissoes = model.Comissoes != null ? model.Comissoes.Select(c => new ProfissionalComissaoEntidade()
+                {
+                    idComissaoColaboradorEmpresaSistema = c.ID,
+                    decPercentualComissao = c.decPercentualComissao,
+                    dtDataInicioVigencia = c.dtDataInicioVigencia,
+                    dtDataFimVigencia = c.dtDataFimVigencia,
+                    vcObservacoes = c.Observacao 
+                }).ToArray() : new ProfissionalComissaoEntidade[] { }
             });
 
             // Return

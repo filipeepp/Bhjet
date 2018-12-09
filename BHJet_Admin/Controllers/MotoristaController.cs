@@ -74,10 +74,15 @@ namespace BHJet_Admin.Controllers
                         RuaNumero = profissional.RuaNumero,
                         UF = profissional.UF,
                         EdicaoCadastro = true,
-                        Comissao = new NovoMotoristaComissaoModel[]
-                         {
+                        Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
+                        {
+                            ID = c.ID,
+                            ValorComissao = c.decPercentualComissao.ToString(),
+                            VigenciaInicio = c.dtDataInicioVigencia,
+                            VigenciaFim = c.dtDataFimVigencia,
+                            Observacao = c.Observacao
 
-                         }
+                        }).ToArray() : new NovoMotoristaComissaoModel[] { }
                     });
                 }
                 else
@@ -121,6 +126,19 @@ namespace BHJet_Admin.Controllers
         {
             try
             {
+                // Validacoes
+                if (model.Comissao.Any())
+                {
+                    model.Comissao.All(x =>
+                    {
+                        if(x.VigenciaInicio < DateTime.Now.Date)
+                            throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
+                        else if(x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
+                            throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
+                        return true;
+                    });
+                }
+
                 // Modelo entidade
                 var entidade = new ProfissionalCompletoModel()
                 {
@@ -159,7 +177,7 @@ namespace BHJet_Admin.Controllers
                 else
                     profissionalServico.IncluirProfissional(entidade); // Atualiza dados do profissional
 
-                this.TrataSucesso("Profissional atualizado com sucesso.");
+                this.MensagemSucesso("Profissional atualizado com sucesso.");
 
                 // Return
                 return View(model);
@@ -189,10 +207,10 @@ namespace BHJet_Admin.Controllers
             try
             {
                 // Validação
-                if (data.Comissao.Where(c => c.ValorComissao == null || c.VigenciaFim == null || c.VigenciaInicio == null).Any())
+                if (data.Comissao != null && data.Comissao.Where(c => c.ValorComissao == null || c.VigenciaFim == null || c.VigenciaInicio == null).Any())
                     throw new Exception("Favor preencher todos os campos da comissão anterior antes de incluir uma nova.");
 
-                var listaNovaComissao = data.Comissao.ToList();
+                var listaNovaComissao = data.Comissao?.ToList() ?? new List<NovoMotoristaComissaoModel>();
                 listaNovaComissao.Add(new NovoMotoristaComissaoModel());
                 data.Comissao = listaNovaComissao.ToArray();
 

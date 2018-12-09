@@ -60,7 +60,8 @@ namespace BHJet_WebApi.Controllers
                 vcEmail = model.Email,
                 bitAtivo = model.Situacao,
                 idTipoUsuario = model.TipoUsuario,
-                vbIncPassword = model.Senha
+                vbIncPassword = model.Senha,
+                ClienteSelecionado = model.ClienteSelecionado
             });
 
             // Return

@@ -61,7 +61,7 @@ namespace BHJet_Repositorio.Admin
 		                             and P.intOdometroFimExpediente is not null
 		                             and P.idCliente not in (select RD.idCliente from tblItemFaturamento as IT left join tblRegistroDiarias as RD ON (IT.idRegistroDiaria = RD.idRegistroDiaria))
                                      and P.idRegistroDiaria not in (select idRegistroDiaria from tblItemFaturamento where idRegistroDiaria = P.idRegistroDiaria)
-                                     %clienteCondition1%
+                                     %clienteCondition%
 
 		                        --- Busca Corridas ---
 		                                select P.idCorrida,
@@ -71,24 +71,16 @@ namespace BHJet_Repositorio.Admin
 	                                           P.decValorFinalizado as decValor,
 	                                           P.decValorComissaoNegociado as decValorComissao
 	                                        from tblCorridas as P
-                                                 join tblUsuarios as US on (P.idUsuarioChamador = us.idUsuario)
-			                                     join tblColaboradoresCliente as CC on (CC.idUsuario = us.idUsuario) 
 	                                        where P.dtDataHoraInicio BETWEEN  @dataInicio AND @dataFim
                                         	  and P.dtDataHoraTermino is not null 
-                                              and P.idCorrida not  in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
-                                              %clienteCondition2%";
+                                              and P.idCorrida not in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
+                                              %clienteCondition%";
 
                         // Busca por cliente
                         if (idCliente != null && idCliente.Any())
-                        {
-                            query = query.Replace("%clienteCondition1%", " and  P.idCliente in @IDCliente");
-                            query = query.Replace("%clienteCondition2%", " and  CC.idCliente in @IDCliente");
-                        }
+                            query = query.Replace("%clienteCondition%", " and  P.idCliente in @IDCliente");
                         else
-                        {
-                            query = query.Replace("%clienteCondition1%", "");
-                            query = query.Replace("%clienteCondition2%", "");
-                        }
+                            query = query.Replace("%clienteCondition%", "");
 
                         // Query Multiple
                         using (var multi = sqlConnection.QueryMultiple(query, new
@@ -173,7 +165,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
         /// Busca Profissionais Disponiveis
         /// </summary>
@@ -186,42 +177,49 @@ namespace BHJet_Repositorio.Admin
                 // Query
 
                 string query = @"-- fatu registro diaria
-	                            select
- 	                            IT.idItemFaturamento AS ID, 
+	                       select
+                                CLI.idCliente,
  	                            CLI.vcNomeFantasia AS NomeCliente,
- 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
- 	                            'Chamados Avulsos' as TipoDescContrato,
- 	                            IT.decValor as Valor
+ 	                            --concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
+ 	                            --'Chamados Avulsos' as TipoDescContrato,
+ 	                            sum(IT.decValor) as Valor
    	                            from tblItemFaturamento IT
 						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-						left join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
-						left join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
+						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
 				where PF.dtDataInicioPeriodoFaturamento = @dataInicio  
 						 and PF.dtDataFimPeriodoFaturamento = @dataFim  
 						 and it.idCorrida is null
-						 and IT.idRegistroDiaria is not null  %clienteCondition%
+						 and IT.idRegistroDiaria is not null  %clienteCondition% 
+                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor
 
-                        -- fatu corridas
-	                            select
- 	                            IT.idItemFaturamento AS ID, 
+                        -- fatu corridas                            
+					     select
+								CLI.idCliente as IDCliente,
  	                            CLI.vcNomeFantasia AS NomeCliente,
- 	                            concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
- 	                            'Chamados Avulsos' as TipoDescContrato,
+ 	                           -- concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
+ 	                            --'Chamados Avulsos' as TipoDescContrato,
  	                            IT.decValor as Valor
   	                             from tblItemFaturamento IT
-						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-						left join tblCorridas RG on (RG.idCorrida = it.idCorrida)
-						 join tblColaboradoresCliente as CC on (CC.idUsuario = RG.idUsuarioChamador)             
-		                 join tblClientes CLI on (CLI.idCliente = CC.idCliente)
+						 join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+						 join tblCorridas RG on (RG.idCorrida = it.idCorrida)
+						 join tblClientes as CLI on (CLI.idCliente = rg.idCliente) 
 				where PF.dtDataInicioPeriodoFaturamento = @dataInicio 
 						 and PF.dtDataFimPeriodoFaturamento = @dataFim 
 						 and it.idRegistroDiaria is null
-						 and IT.idCorrida is not null  %clienteCondition%";
+						 and IT.idCorrida is not null  %clienteCondition2% 
+                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor";
 
                 if (idClientes != null && idClientes.Any())
-                    query = query.Replace("%clienteCondition%", " and  CLI.idCliente in @IDCliente");
+                {
+                    query = query.Replace("%clienteCondition%", "and CLI.idCliente in @IDCliente");
+                    query = query.Replace("%clienteCondition2%", "and CLI.idCliente in @IDCliente");
+                }
                 else
+                {
                     query = query.Replace("%clienteCondition%", " ");
+                    query = query.Replace("%clienteCondition2%", " ");
+                }
 
                 // Retorno
                 var retorno = new ItemFaturamentoResumidoEntidade[] { };
@@ -234,11 +232,23 @@ namespace BHJet_Repositorio.Admin
                     IDCliente = idClientes
                 }))
                 {
-                    // chamadosAguardando
+                    // registra diaria
                     var fatDiaria = multi.Read<ItemFaturamentoResumidoEntidade>().AsList();
+                    fatDiaria = fatDiaria.Select(x => 
+                    {
+                        x.Periodo = $"{periodoFatInico.ToShortDateString()} a {periodoFatFim.ToShortDateString()}";
+                        x.TipoDescContrato = "Diárias Avulsas";
+                        return x;
+                    }).ToList();
 
-                    // motoristasAguardando
+                    // corridas
                     var fatContrato = multi.Read<ItemFaturamentoResumidoEntidade>().AsList();
+                    fatContrato = fatContrato.Select(x =>
+                    {
+                        x.Periodo = $"{periodoFatInico.ToShortDateString()} a {periodoFatFim.ToShortDateString()}";
+                        x.TipoDescContrato = "Chamados Avulsos";
+                        return x;
+                    }).ToList();
 
                     // Serpara por tipo
                     if (tipo != null)
@@ -250,11 +260,166 @@ namespace BHJet_Repositorio.Admin
                     }
                     else
                         retorno = fatDiaria.Union(fatContrato).ToArray();
+
                 }
                 // Execução
                 return retorno;
             }
         }
 
+
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoDiaria(long idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+
+                string queryDiarias = @"-- busca todas diarias		
+						  select
+                                it.idRegistroDiaria
+   	                            from tblItemFaturamento IT
+						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
+						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+				where PF.dtDataInicioPeriodoFaturamento = @dtIni 
+						 and PF.dtDataFimPeriodoFaturamento = @dtFim  
+						 and it.idCorrida is null
+						 and IT.idRegistroDiaria is not null 
+						 and RG.idCliente = @idcli";
+
+
+                // Retorno
+                var diarias = sqlConnection.Query<long>(queryDiarias, new
+                {
+                    idcli = idCliente,
+                    dtIni = periodoFatInico,
+                    dtFim = periodoFatFim
+                });
+
+                if (diarias == null || !diarias.Any())
+                    return new ItemFaturamentoDetalheEntidade[] { };
+
+                string queryDetalheDiarias = @"	select
+                                                        CLI.vcNomeFantasia as NomeCliente,
+                                                        	'Diária Avulsa' as Tipo,
+	                                                        RD.dtDataHoraInicioExpediente as Data,
+	                                                        RD.idRegistroDiaria as OS,
+	                                                        CES.vcNomeCompleto as Profissional,
+	                                                        (intOdometroFimExpediente - intOdometroInicioExpediente) as KM,
+	                                                        decValorDiariaNegociado as Valor
+                                                         from tblRegistroDiarias  as RD
+                                                            join tblColaboradoresEmpresaSistema CES on(CES.idColaboradorEmpresaSistema = rd.idColaboradorEmpresaSistema)
+                                                            join tblClientes CLI on(CLI.idCliente = rd.idCliente)
+                                                         where idRegistroDiaria in (@ids)";
+
+                var diariasDetalhe = sqlConnection.Query<ItemFaturamentoDetalheEntidade>(queryDetalheDiarias, new
+                {
+                    ids = string.Join(",", diarias)
+                });
+
+                // Execução
+                return diariasDetalhe;
+            }
+        }
+
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoCorrida(long idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+
+                string queryCorridas = @"-- busca todas diarias		
+						  select
+                                it.idCorrida
+   	                            from tblItemFaturamento IT
+						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
+						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+				where PF.dtDataInicioPeriodoFaturamento = @dtIni 
+						 and PF.dtDataFimPeriodoFaturamento = @dtFim  
+						 and it.idRegistroDiaria is null
+						 and IT.idCorrida is not null
+						 and RG.idCliente = @idCliente";
+
+
+                // Retorno
+                var corridas = sqlConnection.Query<long>(queryCorridas, new
+                {
+                    idCliente = idCliente,
+                    dtIni = periodoFatInico,
+                    dtFim = periodoFatFim
+                });
+
+                if (corridas == null || !corridas.Any())
+                    return new ItemFaturamentoDetalheEntidade[] { };
+
+                string queryDetalheDiarias = @"select
+                                                CLI.vcNomeFantasia as NomeCliente,
+                                                	    	'Chamado Avulso' as Tipo,
+                                                            dtDataHoraInicio as Data,
+                                                            idCorrida as OS,
+                                                            CES.vcNomeCompleto as Profissional,
+                                                            decValorFinalizado as Valor
+                                                      from tblCorridas as CR
+                                                            join tblColaboradoresEmpresaSistema CES on (CES.idColaboradorEmpresaSistema = CR.idUsuarioColaboradorEmpresa)
+                                                            join tblClientes as CLI on (CLI.idCliente = CR.idCliente) 
+                                                         where idCorrida in (@ids)";
+
+                var diariasDetalhe = sqlConnection.Query<ItemFaturamentoDetalheEntidade>(queryDetalheDiarias, new
+                {
+                    ids = string.Join(",", corridas)
+                });
+
+                // Execução
+                return diariasDetalhe;
+            }
+        }
     }
 }
+
+//-- Detalhe Registro Diaria
+//select
+//    CLI.vcNomeFantasia as NomeCliente,
+//	'Diária Avulsa' as Tipo,
+//	RD.dtDataHoraInicioExpediente as Data,
+//	RD.idRegistroDiaria as OS,
+//	CES.vcNomeCompleto as Profissional,
+//	(intOdometroFimExpediente - intOdometroInicioExpediente) as KM,
+//	decValorDiariaNegociado as Valor
+// from tblRegistroDiarias  as RD
+//    join tblColaboradoresEmpresaSistema CES on(CES.idColaboradorEmpresaSistema = rd.idColaboradorEmpresaSistema)
+
+//    join tblClientes CLI on(CLI.idCliente = rd.idCliente)
+//        where idRegistroDiaria = 4
+
+//-- Detalhe Corrida
+
+//        select
+
+//            CLI.vcNomeFantasia as NomeCliente,
+//	    	'Chamado Avulso' as Tipo,
+//            dtDataHoraInicio as Data,
+//            idCorrida as OS,
+//            CES.vcNomeCompleto as Profissional,
+//            decValorFinalizado as Valor
+
+//            from tblCorridas as CR
+
+//            join tblColaboradoresEmpresaSistema CES on (CES.idColaboradorEmpresaSistema = CR.idUsuarioColaboradorEmpresa)
+
+//             LEFT join tblClientes as CLI on (CLI.idUsuario = CR.idUsuarioChamador) 
+
+//             LEFT join tblColaboradoresCliente as CC on (CC.idUsuario = CR.idUsuarioChamador) 
+//				where idCorrida = 3
+
+//-- Busca KMS percorridos corrida
+
+//                SELECT
+
+//                 geoPosicao.STY  as vcLatitude,
+//                 geoPosicao.STX  as vcLongitude
+
+//                 FROM tblLogCorrida
+//                    where idCorrida = 3
+
+//                        and idStatusCorrida in (2, 3, 8, 9, 10)

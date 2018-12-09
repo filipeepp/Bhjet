@@ -6,11 +6,11 @@ namespace BHJet_Admin.Models.Usuario
 {
     public class UsuariosModel
     {
-        public UsuarioModel[] usuarios { get; set; }
-        public UsuarioModel novo { get; set; }
+        public UsuarioDetalheModel[] usuarios { get; set; }
+        public UsuarioDetalheModel novo { get; set; }
     }
 
-    public class UsuarioModel
+    public class UsuarioDetalheModel
     {
         public long ID { get; set; }
 
@@ -21,6 +21,19 @@ namespace BHJet_Admin.Models.Usuario
 
         [Required(ErrorMessage = "Selecione o tipo de usuário.")]
         public TipoUsuario TipoUser { get; set; }
+
+        private int? _ClienteSelecionado;
+        public int? ClienteSelecionado
+        {
+            get
+            {
+                return _ClienteSelecionado;
+            }
+            set
+            {
+                _ClienteSelecionado = value;
+            }
+        }
 
         public string SituacaoDesc { get; set; }
 

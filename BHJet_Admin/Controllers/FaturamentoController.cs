@@ -53,7 +53,7 @@ namespace BHJet_Admin.Controllers
                     DataFimFaturamento = fim
                 });
 
-                this.TrataSucesso("Faturamento gerado com sucesso.");
+                this.MensagemSucesso("Faturamento gerado com sucesso.");
 
                 // Return View
                 return View(new GerarFaturamantoModel()
@@ -63,7 +63,7 @@ namespace BHJet_Admin.Controllers
                     {
                         ID = x.ID,
                         Cliente = x.NomeCliente,
-                        Apuração = x.Periodo,
+                        Apuracao = x.Periodo,
                         DescContrato = x.TipoContrato,
                         Valor = x.Valor.ToString("C", new CultureInfo("pt-BR"))
                     })
@@ -125,8 +125,9 @@ namespace BHJet_Admin.Controllers
                 model.ListaFaturamento = faturamentos.Select(fat => new FaturamentoModel()
                 {
                     ID = fat.ID,
+                    IDCliente = fat.IDCliente,
                     Cliente = fat.NomeCliente,
-                    Apuração = fat.Periodo,
+                    Apuracao = fat.Periodo,
                     DescContrato = fat.TipoContrato,
                     Valor = fat.Valor.ToString("C", new CultureInfo("pt-BR"))
                 });
@@ -181,7 +182,7 @@ namespace BHJet_Admin.Controllers
                     new FaturamentoModel()
                      {
                       Cliente = "Cliente A",
-                      Apuração = "",
+                      Apuracao = "",
                        DescContrato = "Avulso",
                        Valor = ""
                     }
@@ -247,28 +248,37 @@ namespace BHJet_Admin.Controllers
         }
 
         [ValidacaoUsuarioAttribute()]
-        public ActionResult DetalheFaturamentoAvulso()
+        public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo)
         {
-            return View(new DetalheFaturamentoAvulso()
+            try
             {
-                Cliente = "Teste",
-                Contrato = "s",
-                DataRelatorio = new DateTime(),
-                PeriodoIntervalo = "",
-                Registros = new DetalheFaturamentoAvulsoRegistros[]
-                     {
-                         new DetalheFaturamentoAvulsoRegistros()
-                         {
-                              DataCorrida = new DateTime(),
-                               NumeroOS = 1,
-                                QuantidadeKM = 1515,
-                                 TipoProfissional = BHJet_Core.Enum.TipoProfissional.Motociclista,
-                                  Valor = 1545.55F
+                var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
+                var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
 
-                         }
-                     }
+                // Busca detalhe
+                var resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
 
-            });
+                // Return View
+                return View(new DetalheFaturamentoAvulso()
+                {
+                    Cliente = resultado.FirstOrDefault().NomeCliente,
+                    DataRelatorio = DateTime.Now.ToLongDateString(),
+                    PeriodoIntervalo = datIni.ToShortDateString() + " a " + datFim.ToShortDateString(),
+                    Registros = resultado.Select(c => new DetalheFaturamentoAvulsoRegistros()
+                    {
+                        DataCorrida = c.Data,
+                        NumeroOS = c.OS,
+                        QuantidadeKM = c.KM,
+                        Profissional = c.Profissional,
+                        Valor = c.Valor
+                    }).ToArray()
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(new Exception("Erro ao detalhar faturamento, tente novamente mais tarde."));
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
         #endregion
     }

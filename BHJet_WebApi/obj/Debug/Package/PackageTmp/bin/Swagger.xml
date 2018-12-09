@@ -58,6 +58,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BHJet_WebApi.Controllers.FaturamentoController.GetDetalheFaturamentoComum(BHJet_DTO.Faturamento.ConsultarFaturamentoDetalheDTO)">
+            <summary>
+            Busca faturamento comum de acordo com filtros
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:BHJet_WebApi.Controllers.ProfissionalController.UsuarioAutenticado">
             <summary>
             Informações do usuário autenticado

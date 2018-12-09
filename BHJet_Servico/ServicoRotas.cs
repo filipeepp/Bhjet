@@ -49,6 +49,7 @@
         {
             public const string PostFaturamento = "/Faturamento";
             public const string PostFaturamentoComum = "/Faturamento/comum";
+            public const string GetFaturamentoDetalhe = "/Faturamento/detalhe";
         }
 
         public class Profissional

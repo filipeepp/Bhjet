@@ -7,6 +7,7 @@ namespace BHJet_Servico.Faturamento
     {
         ItemFaturamentoDTO[] GerarFaturamento(GerarFaturamentoDTO model);
         ItemFaturamentoDTO[] GetFaturamentoNormal(ConsultarFaturamentoDTO model);
+        ItemFaturamentoDetalheDTO[] GetFaturamentoDetalhe(long idCliente, DateTime periodoIni, DateTime periodoFim);
     }
 
     public class FaturamentoServico : ServicoBase, IFaturamentoServico
@@ -24,6 +25,11 @@ namespace BHJet_Servico.Faturamento
         public ItemFaturamentoDTO[] GetFaturamentoNormal(ConsultarFaturamentoDTO model)
         {
             return this.Post<ConsultarFaturamentoDTO, ItemFaturamentoDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Faturamento.PostFaturamentoComum}"), model);
+        }
+
+        public ItemFaturamentoDetalheDTO[] GetFaturamentoDetalhe(long idCliente, DateTime periodoIni, DateTime periodoFim)
+        {
+            return this.Get<ItemFaturamentoDetalheDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Faturamento.GetFaturamentoDetalhe}?IDCliente={idCliente}&DataInicioFaturamentoFiltro={periodoIni.ToString("yyyy-MM-dd")}T00:00:00&DataFimFaturamentoFiltro={periodoFim.ToString("yyyy-MM-dd")}T00:00:00"));
         }
     }
 }

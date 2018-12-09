@@ -23,10 +23,17 @@ namespace BHJet_Admin.Controllers
             return;
         }
 
-        public static void TrataSucesso(this Controller controle, string mensagemSucesso)
+        public static void MensagemSucesso(this Controller controle, string mensagemSucesso)
         {
             controle.TempData["mensagemGeral"] = mensagemSucesso.ToAscii();
             controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\sucesso.png".ToAscii();
+            return;
+        }
+
+        public static void MensagemAlerta(this Controller controle, string mensagemAlerta)
+        {
+            controle.TempData["mensagemGeral"] = mensagemAlerta.ToAscii();
+            controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\warming.png".ToAscii();
             return;
         }
     }

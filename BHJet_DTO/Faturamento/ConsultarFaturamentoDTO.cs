@@ -11,4 +11,11 @@ namespace BHJet_DTO.Faturamento
         public DateTime DataFimFaturamentoFiltro { get; set; }
         public TipoContrato? TipoContratoFiltro { get; set; }
     }
+
+    public class ConsultarFaturamentoDetalheDTO
+    {
+        public long IDCliente { get; set; }
+        public DateTime DataInicioFaturamentoFiltro { get; set; }
+        public DateTime DataFimFaturamentoFiltro { get; set; }
+    }
 }

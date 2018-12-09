@@ -78,6 +78,7 @@ namespace BHJet_Admin.Models.Motorista
 
     public class NovoMotoristaComissaoModel
     {
+        public long? ID { get; set; }
         public string ValorComissao { get; set; }
         public DateTime? VigenciaInicio { get; set; }
         public DateTime? VigenciaFim { get; set; }
