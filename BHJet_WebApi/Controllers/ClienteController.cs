@@ -97,7 +97,7 @@ namespace BHJet_WebApi.Controllers
 					NomeFantasia = model.DadosCadastrais.NomeFantasia,
 					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
 					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-					ISS = model.DadosCadastrais.ISS == true ? 1 : 0,
+					ISS = model.DadosCadastrais.ISS,
 					Endereco = model.DadosCadastrais.Endereco,
 					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
 					Complemento = model.DadosCadastrais.Complemento,
@@ -120,12 +120,12 @@ namespace BHJet_WebApi.Controllers
 				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
 				Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
 				{
-					ValorUnitario = x.ValorUnitario.ToDecimalCurrency(),
+					ValorUnitario = x.ValorUnitario,
 					TipoTarifa = x.TipoTarifa,
 					VigenciaInicio = x.VigenciaInicio,
 					VigenciaFim = x.VigenciaFim,
-					Franquia = Convert.ToDecimal(x.Franquia),
-					FranquiaAdicional = Convert.ToDecimal(x.FranquiaAdicional),
+					Franquia = x.Franquia,
+					FranquiaAdicional = x.FranquiaAdicional,
 					Observacao = x.Observacao
 
 				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }

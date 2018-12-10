@@ -21,71 +21,16 @@ namespace BHJet_Admin.Controllers
 			clienteServico = _cliente;
 		}
 
-		// GET: Clientes
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult Clientes()
         {
-            return View(new TabelaClienteModel()
-            {
-                ListModel = new List<LinhaClienteModel>()
-                 {
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 1,
-                        NomeRazaoSocial = "Tânia Azevedo Araujo",
-                        TipoContrato = TipoContrato.ChamadosAvulsos
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 2,
-                        NomeRazaoSocial = "André Rodrigues Oliveira",
-                        TipoContrato = TipoContrato.ChamadosAvulsos
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 3,
-                        NomeRazaoSocial = "Kauã Souza Azevedo",
-                        TipoContrato = TipoContrato.ChamadosAvulsos
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 4,
-                        NomeRazaoSocial = "Melissa Castro Ribeiro",
-                        TipoContrato = TipoContrato.ContratoLocacao
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 5,
-                        NomeRazaoSocial = "Caio Cunha Fernandes",
-                        TipoContrato = TipoContrato.ContratoLocacao
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 6,
-                        NomeRazaoSocial = "Emilly Costa Rodrigues",
-                        TipoContrato = TipoContrato.ChamadosAvulsos
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 7,
-                        NomeRazaoSocial = "Maria Pinto Lima",
-                        TipoContrato = TipoContrato.ContratoLocacao
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 8,
-                        NomeRazaoSocial = "Alex Melo Pereira",
-                        TipoContrato = TipoContrato.ContratoLocacao
-                    },
-                    new LinhaClienteModel()
-                    {
-                        ClienteID = 9,
-                        NomeRazaoSocial = "Sarah Dias Martins",
-                        TipoContrato = TipoContrato.ChamadosAvulsos
-                    }
-                 }
-            });
-
+			return View(new TabelaClienteModel()
+			{
+				ListModel = new List<LinhaClienteModel>()
+				{
+					new LinhaClienteModel(){ }
+				}
+			});
         }
 
 		[ValidacaoUsuarioAttribute()]
@@ -96,6 +41,32 @@ namespace BHJet_Admin.Controllers
 				DadosCadastrais = new DadosCadastraisModel() { }
 			});
 		}
+
+		/*[HttpGet]
+		[ValidacaoUsuarioAttribute()]
+		public ActionResult BuscaCliente(string trechoPesquisa)
+		{
+			try
+			{
+				var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
+
+				//Ok
+				return View(new TabelaClienteModel()
+				{
+					ListModel = entidade.Select(x => new LinhaClienteModel()
+					{
+						ClienteID = x.ID,
+						NomeRazaoSocial = x.vcNomeRazaoSocial,
+						TipoContrato = x.
+					}).ToArray()
+				});
+			}
+			catch (Exception e)
+			{
+				this.TrataErro(e);
+				return View();
+			}
+		}*/
 
 
 		[HttpPost]
@@ -127,7 +98,7 @@ namespace BHJet_Admin.Controllers
 						NomeFantasia = model.DadosCadastrais.NomeFantasia,
 						CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
 						InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-						ISS = model.DadosCadastrais.ISS,
+						ISS = model.DadosCadastrais.ISS == true ? 1 : 0,
 						Endereco = model.DadosCadastrais.Endereco,
 						NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
 						Complemento = model.DadosCadastrais.Complemento,
@@ -151,12 +122,13 @@ namespace BHJet_Admin.Controllers
 					Valor = listValorTratada.Select(x => new ClienteValorModel()
 					{
 
-						ValorUnitario = x.ValorUnitario,
+						ValorUnitario = x.ValorUnitario.ToDecimalCurrency(),
 						TipoTarifa = x.TipoTarifa.RetornaDisplayNameEnum(),
 						VigenciaInicio = x.VigenciaInicio,
 						VigenciaFim = x.VigenciaFim,
-						Franquia = x.Franquia,
-						FranquiaAdicional = x.FranquiaAdicional,
+						Franquia = Convert.ToDecimal(x.Franquia),
+						FranquiaAdicional = Convert.ToDecimal(x.FranquiaAdicional),
+						ValorAtivado = x.ValorAtivado == true ? 1 : 0,
 						Observacao = x.Observacao
 
 					}).ToArray()
@@ -177,6 +149,7 @@ namespace BHJet_Admin.Controllers
 
 		}
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult CarregarNovoContato(ClienteModel model)
         {
             return PartialView("_Contato", model);
@@ -187,6 +160,7 @@ namespace BHJet_Admin.Controllers
             return View(model);
         }*/
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult CarregarNovoValor(ClienteModel model)
 		{
 			return PartialView("_Valor", model);

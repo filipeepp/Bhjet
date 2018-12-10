@@ -235,7 +235,7 @@ namespace BHJet_Repositorio.Admin
 									Franquia = tarifa.Franquia,
 									FranquiaAdicional = tarifa.FranquiaAdicional,
 									ValorUnitario = tarifa.ValorUnitario,
-									TarifaAtivada = 1,
+									TarifaAtivada = tarifa.ValorAtivado,
 									PagamentoAVista = 0,
 									Observacao = tarifa.Observacao
 								}, trans);

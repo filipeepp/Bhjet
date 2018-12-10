@@ -60,6 +60,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteValorEntidade
 	{
+		public int ValorAtivado { get; set; }
 		public decimal ValorUnitario { get; set; }
 		public string TipoTarifa { get; set; }
 		public DateTime VigenciaInicio { get; set; }

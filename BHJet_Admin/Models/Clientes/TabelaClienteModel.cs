@@ -10,7 +10,7 @@ namespace BHJet_Admin.Models
 
     public class LinhaClienteModel
     {
-        public int ClienteID { get; set; }
+        public long? ClienteID { get; set; }
         public string NomeRazaoSocial { get; set; }
         public TipoContrato TipoContrato { get; set; }
     }

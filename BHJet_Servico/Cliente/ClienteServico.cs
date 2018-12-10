@@ -37,8 +37,8 @@ namespace BHJet_Servico.Cliente
 
 		public void IncluirCliente(ClienteCompletoModel clienteModel)
 		{
-			this.Post(new Uri($"http://localhost:50435/api/Cliente"), clienteModel);
-			//this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
+			//this.Post(new Uri($"http://localhost:50435/api/Cliente"), clienteModel);
+			this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
 		}
 	}
 }

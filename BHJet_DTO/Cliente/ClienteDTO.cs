@@ -35,7 +35,7 @@ namespace BHJet_DTO.Cliente
 		public string NomeFantasia { get; set; }
 		public string CPFCNPJ { get; set; }
 		public string InscricaoEstadual { get; set; }
-		public bool ISS { get; set; }
+		public int ISS { get; set; }
 		public string Endereco { get; set; }
 		public string NumeroEndereco { get; set; }
 		public string Complemento { get; set; }
@@ -60,12 +60,13 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteValorModel
 	{
-		public string ValorUnitario { get; set; }
+		public int ValorAtivado { get; set; }
+		public decimal ValorUnitario { get; set; }
 		public string TipoTarifa { get; set; }
 		public DateTime VigenciaInicio { get; set; }
 		public DateTime VigenciaFim { get; set; }
-		public string Franquia { get; set; }
-		public string FranquiaAdicional { get; set; }
+		public decimal Franquia { get; set; }
+		public decimal FranquiaAdicional { get; set; }
 		public string Observacao { get; set; }
 	}
 
