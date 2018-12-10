@@ -1,5 +1,8 @@
-﻿using BHJet_DTO.Cliente;
+﻿using BHJet_Core.Extension;
+using BHJet_DTO.Cliente;
 using BHJet_Repositorio.Admin;
+using BHJet_WebApi.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,11 +13,27 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Cliente")]
     public class ClienteController : ApiController
     {
-       /// <summary>
-       /// Busca Lista de Clientes
-       /// </summary>
-       /// <returns></returns>
-        [Authorize]
+		private UsuarioLogado _usuarioAutenticado;
+
+		/// <summary>
+		/// Informações do usuário autenticado
+		/// </summary>
+		public UsuarioLogado UsuarioAutenticado
+		{
+			get
+			{
+				if (_usuarioAutenticado == null)
+					_usuarioAutenticado = new UsuarioLogado();
+
+				return _usuarioAutenticado;
+			}
+		}
+
+		/// <summary>
+		/// Busca Lista de Clientes
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ClienteDTO>))]
         public IHttpActionResult GetListaClientes([FromUri]string trecho = "")
@@ -78,7 +97,7 @@ namespace BHJet_WebApi.Controllers
 					NomeFantasia = model.DadosCadastrais.NomeFantasia,
 					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
 					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-					ISS = model.DadosCadastrais.ISS,
+					ISS = model.DadosCadastrais.ISS == true ? 1 : 0,
 					Endereco = model.DadosCadastrais.Endereco,
 					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
 					Complemento = model.DadosCadastrais.Complemento,
@@ -101,12 +120,12 @@ namespace BHJet_WebApi.Controllers
 				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
 				Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
 				{
-					ValorUnitario = x.ValorUnitario,
+					ValorUnitario = x.ValorUnitario.ToDecimalCurrency(),
 					TipoTarifa = x.TipoTarifa,
 					VigenciaInicio = x.VigenciaInicio,
 					VigenciaFim = x.VigenciaFim,
-					Franquia = x.Franquia,
-					FranquiaAdicional = x.FranquiaAdicional,
+					Franquia = Convert.ToDecimal(x.Franquia),
+					FranquiaAdicional = Convert.ToDecimal(x.FranquiaAdicional),
 					Observacao = x.Observacao
 
 				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }

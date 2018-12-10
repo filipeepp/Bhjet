@@ -88,7 +88,6 @@ namespace BHJet_Repositorio.Admin
                                            ,[vcCidade]
                                            ,[vcUF]
                                            ,[vcCEP]
-                                           ,[vcPontoDeReferencia]
                                            ,[bitPrincipal])
                                      VALUES
                                            (@Rua
@@ -112,9 +111,6 @@ namespace BHJet_Repositorio.Admin
 							Cep = cliente.DadosCadastrais.CEP,
 							EnderecoPrincipal = 1
 						}, trans);
-
-						// Commit
-						trans.Commit();
 
 						// Insere Cliente
 						using (var sqlConnectionCom = this.InstanciaConexao())
@@ -155,9 +151,6 @@ namespace BHJet_Repositorio.Admin
 								ClienteAvulso = 0
 							}, trans);
 
-							// Commit
-							trans.Commit();
-
 						}
 
 						// Insere Contato
@@ -196,8 +189,6 @@ namespace BHJet_Repositorio.Admin
 
 								Contatos.Add(idContato);
 							}
-							// Commit
-							trans.Commit();
 						}
 
 						// Insere Tarifa
@@ -210,6 +201,8 @@ namespace BHJet_Repositorio.Admin
                                            ,[decFranquiaKMMensalidade]
                                            ,[decValorKMAdicionalMensalidade]
                                            ,[decValorMensalidade]
+                                           ,[bitAtivo]
+                                           ,[bitPagamentoAVista]
                                            ,[vcObservacao])
                                      VALUES
                                            (@TipoTarifa
@@ -218,6 +211,8 @@ namespace BHJet_Repositorio.Admin
                                            ,@Franquia
                                            ,@FranquiaAdicional
 										   ,@ValorUnitario
+										   ,@TarifaAtivada
+										   ,@PagamentoAVista
                                            ,@Observacao)
                                            select @@identity;";
 
@@ -240,6 +235,8 @@ namespace BHJet_Repositorio.Admin
 									Franquia = tarifa.Franquia,
 									FranquiaAdicional = tarifa.FranquiaAdicional,
 									ValorUnitario = tarifa.ValorUnitario,
+									TarifaAtivada = 1,
+									PagamentoAVista = 0,
 									Observacao = tarifa.Observacao
 								}, trans);
 
@@ -253,9 +250,10 @@ namespace BHJet_Repositorio.Admin
 
 								ValoresClientes.Add(idValorCliente);
 							}
-							// Commit
-							trans.Commit();
 						}
+
+						// Commit
+						trans.Commit();
 					}
 					catch (Exception e)
 					{

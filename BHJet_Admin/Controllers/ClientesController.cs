@@ -22,6 +22,7 @@ namespace BHJet_Admin.Controllers
 		}
 
 		// GET: Clientes
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult Clientes()
         {
             return View(new TabelaClienteModel()
@@ -87,6 +88,7 @@ namespace BHJet_Admin.Controllers
 
         }
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente()
 		{
 			return View(new ClienteModel()
@@ -97,6 +99,7 @@ namespace BHJet_Admin.Controllers
 
 
 		[HttpPost]
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente(ClienteModel model)
 		{
 			try
@@ -163,7 +166,8 @@ namespace BHJet_Admin.Controllers
 
 				this.TrataSucesso("Cliente incluido com sucesso.");
 
-				return View(model);
+				//Ok
+				return View(new ClienteModel());
 			}
 			catch (Exception e)
 			{

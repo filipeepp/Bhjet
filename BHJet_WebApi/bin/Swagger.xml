@@ -4,10 +4,22 @@
         <name>BHJet_WebApi</name>
     </assembly>
     <members>
+        <member name="P:BHJet_WebApi.Controllers.ClienteController.UsuarioAutenticado">
+            <summary>
+            Informações do usuário autenticado
+            </summary>
+        </member>
         <member name="M:BHJet_WebApi.Controllers.ClienteController.GetListaClientes(System.String)">
             <summary>
             Busca Lista de Clientes
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BHJet_WebApi.Controllers.ClienteController.PostCliente(BHJet_DTO.Cliente.ClienteCompletoModel)">
+            <summary>
+            Post Cliente
+            </summary>
+            <param name="model"></param>
             <returns></returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:BHJet_WebApi.Controllers.CorridaController.GetCorrida(System.Int32)" -->
