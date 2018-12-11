@@ -3,9 +3,23 @@ using System.Collections.Generic;
 
 namespace BHJet_Admin.Models
 {
+
     public class TabelaClienteModel
     {
-        public List<LinhaClienteModel> ListModel { get; set; }
+		private IEnumerable<long> _ClienteSelecionado;
+		public IEnumerable<long> ClienteSelecionado
+		{
+			get
+			{
+				return _ClienteSelecionado;
+			}
+			set
+			{
+				_ClienteSelecionado = value;
+			}
+		}
+
+		public List<LinhaClienteModel> ListModel { get; set; }
     }
 
     public class LinhaClienteModel

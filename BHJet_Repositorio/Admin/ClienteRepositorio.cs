@@ -34,6 +34,48 @@ namespace BHJet_Repositorio.Admin
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteEntidade> BuscaListaClientes()
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT TOP 50
+									Cliente.idCliente,
+									Cliente.vcNomeRazaoSocial,
+									Cliente.vcNomeFantasia,
+									Cliente.vcCPFCNPJ,
+									Cliente.vcInscricaoEstadual,
+									Cliente.bitRetemISS,
+									Cliente.vcObservacoes,
+									Cliente.vcSite,
+									Endereco.vcRua,
+									Endereco.vcNumero,
+									Endereco.vcComplemento,
+									Endereco.vcBairro,
+									Endereco.vcCidade,
+									Endereco.vcUF,
+									Valor.bitAtivo
+								FROM
+									tblClientes Cliente
+								INNER JOIN
+									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
+								INNER JOIN
+									tblClientesTarifario ClienteValor ON ClienteValor.idCliente = Cliente.idCliente
+								INNER JOIN
+									tblTarifario Valor ON Valor.idTarifario = ClienteValor.idTarifario
+								WHERE
+									Valor.bitAtivo = 1";
+
+				// Execução
+				return sqlConnection.Query<ClienteEntidade>(query);
+			}
+		}
+
+		/// <summary>
+		/// Busca Profissionais Disponiveis
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
 		public IEnumerable<ClienteEntidade> BuscaClientes(string trecho)
 		{
 			using (var sqlConnection = this.InstanciaConexao())

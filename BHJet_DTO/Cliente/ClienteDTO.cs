@@ -6,18 +6,26 @@ namespace BHJet_DTO.Cliente
 {
     public class ClienteDTO
 	{
-		public long? ID { get; set; }
-        public int idEndereco { get; set; }
-        public int idUsuario { get; set; }
-        public string vcNomeRazaoSocial { get; set; }
-        public string vcNomeFantasia { get; set; }
-        public string vcCPFCNPJ { get; set; }
-        public string vcInscricaoMunicipal { get; set; }
-        public string vcInscricaoEstadual { get; set; }
-        public bool bitRetemISS { get; set; }
-        public string vcObservacoes { get; set; }
-        public string vcSite { get; set; }
-        public IEnumerable<ClienteContatoModel> Contato { get; set; }
+		public int ID { get; set; }
+		public int idCliente { get; set; }
+		public int idEndereco { get; set; }
+		public string vcRua { get; set; }
+		public string vcNumero { get; set; }
+		public string vcComplemento { get; set; }
+		public string vcBairro { get; set; }
+		public string vcCidade { get; set; }
+		public string vcUF { get; set; }
+		public int idUsuario { get; set; }
+		public string vcNomeRazaoSocial { get; set; }
+		public string vcNomeFantasia { get; set; }
+		public string vcCPFCNPJ { get; set; }
+		public string vcInscricaoMunicipal { get; set; }
+		public string vcInscricaoEstadual { get; set; }
+		public bool bitRetemISS { get; set; }
+		public string vcObservacoes { get; set; }
+		public string vcSite { get; set; }
+		public int bitAtivo { get; set; }
+		public IEnumerable<ClienteContatoModel> Contato { get; set; }
 		public IEnumerable<ClienteValorModel> Valor { get; set; }
 	}
 

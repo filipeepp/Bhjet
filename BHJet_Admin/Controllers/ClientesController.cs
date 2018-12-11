@@ -24,14 +24,27 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult Clientes()
         {
-			return View(new TabelaClienteModel()
+			try
 			{
-				ListModel = new List<LinhaClienteModel>()
+				var entidade = clienteServico.BuscaClientesValorAtivo();
+				
+				// Return
+				return Json(entidade.Select(x => new AutoCompleteModel()
 				{
-					new LinhaClienteModel(){ }
-				}
-			});
-        }
+					label = x.ID + " - " + x.vcNomeFantasia,
+					value = x.ID
+				}), JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				this.TrataErro(e);
+				return View(new TabelaClienteModel()
+				{
+					ListModel = new List<LinhaClienteModel>() { }
+
+				});
+			}	
+		}
 
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente()
@@ -42,11 +55,11 @@ namespace BHJet_Admin.Controllers
 			});
 		}
 
-		/*[HttpGet]
+		[HttpGet]
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult BuscaCliente(string trechoPesquisa)
 		{
-			try
+			/*try
 			{
 				var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
 
@@ -65,8 +78,9 @@ namespace BHJet_Admin.Controllers
 			{
 				this.TrataErro(e);
 				return View();
-			}
-		}*/
+			}*/
+			return View();
+		}
 
 
 		[HttpPost]

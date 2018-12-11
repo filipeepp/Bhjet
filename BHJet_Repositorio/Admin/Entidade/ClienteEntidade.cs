@@ -8,9 +8,15 @@ namespace BHJet_Repositorio.Admin.Entidade
 {
     public class ClienteEntidade
     {
-       public int idCliente { get; set; }
+		public int idCliente { get; set; }
         public int idEndereco { get; set; }
-        public int idUsuario { get; set; }
+		public string vcRua { get; set; }
+		public string vcNumero { get; set; }
+		public string vcComplemento { get; set; }
+		public string vcBairro { get; set; }
+		public string vcCidade { get; set; }
+		public string vcUF { get; set; }
+		public int idUsuario { get; set; }
         public string vcNomeRazaoSocial { get; set; }
         public string vcNomeFantasia { get; set; }
         public string vcCPFCNPJ { get; set; }
@@ -19,7 +25,9 @@ namespace BHJet_Repositorio.Admin.Entidade
         public bool bitRetemISS { get; set; }
         public string vcObservacoes { get; set; }
         public string vcSite { get; set; }
-    }
+		public int bitAtivo { get; set; }
+
+	}
 
 	public class ClienteCompletoEntidade
 	{

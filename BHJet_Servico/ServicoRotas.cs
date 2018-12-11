@@ -31,7 +31,8 @@
         {
             public const string GetClientes = "/Cliente";
 			public const string PostCliente = "/Cliente";
-        }
+			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
+		}
 
         public class Usuario
         {

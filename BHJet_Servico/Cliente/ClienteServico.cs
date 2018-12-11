@@ -6,6 +6,7 @@ namespace BHJet_Servico.Cliente
     public interface IClienteServico
     {
         ClienteDTO[] BuscaListaClientes(string trechoPesquisa);
+		ClienteDTO[] BuscaClientesValorAtivo();
 		void IncluirCliente(ClienteCompletoModel clienteModel);
     }
 
@@ -35,9 +36,13 @@ namespace BHJet_Servico.Cliente
             return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientes}?trecho={trechoPesquisa}"));
         }
 
+		public ClienteDTO[] BuscaClientesValorAtivo()
+		{
+			return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientesValorAtivo}"));
+		}
+
 		public void IncluirCliente(ClienteCompletoModel clienteModel)
 		{
-			//this.Post(new Uri($"http://localhost:50435/api/Cliente"), clienteModel);
 			this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
 		}
 	}

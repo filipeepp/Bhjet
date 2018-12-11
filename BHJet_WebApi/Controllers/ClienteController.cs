@@ -30,6 +30,44 @@ namespace BHJet_WebApi.Controllers
 		}
 
 		/// <summary>
+		/// Busca dados de cliente
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[Route("contrato/ativo")]
+		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
+		public IHttpActionResult GetClientesValorAtivo()
+		{
+			// Busca Dados resumidos
+			var entidade = new ClienteRepositorio().BuscaListaClientes();
+
+			// Validacao
+			if (entidade == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			// Return
+			return Ok(entidade.Select(cli => new ClienteDTO()
+			{
+				ID = cli.idCliente,
+				vcNomeFantasia = cli.vcNomeFantasia,
+				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+				vcCPFCNPJ = cli.vcCPFCNPJ,
+				vcInscricaoEstadual = cli.vcInscricaoEstadual,
+				bitRetemISS = cli.bitRetemISS,
+				vcObservacoes = cli.vcObservacoes,
+				vcSite = cli.vcSite,
+				vcRua = cli.vcRua,
+				vcNumero = cli.vcNumero,
+				vcComplemento = cli.vcComplemento,
+				vcBairro = cli.vcBairro,
+				vcCidade = cli.vcCidade,
+				vcUF = cli.vcUF,
+				bitAtivo = cli.bitAtivo
+
+			}));
+		}
+
+		/// <summary>
 		/// Busca Lista de Clientes
 		/// </summary>
 		/// <returns></returns>
