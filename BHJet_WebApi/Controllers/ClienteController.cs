@@ -1,5 +1,8 @@
-﻿using BHJet_DTO.Cliente;
+﻿using BHJet_Core.Extension;
+using BHJet_DTO.Cliente;
 using BHJet_Repositorio.Admin;
+using BHJet_WebApi.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,11 +13,65 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Cliente")]
     public class ClienteController : ApiController
     {
-       /// <summary>
-       /// Busca Lista de Clientes
-       /// </summary>
-       /// <returns></returns>
-        [Authorize]
+		private UsuarioLogado _usuarioAutenticado;
+
+		/// <summary>
+		/// Informações do usuário autenticado
+		/// </summary>
+		public UsuarioLogado UsuarioAutenticado
+		{
+			get
+			{
+				if (_usuarioAutenticado == null)
+					_usuarioAutenticado = new UsuarioLogado();
+
+				return _usuarioAutenticado;
+			}
+		}
+
+		/// <summary>
+		/// Busca dados de cliente
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[Route("contrato/ativo")]
+		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
+		public IHttpActionResult GetClientesValorAtivo()
+		{
+			// Busca Dados resumidos
+			var entidade = new ClienteRepositorio().BuscaListaClientes();
+
+			// Validacao
+			if (entidade == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			// Return
+			return Ok(entidade.Select(cli => new ClienteDTO()
+			{
+				ID = cli.idCliente,
+				vcNomeFantasia = cli.vcNomeFantasia,
+				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+				vcCPFCNPJ = cli.vcCPFCNPJ,
+				vcInscricaoEstadual = cli.vcInscricaoEstadual,
+				bitRetemISS = cli.bitRetemISS,
+				vcObservacoes = cli.vcObservacoes,
+				vcSite = cli.vcSite,
+				vcRua = cli.vcRua,
+				vcNumero = cli.vcNumero,
+				vcComplemento = cli.vcComplemento,
+				vcBairro = cli.vcBairro,
+				vcCidade = cli.vcCidade,
+				vcUF = cli.vcUF,
+				bitAtivo = cli.bitAtivo
+
+			}));
+		}
+
+		/// <summary>
+		/// Busca Lista de Clientes
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ClienteDTO>))]
         public IHttpActionResult GetListaClientes([FromUri]string trecho = "")

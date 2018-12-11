@@ -97,7 +97,7 @@ new ValorModel()
 				<label>Vigência</label>
 				<div id="date_range_@Html.IdFor(model => model.Valor[count].VigenciaInicio)" class="input-group input-daterange">
 					<div id="@Html.IdFor(model => model.Valor[count].VigenciaInicio)">
-						@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value="digite" })
+						@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
 					</div>
 					<div class="input-group-addon">a</div>
 					<div id="@Html.IdFor(model => model.Valor[count].VigenciaFim)">
@@ -123,6 +123,16 @@ new ValorModel()
 				<div id="@Html.IdFor(model => model.Valor[count].Observacao)">
 					<label for="txaObservacoesValor">Observações</label>
 					@Html.TextBoxFor(model => model.Valor[count].Observacao, new { @class = "form-control ctmErrorObservacao" })
+				</div>
+			</div>
+			<div class="form-group col-xs-12 col-md-3">
+				<div id="@Html.IdFor(model => model.Valor[count].ValorAtivado)">
+					<div class="cst-ckb-Novo-Cliente">
+						<label class="label-cbx">
+							@Html.CheckBoxFor(model => model.Valor[count].ValorAtivado, new { @class = "form-control checkbox ctmErrorValorAtivado" })
+							<span>Contrato Ativo</span>
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>

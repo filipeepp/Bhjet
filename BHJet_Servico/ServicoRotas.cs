@@ -7,7 +7,7 @@ namespace BHJet_Servico
         //public static readonly string Base = @"http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
         public static readonly string Base = ConfigurationManager.AppSettings["urlapibhjet"];
 
-        public class Autenticacao
+		public class Autenticacao
         {
             public const string PostAutenticar = "/token";
         }
@@ -34,7 +34,8 @@ namespace BHJet_Servico
         {
             public const string GetClientes = "/Cliente";
 			public const string PostCliente = "/Cliente";
-        }
+			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
+		}
 
         public class Usuario
         {

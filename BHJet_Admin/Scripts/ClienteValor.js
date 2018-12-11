@@ -16,7 +16,11 @@
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
-	$(".mask-data").value = "";
+	//Valor ativado
+	$("input[id='Valor_0__ValorAtivado']").prop("checked", true);
+	$('.ctmErrorValorAtivado').on('change', function () {
+		$('.ctmErrorValorAtivado').not(this).prop('checked', false);
+	});
 
 	var aberturaSpan = '<span class="text-danger field-validation-error" data-valmsg-replace="true"><span>';
 	var fechamentoSpan = '</span></span></span>';
@@ -68,7 +72,7 @@
 
 
 	//Confere se vigencia inicio é menor que a vigência final
-	$('input[id$="VigenciaFim"]').keyup(function () {
+	$('input[id$="VigenciaFim"]').on("change keyup", function () {
 		$("div[id^='date_range']").each(function () {
 
 			if ($(this).find("span[id^='spanError_']").length > 0)
@@ -76,8 +80,10 @@
 
 			var vigenciaInicio = $(this).find('input[id$="VigenciaInicio"]');
 			var vigenciaFim = $(this).find('input[id$="VigenciaFim"]');
+			var dateVigenciaInicio = new Date(vigenciaInicio[0].value);
+			var dateVigenciaFim = new Date(vigenciaFim[0].value);
 
-			vigenciaInicio[0].value > vigenciaFim[0].value ? $(this).append('<span id="spanError_" >' + aberturaSpan + "A data final dever ser maior que a data inicial" + fechamentoSpan) : "";
+			dateVigenciaInicio > dateVigenciaFim ? $(this).append('<span id="spanError_" >' + aberturaSpan + "A data final dever ser maior que a data inicial" + fechamentoSpan) : "";
 		});
 	});
 
@@ -95,12 +101,16 @@
 		$("div[id^='Valor']").each(function () {
 			var aux = $(this).children('input');
 
-			if (aux.hasClass("ctmErrorTipoTarifa")) {
-				aux.is(":checked") ? $(this).children('span[id="spanError_' + aux[0].id + '"]').remove() : "";
+			if (aux.length > 0) {
 
-			}else if (aux[0].value) {
-				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+				if (aux.hasClass("ctmErrorTipoTarifa")) {
+					aux.is(":checked") ? $(this).children('span[id="spanError_' + aux[0].id + '"]').remove() : "";
+
+				} else if (aux[0].value) {
+					$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+				}
 			}
+			
 
 		});
 	});
@@ -118,8 +128,7 @@ window.ValidarValor = function () {
 		if (aux.hasClass("ctmErrorTipoTarifa") && $(this).closest('.div-contato-removido').length <= 0) {
 			//Tipo de Tarifa
 			aux.is(":checked") ? "" : $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Tipo de tarifa é obrigatório.' + fechamentoSpan);
-
-		} else if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
+		} else if (aux.length > 0 && !aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
 			//Valor Unitário
 			aux.hasClass("ctmErrorValorUnitario") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Valor unitario é obrigatório." + fechamentoSpan) : "";
 			//Vigência Início

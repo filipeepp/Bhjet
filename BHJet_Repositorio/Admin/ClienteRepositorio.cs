@@ -34,6 +34,48 @@ namespace BHJet_Repositorio.Admin
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteEntidade> BuscaListaClientes()
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT TOP 50
+									Cliente.idCliente,
+									Cliente.vcNomeRazaoSocial,
+									Cliente.vcNomeFantasia,
+									Cliente.vcCPFCNPJ,
+									Cliente.vcInscricaoEstadual,
+									Cliente.bitRetemISS,
+									Cliente.vcObservacoes,
+									Cliente.vcSite,
+									Endereco.vcRua,
+									Endereco.vcNumero,
+									Endereco.vcComplemento,
+									Endereco.vcBairro,
+									Endereco.vcCidade,
+									Endereco.vcUF,
+									Valor.bitAtivo
+								FROM
+									tblClientes Cliente
+								INNER JOIN
+									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
+								INNER JOIN
+									tblClientesTarifario ClienteValor ON ClienteValor.idCliente = Cliente.idCliente
+								INNER JOIN
+									tblTarifario Valor ON Valor.idTarifario = ClienteValor.idTarifario
+								WHERE
+									Valor.bitAtivo = 1";
+
+				// Execução
+				return sqlConnection.Query<ClienteEntidade>(query);
+			}
+		}
+
+		/// <summary>
+		/// Busca Profissionais Disponiveis
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
 		public IEnumerable<ClienteEntidade> BuscaClientes(string trecho)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
@@ -88,7 +130,6 @@ namespace BHJet_Repositorio.Admin
                                            ,[vcCidade]
                                            ,[vcUF]
                                            ,[vcCEP]
-                                           ,[vcPontoDeReferencia]
                                            ,[bitPrincipal])
                                      VALUES
                                            (@Rua
@@ -112,9 +153,6 @@ namespace BHJet_Repositorio.Admin
 							Cep = cliente.DadosCadastrais.CEP,
 							EnderecoPrincipal = 1
 						}, trans);
-
-						// Commit
-						trans.Commit();
 
 						// Insere Cliente
 						using (var sqlConnectionCom = this.InstanciaConexao())
@@ -155,9 +193,6 @@ namespace BHJet_Repositorio.Admin
 								ClienteAvulso = 0
 							}, trans);
 
-							// Commit
-							trans.Commit();
-
 						}
 
 						// Insere Contato
@@ -196,8 +231,6 @@ namespace BHJet_Repositorio.Admin
 
 								Contatos.Add(idContato);
 							}
-							// Commit
-							trans.Commit();
 						}
 
 						// Insere Tarifa
@@ -210,6 +243,8 @@ namespace BHJet_Repositorio.Admin
                                            ,[decFranquiaKMMensalidade]
                                            ,[decValorKMAdicionalMensalidade]
                                            ,[decValorMensalidade]
+                                           ,[bitAtivo]
+                                           ,[bitPagamentoAVista]
                                            ,[vcObservacao])
                                      VALUES
                                            (@TipoTarifa
@@ -218,6 +253,8 @@ namespace BHJet_Repositorio.Admin
                                            ,@Franquia
                                            ,@FranquiaAdicional
 										   ,@ValorUnitario
+										   ,@TarifaAtivada
+										   ,@PagamentoAVista
                                            ,@Observacao)
                                            select @@identity;";
 
@@ -240,6 +277,8 @@ namespace BHJet_Repositorio.Admin
 									Franquia = tarifa.Franquia,
 									FranquiaAdicional = tarifa.FranquiaAdicional,
 									ValorUnitario = tarifa.ValorUnitario,
+									TarifaAtivada = tarifa.ValorAtivado,
+									PagamentoAVista = 0,
 									Observacao = tarifa.Observacao
 								}, trans);
 
@@ -253,9 +292,10 @@ namespace BHJet_Repositorio.Admin
 
 								ValoresClientes.Add(idValorCliente);
 							}
-							// Commit
-							trans.Commit();
 						}
+
+						// Commit
+						trans.Commit();
 					}
 					catch (Exception e)
 					{
