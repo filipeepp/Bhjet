@@ -30,7 +30,7 @@ namespace BHJet_Repositorio.Admin
 		}
 
 		/// <summary>
-		/// Busca Profissionais Disponiveis
+		/// Busca dados resumidos do(s) cliente(s) e seu(s) contrato(s)
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>UsuarioEntidade</returns>
@@ -39,7 +39,7 @@ namespace BHJet_Repositorio.Admin
 			using (var sqlConnection = this.InstanciaConexao())
 			{
 				// Query
-				string query = @"SELECT TOP 50
+				string query = @"SELECT TOP 50 
 									Cliente.idCliente,
 									Cliente.vcNomeRazaoSocial,
 									Cliente.vcNomeFantasia,
@@ -54,7 +54,8 @@ namespace BHJet_Repositorio.Admin
 									Endereco.vcBairro,
 									Endereco.vcCidade,
 									Endereco.vcUF,
-									Valor.bitAtivo
+									Valor.bitAtivo,
+									Valor.vcDescricaoTarifario
 								FROM
 									tblClientes Cliente
 								INNER JOIN
@@ -70,6 +71,40 @@ namespace BHJet_Repositorio.Admin
 				return sqlConnection.Query<ClienteEntidade>(query);
 			}
 		}
+
+		/// <summary>
+		/// Busca dados do cliente e de seu contrato ativo
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteEntidade> BuscaClienteContrato(string trecho)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT
+									Cliente.idCliente,
+									Cliente.vcNomeRazaoSocial,
+									Valor.vcDescricaoTarifario,
+									Valor.bitAtivo
+								FROM tblClientes Cliente
+								INNER JOIN 
+									tblClientesTarifario on tblClientesTarifario.idCliente = Cliente.idCliente 
+								INNER JOIN
+									tblTarifario Valor on Valor.idTarifario = tblClientesTarifario.idTarifario 
+								WHERE 
+									CONVERT(VARCHAR(250), Cliente.idCliente) LIKE @valorPesquisa OR
+									vcNomeFantasia LIKE @valorPesquisa OR
+									vcNomeRazaoSocial LIKE @valorPesquisa";
+
+				// Execução
+				return sqlConnection.Query<ClienteEntidade>(query, new
+				{
+					valorPesquisa = "%" + trecho + "%",
+				});
+			}
+		}
+
 
 		/// <summary>
 		/// Busca Profissionais Disponiveis
