@@ -55,13 +55,12 @@ namespace BHJet_Admin.Controllers
 			});
 		}
 
-		[HttpGet]
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult BuscaCliente(string trechoPesquisa)
 		{
-			/*try
+			try
 			{
-				var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
+				var entidade = clienteServico.BuscaClienteContrato(trechoPesquisa);
 
 				//Ok
 				return View(new TabelaClienteModel()
@@ -70,16 +69,16 @@ namespace BHJet_Admin.Controllers
 					{
 						ClienteID = x.ID,
 						NomeRazaoSocial = x.vcNomeRazaoSocial,
-						TipoContrato = x.
-					}).ToArray()
+						TipoContrato = (TipoTarifa)Enum.Parse(typeof(TipoTarifa), typeof(TipoTarifa).GetEnumNames().Where(e => e.Contains(x.vcDescricaoTarifario)).ToString()),
+						ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
+					}).ToList()
 				});
 			}
 			catch (Exception e)
 			{
 				this.TrataErro(e);
 				return View();
-			}*/
-			return View();
+			}
 		}
 
 
@@ -169,10 +168,6 @@ namespace BHJet_Admin.Controllers
             return PartialView("_Contato", model);
         }
 
-		/*public ActionResult NovoCliente(ClienteModel model)
-        {
-            return View(model);
-        }*/
 
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult CarregarNovoValor(ClienteModel model)

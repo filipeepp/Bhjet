@@ -33,5 +33,6 @@ namespace BHJet_Core.Extension
 							.GetCustomAttribute<DisplayAttribute>()
 							.GetName();
 		}
+
 	}
 }

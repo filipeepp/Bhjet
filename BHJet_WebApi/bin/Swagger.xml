@@ -9,7 +9,13 @@
             Informações do usuário autenticado
             </summary>
         </member>
-        <member name="M:BHJet_WebApi.Controllers.ClienteController.GetClientes">
+        <member name="M:BHJet_WebApi.Controllers.ClienteController.GetClienteContrato(System.String)">
+            <summary>
+            Busca dados de cliente e seus contratos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BHJet_WebApi.Controllers.ClienteController.GetClientesValorAtivo">
             <summary>
             Busca dados de cliente
             </summary>

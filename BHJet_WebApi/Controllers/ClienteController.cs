@@ -30,6 +30,34 @@ namespace BHJet_WebApi.Controllers
 		}
 
 		/// <summary>
+		/// Busca dados de cliente e seus contratos
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[Route("contrato")]
+		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
+		public IHttpActionResult GetClienteContrato([FromUri]string trecho = "")
+		{
+			// Busca Dados resumidos
+			var entidade = new ClienteRepositorio().BuscaClienteContrato(trecho);
+
+			// Validacao
+			if (entidade == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			// Return
+			return Ok(entidade.Select(cli => new ClienteDTO()
+			{
+				ID = cli.idCliente,
+				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+				vcDescricaoTarifario = cli.vcDescricaoTarifario,
+				bitAtivo = cli.bitAtivo
+
+			}));
+		}
+
+
+		/// <summary>
 		/// Busca dados de cliente
 		/// </summary>
 		/// <returns></returns>
@@ -38,7 +66,7 @@ namespace BHJet_WebApi.Controllers
 		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
 		public IHttpActionResult GetClientesValorAtivo()
 		{
-			// Busca Dados resumidos
+			// Busca Dados
 			var entidade = new ClienteRepositorio().BuscaListaClientes();
 
 			// Validacao
@@ -62,7 +90,8 @@ namespace BHJet_WebApi.Controllers
 				vcBairro = cli.vcBairro,
 				vcCidade = cli.vcCidade,
 				vcUF = cli.vcUF,
-				bitAtivo = cli.bitAtivo
+				bitAtivo = cli.bitAtivo,
+				vcDescricaoTarifario = cli.vcDescricaoTarifario
 
 			}));
 		}
@@ -164,7 +193,8 @@ namespace BHJet_WebApi.Controllers
 					VigenciaFim = x.VigenciaFim,
 					Franquia = x.Franquia,
 					FranquiaAdicional = x.FranquiaAdicional,
-					Observacao = x.Observacao
+					Observacao = x.Observacao,
+					ValorAtivado = x.ValorAtivado
 
 				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
 			});

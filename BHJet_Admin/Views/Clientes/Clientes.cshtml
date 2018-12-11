@@ -22,54 +22,53 @@
 							Clientes
 						</h2>
 					</div>
+					@using (Html.BeginForm("BuscaCliente", "Clientes", FormMethod.Post, new { id = "formBuscaClientes" }))
+					{
+						<div class="row">
 
-					<div class="row">
-						@using (Html.BeginForm("BuscaCliente", "Clientes", FormMethod.Get, new { id = "formBuscaClientes" }))
-						{
-						<div class="form-group ">
-							<label class="control-label col-sm-2" for="email">Selecione ou digite para pesquisar:</label>
-							<button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
-							<div class="col-sm-3">
-								<input id="pesquisaCliente" class="form-control input-md" placeholder="Pesquisar por ID/Nome." />
+							<div class="form-group ">
+								<label class="control-label col-sm-2" for="email">Selecione ou digite para pesquisar:</label>
+								<button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+								<div class="col-sm-3">
+									<input id="pesquisaCliente" class="form-control input-md" placeholder="Pesquisar por ID/Nome." />
 
-								@Html.ListBoxFor(m => m.ClienteSelecionado,
-								  new List<SelectListItem>(), new { @class = "form-control" })
-								<b><small>(Ctrl + Click) Para selecionar vários.</small></b>
+									@Html.ListBoxFor(m => m.ClienteSelecionado,
+									  new List<SelectListItem>(), new { @class = "form-control" })
+									<b><small>(Ctrl + Click) Para selecionar vários.</small></b>
+								</div>
+
 							</div>
-							
-						</div>
-						}
-						</div>
-					<div clss="row">
-						<button id="" type="button" class="btn btn-primary pull-left" onclick="location.href='NovoCliente'"><i class="fa fa-plus" aria-hidden="true"></i>Novo Cliente</button>
-					</div>
 
-					<div class="row" style="display: none;">
-						<div class="col-md-12">
-							<div class="table-responsive">
-								<br />
-								<table class="table table-bordered">
-									<thead>
-										<tr class="bg-light-gray">
-											<th scope="col">Cliente</th>
-											<th scope="col">Tipo Contrato</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach (var linha in @Model.ListModel)
-										{
-											<tr>
-												<td>@linha.NomeRazaoSocial</td>
-												<td>@linha.TipoContrato</td>
+						</div>
+						<div clss="row">
+							<button id="" type="button" class="btn btn-primary pull-left" onclick="location.href='NovoCliente'"><i class="fa fa-plus" aria-hidden="true"></i>Novo Cliente</button>
+						</div>
+
+						<div class="row" style="display: none;">
+							<div class="col-md-12">
+								<div class="table-responsive">
+									<br />
+									<table class="table table-bordered">
+										<thead>
+											<tr class="bg-light-gray">
+												<th scope="col">Cliente</th>
+												<th scope="col">Tipo Contrato</th>
 											</tr>
-										}
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											@foreach (var linha in @Model.ListModel)
+											{
+												<tr>
+													<td>@linha.NomeRazaoSocial</td>
+													<td>@linha.TipoContrato</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>
-
-
+					}
 				</div>
 			</div>
 		</div>
