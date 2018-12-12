@@ -270,7 +270,7 @@ namespace BHJet_Admin.Controllers
                         ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
                     });
 
-                    this.TrataSucesso("Diaria avulsa cadastrada com sucesso.");
+                    this.MensagemSucesso("Diaria avulsa cadastrada com sucesso.");
 
                     ModelState.Clear();
                     return View();

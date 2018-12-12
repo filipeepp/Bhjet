@@ -45,6 +45,7 @@ namespace BHJet_DTO.Profissional
         public decimal decPercentualComissao { get; set; }
         public DateTime dtDataInicioVigencia { get; set; }
         public DateTime dtDataFimVigencia { get; set; }
+        public string Observacao { get; set; }
     }
 
 }

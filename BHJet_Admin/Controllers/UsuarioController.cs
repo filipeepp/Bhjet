@@ -1,5 +1,7 @@
 ﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using BHJet_Admin.Models.Usuario;
+using BHJet_Servico.Cliente;
 using BHJet_Servico.Usuario;
 using System;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace BHJet_Admin.Controllers
     public class UsuarioController : Controller
     {
         private IUsuarioServico usuariosServico;
+        private readonly IClienteServico clienteServico;
 
-        public UsuarioController(IUsuarioServico _usuariosServico)
+        public UsuarioController(IUsuarioServico _usuariosServico, IClienteServico _clienteServico)
         {
             usuariosServico = _usuariosServico;
+            clienteServico = _clienteServico;
         }
 
         // GET: Usuario
@@ -31,7 +35,7 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return View(new UsuariosModel()
                 {
-                    usuarios = model.Select(usu => new UsuarioModel()
+                    usuarios = model.Select(usu => new UsuarioDetalheModel()
                     {
                         ID = usu.ID,
                         Email = usu.Email,
@@ -39,7 +43,7 @@ namespace BHJet_Admin.Controllers
                         SituacaoDesc = usu.SituacaoDesc,
                         TipoUser = usu.TipoUsuario
                     }).ToArray(),
-                     novo = null
+                    novo = null
                 });
             }
             catch (Exception e)
@@ -48,7 +52,7 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return View(new UsuariosModel()
                 {
-                    usuarios = new UsuarioModel[] { }
+                    usuarios = new UsuarioDetalheModel[] { }
                 });
             }
         }
@@ -66,23 +70,25 @@ namespace BHJet_Admin.Controllers
                     Email = model.novo.Email,
                     Situacao = model.novo.Situacao,
                     TipoUsuario = model.novo.TipoUser,
-                    Senha = model.novo.Senha
+                    Senha = model.novo.Senha,
+                    ClienteSelecionado = model.novo.ClienteSelecionado
                 });
 
-                this.TrataSucesso("Usuário cadastrado com sucesso.");
+                model.novo = new UsuarioDetalheModel();
+                this.MensagemSucesso("Usuário cadastrado com sucesso.");
 
                 // Busca Usuarios
-                return BuscaUsuariosSemValidacao();
+                return BuscaUsuariosSemValidacao(model);
             }
             catch (Exception e)
             {
                 this.TrataErro(e);
                 // Return
-                return BuscaUsuariosSemValidacao();
+                return BuscaUsuariosSemValidacao(model);
             }
         }
 
-        private ViewResult BuscaUsuariosSemValidacao()
+        private ViewResult BuscaUsuariosSemValidacao(UsuariosModel model)
         {
             try
             {
@@ -92,21 +98,23 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return View(new UsuariosModel()
                 {
-                    usuarios = modelRetorno.Select(usu => new UsuarioModel()
+                    usuarios = modelRetorno.Select(usu => new UsuarioDetalheModel()
                     {
                         ID = usu.ID,
                         Email = usu.Email,
                         Situacao = usu.Situacao,
                         SituacaoDesc = usu.SituacaoDesc,
                         TipoUser = usu.TipoUsuario
-                    }).ToArray()
+                    }).ToArray(),
+                    novo = model.novo
                 });
             }
             catch
             {
                 return View(new UsuariosModel()
                 {
-                    usuarios = new UsuarioModel[] { }
+                    usuarios = new UsuarioDetalheModel[] { },
+                    novo = model.novo
                 });
             }
         }
@@ -133,6 +141,21 @@ namespace BHJet_Admin.Controllers
 
             // Return
             return Json($"Usuário {msg} com sucesso !", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaClientes(string trechoPesquisa)
+        {
+            // Recupera dados
+            var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.vcNomeFantasia,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
         }
     }
 }

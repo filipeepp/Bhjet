@@ -131,13 +131,26 @@ namespace BHJet_Repositorio.Admin
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)
 	                               where
-		                                PRO.idColaboradorEmpresaSistema = @id";
+		                                PRO.idColaboradorEmpresaSistema = @id
 
-                // Execução
-                return sqlConnection.QueryFirstOrDefault<ProfissionalCompletoEntidade>(query, new
+                                select * from tblComissaoColaboradorEmpresaSistema
+												where idColaboradorEmpresaSistema = @id";
+
+                // Query Multiple
+                using (var multi = sqlConnection.QueryMultiple(query, new { id = idProfissional }))
                 {
-                    id = idProfissional
-                });
+                    // chamadosAguardando
+                    var profissional = multi.Read<ProfissionalCompletoEntidade>().FirstOrDefault();
+
+                    // motoristasAguardando
+                    var comissoes = multi.Read<ProfissionalComissaoEntidade>().AsList();
+
+                    if (profissional != null)
+                        profissional.Comissoes = comissoes.ToArray();
+
+                    // Return
+                    return profissional;
+                }
             }
         }
 
@@ -199,6 +212,55 @@ namespace BHJet_Repositorio.Admin
                         // Execute
                         var idEndereco = trans.Connection.Query<int>(query, profissional, trans);
 
+                        // Comissoes
+                        string queryComissao = @"UPDATE  [dbo].[tblComissaoColaboradorEmpresaSistema]
+                                        SET
+                                            [decPercentualComissao] = @decCom
+                                           ,[dtDataInicioVigencia] = @dtIni
+                                           ,[dtDataFimVigencia] = @dtFim
+                                           ,[vcObservacoes] = @Obs
+ 	                                   WHERE idComissaoColaboradorEmpresaSistema = @id";
+
+                        string queryAddComissao = @"INSERT INTO [dbo].[tblComissaoColaboradorEmpresaSistema]
+                                                    ([idColaboradorEmpresaSistema]
+                                                    ,[decPercentualComissao]
+                                                    ,[dtDataInicioVigencia]
+                                                    ,[dtDataFimVigencia]
+                                                    ,vcObservacoes
+                                                    ,[bitAtivo])
+                                                VALUES
+                                                        (@id
+                                                        ,@decCom
+                                                        ,@dtIni
+                                                        ,@dtFim
+                                                        ,@Obs
+                                                        ,1) select @@identity;";
+
+                        foreach (var com in profissional.Comissoes)
+                        {
+                            if (com.dtDataInicioVigencia == null || com.dtDataInicioVigencia == null)
+                                continue;
+
+                            if (ExisteComissao(trans, com.idComissaoColaboradorEmpresaSistema, profissional.ID))
+                                trans.Connection.Execute(queryComissao, new
+                                {
+                                    decCom = com.decPercentualComissao,
+                                    dtIni = com.dtDataInicioVigencia,
+                                    dtFim = com.dtDataFimVigencia,
+                                    Obs = com.vcObservacoes,
+                                    id = com.idComissaoColaboradorEmpresaSistema
+                                }, trans);
+                            else
+                                trans.Connection.Execute(queryAddComissao, new
+                                {
+                                    decCom = com.decPercentualComissao,
+                                    dtIni = com.dtDataInicioVigencia,
+                                    dtFim = com.dtDataFimVigencia,
+                                    Obs = com.vcObservacoes,
+                                    id = profissional.ID
+                                }, trans);
+                        }
+
                         // Commit
                         trans.Commit();
                     }
@@ -211,7 +273,19 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        private bool ExisteComissao(SqlTransaction con, long idComissao, long idColaborador)
+        {
+            // Query
+            string query = @"select cast(count(*) as bit) from [tblComissaoColaboradorEmpresaSistema]
+	                                where idComissaoColaboradorEmpresaSistema = @id and idColaboradorEmpresaSistema = @idCol";
 
+            // Execução
+            return con.Connection.QueryFirstOrDefault<bool>(query, new
+            {
+                id = idComissao,
+                idCol = idColaborador
+            }, con);
+        }
 
         /// <summary>
         /// Inclui Profissional
@@ -327,12 +401,14 @@ namespace BHJet_Repositorio.Admin
                                                     ,[decPercentualComissao]
                                                     ,[dtDataInicioVigencia]
                                                     ,[dtDataFimVigencia]
+                                                    ,vcObservacoes
                                                     ,[bitAtivo])
                                                 VALUES
                                                         (@idCol
                                                         ,@vlComissao
                                                         ,@dtIni
                                                         ,@dtFim
+                                                        ,@Obs
                                                         ,1) select @@identity;";
 
                                 foreach (var com in profissional.Comissoes)
@@ -344,7 +420,8 @@ namespace BHJet_Repositorio.Admin
                                             idCol = idColaborador,
                                             vlComissao = com.decPercentualComissao,
                                             dtIni = com.dtDataInicioVigencia,
-                                            dtFim = com.dtDataFimVigencia
+                                            dtFim = com.dtDataFimVigencia,
+                                            Obs = com.vcObservacoes
                                         }, trans);
 
                                         Comissoes.Add(comissao);

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -60,6 +63,9 @@ namespace BHJet_Core.Extension
 
         public static string ToAscii(this string valor)
         {
+            //byte[] bytes = Encoding.Default.GetBytes(valor);
+            //valor = Encoding.UTF8.GetString(bytes);
+
             return string.Join("", System.Text.Encoding.ASCII.GetChars(System.Text.Encoding.ASCII.GetBytes(valor.ToCharArray())));
         }
 

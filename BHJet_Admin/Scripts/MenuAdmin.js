@@ -51,6 +51,42 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
+function parseDMY(value) {
+    var date = value.split("/");
+    var d = parseInt(date[0], 10),
+        m = parseInt(date[1], 10),
+        y = parseInt(date[2], 10);
+    return new Date(y, m - 1, d);
+}
+
+function isValidDate(txtDate) {
+    var currVal = txtDate;
+    if (currVal == '')
+        return false;
+    //Declare Regex 
+    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/;
+    var dtArray = currVal.match(rxDatePattern); // is format OK?
+    if (dtArray == null)
+        return false;
+    //Checks for mm/dd/yyyy format.
+    dtDay = dtArray[1];
+    dtMonth = dtArray[3];
+    dtYear = dtArray[5]; 
+    if (dtMonth < 1 || dtMonth > 12)
+        return false;
+    else if (dtDay < 1 || dtDay > 31)
+        return false;
+    else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+        return false;
+    else if (dtMonth == 2) {
+        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+        if (dtDay > 29 || (dtDay == 29 && !isleap))
+            return false;
+    }
+    return true;
+
+}
+
 function alteraMenu() {
 
     $(".sidebar-menu").find("li").each(function () {
@@ -67,17 +103,26 @@ function alteraMenu() {
 
 }
 
+function MensagemAlerta(msg) {
+    $("#msgModal").text(msg)
+    $("#imgMensagem").attr("src", "..\\Images\\warming.png");
+    $('#myModal').modal('show')
+}
+
 
 function AdicionarErroCampo(idField, message, tempoAtivo) {
     var para = document.createElement("p");
     var node = document.createTextNode(message);
     para.appendChild(node);
-    para.id = "msgDigitacao";
+    para.className = "msgDigitacao";
     para.style.position = 'relative';
     para.style.fontSize = '12px';
     para.style.color = '#c33939';
     para.style.display = 'inline';
     if ($("#" + idField) != undefined) {
+        if ($("#" + idField).next().hasClass("msgDigitacao")) {
+            $("#" + idField).next().remove();
+        }
         $("#" + idField).after(para);
     }
     var removeAfter = tempoAtivo;

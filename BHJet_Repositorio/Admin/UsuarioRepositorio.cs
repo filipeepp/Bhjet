@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Utilitario;
+﻿using BHJet_Core.Enum;
+using BHJet_Core.Utilitario;
 using BHJet_Repositorio.Entidade;
 using Dapper;
 using System.Collections.Generic;
@@ -56,7 +57,6 @@ namespace BHJet_Repositorio.Admin
 
             using (var sqlConnection = this.InstanciaConexao())
             {
-
                 // Query
                 string query = @"INSERT INTO [dbo].[tblUsuarios]
                                     ([idTipoUsuario]
@@ -67,17 +67,38 @@ namespace BHJet_Repositorio.Admin
                                     (@tpUser
                                     ,@email
                                     ,@senha
-                                    ,@situacao) ";
-
+                                    ,@situacao) select @@identity;";
 
                 // Execução
-                sqlConnection.ExecuteScalar(query, new
+                var idUsurario = sqlConnection.ExecuteScalar<int>(query, new
                 {
                     tpUser = usuario.idTipoUsuario,
                     email = usuario.vcEmail,
                     senha = senhaEncrypByte,
                     situacao = usuario.bitAtivo
                 });
+
+                // Atualiza cliente
+                switch (usuario.idTipoUsuario)
+                {
+                    case TipoUsuario.ClienteAvulsoSite:
+                        string queryCliente = @"update tblClientes set idUsuario = @IdUsu where idCliente = @idCli";
+                        sqlConnection.ExecuteScalar(queryCliente, new
+                        {
+                            IdUsu = idUsurario,
+                            idCli = usuario.ClienteSelecionado
+                        });
+                        break;
+                    case TipoUsuario.FuncionarioCliente:
+                        string queryClienteCol = @"update tblColaboradoresCliente set idUsuario = @IdUsu where idCliente = @idCli";
+                        sqlConnection.ExecuteScalar(queryClienteCol, new
+                        {
+                            IdUsu = idUsurario,
+                            idCli = usuario.ClienteSelecionado
+                        });
+                        break;
+                }
+
             }
         }
 
@@ -97,8 +118,8 @@ namespace BHJet_Repositorio.Admin
                 // Execução
                 sqlConnection.ExecuteScalar(query, new
                 {
-                   id = idUser,
-                   sit = situacao
+                    id = idUser,
+                    sit = situacao
                 });
             }
         }

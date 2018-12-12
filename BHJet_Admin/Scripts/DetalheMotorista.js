@@ -11,7 +11,11 @@ function mascaraComissoes() {
     $("input[id*='VigenciaInicio'], input[id*='VigenciaFim']").each(function () {
         $(this).mask("00/00/0000", {
             onComplete: function (a) {
-
+                //if (!isValidDate(a)) {
+                //    var teste = $('input[text*=' + a + ']');
+                //    teste.val();
+                //    AdicionarErroCampo(teste.attr('id'), 'Favor preencher uma data válida.', 10000);
+                //}
             },
             placeholder: "__/__/____"
         });
@@ -50,7 +54,68 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $('#CpfCnpj').mask(cpfMascara, cpfOptions);
 
     $('#confirmaMotorista').click(function (event) {
-        //$("#loading").show()
+        //ms
+        var erro;
+        var t = "";
+        //vld
+        $(".rowList").each(function () {
+            var comissao = $(this).find("input[id*='ValorComissao']")
+            var vgInicio = $(this).find("input[id*='VigenciaInicio']")
+            var vgFim = $(this).find("input[id*='VigenciaFim']")
+            if ((comissao.val() != "" || vgInicio.val() != "" || vgFim.val() != "") || $(".rowList").length > 1) {
+                //com
+                if (comissao.val() == "") {
+                    comissao.css('border-color', 'red');
+                    AdicionarErroCampo(comissao.attr('id'), 'Favor preencher um valor para a comissão.', 10000);
+                    erro = true;
+                }
+                else {
+                    comissao.css('border-color', '#ccc');
+                }
+                //vgIni
+                if (vgInicio.val() == "") {
+                    vgInicio.css('border-color', 'red');
+                    AdicionarErroCampo(vgInicio.attr('id'), 'Favor preencher um valor para a data de vigência inicial.', 10000);
+                    erro = true;
+                }
+                else {
+                    if (!isValidDate(vgInicio.val())) {
+                        vgInicio.css('border-color', 'red');
+                        AdicionarErroCampo(vgInicio.attr('id'), 'Favor preencher uma data válida.', 10000);
+                        erro = true;
+                    } else {
+                        vgInicio.css('border-color', '#ccc');
+                    }
+                }
+                //vgFim
+                if (vgFim.val() == "") {
+                    vgFim.css('border-color', 'red');
+                    AdicionarErroCampo(vgFim.attr('id'), 'Favor preencher um valor para a data de vigência final.', 10000);
+                    erro = true;
+                }
+                else {
+                    if (!isValidDate(vgFim.val())) {
+                        vgFim.css('border-color', 'red');
+                        AdicionarErroCampo(vgFim.attr('id'), 'Favor preencher uma data válida.', 10000);
+                        erro = true;
+                    } else {
+                        vgFim.css('border-color', '#ccc');
+                    }
+                }
+            }
+            else {
+                comissao.css('border-color', '#ccc');
+                vgInicio.css('border-color', '#ccc');
+                vgFim.css('border-color', '#ccc');
+            }
+        })
+        // err
+        if (erro) {
+            MensagemAlerta("Os Campos destacados são obrigatórios.");
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
     });
 
     function limpaEndereco() {
@@ -60,8 +125,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#Cidade").val("");
         $("#UF").val("");
     }
-
-
 
     //CEP
     var endereco = {
@@ -74,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     $('#Cep').mask('00000-000', GetOptionsViaCep(endereco));
 
-
     $("#btnNovoContatos").click(function () {
         $.ajax({
             url: '/Motorista/AddComissao',
@@ -82,14 +144,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             dataType: "html",
             data: $("#DetalheMotorista").serialize(),
             success: function (data) {
-                //var utfstring = unescape(encodeURIComponent(data));
-                //var url = '@Html.Raw(Url.Action("Index", new { model = utfstring, adicionarComissao: true }))';
                 window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
-                $("#confirmaMotorista").mousemove();
+                $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                 mascaraComissoes();
-                //$.get("/Motorista/Novo", { adicionarComissao: true });
             },
-            error: function () { $("#confirmaMotorista").focus();}
+            error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
         });
     })
 });
@@ -102,9 +161,9 @@ function removeComissao(idCom) {
         data: $("#DetalheMotorista").serialize(),
         success: function (data) {
             window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
-            $("#confirmaMotorista").mousemove();
             mascaraComissoes();
+            $("html, body").animate({ scrollTop: $(document).height() }, 1000);
         },
-        error: function () { $("#confirmaMotorista").focus(); }
+        error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
     });
 }

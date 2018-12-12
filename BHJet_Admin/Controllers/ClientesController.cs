@@ -155,7 +155,7 @@ namespace BHJet_Admin.Controllers
 
 				clienteServico.IncluirCliente(entidade); // Atualiza dados do profissional
 
-				this.TrataSucesso("Cliente incluido com sucesso.");
+				this.MensagemSucesso("Cliente incluido com sucesso.");
 
 				//Ok
 				return View(new ClienteModel());
