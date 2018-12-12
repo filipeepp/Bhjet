@@ -62,7 +62,7 @@ namespace BHJet_Admin.Controllers
 
 		[HttpPost]
 		[ValidacaoUsuarioAttribute()]
-		public ActionResult BuscaCliente(string trechoPesquisa)
+		public ActionResult Clientes(string trechoPesquisa)
 		{
 			try
 			{
@@ -75,7 +75,7 @@ namespace BHJet_Admin.Controllers
 					{
 						ClienteID = x.ID,
 						NomeRazaoSocial = x.vcNomeRazaoSocial,
-						TipoContrato = (TipoTarifa)Enum.Parse(typeof(TipoTarifa), typeof(TipoTarifa).GetEnumNames().Where(e => e.Contains(x.vcDescricaoTarifario)).ToString()),
+						//TipoContrato = (TipoTarifa)Enum.Parse(typeof(TipoTarifa), typeof(TipoTarifa).GetEnumNames().Where(e => e.Contains(x.vcDescricaoTarifario)).ToString()),
 						ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
 					}).ToList()
 				});
