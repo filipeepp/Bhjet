@@ -33,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		//$("#loading").show()
 	});
 
-	$("#ClienteSelecionado").dblclick(function () {
 
-	});
 
 });
