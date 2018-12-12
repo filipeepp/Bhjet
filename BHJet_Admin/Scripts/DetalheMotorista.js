@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 //vgIni
                 if (vgInicio.val() == "") {
                     vgInicio.css('border-color', 'red');
-                    AdicionarErroCampo(vgInicio.attr('id'), 'Favor preencher um valor para a comissão.', 10000);
+                    AdicionarErroCampo(vgInicio.attr('id'), 'Favor preencher um valor para a data de vigência inicial.', 10000);
                     erro = true;
                 }
                 else {
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 //vgFim
                 if (vgFim.val() == "") {
                     vgFim.css('border-color', 'red');
-                    AdicionarErroCampo(vgFim.attr('id'), 'Favor preencher um valor para a comissão.', 10000);
+                    AdicionarErroCampo(vgFim.attr('id'), 'Favor preencher um valor para a data de vigência final.', 10000);
                     erro = true;
                 }
                 else {
