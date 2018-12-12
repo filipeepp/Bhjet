@@ -1,73 +1,88 @@
 ﻿@using System.Web.Http
 @using BHJet_Admin.Models
+@using BHJet_Core.Extension
 @model TabelaClienteModel
 
+<script src="@Url.Content("~/Scripts/Clientes.js")"></script>
+
 <ol class="breadcrumb">
-    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-    <li><a href="#map_canvas">Clientes</a></li>
+	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
+	<li><a href="#map_canvas">Clientes</a></li>
 </ol>
 
 <div class="container-fluid">
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-7 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
+	<div class="row">
+		<div class="col-xs-12 col-sm-7 col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
 
-                    <div class="titulo">
-                        <h2>
-                            <a onclick="history.go(-1);">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                            </a>
-                            Clientes
-                        </h2>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="txtPesquisarCliente">Pesquisar Cliente</label>
-                            <form class="form-inline">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                        <input type="text" class="col-xs-4 col-md-12 form-control" id="txtPesquisarCliente">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
-                                <button id="" type="button" class="btn btn-primary" onclick="location.href='NovoCliente'"><i class="fa fa-plus" aria-hidden="true"></i>Novo Cliente</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <br />
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr class="bg-light-gray">
-                                            <th scope="col">Cliente</th>
-                                            <th scope="col">Tipo Contrato</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var linha in @Model.ListModel)
-                                        {
-                                            <tr>
-                                                <td>@linha.NomeRazaoSocial</td>
-                                                <td>@linha.TipoContrato</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+					<div class="titulo">
+						<h2>
+							<a onclick="history.go(-1);">
+								<i class="fa fa-arrow-left" aria-hidden="true"></i>
+							</a>
+							Clientes
+						</h2>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<label for="txtPesquisarCliente">Pesquisar Cliente</label>
+							@using (Html.BeginForm("Clientes", "Clientes", FormMethod.Post, new { id = "formBuscaClientes" }))
+							{
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-search"></i></div>
+										<input style="max-width: 400px;" class="form-control" type="text" id="palavraChave" name="palavraChave">
+										<button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+									</div>
+								</div>
+							}
+						</div>
 
 
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="col-md-12">
+							<div class="table-responsive">
+								<br />
+								<table class="table table-bordered">
+									<thead>
+										<tr class="bg-light-gray">
+											<th scope="col">ID</th>
+											<th scope="col">Cliente</th>
+											<th scope="col">Tipo Contrato</th>
+											<th scope="col">Contrato Ativo</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var linha in Model.ListModel)
+										{
+											<tr>
+												<td> <a href="">@linha.ClienteID</a></td>
+												<td> <a href=""> @linha.NomeRazaoSocial </a></td>
+												<td> <a href="">@linha.TipoContrato</a></td>
+												<td> <a href="">@linha.ValorAtivado</a></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>
+@if (TempData["mensagemGeral"] != null)
+{
+	<script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+	</script>
+}

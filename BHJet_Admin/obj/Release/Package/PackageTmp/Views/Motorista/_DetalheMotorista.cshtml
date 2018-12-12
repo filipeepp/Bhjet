@@ -3,8 +3,11 @@
 @model NovoMotoristaModel
 
 @Scripts.Render("~/bundles/jqueryval")
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
-@using (Html.BeginForm("Novo", "Motorista", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("Novo", "Motorista", FormMethod.Post, new { @id = "DetalheMotorista", @class = "form-horizontal" }))
 {
     <div class="row form-group ">
         @Html.HiddenFor(model => model.EdicaoCadastro);
@@ -186,6 +189,66 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Com -->
+        <div class="panel panel-default" style="margin:30px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-files-o" aria-hidden="true"></i>
+                        </a>
+                        Comissionamento
+                    </h2>
+
+                    <button id="btnNovoContatos" style="margin-bottom:2px" name="btnNovoContato" class="btn btn-primary pull-right" type="button">
+                        <i class="fa fa-plus" aria-hidden="true"></i>Nova comissão
+                    </button>
+
+                </div>
+
+                @for (int i = 0; i < Model.Comissao.Count(); i++)
+                {
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <div class="row rowList">
+
+                            <div class="col-md-1" style="margin-right: -80px;margin-top: 20px;">
+                                <a onclick="removeComissao(@i)">
+                                    <i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
+                                </a>
+                            </div>
+
+                            @if (Model.EdicaoCadastro == true)
+                            {
+                            <div class="col-md-1">
+                                <label for="txtNomeFantasia">ID</label>
+                                <br />
+                                @Html.TextBoxFor(model => model.Comissao[i].ID, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            }
+                            @Html.HiddenFor(model => model.Comissao[i].ID)
+                            <div class="col-md-2">
+                                <label for="txtNomeFantasia">Percentual</label>
+                                <br />
+                                @Html.TextBoxFor(model => model.Comissao[i].ValorComissao, new { @class = "form-control" })
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <label>Vigência</label>
+                                <div class="input-group input-daterange">
+                                    @Html.TextBoxFor(model => model.Comissao[i].VigenciaInicio, new { style = "width: 160px;", @class = "form-control" })
+                                    <div style="margin-left:-2px" class="input-group-addon">a</div>
+                                    @Html.TextBoxFor(model => model.Comissao[i].VigenciaFim, new { style = "width: 160px;", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class=" col-md-5">
+                                <label for="txtNomeFantasia">Observações</label>
+                                @Html.TextAreaFor(model => model.Comissao[i].Observacao, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 

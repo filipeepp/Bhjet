@@ -1,7 +1,9 @@
 ﻿$(document).ready(function () {
+	//MASCARAS
+	$(".mask-telefone").mask("(00) 0000-0000");
+	$(".mask-celular").mask("(00) 00009-0000");
 
-
-
+	//VARIÁVEIS INICIAIS
 	var aberturaSpan = '<span class="text-danger field-validation-error" data-valmsg-replace="true"><span>';
 	var fechamentoSpan = '</span></span></span>';
 
@@ -21,6 +23,15 @@
 	
 	});
 
+	//Habilita botão avançar
+	$(document).on("change keyup mouseup mousemove", function () {
+
+		if ($(document).find('span[id^="spanError_"]').length === 0) {
+			$("#lnkValidarContato").removeClass("isDisabled");
+		}
+
+	});
+
 
 	//Limpa Erro quando digitado e trata expressões regulares
 	$("input[name^='Contato']").keyup(function () {
@@ -29,7 +40,7 @@
 			var aux = $(this).children('input');
 		
 			if (aux[0].value) {
-				$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
+				$(this).find("span[id^='spanError_']").remove();
 
 				if (aux.hasClass("ctmErrorEmail")) {
 
@@ -45,7 +56,7 @@
 					$(this).append('<span id="spanError_' + aux[0].id + '" >');
 
 					if (!reTelefoneComercial.test(aux[0].value))
-						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Comercial inválido.' + fechamentoSpan);
+						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Comercial inválido. Deve ser fixo.' + fechamentoSpan);
 					else
 						$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 
@@ -54,10 +65,16 @@
 					$(this).append('<span id="spanError_' + aux[0].id + '" >');
 
 					if (!reTelefoneCelular.test(aux[0].value))
-						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Celular inválido.' + fechamentoSpan);
+						$(this).children('span[id$="' + aux[0].id + '"]').html(aberturaSpan + 'Telefone Celular inválido. Deve conter 9 adicional.' + fechamentoSpan);
 					else
 						$(this).children('span[id="spanError_' + aux[0].id + '"]').remove();
 
+				} else if (aux.hasClass("ctmErrorDataNascimento")) {
+					if (aux[0].value.length > 10) {
+						aux[0].value = "";
+						aux[0].blur();
+						$(this).append('<span id="spanError_" >' + aberturaSpan + "Data inválida" + fechamentoSpan);
+					}
 				}
 
 			}
@@ -74,7 +91,7 @@ window.ValidarContato = function () {
 
 	$("div[id^='Contato']").each(function () {
 		var aux = $(this).children('input');
-		if (!aux[0].value) {
+		if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
 			//Contato
 			aux.hasClass("ctmErrorContato") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Nome do Contato obrigatório.' + fechamentoSpan) : "";
 			//Email
@@ -86,13 +103,39 @@ window.ValidarContato = function () {
 			//Setor
 			aux.hasClass("ctmErrorSetor") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Setor é obrigatório." + fechamentoSpan) : "";
 			//Data Nascimento
-			aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : "";
+			aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : ""
 
 		}
-
-		//Desabilita botão de avançar caso encontre erro
-		if ($(document).find('span[id^="spanError_"]').length > 0)
-			$("#lnkValidarContato").addClass("isDisabled");
 	});
 
+	//Desabilita botão de avançar caso encontre erro
+	if ($(document).find('span[id^="spanError_"]').length > 0) {
+		$("#lnkValidarContato").addClass("isDisabled");
+		return false;
+	}
+
+	return true;
+
+
 };
+
+window.RemoverBlocoContato = function (divBlocoContato) {
+	var id = divBlocoContato.id;
+
+	//Adicionta classe para identificar que o contato foi removido
+	$("#" + id).addClass("div-contato-removido");
+
+	//Remove span de erro
+	$('span', '#'+id).each(function () {
+		$(this).remove();
+	});
+
+	//Adiciona true para model ContatoRemovido
+	$("#" + id).find("input[id$='ContatoRemovido']").attr("value", true);
+
+	//Exclui o bloco
+	$("#" + id).hide();
+
+	return true;
+
+}

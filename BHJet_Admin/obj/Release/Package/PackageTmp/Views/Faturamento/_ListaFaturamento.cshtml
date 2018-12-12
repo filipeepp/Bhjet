@@ -19,7 +19,7 @@
                 <tr class="bg-light-gray">
                     <th>Cliente</th>
                     <th>Apuração</th>
-                    <th>Tipo Contrato</th>
+                    @*<th>Tipo Contrato</th>*@
                     <th>Valor R$</th>
                 </tr>
             </thead>
@@ -27,10 +27,10 @@
                 @foreach (FaturamentoModel fat in @Model)
                 {
                     <tr>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Cliente<a/></td>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Apuração<a /></td>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.DescContrato<a /></td>
-                        <td><a href="@Url.Action("DetalheFaturamento", "Faturamento", new { Edicao = true, ID = @fat.ID })">@fat.Valor<a /></td>
+                        <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.Cliente<a/></td>
+                        <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.Apuracao<a /></td>
+                        @*<td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.DescContrato<a /></td>*@
+                        <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.Valor<a /></td>
                     </tr>
                 }
             </tbody>

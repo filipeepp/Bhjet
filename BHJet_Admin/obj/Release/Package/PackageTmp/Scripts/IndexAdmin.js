@@ -49,7 +49,7 @@ function buscaGraficoResumoSituacaoChamados() {
                     title: {
                         display: true,
                         text: 'Chamados por Situação',
-                        fontColor: "#ffffff"
+                        fontColor: "#000"
                     },
                     scales: {
                         yAxes: [{
@@ -124,7 +124,7 @@ function buscaGraficoResumoSituacaoAtendimentos() {
                     title: {
                         display: true,
                         text: 'Atendimentos por profissional',
-                        fontColor: "#ffffff"
+                        fontColor: "#000"
                     },
                     scales: {
                         yAxes: [{
