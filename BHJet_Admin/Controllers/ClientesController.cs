@@ -46,6 +46,7 @@ namespace BHJet_Admin.Controllers
 			}	
 		}
 
+
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente()
 		{
@@ -55,6 +56,7 @@ namespace BHJet_Admin.Controllers
 			});
 		}
 
+		[HttpPost]
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult BuscaCliente(string trechoPesquisa)
 		{
@@ -77,7 +79,7 @@ namespace BHJet_Admin.Controllers
 			catch (Exception e)
 			{
 				this.TrataErro(e);
-				return View();
+				return View(new TabelaClienteModel());
 			}
 		}
 
