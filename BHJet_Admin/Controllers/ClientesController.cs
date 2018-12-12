@@ -24,7 +24,11 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult Clientes()
         {
-			try
+			return View(new TabelaClienteModel()
+			{
+				ListModel = new List<LinhaClienteModel>() { }
+			});
+			/*try
 			{
 				var entidade = clienteServico.BuscaClientesValorAtivo();
 				
@@ -43,7 +47,7 @@ namespace BHJet_Admin.Controllers
 					ListModel = new List<LinhaClienteModel>() { }
 
 				});
-			}	
+			}*/
 		}
 
 
@@ -162,6 +166,21 @@ namespace BHJet_Admin.Controllers
 				return View(model);
 			}
 
+		}
+
+		[HttpGet]
+		[ValidacaoUsuarioAttribute()]
+		public JsonResult BuscaClientes()
+		{
+			// Recupera dados
+			var entidade = clienteServico.BuscaClientesValorAtivo();
+
+			// Return
+			return Json(entidade.Select(x => new AutoCompleteModel()
+			{
+				label = x.ID + " - " + x.vcNomeFantasia,
+				value = x.ID
+			}), JsonRequestBehavior.AllowGet);
 		}
 
 		[ValidacaoUsuarioAttribute()]
