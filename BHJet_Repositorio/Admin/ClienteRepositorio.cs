@@ -94,8 +94,9 @@ namespace BHJet_Repositorio.Admin
 									tblTarifario Valor on Valor.idTarifario = tblClientesTarifario.idTarifario 
 								WHERE 
 									CONVERT(VARCHAR(250), Cliente.idCliente) LIKE @valorPesquisa OR
-									vcNomeFantasia LIKE @valorPesquisa OR
-									vcNomeRazaoSocial LIKE @valorPesquisa";
+									Cliente.vcNomeFantasia LIKE @valorPesquisa OR
+									Cliente.vcNomeRazaoSocial LIKE @valorPesquisa OR
+									Valor.vcDescricaoTarifario LIKE @valorPesquisa";
 
 				// Execução
 				return sqlConnection.Query<ClienteEntidade>(query, new

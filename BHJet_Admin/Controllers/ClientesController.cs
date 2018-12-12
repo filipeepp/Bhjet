@@ -21,23 +21,31 @@ namespace BHJet_Admin.Controllers
 			clienteServico = _cliente;
 		}
 
+
+		[ValidacaoUsuarioAttribute()]
+		public ActionResult Index()
+		{
+			return View();
+		}
+
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult Clientes()
         {
-			return View(new TabelaClienteModel()
-			{
-				ListModel = new List<LinhaClienteModel>() { }
-			});
-			/*try
+			try
 			{
 				var entidade = clienteServico.BuscaClientesValorAtivo();
-				
+
 				// Return
-				return Json(entidade.Select(x => new AutoCompleteModel()
+				return View(new TabelaClienteModel()
 				{
-					label = x.ID + " - " + x.vcNomeFantasia,
-					value = x.ID
-				}), JsonRequestBehavior.AllowGet);
+					ListModel = entidade.Select(x => new LinhaClienteModel()
+					{
+						ClienteID = x.ID,
+						NomeRazaoSocial = x.vcNomeRazaoSocial,
+						TipoContrato = x.vcDescricaoTarifario,
+						ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
+					}).ToList()
+				});
 			}
 			catch (Exception e)
 			{
@@ -47,7 +55,7 @@ namespace BHJet_Admin.Controllers
 					ListModel = new List<LinhaClienteModel>() { }
 
 				});
-			}*/
+			}
 		}
 
 
@@ -62,11 +70,11 @@ namespace BHJet_Admin.Controllers
 
 		[HttpPost]
 		[ValidacaoUsuarioAttribute()]
-		public ActionResult Clientes(string trechoPesquisa)
+		public ActionResult Clientes(string palavraChave)
 		{
 			try
 			{
-				var entidade = clienteServico.BuscaClienteContrato(trechoPesquisa);
+				var entidade = clienteServico.BuscaClienteContrato(palavraChave);
 
 				//Ok
 				return View(new TabelaClienteModel()
@@ -75,7 +83,7 @@ namespace BHJet_Admin.Controllers
 					{
 						ClienteID = x.ID,
 						NomeRazaoSocial = x.vcNomeRazaoSocial,
-						//TipoContrato = (TipoTarifa)Enum.Parse(typeof(TipoTarifa), typeof(TipoTarifa).GetEnumNames().Where(e => e.Contains(x.vcDescricaoTarifario)).ToString()),
+						TipoContrato = x.vcDescricaoTarifario,
 						ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
 					}).ToList()
 				});
@@ -166,21 +174,6 @@ namespace BHJet_Admin.Controllers
 				return View(model);
 			}
 
-		}
-
-		[HttpGet]
-		[ValidacaoUsuarioAttribute()]
-		public JsonResult BuscaClientes()
-		{
-			// Recupera dados
-			var entidade = clienteServico.BuscaClientesValorAtivo();
-
-			// Return
-			return Json(entidade.Select(x => new AutoCompleteModel()
-			{
-				label = x.ID + " - " + x.vcNomeFantasia,
-				value = x.ID
-			}), JsonRequestBehavior.AllowGet);
 		}
 
 		[ValidacaoUsuarioAttribute()]

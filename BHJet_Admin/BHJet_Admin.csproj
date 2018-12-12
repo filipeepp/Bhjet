@@ -266,7 +266,6 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CadastroDiariaAvulsa.js" />
     <Content Include="Scripts\ClienteContato.js" />
-    <Content Include="Scripts\Clientes.js" />
     <Content Include="Scripts\ClienteValor.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
@@ -327,6 +326,7 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Faturamento\DetalheFaturamentoAvulso.cshtml" />
     <Content Include="Views\Faturamento\_DetalheChamadoAvulso.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

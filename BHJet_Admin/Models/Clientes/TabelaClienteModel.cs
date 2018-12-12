@@ -26,7 +26,7 @@ namespace BHJet_Admin.Models
     {
         public long? ClienteID { get; set; }
         public string NomeRazaoSocial { get; set; }
-        public TipoTarifa TipoContrato { get; set; }
+        public string TipoContrato { get; set; }
 		public string ValorAtivado { get; set; }
     }
 }
