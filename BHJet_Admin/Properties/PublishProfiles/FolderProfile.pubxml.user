@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\Repositorio Visual Studio</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\Repositorio Visual Studio\Web_Admin</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/07/2018 00:37:25</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.dll">
-      <publishTime>12/12/2018 00:15:49</publishTime>
+      <publishTime>12/12/2018 00:22:33</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.pdb">
-      <publishTime>12/12/2018 00:15:49</publishTime>
+      <publishTime>12/12/2018 00:22:33</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
       <publishTime>12/12/2018 00:15:47</publishTime>

@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\Repositorio Visual Studio\Web_API</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\Repositorio Visual Studio\Web_Api</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -34,10 +34,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/12/2018 00:16:16</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>12/12/2018 00:17:38</publishTime>
+      <publishTime>12/12/2018 00:22:06</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>12/12/2018 00:17:38</publishTime>
+      <publishTime>12/12/2018 00:22:06</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>
