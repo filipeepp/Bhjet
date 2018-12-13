@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BHJet_Core.Extension;
+using System.Globalization;
+
 namespace BHJet_Admin.Controllers
 {
     public class ClientesController : Controller
@@ -68,11 +70,58 @@ namespace BHJet_Admin.Controllers
 					var clienteIDLong = long.Parse(clienteID);
 					var entidade = clienteServico.BuscaClientePorID(clienteIDLong);
 
+					return View(new ClienteModel()
+					{
+						DadosCadastrais = new DadosCadastraisModel()
+						{
+							NomeRazaoSocial = entidade.DadosCadastrais.NomeRazaoSocial,
+							NomeFantasia = entidade.DadosCadastrais.NomeFantasia,
+							CPFCNPJ = entidade.DadosCadastrais.CPFCNPJ,
+							InscricaoEstadual = entidade.DadosCadastrais.InscricaoEstadual,
+							ISS = entidade.DadosCadastrais.ISS == 1 ? true : false,
+							Endereco = entidade.DadosCadastrais.Endereco,
+							NumeroEndereco = entidade.DadosCadastrais.NumeroEndereco,
+							Complemento = entidade.DadosCadastrais.Complemento,
+							Bairro = entidade.DadosCadastrais.Bairro,
+							Cidade = entidade.DadosCadastrais.Cidade,
+							Estado = entidade.DadosCadastrais.Estado,
+							CEP = entidade.DadosCadastrais.Estado,
+							Observacoes = entidade.DadosCadastrais.Estado,
+							HomePage = entidade.DadosCadastrais.Complemento,
+						},
+
+						Contato = entidade.Contato != null ? entidade.Contato.Select(c => new ContatoModel()
+						{
+							Contato = c.Contato,
+							Email = c.Email,
+							TelefoneComercial = c.TelefoneComercial,
+							TelefoneCelular = c.TelefoneCelular,
+							Setor = c.Setor,
+							DataNascimento = c.DataNascimento,
+
+						}).ToList() : new List<ContatoModel>() { },
+
+						Valor = entidade.Valor != null ? entidade.Valor.Select(v => new ValorModel()
+						{
+							ValorAtivado = v.ValorAtivado == 1 ? true : false,
+							ValorUnitario = Convert.ToString(v.ValorUnitario),
+							TipoTarifa = v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AvulsoMensal : v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AlocacaoMensal,
+							VigenciaInicio = DateTime.ParseExact(v.VigenciaInicio.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
+							VigenciaFim = DateTime.ParseExact(v.VigenciaFim.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
+							Franquia = Convert.ToString(v.Franquia),
+							FranquiaAdicional = Convert.ToString(v.FranquiaAdicional),
+							Observacao = v.Observacao
+
+						}).ToList() : new List<ValorModel>() { }
+
+					});
+
 
 				}
 				catch(Exception e)
 				{
-
+					this.TrataErro(e);
+					return View(new ClienteModel());
 				}
 
 			}
