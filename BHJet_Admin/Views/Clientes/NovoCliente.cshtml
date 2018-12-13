@@ -3,9 +3,18 @@
 @using BHJet_Core.Enum
 @model ClienteModel
 
+<!--VARIÁVEIS INICÍAIS-->
 @{
 	Session["QTDE_CONTATO"] = null;
 	Session["QTDE_VALOR"] = null;
+
+	var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
+
+	if(edicao)
+	{
+	}
+
+
 }
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -64,7 +73,7 @@
 
 <ol class="breadcrumb">
 	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
-	<li><a href="#map_canvas">Cadastrar Cliente</a></li>
+	<li><a href="#map_canvas">@ViewBag.MetodoPagina Cliente</a></li>
 </ol>
 
 <div class="container-fluid">
@@ -77,7 +86,7 @@
 							<a onclick="history.go(-1);">
 								<i class="fa fa-arrow-left" aria-hidden="true"></i>
 							</a>
-							Cadastrar Cliente
+							@ViewBag.MetodoPagina Cliente
 						</h2>
 					</div>
 					<div class="container-fluid">
