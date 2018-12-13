@@ -2,6 +2,7 @@
 using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BHJet_Repositorio.Admin
 {
@@ -30,9 +31,129 @@ namespace BHJet_Repositorio.Admin
 		}
 
 		/// <summary>
+		/// Busca dados cadastrais cliente
+		/// </summary>
+		/// <param name="filtro">clienteID</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteDadosCadastraisEntidade> BuscaClienteDadosCadastrais(long clienteID)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT
+									Cliente.vcNomeRazaoSocial AS NomeRazaoSocial,
+									Cliente.vcNomeFantasia AS NomeFantasia,
+									Cliente.vcCPFCNPJ AS CPFCNPJ,
+									Cliente.vcInscricaoMunicipal AS InscricaoMunicipal,
+									Cliente.vcInscricaoEstadual AS InscricaoEstadual,
+									Cliente.bitRetemISS AS ISS,
+									Cliente.vcObservacoes AS Observacoes,
+									Cliente.vcSite AS HomePage,
+									Endereco.vcRua AS Endereco,
+									Endereco.vcNumero AS NumeroEndereco,
+									Endereco.vcComplemento AS Complemento,
+									Endereco.vcBairro AS Bairro,
+									Endereco.vcCidade AS Cidade,
+									Endereco.vcUF AS Estado,
+									Endereco.vcCEP AS CEP
+								FROM
+									tblClientes Cliente
+								INNER JOIN
+									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
+								WHERE
+									Cliente.idCliente = @ClienteID";
+
+				// Execução
+				return sqlConnection.Query<ClienteDadosCadastraisEntidade>(query, new
+				{
+					ClienteID = clienteID
+				});
+
+			}
+		}
+
+
+		/// <summary>
+		/// Busca contatos do cliente
+		/// </summary>
+		/// <param name="filtro">clienteID</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteContatoEntidade> BuscaClienteContatos(long clienteID)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT
+									vcNomeContato AS Contato,
+									vcDepartamento AS Setor,
+									dtDataNascimento AS DataNascimento,
+									vcTelefoneComercial AS TelefoneComercial,
+									vcTelefoneCelular AS TelefoneCelular,
+									vcRamalComercial AS TelefoneRamal,
+									bitTelefoneCelularWhatsapp AS Whatsapp,
+									vcEmail AS Email
+								FROM
+									tblColaboradoresCliente
+								WHERE
+									idCliente = @ClienteID";
+
+				// Execução
+				return sqlConnection.Query<ClienteContatoEntidade>(query, new
+				{
+					ClienteID = clienteID
+				});
+			}
+		}
+
+		/// <summary>
+		/// Busca valor cliente
+		/// </summary>
+		/// <param name="filtro">clienteID</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteValorEntidade> BuscaClienteValores(long clienteID)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT
+									Valor.vcDescricaoTarifario AS TipoTarifa,
+									Valor.dtDataInicioVigencia AS VigenciaInicio,
+									Valor.dtDataFimVigencia AS VigenciaFim,
+									Valor.decValorBandeirada AS ValorBandeira,
+									Valor.decFranquiaKMBandeirada AS ValorKMBandeiradada,
+									Valor.decValorKMAdicionalCorrida AS ValorKMAdicionalCorrida,
+									Valor.intFranquiaMinutosParados AS MinutosParado,
+									Valor.decValorMinutoParado AS ValorMinutosParado,
+									Valor.timFaixaHorarioInicial AS HorarioInicial,
+									Valor.timFaixaHorarioFinal AS HorarioFinal,
+									Valor.decValorDiaria AS ValorDiaria,
+									Valor.decFranquiaKMDiaria AS ValorKMDiaria,
+									Valor.decValorKMAdicionalDiaria AS ValorKMAdicionalDiaria,
+									Valor.decValorMensalidade AS ValorUnitario,
+									Valor.decFranquiaKMMensalidade AS Franquia,
+									Valor.decValorKMAdicionalMensalidade AS FranquiaAdicional,
+									Valor.bitAtivo AS ValorAtivado,
+									Valor.bitPagamentoAvista AS PagamentoAVista,
+									Valor.vcObservacao AS Observacao
+								FROM
+									tblTarifario Valor
+								INNER JOIN
+									tblClientesTarifario ON tblClientesTarifario.idTarifario = Valor.idTarifario 
+								WHERE
+									tblClientesTarifario.idCliente = @ClienteID
+								ORDER BY Valor.bitAtivo desc";
+
+				// Execução
+				return sqlConnection.Query<ClienteValorEntidade>(query, new
+				{
+					ClienteID = clienteID
+				});
+			}
+		}
+
+		/// <summary>
 		/// Busca dados resumidos do(s) cliente(s) e seu(s) contrato(s)
 		/// </summary>
-		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>UsuarioEntidade</returns>
 		public IEnumerable<ClienteEntidade> BuscaListaClientes()
 		{
@@ -54,6 +175,7 @@ namespace BHJet_Repositorio.Admin
 									Endereco.vcBairro,
 									Endereco.vcCidade,
 									Endereco.vcUF,
+									Endereco.vcCEP,
 									Valor.bitAtivo,
 									Valor.vcDescricaoTarifario
 								FROM

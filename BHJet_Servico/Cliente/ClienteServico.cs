@@ -8,6 +8,7 @@ namespace BHJet_Servico.Cliente
         ClienteDTO[] BuscaListaClientes(string trechoPesquisa);
 		ClienteDTO[] BuscaClientesValorAtivo();
 		ClienteDTO[] BuscaClienteContrato(string trechoPesquisa);
+		ClienteCompletoModel BuscaClientePorID(long clienteID);
 		void IncluirCliente(ClienteCompletoModel clienteModel);
     }
 
@@ -44,6 +45,11 @@ namespace BHJet_Servico.Cliente
 		public ClienteDTO[] BuscaClientesValorAtivo()
 		{
 			return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientesValorAtivo}"));
+		}
+
+		public ClienteCompletoModel BuscaClientePorID(long clienteID)
+		{
+			return this.Get<ClienteCompletoModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Cliente.GetClienteCompleto, clienteID)}"));
 		}
 
 		public void IncluirCliente(ClienteCompletoModel clienteModel)

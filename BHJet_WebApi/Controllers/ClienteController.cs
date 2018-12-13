@@ -90,10 +90,78 @@ namespace BHJet_WebApi.Controllers
 				vcBairro = cli.vcBairro,
 				vcCidade = cli.vcCidade,
 				vcUF = cli.vcUF,
+				vcCEP = cli.vcCEP,
 				bitAtivo = cli.bitAtivo,
 				vcDescricaoTarifario = cli.vcDescricaoTarifario
 
 			}));
+		}
+
+		/// <summary>
+		/// Busca cliente completo por ID
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[Route("{idCliente:long}")]
+		[ResponseType(typeof(ClienteCompletoModel))]
+		public IHttpActionResult GetClienteCompleto(long idCliente)
+		{
+			// Busca dados cadastrais
+			var entidadeDadosCadastrais = new ClienteRepositorio().BuscaClienteDadosCadastrais(idCliente);
+			// Busca contato(s)
+			var entidadeContato = new ClienteRepositorio().BuscaClienteContatos(idCliente);
+			// Busca valor(es)
+			var entidadeValor = new ClienteRepositorio().BuscaClienteValores(idCliente);
+
+			//Monta Cliente Completo
+			if(entidadeDadosCadastrais == null && entidadeContato == null && entidadeValor == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			var entidade = new ClienteCompletoModel()
+			{
+				DadosCadastrais = entidadeDadosCadastrais.Select(cli => new ClienteDadosCadastraisModel()
+				{
+					NomeRazaoSocial = cli.NomeRazaoSocial,
+					NomeFantasia = cli.NomeFantasia,
+					CPFCNPJ = cli.CPFCNPJ,
+					InscricaoEstadual = cli.InscricaoEstadual,
+					ISS = cli.ISS,
+					Endereco = cli.Endereco,
+					NumeroEndereco = cli.NumeroEndereco,
+					Complemento = cli.Complemento,
+					Bairro = cli.Bairro,
+					Cidade = cli.Cidade,
+					Estado = cli.Estado,
+					CEP = cli.CEP,
+					Observacoes = cli.Observacoes,
+					HomePage = cli.HomePage
+
+				}).FirstOrDefault(),
+				Contato = entidadeContato.Select(cot => new ClienteContatoModel()
+				{
+					Contato = cot.Contato,
+					Email = cot.Email,
+					TelefoneComercial = cot.TelefoneComercial,
+					TelefoneCelular = cot.TelefoneCelular,
+					Setor = cot.Setor,
+					DataNascimento = cot.DataNascimento
+
+				}).ToArray(),
+				Valor = entidadeValor.Select(val => new ClienteValorModel()
+				{
+					ValorAtivado = val.ValorAtivado,
+					ValorUnitario = val.ValorUnitario,
+					TipoTarifa = val.TipoTarifa,
+					VigenciaInicio = val.VigenciaInicio,
+					VigenciaFim = val.VigenciaFim,
+					Franquia = val.Franquia,
+					FranquiaAdicional = val.FranquiaAdicional,
+					Observacao = val.Observacao
+				}).ToArray()
+			};
+
+			//Return
+			return Ok(entidade);
 		}
 
 		/// <summary>

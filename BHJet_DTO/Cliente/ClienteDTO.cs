@@ -15,6 +15,7 @@ namespace BHJet_DTO.Cliente
 		public string vcBairro { get; set; }
 		public string vcCidade { get; set; }
 		public string vcUF { get; set; }
+		public string vcCEP { get; set; }
 		public int idUsuario { get; set; }
 		public string vcNomeRazaoSocial { get; set; }
 		public string vcNomeFantasia { get; set; }

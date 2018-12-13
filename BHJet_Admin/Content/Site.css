@@ -15,6 +15,11 @@
     margin-top: 20px;
 }
 
+.cst-tbl-Clientes:hover {
+	cursor: pointer;
+	background-color: #ccc;
+}
+
 
 /*************************************END DIOGO***********************************/
 #footer {

@@ -58,15 +58,31 @@ namespace BHJet_Admin.Controllers
 			}
 		}
 
-
 		[ValidacaoUsuarioAttribute()]
-		public ActionResult NovoCliente()
+		public ActionResult NovoCliente(bool edicao = false, string clienteID = "")
 		{
+			if (edicao)
+			{
+				try
+				{
+					var clienteIDLong = long.Parse(clienteID);
+					var entidade = clienteServico.BuscaClientePorID(clienteIDLong);
+
+
+				}
+				catch(Exception e)
+				{
+
+				}
+
+			}
 			return View(new ClienteModel()
 			{
 				DadosCadastrais = new DadosCadastraisModel() { }
 			});
 		}
+
+	
 
 		[HttpPost]
 		[ValidacaoUsuarioAttribute()]

@@ -36,6 +36,7 @@ namespace BHJet_Servico
 			public const string PostCliente = "/Cliente";
 			public const string GetClienteContrato = "/Cliente/contrato";
 			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
+			public const string GetClienteCompleto = "/Cliente/{0}";
 		}
 
         public class Usuario
