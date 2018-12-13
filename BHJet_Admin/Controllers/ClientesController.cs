@@ -105,7 +105,7 @@ namespace BHJet_Admin.Controllers
 						{
 							ValorAtivado = v.ValorAtivado == 1 ? true : false,
 							ValorUnitario = Convert.ToString(v.ValorUnitario),
-							TipoTarifa = v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AvulsoMensal : v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AlocacaoMensal,
+							//TipoTarifa = v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AvulsoMensal : v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AlocacaoMensal : Nullable<TipoTarifa>,
 							VigenciaInicio = DateTime.ParseExact(v.VigenciaInicio.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
 							VigenciaFim = DateTime.ParseExact(v.VigenciaFim.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
 							Franquia = Convert.ToString(v.Franquia),
