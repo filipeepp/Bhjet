@@ -6,33 +6,43 @@
 
 <!--QUANTIDADE DE CONTATOS-->
 @{
-	#region Session
-	if (Session["QTDE_CONTATO"] == null)
-	{
-		Session["QTDE_CONTATO"] = 0;
-	}
-	else
-	{
-		Session["QTDE_CONTATO"] = Convert.ToInt16(Session["QTDE_CONTATO"]) + 1;
-	}
-	var count = Convert.ToInt16(Session["QTDE_CONTATO"]);
-	var numeroDisplay = count + 1;
-	#endregion
+	var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
+	var contador = 0;
+	var numeroDisplay = 1;
 
-	#region Instancia
-	//Instancia 
-	Model.Contato = new List<ContatoModel>()
+	if (!edicao)
 	{
-		new ContatoModel()
-	};
 
-	for (int i = 0; i <= count; i++)
-	{
-		//Adiciona quantidade de instancias
-		Model.Contato.Add(new ContatoModel());
+		#region Session
+		if (Session["QTDE_CONTATO"] == null)
+		{
+			Session["QTDE_CONTATO"] = 0;
+		}
+		else
+		{
+			Session["QTDE_CONTATO"] = Convert.ToInt16(Session["QTDE_CONTATO"]) + 1;
+		}
+		//var count = Convert.ToInt16(Session["QTDE_CONTATO"]);
+		contador = Convert.ToInt16(Session["QTDE_CONTATO"]);
+		//var numeroDisplay = count + 1;
+		numeroDisplay = contador + 1;
+
+		#endregion
+
+		#region Instancia
+		//Instancia
+		Model.Contato = new List<ContatoModel>()
+		{
+			new ContatoModel()
+		};
+
+		for (int i = 0; i <= contador; i++)
+		{
+			//Adiciona quantidade de instancias
+			Model.Contato.Add(new ContatoModel());
+		}
+		#endregion
 	}
-	#endregion
-
 }
 
 <style type="text/css">
@@ -44,68 +54,146 @@
 		pointer-events: none;
 	}
 </style>
+@if (edicao)
+{
+	var tamanho = Model.Contato.Count;
 
-<div class="panel panel-default cst-panel-contato" style="margin:30px" id="div_panel_contato_@Html.IdFor(model => model.Contato[count])">
-	@Html.HiddenFor(model => model.Contato[count].ContatoRemovido)
-	<div class="panel-body">
-		<div class="titulo">
-			<h2>
-				<a>
-					<i class="fa fa-hashtag" aria-hidden="true"></i>
-					<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
-				</a>
-				Contato
-				@if (count > 0)
-				{
-					<div style="text-align: right;">
-						<a style="font-size: 20px;" title="Remover contato" onclick="RemoverBlocoContato(document.getElementsByClassName('cst-panel-contato')[@count]);" >
-							<i class="fa fa-times" aria-hidden="true"></i>
+	for (var i = 0; i < tamanho; i++)
+	{
+		<div class="panel panel-default cst-panel-contato" style="margin:30px" id="div_panel_contato_@Html.IdFor(model => model.Contato[i])">
+			@Html.HiddenFor(model => model.Contato[i].ContatoRemovido)
+			<div class="panel-body">
+				<div class="titulo">
+					<h2>
+						<a>
+							<i class="fa fa-hashtag" aria-hidden="true"></i>
+							<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
 						</a>
+						Contato
+						@if (i > 0)
+						{
+							<div style="text-align: right;">
+								<a style="font-size: 20px;" title="Remover contato" onclick="RemoverBlocoContato(document.getElementsByClassName('cst-panel-contato')[@i]);">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</a>
+							</div>
+						}
+					</h2>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-4">
+						<div id="@Html.IdFor(model => model.Contato[i].Contato)">
+							<label for="txtContato">Contato</label>
+							@Html.TextBoxFor(model => model.Contato[i].Contato, new { type = "text", @class = "form-control ctmErrorContato" })
+						</div>
 					</div>
-				}
-			</h2>
+					<div class="form-group col-xs-12 col-md-4">
+						<div id="@Html.IdFor(model => model.Contato[i].Email)">
+							<label for="txtEmail">E-mail</label>
+							@Html.TextBoxFor(model => model.Contato[i].Email, new { type = "email", @class = "form-control ctmErrorEmail" })
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-4">
+						<div id="@Html.IdFor(model => model.Contato[i].TelefoneComercial)">
+							<label for="txtTelefoneComercial">Tel. Comercial</label>
+							@Html.TextBoxFor(model => model.Contato[i].TelefoneComercial, new { type = "text", @class = "form-control mask-telefone ctmErrorTelefoneComercial" })
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-md-4">
+						<div id="@Html.IdFor(model => model.Contato[i].TelefoneCelular)">
+							<label for="txtTelefoneCelular">Celular</label>
+							@Html.TextBoxFor(model => model.Contato[i].TelefoneCelular, new { type = "text", @class = "form-control mask-celular ctmErrorTelefoneCelular" })
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-4">
+						<div id="@Html.IdFor(model => model.Contato[i].Setor)">
+							<label for="txtSetor">Setor</label>
+							@Html.TextBoxFor(model => model.Contato[i].Setor, new { type = "text", @class = "form-control ctmErrorSetor" })
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-md-2">
+						<div id="@Html.IdFor(model => model.Contato[i].DataNascimento)">
+							<label for="txtDataNascimento">Aniversário</label>
+							@Html.TextBoxFor(model => model.Contato[i].DataNascimento, new { type = "date", @class = "form-control ctmErrorDataNascimento" })
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-4">
-				<div id="@Html.IdFor(model => model.Contato[count].Contato)">
-					<label for="txtContato">Contato</label>
-					@Html.TextBoxFor(model => model.Contato[count].Contato, new { type = "text", @class = "form-control ctmErrorContato" })
+		numeroDisplay++;
+	}
+	edicao = false;
+	Session["QTDE_CONTATO"] = tamanho-1;
+}
+else
+{
+	<div class="panel panel-default cst-panel-contato" style="margin:30px" id="div_panel_contato_@Html.IdFor(model => model.Contato[contador])">
+		@Html.HiddenFor(model => model.Contato[contador].ContatoRemovido)
+		<div class="panel-body">
+			<div class="titulo">
+				<h2>
+					<a>
+						<i class="fa fa-hashtag" aria-hidden="true"></i>
+						<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
+					</a>
+					Contato
+					@if (contador > 0)
+					{
+						<div style="text-align: right;">
+							<a style="font-size: 20px;" title="Remover contato" onclick="RemoverBlocoContato(document.getElementsByClassName('cst-panel-contato')[@contador]);">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</a>
+						</div>
+					}
+				</h2>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-4">
+					<div id="@Html.IdFor(model => model.Contato[contador].Contato)">
+						<label for="txtContato">Contato</label>
+						@Html.TextBoxFor(model => model.Contato[contador].Contato, new { type = "text", @class = "form-control ctmErrorContato" })
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-md-4">
+					<div id="@Html.IdFor(model => model.Contato[contador].Email)">
+						<label for="txtEmail">E-mail</label>
+						@Html.TextBoxFor(model => model.Contato[contador].Email, new { type = "email", @class = "form-control ctmErrorEmail" })
+					</div>
 				</div>
 			</div>
-			<div class="form-group col-xs-12 col-md-4">
-				<div id="@Html.IdFor(model => model.Contato[count].Email)">
-					<label for="txtEmail">E-mail</label>
-					@Html.TextBoxFor(model => model.Contato[count].Email, new { type = "email", @class = "form-control ctmErrorEmail" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-4">
+					<div id="@Html.IdFor(model => model.Contato[contador].TelefoneComercial)">
+						<label for="txtTelefoneComercial">Tel. Comercial</label>
+						@Html.TextBoxFor(model => model.Contato[contador].TelefoneComercial, new { type = "text", @class = "form-control mask-telefone ctmErrorTelefoneComercial" })
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-md-4">
+					<div id="@Html.IdFor(model => model.Contato[contador].TelefoneCelular)">
+						<label for="txtTelefoneCelular">Celular</label>
+						@Html.TextBoxFor(model => model.Contato[contador].TelefoneCelular, new { type = "text", @class = "form-control mask-celular ctmErrorTelefoneCelular" })
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-4">
-				<div id="@Html.IdFor(model => model.Contato[count].TelefoneComercial)">
-					<label for="txtTelefoneComercial">Tel. Comercial</label>
-					@Html.TextBoxFor(model => model.Contato[count].TelefoneComercial, new { type = "text", @class = "form-control mask-telefone ctmErrorTelefoneComercial" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-4">
+					<div id="@Html.IdFor(model => model.Contato[contador].Setor)">
+						<label for="txtSetor">Setor</label>
+						@Html.TextBoxFor(model => model.Contato[contador].Setor, new { type = "text", @class = "form-control ctmErrorSetor" })
+					</div>
 				</div>
-			</div>
-			<div class="form-group col-xs-12 col-md-4">
-				<div id="@Html.IdFor(model => model.Contato[count].TelefoneCelular)">
-					<label for="txtTelefoneCelular">Celular</label>
-					@Html.TextBoxFor(model => model.Contato[count].TelefoneCelular, new { type = "text", @class = "form-control mask-celular ctmErrorTelefoneCelular" })	
-				</div>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-4">
-				<div id="@Html.IdFor(model => model.Contato[count].Setor)">
-					<label for="txtSetor">Setor</label>
-					@Html.TextBoxFor(model => model.Contato[count].Setor, new { type = "text", @class = "form-control ctmErrorSetor" })
-				</div>
-			</div>
-			<div class="form-group col-xs-12 col-md-2">
-				<div id="@Html.IdFor(model => model.Contato[count].DataNascimento)">
-					<label for="txtDataNascimento">Aniversário</label>
-					@Html.TextBoxFor(model => model.Contato[count].DataNascimento, new { type = "date", @class = "form-control ctmErrorDataNascimento" })
+				<div class="form-group col-xs-12 col-md-2">
+					<div id="@Html.IdFor(model => model.Contato[contador].DataNascimento)">
+						<label for="txtDataNascimento">Aniversário</label>
+						@Html.TextBoxFor(model => model.Contato[contador].DataNascimento, new { type = "date", @class = "form-control ctmErrorDataNascimento" })
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+}
+

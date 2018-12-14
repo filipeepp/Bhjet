@@ -62,7 +62,7 @@ namespace BHJet_Admin.Controllers
 
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente(bool edicao = false, string clienteID = "")
-		{
+		 {
 			if (edicao)
 			{
 				ViewBag.MetodoPagina = "Edição";
@@ -86,9 +86,9 @@ namespace BHJet_Admin.Controllers
 							Bairro = entidade.DadosCadastrais.Bairro,
 							Cidade = entidade.DadosCadastrais.Cidade,
 							Estado = entidade.DadosCadastrais.Estado,
-							CEP = entidade.DadosCadastrais.Estado,
-							Observacoes = entidade.DadosCadastrais.Estado,
-							HomePage = entidade.DadosCadastrais.Complemento,
+							CEP = entidade.DadosCadastrais.CEP,
+							Observacoes = entidade.DadosCadastrais.Observacoes,
+							HomePage = entidade.DadosCadastrais.HomePage,
 						},
 
 						Contato = entidade.Contato != null ? entidade.Contato.Select(c => new ContatoModel()
@@ -107,8 +107,8 @@ namespace BHJet_Admin.Controllers
 							ValorAtivado = v.ValorAtivado == 1 ? true : false,
 							ValorUnitario = Convert.ToString(v.ValorUnitario),
 							//TipoTarifa = v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AvulsoMensal : v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AlocacaoMensal : Nullable<TipoTarifa>,
-							VigenciaInicio = DateTime.ParseExact(v.VigenciaInicio.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
-							VigenciaFim = DateTime.ParseExact(v.VigenciaFim.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
+						//	VigenciaInicio = DateTime.ParseExact(v.VigenciaInicio.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
+						//	VigenciaFim = DateTime.ParseExact(v.VigenciaFim.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
 							Franquia = Convert.ToString(v.Franquia),
 							FranquiaAdicional = Convert.ToString(v.FranquiaAdicional),
 							Observacao = v.Observacao
@@ -165,8 +165,9 @@ namespace BHJet_Admin.Controllers
 
 		[HttpPost]
 		[ValidacaoUsuarioAttribute()]
-		public ActionResult NovoCliente(bool edicao = false, string clienteID = "", ClienteModel model)
+		public ActionResult NovoCliente(ClienteModel model)
 		{
+			var edicao = true;
 			if (edicao)
 			{
 				return View();
