@@ -73,6 +73,7 @@ namespace BHJet_Admin.Controllers
 
 					return View(new ClienteModel()
 					{
+						ID = entidade.ID,
 						DadosCadastrais = new DadosCadastraisModel()
 						{
 							NomeRazaoSocial = entidade.DadosCadastrais.NomeRazaoSocial,

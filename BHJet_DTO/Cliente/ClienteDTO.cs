@@ -33,6 +33,7 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteCompletoModel
 	{
+		public long ID { get; set; }
 		public ClienteDadosCadastraisModel DadosCadastrais { get; set; }
 		public IEnumerable<ClienteContatoModel> Contato { get; set; }
 		public IEnumerable<ClienteValorModel> Valor { get; set; }

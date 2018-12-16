@@ -33,6 +33,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteCompletoEntidade
 	{
+		public long ID { get; set; }
 		public ClienteDadosCadastraisEntidade DadosCadastrais { get; set; }
 		public IEnumerable<ClienteContatoEntidade> Contato { get; set; }
 		public IEnumerable<ClienteValorEntidade> Valor { get; set; }

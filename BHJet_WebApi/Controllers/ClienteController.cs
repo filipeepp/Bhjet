@@ -119,6 +119,7 @@ namespace BHJet_WebApi.Controllers
 
 			var entidade = new ClienteCompletoModel()
 			{
+				ID = idCliente,
 				DadosCadastrais = entidadeDadosCadastrais.Select(cli => new ClienteDadosCadastraisModel()
 				{
 					NomeRazaoSocial = cli.NomeRazaoSocial,

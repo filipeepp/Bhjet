@@ -6,7 +6,7 @@ namespace BHJet_Admin.Models.Clientes
 {
 	public class DadosCadastraisModel
 	{
-		public int Codigo { get; set; }
+		public int ID { get; set; }
 
         [Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
         public string NomeRazaoSocial { get; set; }

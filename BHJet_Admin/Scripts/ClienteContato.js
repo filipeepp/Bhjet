@@ -144,6 +144,7 @@ window.ExcluirContato = function (divBlocoContato) {
 
 	var idBloco = divBlocoContato.id;
 	var idContato = $("#" + idBloco).find("input[id$='ID']").val();
+	var idCliente = $(document).find("input[id$='ID']").val()
 
 	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse contato da base?");
 
@@ -156,8 +157,9 @@ window.ExcluirContato = function (divBlocoContato) {
 			success: function (data) {
 				//window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
 				//mascaraComissoes();
-				RemoverBlocoContato();
+				RemoverBlocoContato(divBlocoContato);
 				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+				window.location.href = "/Clientes/NovoCliente?edicao=true&";
 			},
 			error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
 		});
