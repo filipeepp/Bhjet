@@ -93,22 +93,24 @@ namespace BHJet_Admin.Controllers
 
 						Contato = entidade.Contato != null ? entidade.Contato.Select(c => new ContatoModel()
 						{
+							ID = c.ID,
 							Contato = c.Contato,
 							Email = c.Email,
 							TelefoneComercial = c.TelefoneComercial,
 							TelefoneCelular = c.TelefoneCelular,
 							Setor = c.Setor,
-							DataNascimento = c.DataNascimento,
+							DataNascimento = c.DataNascimento.ToShortDateString(),
 
 						}).ToList() : new List<ContatoModel>() { },
 
 						Valor = entidade.Valor != null ? entidade.Valor.Select(v => new ValorModel()
 						{
+							ID = v.ID,
 							ValorAtivado = v.ValorAtivado == 1 ? true : false,
 							ValorUnitario = Convert.ToString(v.ValorUnitario),
-							//TipoTarifa = v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AvulsoMensal : v.TipoTarifa.Equals(TipoTarifa.AvulsoMensal) ? TipoTarifa.AlocacaoMensal : Nullable<TipoTarifa>,
-						//	VigenciaInicio = DateTime.ParseExact(v.VigenciaInicio.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
-						//	VigenciaFim = DateTime.ParseExact(v.VigenciaFim.ToString(), "dd/MM/yyyy", new CultureInfo("pt-BR")),
+							TipoTarifa = v.TipoTarifa.Contains("Avulso Mensal") ? TipoTarifa.AvulsoMensal : TipoTarifa.AlocacaoMensal,
+							VigenciaInicio = v.VigenciaInicio.ToShortDateString(),
+							VigenciaFim = v.VigenciaFim.ToShortDateString(),
 							Franquia = Convert.ToString(v.Franquia),
 							FranquiaAdicional = Convert.ToString(v.FranquiaAdicional),
 							Observacao = v.Observacao
@@ -167,7 +169,7 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente(ClienteModel model)
 		{
-			var edicao = true;
+			var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
 			if (edicao)
 			{
 				return View();
@@ -218,7 +220,7 @@ namespace BHJet_Admin.Controllers
 							TelefoneComercial = x.TelefoneComercial,
 							TelefoneCelular = x.TelefoneCelular,
 							Setor = x.Setor,
-							DataNascimento = x.DataNascimento
+							DataNascimento = Convert.ToDateTime(x.DataNascimento)
 
 						}).ToArray(),
 						Valor = listValorTratada.Select(x => new ClienteValorModel()
@@ -226,10 +228,10 @@ namespace BHJet_Admin.Controllers
 
 							ValorUnitario = x.ValorUnitario.ToDecimalCurrency(),
 							TipoTarifa = x.TipoTarifa.RetornaDisplayNameEnum(),
-							VigenciaInicio = x.VigenciaInicio,
-							VigenciaFim = x.VigenciaFim,
-							Franquia = Convert.ToDecimal(x.Franquia),
-							FranquiaAdicional = Convert.ToDecimal(x.FranquiaAdicional),
+							VigenciaInicio = Convert.ToDateTime(x.VigenciaInicio),
+							VigenciaFim = Convert.ToDateTime(x.VigenciaFim),
+							Franquia = x.Franquia.ToDecimalCurrency(),
+							FranquiaAdicional = x.FranquiaAdicional.ToDecimalCurrency(),
 							ValorAtivado = x.ValorAtivado == true ? 1 : 0,
 							Observacao = x.Observacao
 

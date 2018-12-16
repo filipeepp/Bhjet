@@ -1,18 +1,18 @@
 ﻿$(document).ready(function () {
 	//MASCARAS
-	$(".mask-valor").maskMoney({
-		prefix: "R$:",
-		decimal: ",",
-		thousands: "."
+	$('.ctmErrorValorUnitario').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ prefix: "R$:", decimal: ',', thousands: "." });
 	});
 
-	$('.ctmErrorFranquia').maskMoney({
-		decimal: '.',
-		precision: 2
+	$('.ctmErrorFranquia').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
 	});
-	$('.ctmErrorFranquiaAdicional').maskMoney({
-		decimal: '.',
-		precision: 2
+
+	$('.ctmErrorFranquiaAdicional').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
@@ -138,7 +138,7 @@ window.ValidarValor = function () {
 			//Franquia
 			aux.hasClass("ctmErrorFranquia") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia é obrigatório." + fechamentoSpan) : "";
 			//Franquia Adicional
-			aux.hasClass("ctmErrorFranquiaAdicional") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia adicional é orbigatória." + fechamentoSpan) : "";
+			aux.hasClass("ctmErrorFranquiaAdicional") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia adicional é obrigatória." + fechamentoSpan) : "";
 			//Observação
 			aux.hasClass("ctmErrorObservacao") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Observação é obrigatório." + fechamentoSpan) : "";
 

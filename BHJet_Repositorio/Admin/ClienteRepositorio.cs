@@ -84,6 +84,7 @@ namespace BHJet_Repositorio.Admin
 			{
 				// Query
 				string query = @"SELECT
+									idColaboradorCliente AS ID,
 									vcNomeContato AS Contato,
 									vcDepartamento AS Setor,
 									dtDataNascimento AS DataNascimento,
@@ -116,6 +117,7 @@ namespace BHJet_Repositorio.Admin
 			{
 				// Query
 				string query = @"SELECT
+									Valor.idTarifario AS ID,
 									Valor.vcDescricaoTarifario AS TipoTarifa,
 									Valor.dtDataInicioVigencia AS VigenciaInicio,
 									Valor.dtDataFimVigencia AS VigenciaFim,

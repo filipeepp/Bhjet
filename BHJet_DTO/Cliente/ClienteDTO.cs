@@ -60,6 +60,7 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteContatoModel
 	{
+		public int ID { get; set; }
 		public string Contato { get; set; }
 		public string Email { get; set; }
 		public string TelefoneComercial { get; set; }
@@ -70,6 +71,7 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteValorModel
 	{
+		public int ID { get; set; }
 		public int ValorAtivado { get; set; }
 		public decimal ValorUnitario { get; set; }
 		public string TipoTarifa { get; set; }

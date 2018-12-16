@@ -122,7 +122,7 @@ window.ValidarContato = function () {
 window.RemoverBlocoContato = function (divBlocoContato) {
 	var id = divBlocoContato.id;
 
-	//Adicionta classe para identificar que o contato foi removido
+	//Adiciona classe para identificar que o contato foi removido
 	$("#" + id).addClass("div-contato-removido");
 
 	//Remove span de erro
@@ -138,4 +138,31 @@ window.RemoverBlocoContato = function (divBlocoContato) {
 
 	return true;
 
+}
+
+window.ExcluirContato = function (divBlocoContato) {
+
+	var idBloco = divBlocoContato.id;
+	var idContato = $("#" + idBloco).find("input[id$='ID']").val();
+
+	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse contato da base?");
+
+	if (alertConfirmacao) {
+		$.ajax({
+			url: '/Clientes/ExcluirContato?idContato=' + idContato,
+			type: "POST",
+			dataType: "html",
+			//data: $("#DetalheMotorista").serialize(),
+			success: function (data) {
+				//window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
+				//mascaraComissoes();
+				RemoverBlocoContato();
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+			},
+			error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
+		});
+
+	} else {
+		event.stopPropagation();
+	}
 }

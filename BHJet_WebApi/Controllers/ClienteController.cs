@@ -139,6 +139,7 @@ namespace BHJet_WebApi.Controllers
 				}).FirstOrDefault(),
 				Contato = entidadeContato.Select(cot => new ClienteContatoModel()
 				{
+					ID = cot.ID,
 					Contato = cot.Contato,
 					Email = cot.Email,
 					TelefoneComercial = cot.TelefoneComercial,
@@ -149,6 +150,7 @@ namespace BHJet_WebApi.Controllers
 				}).ToArray(),
 				Valor = entidadeValor.Select(val => new ClienteValorModel()
 				{
+					ID = val.ID,
 					ValorAtivado = val.ValorAtivado,
 					ValorUnitario = val.ValorUnitario,
 					TipoTarifa = val.TipoTarifa,

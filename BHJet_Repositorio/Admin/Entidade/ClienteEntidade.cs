@@ -62,6 +62,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteContatoEntidade
 	{
+		public int ID { get; set; }
 		public string Contato { get; set; }
 		public string Email { get; set; }
 		public string TelefoneRamal { get; set; }
@@ -74,6 +75,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteValorEntidade
 	{
+		public int ID { get; set; }
 		public int ValorAtivado { get; set; }
 		public int PagamentoAVista { get; set; }
 		public decimal ValorUnitario { get; set; }
