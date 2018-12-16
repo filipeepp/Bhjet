@@ -260,6 +260,31 @@ namespace BHJet_Repositorio.Admin
 		}
 
 		/// <summary>
+		/// Busca dados do cliente e de seu contrato ativo
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteEntidade> BuscaClienteContratoAtivo(int idValor)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT 
+									*
+								FROM
+									tblTarifario
+								WHERE
+									idTarifario = @ValorID";
+
+				// Execução
+				return sqlConnection.Query<ClienteEntidade>(query, new
+				{
+					ValorID = idValor,
+				});
+			}
+		}
+
+		/// <summary>
 		/// Inclui Cliente
 		/// </summary>
 		/// <param name="filtro">ProfissionalCompletoEntidade</param>
@@ -465,6 +490,58 @@ namespace BHJet_Repositorio.Admin
 						throw e;
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Remove contato da base
+		/// </summary>
+		/// <returns></returns>
+		public void ExcluiContato(int idContato)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"DELETE
+								FROM
+									tblColaboradoresCliente
+								WHERE
+									idColaboradorCliente = @ContatoID";
+
+				// Execução
+				sqlConnection.ExecuteScalar(query, new
+				{
+					ContatoID = idContato
+				});
+			}
+		}
+
+		/// <summary>
+		/// Remove tarifa da base
+		/// </summary>
+		/// <returns></returns>
+		public void ExcluiContrato(long idValor)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"DELETE
+								FROM
+									tblClientesTarifario
+								WHERE
+									idTarifario = @TarifarioID
+
+								DELETE
+								FROM
+									tblTarifario
+								WHERE
+									idTarifario = @TarifarioID";
+
+				// Execução
+				sqlConnection.QueryMultiple(query, new
+				{
+					TarifarioID = idValor
+				});
 			}
 		}
 

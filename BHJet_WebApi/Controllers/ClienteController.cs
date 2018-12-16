@@ -274,6 +274,49 @@ namespace BHJet_WebApi.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Deleta contato específico
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		[Authorize]
+		[Route("contato/{idContato:int}")]
+		public IHttpActionResult DeleteContato(int idContato)
+		{
+			// Instancia
+			var clienteRepositorio = new ClienteRepositorio();
+
+			// Deleta contrato
+			clienteRepositorio.ExcluiContato(idContato);
+
+			// Return
+			return Ok();
+		}
+
+		/// <summary>
+		/// Deleta contrato específico
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		[Authorize]
+		[Route("contrato/{idValor:int}")]
+		public IHttpActionResult DeleteValor(int idValor)
+		{
+			// Instancia
+			var clienteRepositorio = new ClienteRepositorio();
+
+			//Verifica se o contrato a ser excluido é o ativo
+			var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
+			if(contratoAtivo.FirstOrDefault().bitAtivo == 1)
+				return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
+
+			// Deleta contrato
+			clienteRepositorio.ExcluiContrato(idValor);
+
+			// Return
+			return Ok();
+		}
+
 
 	}
 }

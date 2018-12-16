@@ -239,7 +239,7 @@ namespace BHJet_Admin.Controllers
 						}).ToArray()
 					};
 
-					clienteServico.IncluirCliente(entidade); // Atualiza dados do profissional
+					clienteServico.IncluirCliente(entidade); // Atualiza dados do cliente
 
 					this.MensagemSucesso("Cliente incluido com sucesso.");
 					ModelState.Clear();
@@ -256,6 +256,26 @@ namespace BHJet_Admin.Controllers
 		}
 
 		[ValidacaoUsuarioAttribute()]
+		[HttpPost]
+		public ActionResult ExcluirContato(string idContato = "")
+		{
+			var idContatoInt = Convert.ToInt32(idContato);
+
+			try
+			{
+				clienteServico.ExcluirContato(idContatoInt);
+				this.MensagemSucesso("Contato removido com sucesso.");
+				return View();
+
+			}
+			catch(Exception e)
+			{
+				this.TrataErro(e);
+				return View();
+			}
+		}
+
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult CarregarNovoContato(ClienteModel model)
         {
             return PartialView("_Contato", model);
@@ -267,5 +287,7 @@ namespace BHJet_Admin.Controllers
 		{
 			return PartialView("_Valor", model);
 		}
+
+
 	}
 }

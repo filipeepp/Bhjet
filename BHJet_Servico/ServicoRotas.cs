@@ -37,6 +37,8 @@ namespace BHJet_Servico
 			public const string GetClienteContrato = "/Cliente/contrato";
 			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
 			public const string GetClienteCompleto = "/Cliente/{0}";
+			public const string DeleteContato = "/Cliente/contato/{0}";
+			public const string DeleteValor = "/Cliente/contrato/{0}";
 		}
 
         public class Usuario

@@ -10,7 +10,9 @@ namespace BHJet_Servico.Cliente
 		ClienteDTO[] BuscaClienteContrato(string trechoPesquisa);
 		ClienteCompletoModel BuscaClientePorID(long clienteID);
 		void IncluirCliente(ClienteCompletoModel clienteModel);
-    }
+		void ExcluirContato(int idContato);
+		void ExcluirValor(int idValor);
+	}
 
     public class ClienteServico : ServicoBase, IClienteServico
     {
@@ -55,6 +57,16 @@ namespace BHJet_Servico.Cliente
 		public void IncluirCliente(ClienteCompletoModel clienteModel)
 		{
 			this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
+		}
+
+		public void ExcluirContato(int idContato)
+		{
+			this.Delete(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Cliente.DeleteContato, idContato)}"));
+		}
+
+		public void ExcluirValor(int idValor)
+		{
+			this.Delete(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Cliente.DeleteValor, idValor)}"));
 		}
 	}
 }

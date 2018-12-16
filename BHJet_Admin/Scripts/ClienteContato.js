@@ -144,7 +144,7 @@ window.ExcluirContato = function (divBlocoContato) {
 
 	var idBloco = divBlocoContato.id;
 	var idContato = $("#" + idBloco).find("input[id$='ID']").val();
-	var idCliente = $(document).find("input[id$='ID']").val()
+	var idCliente = $("input[id='DadosCadastrais_ID']").val();
 
 	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse contato da base?");
 
@@ -159,7 +159,8 @@ window.ExcluirContato = function (divBlocoContato) {
 				//mascaraComissoes();
 				RemoverBlocoContato(divBlocoContato);
 				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-				window.location.href = "/Clientes/NovoCliente?edicao=true&";
+				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+				ProximaTab(true, false, true);
 			},
 			error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
 		});
