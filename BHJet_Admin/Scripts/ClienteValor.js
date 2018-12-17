@@ -1,5 +1,15 @@
 ﻿$(document).ready(function () {
 	//MASCARAS
+	$('.ctmErrorVigenciaInicio').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
+	});
+
+	$('.ctmErrorVigenciaFim').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
+	});
+
 	$('.ctmErrorValorUnitario').keyup(function (event) {
 		var id = event.target.id;
 		$('input[id="' + id + '"]').maskMoney({ prefix: "R$:", decimal: ',', thousands: "." });
@@ -176,6 +186,30 @@ window.RemoverBlocoValor = function (divBlocoValor) {
 
 }
 
-window.ComparaVigencias = function (vigenciaInicio, vigenciaFim) {
+window.ExcluirValor = function (divBlocoValor) {
+
+	var idBloco = divBlocoValor.id;
+	var idValor = $("#" + idBloco).find("input[id$='ID']").val();
+
+	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse valor da base?");
+
+	if (alertConfirmacao) {
+		$.ajax({
+			url: '/Clientes/ExcluirValor?idValor=' + idValor,
+			type: "POST",
+			success: function () {
+				RemoverBlocoValor(divBlocoValor);
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+			},
+			error: function () {
+				var idCliente = $("input[id='ID']").val();
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+			}
+		});
+
+	} else {
+		event.stopPropagation();
+	}
 
 }

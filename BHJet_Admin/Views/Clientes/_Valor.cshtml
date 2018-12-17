@@ -4,7 +4,7 @@
 @model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
-<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>>
+<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>
 
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
@@ -78,8 +78,8 @@ new ValorModel()
 						@if (i > 0)
 						{
 							<div style="text-align: right;">
-								<a style="font-size: 20px;" title="Remover valor" onclick="RemoverBlocoValor(document.getElementsByClassName('cst-panel-valor')[@i]);">
-									<i class="fa fa-times" aria-hidden="true"></i>
+								<a style="font-size: 20px;" title="Remover valor" onclick="ExcluirValor(document.getElementsByClassName('cst-panel-valor')[@i]);">
+									<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
 								</a>
 							</div>
 						}
@@ -176,7 +176,7 @@ else
 					{
 						<div style="text-align: right;">
 							<a style="font-size: 20px;" title="Remover valor" onclick="RemoverBlocoValor(document.getElementsByClassName('cst-panel-valor')[@contador]);">
-								<i class="fa fa-times" aria-hidden="true"></i>
+								<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
 							</a>
 						</div>
 					}

@@ -9,7 +9,7 @@ namespace BHJet_Admin.Models.Clientes
 	public class ContatoModel
 	{
 		public bool ContatoRemovido { get; set; }
-		public int? ID { get; set;}
+		public int ID { get; set;}
         public string Contato { get; set; }
         public string Email { get; set; }
         public string TelefoneComercial { get; set; }

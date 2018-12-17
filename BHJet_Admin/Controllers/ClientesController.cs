@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using BHJet_Core.Extension;
 using System.Globalization;
 
@@ -170,76 +171,101 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente(ClienteModel model)
 		{
-			var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
-			if (edicao)
-			{
-				return View();
-			}
-			else
-			{
+			//var teste = BHJet_Core.Customizavel.MetodoPagina.GetUrlParameter(Request, "edicao");
+			var edicao = false;
+			//Verifica se a requisição é edição
+			if (Request.UrlReferrer.Query.Contains("edicao"))
+				edicao = Request.UrlReferrer.Query.Split('&')[0].Split('=')[1].Trim().ToLower() == "true" ? true : false;
+		
 
-				try
+			try
+			{
+				var listContatoTratata = new List<ContatoModel>();
+				var listValorTratada = new List<ValorModel>();
+
+				foreach (var contato in model.Contato)
 				{
-					var listContatoTratata = new List<ContatoModel>();
-					var listValorTratada = new List<ValorModel>();
+					if (contato.ContatoRemovido == false)
+						listContatoTratata.Add(contato);
+				}
 
-					foreach (var contato in model.Contato)
+				foreach (var valor in model.Valor)
+				{
+					if (valor.ValorRemovido == false)
+						listValorTratada.Add(valor);
+				}
+
+				var entidade = new ClienteCompletoModel()
+				{
+					ID = model.ID,
+					DadosCadastrais = new ClienteDadosCadastraisModel()
 					{
-						if (contato.ContatoRemovido == false)
-							listContatoTratata.Add(contato);
+						NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+						NomeFantasia = model.DadosCadastrais.NomeFantasia,
+						CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+						InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+						ISS = model.DadosCadastrais.ISS == true ? 1 : 0,
+						Endereco = model.DadosCadastrais.Endereco,
+						NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+						Complemento = model.DadosCadastrais.Complemento,
+						Bairro = model.DadosCadastrais.Bairro,
+						Cidade = model.DadosCadastrais.Cidade,
+						Estado = model.DadosCadastrais.Estado,
+						CEP = model.DadosCadastrais.CEP,
+						Observacoes = model.DadosCadastrais.Observacoes,
+						HomePage = model.DadosCadastrais.HomePage
+					},
+					Contato = listContatoTratata.Select(c => new ClienteContatoModel()
+					{
+						ID = c.ID,
+						Contato = c.Contato,
+						Email = c.Email,
+						TelefoneComercial = c.TelefoneComercial,
+						TelefoneCelular = c.TelefoneCelular,
+						Setor = c.Setor,
+						DataNascimento = Convert.ToDateTime(c.DataNascimento)
+
+					}).ToArray(),
+					Valor = listValorTratada.Select(v => new ClienteValorModel()
+					{
+						ID = v.ID,
+						ValorUnitario = v.ValorUnitario.ToDecimalCurrency(),
+						TipoTarifa = v.TipoTarifa.RetornaDisplayNameEnum(),
+						VigenciaInicio = Convert.ToDateTime(v.VigenciaInicio),
+						VigenciaFim = Convert.ToDateTime(v.VigenciaFim),
+						Franquia = v.Franquia.ToDecimalCurrency(),
+						FranquiaAdicional = v.FranquiaAdicional.ToDecimalCurrency(),
+						ValorAtivado = v.ValorAtivado == true ? 1 : 0,
+						Observacao = v.Observacao
+
+					}).ToArray()
+				};
+
+				if(edicao)
+				{
+					//Incluir Contato se adicionado novo
+					foreach(var contato in entidade.Contato)
+					{
+						if (contato.ID == 0)
+							clienteServico.IncluirContato(contato, entidade.ID);
 					}
 
-					foreach (var valor in model.Valor)
+					//Incluir Valor se adicionado novo
+					foreach (var valor in entidade.Valor)
 					{
-						if (valor.ValorRemovido == false)
-							listValorTratada.Add(valor);
+						if (valor.ID == 0)
+							clienteServico.IncluirValor(valor, entidade.ID);
 					}
 
-					var entidade = new ClienteCompletoModel()
-					{
-						DadosCadastrais = new ClienteDadosCadastraisModel()
-						{
-							NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
-							NomeFantasia = model.DadosCadastrais.NomeFantasia,
-							CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
-							InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-							ISS = model.DadosCadastrais.ISS == true ? 1 : 0,
-							Endereco = model.DadosCadastrais.Endereco,
-							NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
-							Complemento = model.DadosCadastrais.Complemento,
-							Bairro = model.DadosCadastrais.Bairro,
-							Cidade = model.DadosCadastrais.Cidade,
-							Estado = model.DadosCadastrais.Estado,
-							CEP = model.DadosCadastrais.CEP,
-							Observacoes = model.DadosCadastrais.Observacoes,
-							HomePage = model.DadosCadastrais.HomePage
-						},
-						Contato = listContatoTratata.Select(x => new ClienteContatoModel()
-						{
-							Contato = x.Contato,
-							Email = x.Email,
-							TelefoneComercial = x.TelefoneComercial,
-							TelefoneCelular = x.TelefoneCelular,
-							Setor = x.Setor,
-							DataNascimento = Convert.ToDateTime(x.DataNascimento)
+					clienteServico.EditarCliente(entidade);// Atualiza dados do cliente
 
-						}).ToArray(),
-						Valor = listValorTratada.Select(x => new ClienteValorModel()
-						{
+					this.MensagemSucesso("Cliente atualizado com sucesso.");
 
-							ValorUnitario = x.ValorUnitario.ToDecimalCurrency(),
-							TipoTarifa = x.TipoTarifa.RetornaDisplayNameEnum(),
-							VigenciaInicio = Convert.ToDateTime(x.VigenciaInicio),
-							VigenciaFim = Convert.ToDateTime(x.VigenciaFim),
-							Franquia = x.Franquia.ToDecimalCurrency(),
-							FranquiaAdicional = x.FranquiaAdicional.ToDecimalCurrency(),
-							ValorAtivado = x.ValorAtivado == true ? 1 : 0,
-							Observacao = x.Observacao
-
-						}).ToArray()
-					};
-
-					clienteServico.IncluirCliente(entidade); // Atualiza dados do cliente
+					return View();
+				}
+				else
+				{
+					clienteServico.IncluirCliente(entidade); // Insere dados do cliente
 
 					this.MensagemSucesso("Cliente incluido com sucesso.");
 					ModelState.Clear();
@@ -247,11 +273,11 @@ namespace BHJet_Admin.Controllers
 					//Ok
 					return View(new ClienteModel());
 				}
-				catch (Exception e)
-				{
-					this.TrataErro(e);
-					return View(model);
-				}
+			}
+			catch (Exception e)
+			{
+				this.TrataErro(e);
+				return View(model);
 			}
 		}
 
@@ -264,11 +290,29 @@ namespace BHJet_Admin.Controllers
 			try
 			{
 				clienteServico.ExcluirContato(idContatoInt);
-				this.MensagemSucesso("Contato removido com sucesso.");
-				return View();
+				return new EmptyResult();
 
 			}
 			catch(Exception e)
+			{
+				this.TrataErro(e);
+				return View();
+			}
+		}
+
+		[ValidacaoUsuarioAttribute()]
+		[HttpPost]
+		public ActionResult ExcluirValor(string idValor = "")
+		{
+			var idValorInt = Convert.ToInt32(idValor);
+
+			try
+			{
+				clienteServico.ExcluirValor(idValorInt);
+				return new EmptyResult();
+
+			}
+			catch (Exception e)
 			{
 				this.TrataErro(e);
 				return View();

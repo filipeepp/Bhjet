@@ -275,6 +275,130 @@ namespace BHJet_WebApi.Controllers
 		}
 
 		/// <summary>
+		/// Post Cliente Contato
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[Authorize]
+		[Route("{idCliente:long}/contato")]
+		public IHttpActionResult PostClienteContato(long idCliente, [FromBody]ClienteContatoModel model)
+		{
+			// Busca Dados resumidos
+			var clienteRepositorio = new ClienteRepositorio();
+
+			// Inclui profissional
+			clienteRepositorio.IncluirContato(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+			{
+				Contato = model.Contato,
+				Email = model.Email,
+				TelefoneComercial = model.TelefoneComercial,
+				TelefoneCelular = model.TelefoneCelular,
+				Setor = model.Setor,
+				DataNascimento = model.DataNascimento
+			});
+
+			//Return
+			return Ok();
+		}
+
+		/// <summary>
+		/// Post Cliente Contato
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[Authorize]
+		[Route("{idCliente:long}/contrato")]
+		public IHttpActionResult PostClienteValor(long idCliente, [FromBody]ClienteValorModel model)
+		{
+			// Busca Dados resumidos
+			var clienteRepositorio = new ClienteRepositorio();
+
+			// Inclui profissional
+			clienteRepositorio.IncluirValor(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+			{
+				ValorUnitario = model.ValorUnitario,
+				TipoTarifa = model.TipoTarifa,
+				VigenciaInicio = model.VigenciaInicio,
+				VigenciaFim = model.VigenciaFim,
+				Franquia = model.Franquia,
+				FranquiaAdicional = model.FranquiaAdicional,
+				Observacao = model.Observacao,
+				ValorAtivado = model.ValorAtivado
+			});
+
+			//Return
+			return Ok();
+		}
+
+
+		/// <summary>
+		/// Put Cliente
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[Authorize]
+		[Route("{idCliente:long}")]
+		public IHttpActionResult PutCliente(long idCliente, [FromBody]ClienteCompletoModel model)
+		{ 
+			// Busca Dados resumidos
+			var clienteRepositorio = new ClienteRepositorio();
+
+			//Busca ID do Endereço
+			var idEndereco = clienteRepositorio.BuscaClienteEndereco(idCliente).FirstOrDefault().idEndereco;
+
+			// Inclui profissional
+			clienteRepositorio.AtualizaCliente(idEndereco, new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
+			{
+				ID = model.ID,
+				DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+				{
+					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+					NomeFantasia = model.DadosCadastrais.NomeFantasia,
+					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+					ISS = model.DadosCadastrais.ISS,
+					Endereco = model.DadosCadastrais.Endereco,
+					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+					Complemento = model.DadosCadastrais.Complemento,
+					Bairro = model.DadosCadastrais.Bairro,
+					Cidade = model.DadosCadastrais.Cidade,
+					Estado = model.DadosCadastrais.Estado,
+					CEP = model.DadosCadastrais.CEP,
+					Observacoes = model.DadosCadastrais.Observacoes,
+					HomePage = model.DadosCadastrais.HomePage
+				},
+				Contato = model.Contato.Any() ? model.Contato.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+				{
+					ID = x.ID,
+					Contato = x.Contato,
+					Email = x.Email,
+					TelefoneComercial = x.TelefoneComercial,
+					TelefoneCelular = x.TelefoneCelular,
+					Setor = x.Setor,
+					DataNascimento = x.DataNascimento
+
+				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
+				Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+				{
+					ID = x.ID,
+					ValorUnitario = x.ValorUnitario,
+					TipoTarifa = x.TipoTarifa,
+					VigenciaInicio = x.VigenciaInicio,
+					VigenciaFim = x.VigenciaFim,
+					Franquia = x.Franquia,
+					FranquiaAdicional = x.FranquiaAdicional,
+					Observacao = x.Observacao,
+					ValorAtivado = x.ValorAtivado
+
+				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
+			});
+
+			// Return
+			return Ok();
+		}
+
+
+		/// <summary>
 		/// Deleta contato específico
 		/// </summary>
 		/// <param name="id"></param>
@@ -307,7 +431,7 @@ namespace BHJet_WebApi.Controllers
 
 			//Verifica se o contrato a ser excluido é o ativo
 			var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
-			if(contratoAtivo.FirstOrDefault().bitAtivo == 1)
+			if(contratoAtivo.FirstOrDefault().ValorAtivado == 1)
 				return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
 
 			// Deleta contrato

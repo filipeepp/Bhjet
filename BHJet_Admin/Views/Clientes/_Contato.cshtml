@@ -56,6 +56,7 @@
 </style>
 @if (edicao)
 {
+	var campoData = "text";
 	var tamanho = Model.Contato.Count;
 
 	for (var i = 0; i < tamanho; i++)
@@ -75,7 +76,7 @@
 						{
 							<div style="text-align: right;">
 								<a style="font-size: 20px;" title="Remover contato" onclick="ExcluirContato(document.getElementsByClassName('cst-panel-contato')[@i]);">
-									<i class="fa fa-times" aria-hidden="true"></i>
+									<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
 								</a>
 							</div>
 						}
@@ -119,7 +120,7 @@
 					<div class="form-group col-xs-12 col-md-2">
 						<div id="@Html.IdFor(model => model.Contato[i].DataNascimento)">
 							<label for="txtDataNascimento"><small class="obrigatorio">*</small>Aniversário</label>
-							@Html.TextBoxFor(model => model.Contato[i].DataNascimento, new { type = "date", @class = "form-control ctmErrorDataNascimento" })
+							@Html.TextBoxFor(model => model.Contato[i].DataNascimento, new { type = campoData, @class = "form-control ctmErrorDataNascimento" })
 						</div>
 					</div>
 				</div>
@@ -132,6 +133,7 @@
 }
 else
 {
+	var campoData = "date";
 	<div class="panel panel-default cst-panel-contato" style="margin:30px" id="div_panel_contato_@Html.IdFor(model => model.Contato[contador])">
 		@Html.HiddenFor(model => model.Contato[contador].ContatoRemovido)
 		<div class="panel-body">
@@ -146,7 +148,7 @@ else
 					{
 						<div style="text-align: right;">
 							<a style="font-size: 20px;" title="Remover contato" onclick="RemoverBlocoContato(document.getElementsByClassName('cst-panel-contato')[@contador]);">
-								<i class="fa fa-times" aria-hidden="true"></i>
+								<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
 							</a>
 						</div>
 					}
@@ -190,7 +192,7 @@ else
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Contato[contador].DataNascimento)">
 						<label for="txtDataNascimento"><small class="obrigatorio">*</small>Aniversário</label>
-						@Html.TextBoxFor(model => model.Contato[contador].DataNascimento, new { type = "date", @class = "form-control ctmErrorDataNascimento" })
+						@Html.TextBoxFor(model => model.Contato[contador].DataNascimento, new { type = campoData, @class = "form-control ctmErrorDataNascimento" })
 					</div>
 				</div>
 			</div>

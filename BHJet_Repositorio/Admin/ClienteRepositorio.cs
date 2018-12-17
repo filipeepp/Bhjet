@@ -260,11 +260,11 @@ namespace BHJet_Repositorio.Admin
 		}
 
 		/// <summary>
-		/// Busca dados do cliente e de seu contrato ativo
+		/// Busca dados da tarifa
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>UsuarioEntidade</returns>
-		public IEnumerable<ClienteEntidade> BuscaClienteContratoAtivo(int idValor)
+		public IEnumerable<ClienteValorEntidade> BuscaClienteContratoAtivo(int idValor)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
 			{
@@ -277,9 +277,36 @@ namespace BHJet_Repositorio.Admin
 									idTarifario = @ValorID";
 
 				// Execução
-				return sqlConnection.Query<ClienteEntidade>(query, new
+				return sqlConnection.Query<ClienteValorEntidade>(query, new
 				{
 					ValorID = idValor,
+				});
+			}
+		}
+
+		/// <summary>
+		/// Busca endereço de um cliente específico
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<ClienteEntidade> BuscaClienteEndereco(long idCliente)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT 
+									*
+								FROM
+									tblEnderecos
+								INNER JOIN
+									tblClientes ON tblClientes.idEndereco = tblEnderecos.idEndereco
+								WHERE
+									tblClientes.idCliente = @ClienteID";
+
+				// Execução
+				return sqlConnection.Query<ClienteEntidade>(query, new
+				{
+					ClienteID = idCliente,
 				});
 			}
 		}
@@ -492,6 +519,288 @@ namespace BHJet_Repositorio.Admin
 				}
 			}
 		}
+
+		/// <summary>
+		/// Inclui Contato Cliente
+		/// </summary>
+		/// <param name="filtro">ProfissionalCompletoEntidade</param>
+		/// <returns>UsuarioEntidade</returns>
+		public void IncluirContato(long clienteID, ClienteContatoEntidade contato)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				using (var trans = sqlConnection.BeginTransaction())
+				{
+					try
+					{
+						string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
+                                           ([idCliente]
+                                           ,[vcNomeContato]
+                                           ,[vcDepartamento]
+                                           ,[dtDataNascimento]
+                                           ,[vcTelefoneComercial]
+                                           ,[vcTelefoneCelular]
+                                           ,[vcEmail])
+                                     VALUES
+                                           (@codCliente
+                                           ,@Contato
+                                           ,@Setor
+                                           ,@DataNascimento
+                                           ,@TelefoneComercial
+                                           ,@TelefoneCelular
+                                           ,@Email)
+                                           select @@identity;";
+						// Execute
+						trans.Connection.ExecuteScalar(queryContato, new
+						{
+							codCliente = clienteID,
+							Contato = contato.Contato,
+							Setor = contato.Setor,
+							DataNascimento = contato.DataNascimento,
+							TelefoneComercial = contato.TelefoneComercial,
+							TelefoneCelular = contato.TelefoneCelular,
+							Email = contato.Email
+						}, trans);
+
+						//Comit
+						trans.Commit();
+
+					}
+					catch (Exception e)
+					{
+						if (trans.Connection != null)
+							trans.Rollback();
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Inclui Contato Cliente
+		/// </summary>
+		/// <param name="filtro">ProfissionalCompletoEntidade</param>
+		/// <returns>UsuarioEntidade</returns>
+		public void IncluirValor(long clienteID, ClienteValorEntidade tarifa)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				using (var trans = sqlConnection.BeginTransaction())
+				{
+					try
+					{
+						string queryTarifario = @"INSERT INTO [dbo].[tblTarifario]
+                                           ([vcDescricaoTarifario]
+                                           ,[dtDataInicioVigencia]
+                                           ,[dtDataFimVigencia]
+                                           ,[decFranquiaKMMensalidade]
+                                           ,[decValorKMAdicionalMensalidade]
+                                           ,[decValorMensalidade]
+                                           ,[bitAtivo]
+                                           ,[bitPagamentoAVista]
+                                           ,[vcObservacao])
+                                     VALUES
+                                           (@TipoTarifa
+                                           ,@VigenciaInicio
+                                           ,@VigenciaFim
+                                           ,@Franquia
+                                           ,@FranquiaAdicional
+										   ,@ValorUnitario
+										   ,@TarifaAtivada
+										   ,@PagamentoAVista
+                                           ,@Observacao)
+                                           select @@identity;";
+
+						string queryClienteTarifario = @"INSERT INTO [dbo].[tblClientesTarifario]
+                                           ([idCliente]
+                                           ,[idTarifario])
+                                     VALUES
+                                           (@codCliente
+                                           ,@codTarifario)
+                                           select @@identity;";
+						// Execute
+						var idValor = trans.Connection.ExecuteScalar<int?>(queryTarifario, new
+						{
+							TipoTarifa = tarifa.TipoTarifa,
+							VigenciaInicio = tarifa.VigenciaInicio,
+							VigenciaFim = tarifa.VigenciaFim,
+							Franquia = tarifa.Franquia,
+							FranquiaAdicional = tarifa.FranquiaAdicional,
+							ValorUnitario = tarifa.ValorUnitario,
+							TarifaAtivada = tarifa.ValorAtivado,
+							PagamentoAVista = 0,
+							Observacao = tarifa.Observacao
+						}, trans);
+
+						trans.Connection.ExecuteScalar(queryClienteTarifario, new
+						{
+							codCliente = clienteID,
+							codTarifario = idValor
+						}, trans);
+
+						//Comit
+						trans.Commit();
+					}
+					catch (Exception e)
+					{
+						if (trans.Connection != null)
+							trans.Rollback();
+					}
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Atualiza Cliente
+		/// </summary>
+		/// <param name="filtro">ProfissionalCompletoEntidade</param>
+		/// <returns>UsuarioEntidade</returns>
+		public void AtualizaCliente(int idEndereco, ClienteCompletoEntidade cliente)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				using (var trans = sqlConnection.BeginTransaction())
+				{
+					try
+					{
+						// Atualiza Endereco
+						string queryEndereco = @"UPDATE
+													[dbo].[tblEnderecos]
+												SET
+													[vcRua] = @Rua
+												   ,[vcNumero] = @RuaNumero
+												   ,[vcComplemento] = @Complemento
+												   ,[vcBairro] = @Bairro
+												   ,[vcCidade] = @Cidade
+												   ,[vcUF] = @UF
+												   ,[vcCEP] = @Cep
+												WHERE
+													idEndereco = @EnderecoID";
+						// Execute
+						trans.Connection.Execute(queryEndereco, new
+						{
+							Rua = cliente.DadosCadastrais.Endereco,
+							RuaNumero = cliente.DadosCadastrais.NumeroEndereco,
+							Complemento = cliente.DadosCadastrais.Complemento,
+							Bairro = cliente.DadosCadastrais.Bairro,
+							Cidade = cliente.DadosCadastrais.Cidade,
+							UF = cliente.DadosCadastrais.Estado,
+							Cep = cliente.DadosCadastrais.CEP,
+							EnderecoID = idEndereco
+						}, trans);
+
+
+						// Atualiza Cliente
+						using (var sqlConnectionCom = this.InstanciaConexao())
+						{
+							string queryCliente = @"UPDATE
+														[dbo].[tblClientes]
+													SET
+														[vcNomeRazaoSocial] = @NomeRazaoSocial
+														,[vcNomeFantasia] = @NomeFantasia
+														,[vcCPFCNPJ] = @CPFCNPJ
+														,[vcInscricaoEstadual] = @InscricaoEstadual
+														,[bitRetemISS] = @ISS
+														,[vcObservacoes] = @Observacoes
+														,[vcSite] = @HomePage
+													WHERE
+														idCliente = @ClienteID";
+
+							// Execute
+							trans.Connection.Execute(queryCliente, new
+							{
+								NomeRazaoSocial = cliente.DadosCadastrais.NomeRazaoSocial,
+								NomeFantasia = cliente.DadosCadastrais.NomeFantasia,
+								CPFCNPJ = cliente.DadosCadastrais.CPFCNPJ,
+								InscricaoEstadual = cliente.DadosCadastrais.InscricaoEstadual,
+								ISS = cliente.DadosCadastrais.ISS,
+								Observacoes = cliente.DadosCadastrais.Observacoes,
+								HomePage = cliente.DadosCadastrais.HomePage,
+								ClienteID = cliente.ID
+							}, trans);
+
+						}
+
+						// Atualiza Contato
+						using (var sqlConnectionCom = this.InstanciaConexao())
+						{
+							string queryContato = @"UPDATE
+														[dbo].[tblColaboradoresCliente]
+													SET
+													   [vcNomeContato] = @Contato
+													   ,[vcDepartamento] = @Setor
+													   ,[dtDataNascimento] = @DataNascimento
+													   ,[vcTelefoneComercial] = @TelefoneComercial
+													   ,[vcTelefoneCelular] = @TelefoneCelular
+													   ,[vcEmail] = @Email
+													 WHERE
+														idColaboradorCliente = @ContatoID";
+							// Execute
+							foreach (var contato in cliente.Contato)
+							{
+								trans.Connection.Execute(queryContato, new
+								{
+									Contato = contato.Contato,
+									Setor = contato.Setor,
+									DataNascimento = contato.DataNascimento,
+									TelefoneComercial = contato.TelefoneComercial,
+									TelefoneCelular = contato.TelefoneCelular,
+									Email = contato.Email,
+									ContatoID = contato.ID
+								}, trans);
+
+							}
+						}
+
+						// Atualiza Tarifa
+						using (var sqlConnectionCom = this.InstanciaConexao())
+						{
+							string queryTarifario = @"UPDATE
+														[dbo].[tblTarifario]
+													SET
+													   [vcDescricaoTarifario] = @TipoTarifa
+													   ,[dtDataInicioVigencia] = @VigenciaInicio
+													   ,[dtDataFimVigencia] = @VigenciaFim
+													   ,[decFranquiaKMMensalidade] = @Franquia
+													   ,[decValorKMAdicionalMensalidade] = @FranquiaAdicional
+													   ,[decValorMensalidade] = @ValorUnitario
+													   ,[bitAtivo] = @TarifaAtivada
+													   ,[vcObservacao] = @Observacao
+													 WHERE
+														idTarifario = @ValorID";
+
+							// Execute
+							foreach (var tarifa in cliente.Valor)
+							{
+								trans.Connection.Execute(queryTarifario, new
+								{
+									TipoTarifa = tarifa.TipoTarifa,
+									VigenciaInicio = tarifa.VigenciaInicio,
+									VigenciaFim = tarifa.VigenciaFim,
+									Franquia = tarifa.Franquia,
+									FranquiaAdicional = tarifa.FranquiaAdicional,
+									ValorUnitario = tarifa.ValorUnitario,
+									TarifaAtivada = tarifa.ValorAtivado,
+									Observacao = tarifa.Observacao,
+									ValorID = tarifa.ID
+								}, trans);
+							}
+						}
+
+						// Commit
+						trans.Commit();
+					}
+					catch (Exception e)
+					{
+						if (trans.Connection != null)
+							trans.Rollback();
+						throw e;
+
+					}
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// Remove contato da base

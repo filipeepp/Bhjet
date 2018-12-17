@@ -8,7 +8,7 @@ namespace BHJet_Admin.Models.Clientes
 {
     public class ClienteModel
     {
-        public long? ID { get; set; }
+        public long ID { get; set; }
         public DadosCadastraisModel DadosCadastrais { get; set; }
 		public List<ContatoModel> Contato { get; set; }
 		public List<ValorModel> Valor { get; set; }

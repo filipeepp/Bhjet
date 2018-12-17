@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
 	//MASCARAS
+	$('.ctmErrorDataNascimento').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
+	});
+
 	$(".mask-telefone").mask("(00) 0000-0000");
 	$(".mask-celular").mask("(00) 00009-0000");
 
@@ -144,7 +149,6 @@ window.ExcluirContato = function (divBlocoContato) {
 
 	var idBloco = divBlocoContato.id;
 	var idContato = $("#" + idBloco).find("input[id$='ID']").val();
-	var idCliente = $("input[id='DadosCadastrais_ID']").val();
 
 	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse contato da base?");
 
@@ -152,20 +156,23 @@ window.ExcluirContato = function (divBlocoContato) {
 		$.ajax({
 			url: '/Clientes/ExcluirContato?idContato=' + idContato,
 			type: "POST",
-			dataType: "html",
-			//data: $("#DetalheMotorista").serialize(),
-			success: function (data) {
-				//window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
-				//mascaraComissoes();
+			success: function () {
+
+				//var idCliente = $("input[id='ID']").val();
 				RemoverBlocoContato(divBlocoContato);
 				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
-				ProximaTab(true, false, true);
+				//window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
 			},
-			error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
+			error: function () {
+				var idCliente = $("input[id='ID']").val();
+				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
+			}
 		});
 
 	} else {
 		event.stopPropagation();
 	}
+
 }
