@@ -9,7 +9,7 @@ namespace BHJet_Admin.Models.ClienteAvulso
 	{
 		public long ID { get; set; }
 		public DadosCadastraisClienteAvulsoModel DadosCadastrais { get; set; }
-		public List<OsClienteAvulsoModel> Contato { get; set; }
+		public List<OsClienteAvulsoModel> OrdemServico { get; set; }
 
 		public ClienteAvulsoModel()
 		{

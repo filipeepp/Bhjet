@@ -47,5 +47,10 @@ namespace BHJet_Admin.Controllers
 				});
 			}
 		}
+
+		public ActionResult Visualizar()
+		{
+			return View();
+		}
     }
 }

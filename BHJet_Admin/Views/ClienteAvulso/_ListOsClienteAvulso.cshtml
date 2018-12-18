@@ -1,1 +1,69 @@
-﻿
+﻿@using BHJet_Admin.Models.ClienteAvulso
+@using BHJet_Core.Enum
+@model ClienteAvulsoModel
+
+@Scripts.Render("~/bundles/jqueryval")
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="form-horizontal">
+	<div class="row form-group ">
+		@Html.HiddenFor(model => model.ID);
+
+		<div class="panel panel-default" style="margin:30px; margin-top:-25px">
+			<div class="panel-body">
+				<div class="titulo">
+					<h2>
+						<a onclick="history.go(-1);">
+							<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						</a>
+						Serviços prestados
+					</h2>
+				</div>
+
+				<div class="col-md-12">
+					<div class="table-responsive">
+						<br />
+						<table class="table table-bordered">
+							<thead>
+								<tr class="bg-light-gray">
+									<th scope="col">OS</th>
+									<th scope="col">Data</th>
+									<th scope="col">Motorista</th>
+									<th scope="col">Valor</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var linha in Model.OrdemServico)
+								{
+								<tr class="cst-tbl-Clientes" id="@linha.ID">
+									<td> <label>@linha.Data</label></td>
+									<td> <label>@linha.NomeMotorista</label></td>
+									<td> <label>@linha.Valor</label></td>
+								</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+	<script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+	</script>
+}
+<script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+<script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
+<script src="~/Scripts/DetalheMotorista.js"></script>
+
