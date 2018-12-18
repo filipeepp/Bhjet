@@ -221,6 +221,7 @@ namespace BHJet_Repositorio.Admin
                                            ,[vcObservacoes] = @Obs
  	                                   WHERE idComissaoColaboradorEmpresaSistema = @id";
 
+
                         string queryAddComissao = @"INSERT INTO [dbo].[tblComissaoColaboradorEmpresaSistema]
                                                     ([idColaboradorEmpresaSistema]
                                                     ,[decPercentualComissao]
@@ -236,12 +237,23 @@ namespace BHJet_Repositorio.Admin
                                                         ,@Obs
                                                         ,1) select @@identity;";
 
+                        string queryRemoveComissao = @"Delete from [dbo].[tblComissaoColaboradorEmpresaSistema] WHERE idComissaoColaboradorEmpresaSistema not in (@ids) and idColaboradorEmpresaSistema = @idCol";
+
+                        // Notificacoes a excluir
+                        long?[] notificacoesAntigasMantidas = profissional.Comissoes.Where(x => x.idComissaoColaboradorEmpresaSistema != null).Select(x => x.idComissaoColaboradorEmpresaSistema).ToArray();
+                        trans.Connection.Execute(queryRemoveComissao, new
+                        {
+                            ids = string.Join(",", notificacoesAntigasMantidas),
+                            idCol = profissional.ID
+                        }, trans);
+
+                        // Notificacoes antigas e novas
                         foreach (var com in profissional.Comissoes)
                         {
                             if (com.dtDataInicioVigencia == null || com.dtDataInicioVigencia == null)
                                 continue;
 
-                            if (ExisteComissao(trans, com.idComissaoColaboradorEmpresaSistema, profissional.ID))
+                            if (com.idComissaoColaboradorEmpresaSistema != null || ExisteComissao(trans, com.idComissaoColaboradorEmpresaSistema, profissional.ID))
                                 trans.Connection.Execute(queryComissao, new
                                 {
                                     decCom = com.decPercentualComissao,
@@ -273,7 +285,7 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        private bool ExisteComissao(SqlTransaction con, long idComissao, long idColaborador)
+        private bool ExisteComissao(SqlTransaction con, long? idComissao, long idColaborador)
         {
             // Query
             string query = @"select cast(count(*) as bit) from [tblComissaoColaboradorEmpresaSistema]

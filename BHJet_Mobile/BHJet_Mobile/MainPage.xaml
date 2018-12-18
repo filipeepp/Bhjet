@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BHJet_Mobile"
+             x:Class="BHJet_Mobile.MainPage">
+
+    <Grid VerticalOptions="End"  BackgroundColor="#E1E1E1" >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Orientation="Vertical" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+            <Image  Source="Home.png"  WidthRequest="30" HeightRequest="30" />
+            <Label Text="Home" TextColor="White"  />
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical"  Grid.Column="1"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+            <Button WidthRequest="75" FontSize="10" Text="Procurar chamado" BackgroundColor="#e1cf34" HeightRequest="70"  BorderRadius="30"></Button>
+        </StackLayout>
+
+        <StackLayout Orientation="Vertical"  Grid.Column="2"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+            <Image  Source="Settings.png"  WidthRequest="30" HeightRequest="30" />
+            <Label Text="Dados" TextColor="White" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
