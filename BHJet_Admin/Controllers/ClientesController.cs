@@ -261,7 +261,7 @@ namespace BHJet_Admin.Controllers
 
 					this.MensagemSucesso("Cliente atualizado com sucesso.");
 
-					return View();
+					return View(model);
 				}
 				else
 				{
