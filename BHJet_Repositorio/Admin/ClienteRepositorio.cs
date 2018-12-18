@@ -157,12 +157,17 @@ namespace BHJet_Repositorio.Admin
 		/// Busca dados resumidos do(s) cliente(s) e seu(s) contrato(s)
 		/// </summary>
 		/// <returns>UsuarioEntidade</returns>
-		public IEnumerable<ClienteEntidade> BuscaListaClientes()
+		public IEnumerable<ClienteEntidade> BuscaListaClientes(bool avulso = false)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
 			{
+				//Se cliente avulso, adiciona parametro na busca
+				string parametroAvulso = "";
+				if (avulso)
+					parametroAvulso = " AND Cliente.bitAvulso = 1";
+
 				// Query
-				string query = @"SELECT TOP 50 
+				string query = $@"SELECT TOP 50 
 									Cliente.idCliente,
 									Cliente.vcNomeRazaoSocial,
 									Cliente.vcNomeFantasia,
@@ -189,7 +194,7 @@ namespace BHJet_Repositorio.Admin
 								INNER JOIN
 									tblTarifario Valor ON Valor.idTarifario = ClienteValor.idTarifario
 								WHERE
-									Valor.bitAtivo = 1";
+									Valor.bitAtivo = 1 {parametroAvulso}";
 
 				// Execução
 				return sqlConnection.Query<ClienteEntidade>(query);

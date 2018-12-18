@@ -32,7 +32,8 @@ namespace BHJet_Servico
 
         public class Cliente
         {
-            public const string GetClientes = "/Cliente";
+			#region Cliente Normal
+			public const string GetClientes = "/Cliente";
 			public const string PostCliente = "/Cliente";
 			public const string PostClienteContato = "/Cliente/{0}/contato";
 			public const string PostClienteValor = "/Cliente/{0}/contrato";
@@ -42,9 +43,14 @@ namespace BHJet_Servico
 			public const string PutCliente = "/Cliente/{0}";
 			public const string DeleteContato = "/Cliente/contato/{0}";
 			public const string DeleteValor = "/Cliente/contrato/{0}";
+			#endregion
+
+			#region Cliente Avulso
+			public const string GetClientesAvulsosValorAtivo = "/Cliente/avulso/contrato/ativo";
+			#endregion
 		}
 
-        public class Usuario
+		public class Usuario
         {
             public const string GetUsuarios = "/Usuarios";
             public const string PostUsuario = "/Usuarios";

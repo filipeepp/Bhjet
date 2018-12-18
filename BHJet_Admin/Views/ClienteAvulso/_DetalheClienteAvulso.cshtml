@@ -1,0 +1,138 @@
+﻿@using BHJet_Admin.Models.ClienteAvulso
+@using BHJet_Core.Enum
+@model ClienteAvulsoModel
+
+@Scripts.Render("~/bundles/jqueryval")
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
+
+<div class="form-horizontal">
+	<div class="row form-group ">
+		@Html.HiddenFor(model => model.ID);
+
+		<div class="panel panel-default" style="margin:30px; margin-top:-25px">
+			<div class="panel-body">
+				<div class="titulo">
+					<h2>
+						<a onclick="history.go(-1);">
+							<i class="fa fa-id-card-o" aria-hidden="true"></i>
+						</a>
+						Dados Pessoais
+					</h2>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-lg-12">
+					<div class="row">
+						<div class="col-md-8">
+							<label for="txtNomeRazaoSocial">Nome Completo</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { disabled= true , @class = "form-control" })
+						</div>
+						<div class="col-md-4">
+							<label for="txtCPFCNPJ">CPF / CNPJ</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { disabled = true, @class = "form-control" })
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class=" col-md-5">
+							<label for="txtTelefoneResidencial">Telefone Residencial</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.TelefoneResidencial, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-5">
+							<label for="txtTelefoneCelular">Telefone Celular</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.TelefoneCelular, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-2">
+							<div style="margin-top:25px;">
+								<label class="label-cbx">
+									@Html.CheckBoxFor(model => model.DadosCadastrais.TelefoneWhatsapp, new { disabled = true, @class = "checkbox" })
+									<span>Whatsapp</span>
+								</label>
+							</div>
+						</div>
+						<br class="hidden-lg" />
+					</div>
+
+					<div class="row">
+						<div class="col-md-4">
+							<label for="txtEmail">Email</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.Email, new { disabled = true, @class = "form-control" })
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="panel panel-default" style="margin:30px">
+			<div class="panel-body">
+				<div class="titulo">
+					<h2>
+						<a onclick="history.go(-1);">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</a>
+						Endereço
+					</h2>
+				</div>
+
+				<div class="col-xs-12 col-sm-12 col-lg-12">
+					<div class="row">
+						<div class=" col-md-3 col-lg-2">
+							<label for="txtCEP">CEP</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.CEP, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-3 col-lg-4">
+							<label for="txtNomeEndereco">Rua</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-2 col-lg-2">
+							<label for="txtNumeroEndereco">Número</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.NumeroEndereco, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-3 col-lg-2">
+							<label for="txtComplemento">Complemento</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.Complemento, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-3 col-lg-2">
+							<label for="txtBairro">Bairro</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.Bairro, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-3 col-lg-2">
+							<label for="txtCidade">Cidade</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-1 col-lg-2">
+							<label for="txtUF">UF</label>
+							@Html.DropDownListFor(model => model.DadosCadastrais.Estado, new SelectList(Enum.GetValues(typeof(UF))), new { disabled = true, @class = "form-control" })
+						</div>
+						<div class=" col-md-3 col-lg-2">
+							<label for="txtDataAniversario">Data Aniversário</label>
+							@Html.TextBoxFor(model => model.DadosCadastrais.DataNascimento, new { disabled = true, @class = "form-control" })
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+	<script type="text/javascript">
+            window.onload = function () {
+                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
+                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+                $('#myModal').modal('show')
+            };
+	</script>
+}
+<script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+<script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
+<script src="~/Scripts/DetalheMotorista.js"></script>
+

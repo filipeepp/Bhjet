@@ -29,6 +29,8 @@ namespace BHJet_WebApi.Controllers
 			}
 		}
 
+		#region Cliente Normal
+
 		/// <summary>
 		/// Busca dados de cliente e seus contratos
 		/// </summary>
@@ -440,7 +442,51 @@ namespace BHJet_WebApi.Controllers
 			// Return
 			return Ok();
 		}
+		#endregion
 
+		#region Cliente Avulso
+
+		/// <summary>
+		/// Busca dados de cliente avulso
+		/// </summary>
+		/// <returns></returns>
+		[Authorize]
+		[Route("avulso/contrato/ativo")]
+		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
+		public IHttpActionResult GetClientesAvulsosValorAtivo()
+		{
+			// Busca Dados
+			var entidade = new ClienteRepositorio().BuscaListaClientes(true);
+
+			// Validacao
+			if (entidade == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			// Return
+			return Ok(entidade.Select(cli => new ClienteDTO()
+			{
+				ID = cli.idCliente,
+				vcNomeFantasia = cli.vcNomeFantasia,
+				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+				vcCPFCNPJ = cli.vcCPFCNPJ,
+				vcInscricaoEstadual = cli.vcInscricaoEstadual,
+				bitRetemISS = cli.bitRetemISS,
+				vcObservacoes = cli.vcObservacoes,
+				vcSite = cli.vcSite,
+				vcRua = cli.vcRua,
+				vcNumero = cli.vcNumero,
+				vcComplemento = cli.vcComplemento,
+				vcBairro = cli.vcBairro,
+				vcCidade = cli.vcCidade,
+				vcUF = cli.vcUF,
+				vcCEP = cli.vcCEP,
+				bitAtivo = cli.bitAtivo,
+				vcDescricaoTarifario = cli.vcDescricaoTarifario
+
+			}));
+		}
+
+		#endregion
 
 	}
 }

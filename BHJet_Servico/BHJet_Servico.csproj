@@ -6,12 +6,15 @@
 
   <ItemGroup>
     <Compile Remove="Autorizacao\Model\**" />
+    <Compile Remove="ClienteAvulso\**" />
     <Compile Remove="Corrida\Model\**" />
     <Compile Remove="Dashboard\Model\**" />
     <EmbeddedResource Remove="Autorizacao\Model\**" />
+    <EmbeddedResource Remove="ClienteAvulso\**" />
     <EmbeddedResource Remove="Corrida\Model\**" />
     <EmbeddedResource Remove="Dashboard\Model\**" />
     <None Remove="Autorizacao\Model\**" />
+    <None Remove="ClienteAvulso\**" />
     <None Remove="Corrida\Model\**" />
     <None Remove="Dashboard\Model\**" />
   </ItemGroup>

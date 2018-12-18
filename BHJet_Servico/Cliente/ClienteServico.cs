@@ -5,6 +5,7 @@ namespace BHJet_Servico.Cliente
 {
     public interface IClienteServico
     {
+		//Cliente Normal
         ClienteDTO[] BuscaListaClientes(string trechoPesquisa);
 		ClienteDTO[] BuscaClientesValorAtivo();
 		ClienteDTO[] BuscaClienteContrato(string trechoPesquisa);
@@ -15,6 +16,9 @@ namespace BHJet_Servico.Cliente
 		void EditarCliente(ClienteCompletoModel clienteModel);
 		void ExcluirContato(int idContato);
 		void ExcluirValor(int idValor);
+
+		//Cliente Avulso
+		ClienteDTO[] BuscaClientesAvulsosValorAtivo();
 	}
 
     public class ClienteServico : ServicoBase, IClienteServico
@@ -24,22 +28,9 @@ namespace BHJet_Servico.Cliente
 
         }
 
-        public ClienteDTO[] BuscaListaClientes(string trechoPesquisa)
+		#region Cliente Normal
+		public ClienteDTO[] BuscaListaClientes(string trechoPesquisa)
         {
-            //return new ClienteDTO[]
-            //{
-            //    new ClienteDTO()
-            //    {
-            //         ID = 1,
-            //         vcNomeFantasia = "Açai da eskina"
-            //    },
-            //     new ClienteDTO()
-            //    {
-            //         ID = 2,
-            //         vcNomeFantasia = "AutoPeça Pedro II"
-            //    }
-            //};
-
             return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientes}?trecho={trechoPesquisa}"));
         }
 		public ClienteDTO[] BuscaClienteContrato(string trechoPesquisa)
@@ -86,5 +77,15 @@ namespace BHJet_Servico.Cliente
 		{
 			this.Delete(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Cliente.DeleteValor, idValor)}"));
 		}
+		#endregion
+
+		#region Cliente Avulso
+
+		public ClienteDTO[] BuscaClientesAvulsosValorAtivo()
+		{
+			return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientesAvulsosValorAtivo}"));
+		}
+
+		#endregion
 	}
 }
