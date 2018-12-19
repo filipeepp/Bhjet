@@ -24,7 +24,7 @@
 					<div class="row">
 						<div class="col-md-8">
 							<label for="txtNomeRazaoSocial">Nome Completo</label>
-							@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { disabled= true , @class = "form-control" })
+							@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { disabled = true, @class = "form-control" })
 						</div>
 						<div class="col-md-4">
 							<label for="txtCPFCNPJ">CPF / CNPJ</label>
@@ -122,12 +122,15 @@
 
 @if (TempData["mensagemGeral"] != null)
 {
+	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
 	<script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
 	</script>
 }
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>

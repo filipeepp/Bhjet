@@ -5,80 +5,83 @@
 @Scripts.Render("~/bundles/jqueryval")
 
 <ol class="breadcrumb">
-    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
-    <li><a href="#map_canvas">Editar Motoristas, Motociclistas</a></li>
+	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
+	<li><a href="#map_canvas">Editar Motoristas, Motociclistas</a></li>
 </ol>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="titulo">
-                        <h2>
-                            <a href="@Url.Action("Index", "Motorista")">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                            </a>
-                            Editar Motoristas / Motociclistas
-                        </h2>
-                    </div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="titulo">
+						<h2>
+							<a href="@Url.Action("Index", "Motorista")">
+								<i class="fa fa-arrow-left" aria-hidden="true"></i>
+							</a>
+							Editar Motoristas / Motociclistas
+						</h2>
+					</div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="txtPesquisarCliente">Pesquisar Motorista</label>
+					<div class="row">
+						<div class="col-md-12">
+							<label for="txtPesquisarCliente">Pesquisar Motorista</label>
 
-                            @using (Html.BeginForm("Listar", "Motorista", FormMethod.Get))
-                            {
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                        <input style="max-width: 400px;" class="form-control" type="text" id="palavraChave" name="palavraChave">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
-                                    </div>
-                                </div>
+							@using (Html.BeginForm("Listar", "Motorista", FormMethod.Get))
+							{
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-search"></i></div>
+										<input style="max-width: 400px;" class="form-control" type="text" id="palavraChave" name="palavraChave">
+										<button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+									</div>
+								</div>
 
-                            }
+							}
 
-                        </div>
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <br />
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr class="bg-light-gray">
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Profissional</th>
-                                            <th scope="col">Tipo Contrato</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var linha in Model.ListaMotorista)
-                                        {
-                                            <tr>
-                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.ID</a></td>
-                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })"> @linha.NomeCompleto </a></td>
-                                                <td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.TipoRegimeContratacao.ToString()</a></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+						</div>
+						<div class="col-md-12">
+							<div class="table-responsive">
+								<br />
+								<table class="table table-bordered">
+									<thead>
+										<tr class="bg-light-gray">
+											<th scope="col">ID</th>
+											<th scope="col">Profissional</th>
+											<th scope="col">Tipo Contrato</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var linha in Model.ListaMotorista)
+										{
+											<tr>
+												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.ID</a></td>
+												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })"> @linha.NomeCompleto </a></td>
+												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.TipoRegimeContratacao.ToString()</a></td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @if (TempData["mensagemGeral"] != null)
 {
-    <script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
-    </script>
+	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+	<script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+	</script>
 }

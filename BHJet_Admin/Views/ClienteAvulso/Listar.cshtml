@@ -63,10 +63,10 @@
 									<tbody>
 										@foreach (var linha in Model.ListClienteAvulso)
 										{
-										<tr class="cst-tbl-Clientes" id="@linha.ClienteID">
-											<td> <a href="">@linha.ClienteID</a></td>
-											<td> <a href="">@linha.NomeRazaoSocial</a></td>
-										</tr>
+											<tr class="cst-tbl-Clientes" id="@linha.ClienteID">
+												<td> <a href="">@linha.ClienteID</a></td>
+												<td> <a href="">@linha.NomeRazaoSocial</a></td>
+											</tr>
 										}
 									</tbody>
 								</table>
@@ -83,11 +83,14 @@
 </div>
 @if (TempData["mensagemGeral"] != null)
 {
+	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
 	<script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
 	</script>
 }
