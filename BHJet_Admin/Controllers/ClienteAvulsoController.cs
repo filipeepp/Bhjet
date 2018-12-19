@@ -1,7 +1,9 @@
-﻿using BHJet_Admin.Models.ClienteAvulso;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models.ClienteAvulso;
 using BHJet_Servico.Cliente;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,11 +19,13 @@ namespace BHJet_Admin.Controllers
 			clienteServico = _cliente;
 		}
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult Index()
         {
             return View();
         }
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult Listar()
 		{
 			try
@@ -48,8 +52,9 @@ namespace BHJet_Admin.Controllers
 			}
 		}
 
+		[ValidacaoUsuarioAttribute()]
 		public ActionResult Visualizar(string clienteID)
-		{ 
+		{
 			try
 			{
 				//Converte para long
@@ -68,24 +73,31 @@ namespace BHJet_Admin.Controllers
 						NomeRazaoSocial = entidadeDadosCliente.DadosCadastrais.NomeRazaoSocial,
 						CPFCNPJ = entidadeDadosCliente.DadosCadastrais.CPFCNPJ,
 						Endereco = entidadeDadosCliente.DadosCadastrais.Endereco,
+						CEP = entidadeDadosCliente.DadosCadastrais.CEP,
+						NumeroEndereco = entidadeDadosCliente.DadosCadastrais.NumeroEndereco,
+						Complemento = entidadeDadosCliente.DadosCadastrais.Complemento,
+						Bairro = entidadeDadosCliente.DadosCadastrais.Bairro,
+						Cidade = entidadeDadosCliente.DadosCadastrais.Cidade,
+						Estado = entidadeDadosCliente.DadosCadastrais.Estado,
 						TelefoneResidencial = entidadeDadosCliente.Contato.FirstOrDefault().TelefoneComercial,
 						TelefoneCelular = entidadeDadosCliente.Contato.FirstOrDefault().TelefoneCelular,
+						TelefoneWhatsapp = entidadeDadosCliente.Contato.FirstOrDefault().TelefoneWhatsapp == 1 ? true : false,
 						Email = entidadeDadosCliente.Contato.FirstOrDefault().Email,
-						DataNascimento = entidadeDadosCliente.Contato.FirstOrDefault().DataNascimento.ToString("dd/MM/YYYY")
+						DataNascimento = entidadeDadosCliente.Contato.FirstOrDefault().DataNascimento.ToString("dd/MM/yyyy")
 					},
 					OrdemServico = entidadeOs.Any() ? entidadeOs.Select(eos => new OsClienteAvulsoModel()
 					{
 						ID = eos.NumeroOS,
 						Data = Convert.ToString(eos.DataInicio),
-						NomeMotorista = eos.NomeProfissional
-						//Valor = eos.ValorFinalizado
+						NomeMotorista = eos.NomeProfissional,
+						Valor = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", eos.ValorFinalizado)
 
 					}).ToList() : new List<OsClienteAvulsoModel>() { }
-					
+
 				});
 
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				this.TrataErro(e);
 				return View(new ClienteAvulsoModel() { });

@@ -147,6 +147,7 @@ namespace BHJet_WebApi.Controllers
 					Email = cot.Email,
 					TelefoneComercial = cot.TelefoneComercial,
 					TelefoneCelular = cot.TelefoneCelular,
+					TelefoneWhatsapp = cot.Whatsapp,
 					Setor = cot.Setor,
 					DataNascimento = cot.DataNascimento
 

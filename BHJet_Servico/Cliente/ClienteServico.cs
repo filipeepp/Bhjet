@@ -90,7 +90,14 @@ namespace BHJet_Servico.Cliente
 
 		public DetalheCorridaModel[] BuscaOsCliente(long clienteID)
 		{
-			return this.Get<DetalheCorridaModel[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetCorridaCliente, clienteID)}"));
+			try
+			{
+				return this.Get<DetalheCorridaModel[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetCorridaCliente, clienteID)}"));
+			}catch
+			{ 
+				return new DetalheCorridaModel[] { };
+			}
+
 		}
 
 		#endregion

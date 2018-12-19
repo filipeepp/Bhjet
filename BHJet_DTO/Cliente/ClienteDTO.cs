@@ -66,6 +66,7 @@ namespace BHJet_DTO.Cliente
 		public string Email { get; set; }
 		public string TelefoneComercial { get; set; }
 		public string TelefoneCelular { get; set; }
+		public int TelefoneWhatsapp { get; set; }
 		public string Setor { get; set; }
 		public DateTime DataNascimento { get; set; }
 	}

@@ -19,7 +19,8 @@
 						Serviços prestados
 					</h2>
 				</div>
-
+				@if(Model.OrdemServico.Count() > 0)
+				{ 
 				<div class="col-md-12">
 					<div class="table-responsive">
 						<br />
@@ -36,6 +37,7 @@
 								@foreach (var linha in Model.OrdemServico)
 								{
 								<tr class="cst-tbl-Clientes" id="@linha.ID">
+									<td> <label>@linha.ID</label></td>
 									<td> <label>@linha.Data</label></td>
 									<td> <label>@linha.NomeMotorista</label></td>
 									<td> <label>@linha.Valor</label></td>
@@ -46,6 +48,12 @@
 					</div>
 
 				</div>
+				}else
+				{
+					<div class="col-md-12 cst-msg-select-null">
+						<h4>Não foram encontrados serviços prestados para este cliente.</h4>
+					</div>
+				}
 
 			</div>
 		</div>
