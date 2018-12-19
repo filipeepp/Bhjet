@@ -13,5 +13,23 @@ namespace BHJet_Mobile
         {
             InitializeComponent();
         }
+
+        protected override  void OnAppearing()
+        {
+           
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            if (findIcon.AnimationIsRunning("RotateTo"))
+            {
+                ViewExtensions.CancelAnimations(findIcon);
+            }
+            else
+            {
+                await findIcon.RotateTo(360, 2000);
+                findIcon.Rotation = 0;
+            }
+        }
     }
 }

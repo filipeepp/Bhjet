@@ -4,27 +4,90 @@
              xmlns:local="clr-namespace:BHJet_Mobile"
              x:Class="BHJet_Mobile.MainPage">
 
-    <Grid VerticalOptions="End"  BackgroundColor="#E1E1E1" >
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="#E1E1E1">
 
-        <StackLayout Orientation="Vertical" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-            <Image  Source="Home.png"  WidthRequest="30" HeightRequest="30" />
-            <Label Text="Home" TextColor="White"  />
-        </StackLayout>
+            <Image Source="bhjet" AbsoluteLayout.LayoutBounds=".5, .1,190,35"
+                AbsoluteLayout.LayoutFlags="PositionProportional" Aspect="AspectFill"></Image>
 
-        <StackLayout Orientation="Vertical"  Grid.Column="1"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-            <Button WidthRequest="75" FontSize="10" Text="Procurar chamado" BackgroundColor="#e1cf34" HeightRequest="70"  BorderRadius="30"></Button>
-        </StackLayout>
+            <Image Source="bgShipping" AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All" Aspect="AspectFill"></Image>
 
-        <StackLayout Orientation="Vertical"  Grid.Column="2"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-            <Image  Source="Settings.png"  WidthRequest="30" HeightRequest="30" />
-            <Label Text="Dados" TextColor="White" />
-        </StackLayout>
-    </Grid>
+            <Frame BackgroundColor="White" Padding="3" OutlineColor="Gray"  AbsoluteLayout.LayoutBounds="0.5, 0.20 , 290, 50" AbsoluteLayout.LayoutFlags="PositionProportional" >
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  MinimumHeightRequest="290" BackgroundColor="#1952b5" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="JOÃO DA SILVA" TextColor="White"  />
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" Text="Status: " TextColor="White"  />
+                    <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Online" TextColor="GreenYellow"  />
+
+                </Grid> 
+            </Frame> 
+            
+            <Frame BackgroundColor="White" Padding="3" OutlineColor="Gray"  AbsoluteLayout.LayoutBounds="0.5, 0.5 ,290, 250" AbsoluteLayout.LayoutFlags="PositionProportional" >
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  MinimumHeightRequest="290" BackgroundColor="#1952b5" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" HorizontalOptions="Center" VerticalOptions="End" Text="Aguardando chamado .." TextColor="White"  />
+
+                    <Image x:Name="findIcon" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="End" Source="clock.png"  WidthRequest="80" HeightRequest="60" />
+
+                </Grid>
+            </Frame>
+
+            <Grid VerticalOptions="End"   AbsoluteLayout.LayoutBounds=".5,1,1,.2" AbsoluteLayout.LayoutFlags="All" BackgroundColor="#eff0f2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" /> 
+                </Grid.ColumnDefinitions>
+
+                <BoxView Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"  Color="#e1cf34" HeightRequest="2" 
+                         VerticalOptions="Start"  />
+
+                <StackLayout Orientation="Vertical" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                    <Image  Source="home.png"   WidthRequest="30" HeightRequest="25" Margin="0,6,0,0" />
+                    <Label Text="Início" TextColor="#474646"  />
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical"  Grid.Column="2"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+                    <Image  Source="motoqueiro.png"  WidthRequest="30" HeightRequest="25" />
+                    <Label Text="Atualizar Dados" TextColor="#474646" />
+                </StackLayout>
+            </Grid>
+
+            <StackLayout VerticalOptions="End"   AbsoluteLayout.LayoutBounds=".5,1,.2,.3" AbsoluteLayout.LayoutFlags="All" >
+                <Button WidthRequest="73" FontSize="9" Text="Procurar" TextColor="White" 
+                        ContentLayout="Top,0"
+                        BackgroundColor="#e1cf34" Clicked="Button_Clicked" Image="search2.png"
+                        HeightRequest="70"  BorderRadius="40"></Button>
+            </StackLayout>
+
+            <!--<BoxView Color="Olive"  AbsoluteLayout.LayoutBounds="1,.5, 25, 100"
+                AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+            <BoxView Color="Red" AbsoluteLayout.LayoutBounds="0,.5,25,100"
+                AbsoluteLayout.LayoutFlags="PositionProportional" />-->
+
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+
+
+
+
 
 </ContentPage>
