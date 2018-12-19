@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 
-		$(".cst-tbl-Clientes").click(function () {
+		$(".cst-tbl-linhaHover").click(function () {
 			window.location = '@Url.Action("NovoCliente", "Clientes")?edicao=true&clienteID=' + $(this)[0].id;
 		});
 
@@ -65,7 +65,7 @@
 									<tbody>
 										@foreach (var linha in Model.ListModel)
 										{
-											<tr class="cst-tbl-Clientes" id="@linha.ClienteID">
+											<tr class="cst-tbl-linhaHover" id="@linha.ClienteID">
 												<td> <a href="">@linha.ClienteID</a></td>
 												<td> <a href=""> @linha.NomeRazaoSocial </a></td>
 												<td> <a href="">@linha.TipoContrato</a></td>

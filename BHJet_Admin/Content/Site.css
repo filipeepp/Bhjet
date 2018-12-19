@@ -15,7 +15,7 @@
     margin-top: 20px;
 }
 
-.cst-tbl-Clientes:hover {
+.cst-tbl-linhaHover:hover {
 	cursor: pointer;
 	background-color: #ccc;
 }

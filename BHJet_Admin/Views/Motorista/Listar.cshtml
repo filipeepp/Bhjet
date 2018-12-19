@@ -54,10 +54,10 @@
 									<tbody>
 										@foreach (var linha in Model.ListaMotorista)
 										{
-											<tr>
-												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.ID</a></td>
-												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })"> @linha.NomeCompleto </a></td>
-												<td> <a href="@Url.Action("Novo", "Motorista", new { Edicao = true, ID = @linha.ID })">@linha.TipoRegimeContratacao.ToString()</a></td>
+											<tr class="cst-tbl-linhaHover" id="@linha.ID">
+												<td> <a href="">@linha.ID</a></td>
+												<td> <a href=""> @linha.NomeCompleto </a></td>
+												<td> <a href="">@linha.TipoRegimeContratacao.ToString()</a></td>
 											</tr>
 										}
 									</tbody>
@@ -72,6 +72,17 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$(".cst-tbl-linhaHover").click(function () {
+			window.location = '@Url.Action("Novo", "Motorista")?Edicao=true&ID=' + $(this)[0].id;
+		});
+
+	});
+</script>
+
+
 @if (TempData["mensagemGeral"] != null)
 {
 	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
@@ -85,3 +96,4 @@
         };
 	</script>
 }
+

@@ -38,8 +38,6 @@ namespace BHJet_Admin.Controllers
 			{
 				var entidade = clienteServico.BuscaClientesValorAtivo();
 
-				this.MensagemSucesso("Conclusão de mensagem para está para estè evidência");
-
 				// Return
 				return View(new TabelaClienteModel()
 				{
