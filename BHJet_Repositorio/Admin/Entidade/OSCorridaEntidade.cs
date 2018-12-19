@@ -8,6 +8,7 @@ namespace BHJet_Repositorio.Admin.Entidade
         public long NumeroOS { get; set; }
         public long IDCliente { get; set; }
         public long IDProfissional { get; set; }
+		public string NomeProfissional { get; set; }
         public string EnderecoCompleto { get; set; }
         public string ProcurarPor { get; set; }
         public bool bitColetarAssinatura { get; set; }
@@ -19,5 +20,8 @@ namespace BHJet_Repositorio.Admin.Entidade
         public DateTime? TempoEspera { get; set; }
         public string Observacao { get; set; }
         public byte[] CaminhoProtocolo { get; set; }
-    }
+		public DateTime? DataHoraInicio { get; set; }
+		public DateTime? DataHoraTermino { get; set; }
+		public decimal? ValorFinalizado { get; set; }
+	}
 }

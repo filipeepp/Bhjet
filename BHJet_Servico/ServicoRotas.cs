@@ -23,7 +23,8 @@ namespace BHJet_Servico
         {
             public const string GetDetalheCorridas = "/Corrida/{0}";
             public const string GetLocalizacaoCorridas = "/Corrida/status/{0}/profissional/{1}/localizacao";
-        }
+			public const string GetCorridaCliente = "/Corrida/cliente/{0}";
+		}
 
         public class Diaria
         {

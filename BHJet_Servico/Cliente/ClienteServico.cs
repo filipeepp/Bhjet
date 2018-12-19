@@ -1,4 +1,5 @@
 ﻿using BHJet_DTO.Cliente;
+using BHJet_DTO.Corrida;
 using System;
 
 namespace BHJet_Servico.Cliente
@@ -19,6 +20,7 @@ namespace BHJet_Servico.Cliente
 
 		//Cliente Avulso
 		ClienteDTO[] BuscaClientesAvulsosValorAtivo();
+		DetalheCorridaModel[] BuscaOsCliente(long clienteID);
 	}
 
     public class ClienteServico : ServicoBase, IClienteServico
@@ -84,6 +86,11 @@ namespace BHJet_Servico.Cliente
 		public ClienteDTO[] BuscaClientesAvulsosValorAtivo()
 		{
 			return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientesAvulsosValorAtivo}"));
+		}
+
+		public DetalheCorridaModel[] BuscaOsCliente(long clienteID)
+		{
+			return this.Get<DetalheCorridaModel[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetCorridaCliente, clienteID)}"));
 		}
 
 		#endregion
