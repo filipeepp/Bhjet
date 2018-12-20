@@ -73,6 +73,7 @@ D:\Projetos\BHJet_Web\BHJet_Core\bin\Debug\System.Web.Razor.xml
 D:\Projetos\BHJet_Web\BHJet_Core\bin\Debug\System.Web.WebPages.xml
 D:\Projetos\BHJet_Web\BHJet_Core\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\Projetos\BHJet_Web\BHJet_Core\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.csprojAssemblyReference.cache
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.csproj.CoreCompileInputs.cache
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.csproj.CopyComplete
 D:\Projetos\BHJet_Web\BHJet_Core\obj\Debug\BHJet_Core.dll

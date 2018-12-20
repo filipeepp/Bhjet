@@ -13,11 +13,11 @@
     <!-- colorPrimary is used for the default action bar background -->
     <item name="colorPrimary">#ffeb43</item>
     <!-- colorPrimaryDark is used for the status bar -->
-    <item name="colorPrimaryDark">#e1cf34</item>
+    <item name="colorPrimaryDark">#ffd423</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#e1cf34</item>
-    <!-- You can also set colorControlNormal, colorControlActivated
+    <item name="colorAccent">#ffd423</item>
+    <!-- You can also set colorControlNormal, colorControlActivated d4a61f
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
 
@@ -25,6 +25,6 @@
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#e1cf34</item>
+    <item name="colorAccent">#ffd423</item>
   </style>
 </resources>
