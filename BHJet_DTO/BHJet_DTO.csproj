@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClienteAvulso\**" />
+    <EmbeddedResource Remove="ClienteAvulso\**" />
+    <None Remove="ClienteAvulso\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Class1.cs" />
   </ItemGroup>
 

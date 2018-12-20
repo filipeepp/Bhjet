@@ -1,18 +1,28 @@
 ﻿$(document).ready(function () {
 	//MASCARAS
-	$(".mask-valor").maskMoney({
-		prefix: "R$:",
-		decimal: ",",
-		thousands: "."
+	$('.ctmErrorVigenciaInicio').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
 	});
 
-	$('.ctmErrorFranquia').maskMoney({
-		decimal: '.',
-		precision: 2
+	$('.ctmErrorVigenciaFim').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
 	});
-	$('.ctmErrorFranquiaAdicional').maskMoney({
-		decimal: '.',
-		precision: 2
+
+	$('.ctmErrorValorUnitario').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ prefix: "R$:", decimal: ',', thousands: "." });
+	});
+
+	$('.ctmErrorFranquia').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
+	});
+
+	$('.ctmErrorFranquiaAdicional').keyup(function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
@@ -138,7 +148,7 @@ window.ValidarValor = function () {
 			//Franquia
 			aux.hasClass("ctmErrorFranquia") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia é obrigatório." + fechamentoSpan) : "";
 			//Franquia Adicional
-			aux.hasClass("ctmErrorFranquiaAdicional") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia adicional é orbigatória." + fechamentoSpan) : "";
+			aux.hasClass("ctmErrorFranquiaAdicional") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia adicional é obrigatória." + fechamentoSpan) : "";
 			//Observação
 			aux.hasClass("ctmErrorObservacao") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Observação é obrigatório." + fechamentoSpan) : "";
 
@@ -176,6 +186,30 @@ window.RemoverBlocoValor = function (divBlocoValor) {
 
 }
 
-window.ComparaVigencias = function (vigenciaInicio, vigenciaFim) {
+window.ExcluirValor = function (divBlocoValor) {
+
+	var idBloco = divBlocoValor.id;
+	var idValor = $("#" + idBloco).find("input[id$='ID']").val();
+
+	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse valor da base?");
+
+	if (alertConfirmacao) {
+		$.ajax({
+			url: '/Clientes/ExcluirValor?idValor=' + idValor,
+			type: "POST",
+			success: function () {
+				RemoverBlocoValor(divBlocoValor);
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+			},
+			error: function () {
+				var idCliente = $("input[id='ID']").val();
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+			}
+		});
+
+	} else {
+		event.stopPropagation();
+	}
 
 }

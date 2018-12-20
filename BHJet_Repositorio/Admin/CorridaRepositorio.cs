@@ -75,5 +75,35 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
-    }
+
+		/// <summary>
+		/// Busca Profissionais Disponiveis
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>UsuarioEntidade</returns>
+		public IEnumerable<OSCorridaEntidade> BuscaDetalheCorridaCliente(long clienteID)
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT
+									Corrida.idCorrida AS NumeroOS,
+									Corrida.dtDataHoraInicio AS DataHoraInicio,
+									Corrida.decValorFinalizado AS ValorFinalizado,
+									Profissional.vcNomeCompleto AS NomeProfissional
+								FROM
+									tblCorridas Corrida
+								INNER JOIN
+									tblColaboradoresEmpresaSistema Profissional ON Profissional.idColaboradorEmpresaSistema = Corrida.idUsuarioColaboradorEmpresa
+								WHERE 
+									Corrida.idCliente = @ClienteID";
+
+				// Execução
+				return sqlConnection.Query<OSCorridaEntidade>(query, new
+				{
+					ClienteID = clienteID,
+				});
+			}
+		}
+	}
 }

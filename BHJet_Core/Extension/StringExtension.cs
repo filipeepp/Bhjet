@@ -30,7 +30,7 @@ namespace BHJet_Core.Extension
         public static decimal ToDecimalCurrency(this string valor)
         {
             var result = default(decimal);
-            if (decimal.TryParse(valor.Replace("R$", "").Replace(" ", ""), NumberStyles.Currency, new CultureInfo("pt-BR"), out result))
+            if (decimal.TryParse(valor.Replace("R$", "").Replace(" ", "").Replace(":", ""), NumberStyles.Currency, new CultureInfo("pt-BR"), out result))
                 return result;
             return 0;
         }

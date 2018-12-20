@@ -15,6 +15,7 @@ namespace BHJet_DTO.Cliente
 		public string vcBairro { get; set; }
 		public string vcCidade { get; set; }
 		public string vcUF { get; set; }
+		public string vcCEP { get; set; }
 		public int idUsuario { get; set; }
 		public string vcNomeRazaoSocial { get; set; }
 		public string vcNomeFantasia { get; set; }
@@ -32,6 +33,7 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteCompletoModel
 	{
+		public long ID { get; set; }
 		public ClienteDadosCadastraisModel DadosCadastrais { get; set; }
 		public IEnumerable<ClienteContatoModel> Contato { get; set; }
 		public IEnumerable<ClienteValorModel> Valor { get; set; }
@@ -59,16 +61,19 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteContatoModel
 	{
+		public int ID { get; set; }
 		public string Contato { get; set; }
 		public string Email { get; set; }
 		public string TelefoneComercial { get; set; }
 		public string TelefoneCelular { get; set; }
+		public int TelefoneWhatsapp { get; set; }
 		public string Setor { get; set; }
 		public DateTime DataNascimento { get; set; }
 	}
 
 	public class ClienteValorModel
 	{
+		public int ID { get; set; }
 		public int ValorAtivado { get; set; }
 		public decimal ValorUnitario { get; set; }
 		public string TipoTarifa { get; set; }

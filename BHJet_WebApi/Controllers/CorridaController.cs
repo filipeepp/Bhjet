@@ -111,5 +111,32 @@ namespace BHJet_WebApi.Controllers
             }));
         }
 
-    }
+		/// <summary>
+		/// Busca detalhes da corrida por cliente
+		/// </summary>
+		/// <returns>List<DetalheCorridaModel></returns>
+		[Authorize]
+		[Route("cliente/{clienteID:long}")]
+		[ResponseType(typeof(DetalheCorridaModel))]
+		public IHttpActionResult GetCorridaCliente(long clienteID)
+		{
+			// Busca Dados detalhados da corrida/OS
+			var entidade = new CorridaRepositorio().BuscaDetalheCorridaCliente(clienteID);
+
+			// Validacao
+			if (entidade == null || !entidade.Any())
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+			// Return
+			return Ok(entidade.Select(dtm => new DetalheCorridaModel()
+			{
+				IDCliente = dtm.IDCliente,
+				NumeroOS = dtm.NumeroOS,
+				DataInicio = dtm.DataHoraInicio,
+				NomeProfissional = dtm.NomeProfissional,
+				ValorFinalizado = dtm.ValorFinalizado
+			}));
+		}
+
+	}
 }

@@ -4,39 +4,47 @@
 @model ClienteModel
 
 @Scripts.Render("~/bundles/jqueryval")
-<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>>
+<script src="@Url.Content("~/Scripts/ClienteValor.js")"></script>
 
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
 
 <!--QUANTIDADE DE VALORES-->
 @{
-	#region Session
-	if (Session["QTDE_VALOR"] == null)
-	{
-		Session["QTDE_VALOR"] = 0;
-	}
-	else
-	{
-		Session["QTDE_VALOR"] = Convert.ToInt16(Session["QTDE_VALOR"]) + 1;
-	}
-	var count = Convert.ToInt16(Session["QTDE_VALOR"]);
-	var numeroDisplay = count + 1;
-	#endregion
+	var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
+	var contador = 0;
+	var numeroDisplay = 1;
 
-	#region Instancia
-	//Instancia
-	Model.Valor = new List<ValorModel>()
+	if (!edicao)
+	{
+		#region Session
+		if (Session["QTDE_VALOR"] == null)
+		{
+			Session["QTDE_VALOR"] = 0;
+		}
+		else
+		{
+			Session["QTDE_VALOR"] = Convert.ToInt16(Session["QTDE_VALOR"]) + 1;
+		}
+		//var contador = Convert.ToInt16(Session["QTDE_VALOR"]);
+		contador = Convert.ToInt16(Session["QTDE_VALOR"]);
+		//var numeroDisplay = contador + 1;
+		numeroDisplay = contador + 1;
+		#endregion
+
+		#region Instancia
+		//Instancia
+		Model.Valor = new List<ValorModel>()
 {
 new ValorModel()
 };
 
-	for (int i = 0; i <= count; i++)
-	{
-		//Adiciona quantidade de instancias
-		Model.Valor.Add(new ValorModel());
+		for (int i = 0; i <= contador; i++)
+		{
+			//Adiciona quantidade de instancias
+			Model.Valor.Add(new ValorModel());
+		}
+		#endregion
 	}
-	#endregion
-
 }
 
 <style type="text/css">
@@ -49,92 +57,198 @@ new ValorModel()
 	}
 </style>
 
-<div class="panel panel-default cst-panel-valor" style="margin:30px" id="div_panel_valor_@Html.IdFor(model => model.Valor[count])">
-	@Html.HiddenFor(model => model.Valor[count].ValorRemovido)
-	<div class="panel-body">
-		<div class="titulo">
-			<h2>
-				<a onclick="history.go(-1);">
-					<i class="fa fa-hashtag" aria-hidden="true"></i>
-					<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
-				</a>
-				Valor
-				@if (count > 0)
-				{
-					<div style="text-align: right;">
-						<a style="font-size: 20px;" title="Remover valor" onclick="RemoverBlocoValor(document.getElementsByClassName('cst-panel-valor')[@count]);">
-							<i class="fa fa-times" aria-hidden="true"></i>
+@if (edicao)
+{
+	var campoData = "text";
+	var tamanho = Model.Valor.Count;
+
+	for (var i = 0; i < tamanho; i++)
+	{
+		<div class="panel panel-default cst-panel-valor" style="margin:30px" id="div_panel_valor_@Html.IdFor(model => model.Valor[i])">
+			@Html.HiddenFor(model => model.Valor[i].ValorRemovido)
+			@Html.HiddenFor(model => model.Valor[i].ID)
+			<div class="panel-body">
+				<div class="titulo">
+					<h2>
+						<a onclick="history.go(-1);">
+							<i class="fa fa-hashtag" aria-hidden="true"></i>
+							<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
 						</a>
+						Valor
+						@if (i > 0)
+						{
+							<div style="text-align: right;">
+								<a style="font-size: 20px;" title="Remover valor" onclick="ExcluirValor(document.getElementsByClassName('cst-panel-valor')[@i]);">
+									<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
+								</a>
+							</div>
+						}
+					</h2>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-3">
+						<div id="@Html.IdFor(model => model.Valor[i].TipoTarifa)">
+							<label for="txtTipoTarifa"><small class="obrigatorio">*</small>Tipo Tarifa</label>
+							<br />
+							@foreach (TipoTarifa tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+							{
+								var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}_{3}", "rdbtn", typeof(TipoTarifa), tipoEnum, i));
+								@Html.RadioButtonFor(model => model.Valor[i].TipoTarifa, tipoEnum, new { id, @class = "option-input radio ctmErrorTipoTarifa" })
+								@Html.Label(tipoEnum.RetornaDisplayNameEnum(), new { @for = id })
+								<br />
+							}
+						</div>
 					</div>
-				}
-			</h2>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-2">
+						<div id="@Html.IdFor(model => model.Valor[i].ValorUnitario)">
+							<label for="txtValorUnitario"><small class="obrigatorio">*</small>Valor Unitário</label>
+							@Html.TextBoxFor(model => model.Valor[i].ValorUnitario, new { @class = "form-control mask-valor ctmErrorValorUnitario" })
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-3">
+						<label>Vigência<small class="obrigatorio">*</small></label>
+						<div id="date_range_@Html.IdFor(model => model.Valor[i].VigenciaInicio)" class="input-group input-daterange">
+							<div id="@Html.IdFor(model => model.Valor[i].VigenciaInicio)">
+								@Html.TextBoxFor(model => model.Valor[i].VigenciaInicio, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
+							</div>
+							<div class="input-group-addon">a</div>
+							<div id="@Html.IdFor(model => model.Valor[i].VigenciaFim)">
+								@Html.TextBoxFor(model => model.Valor[i].VigenciaFim, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaFim" })
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-md-2">
+						<div id="@Html.IdFor(model => model.Valor[i].Franquia)">
+							<label for="txtFranquia"><small class="obrigatorio">*</small>Franquia Km/mês</label>
+							@Html.TextBoxFor(model => model.Valor[i].Franquia, new { @class = "form-control ctmErrorFranquia" })
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-md-2">
+						<div id="@Html.IdFor(model => model.Valor[i].FranquiaAdicional)">
+							<label for="txtFranquiaAdicional">Franquia Adicional</label>
+							@Html.TextBoxFor(model => model.Valor[i].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-6">
+						<div id="@Html.IdFor(model => model.Valor[i].Observacao)">
+							<label for="txaObservacoesValor">Observações</label>
+							@Html.TextBoxFor(model => model.Valor[i].Observacao, new { @class = "form-control ctmErrorObservacao" })
+						</div>
+					</div>
+					<div class="form-group col-xs-12 col-md-3">
+						<div id="@Html.IdFor(model => model.Valor[i].ValorAtivado)">
+							<div class="cst-ckb-Novo-Cliente">
+								<label class="label-cbx">
+									@Html.CheckBoxFor(model => model.Valor[i].ValorAtivado, new { @class = "form-control checkbox ctmErrorValorAtivado" })
+									<span>Contrato Ativo</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-3">
-				<div id="@Html.IdFor(model => model.Valor[count].TipoTarifa)">
-					<label for="txtTipoTarifa">Tipo Tarifa</label>
-					<br />
-					@foreach (TipoTarifa tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+		numeroDisplay++;
+	}
+	edicao = false;
+	Session["QTDE_VALOR"] = tamanho - 1;
+}
+else
+{
+	var campoData = "date";
+	<div class="panel panel-default cst-panel-valor" style="margin:30px" id="div_panel_valor_@Html.IdFor(model => model.Valor[contador])">
+		@Html.HiddenFor(model => model.Valor[contador].ValorRemovido)
+		<div class="panel-body">
+			<div class="titulo">
+				<h2>
+					<a onclick="history.go(-1);">
+						<i class="fa fa-hashtag" aria-hidden="true"></i>
+						<span style="font-size: 14px; font-weight: bold;">@numeroDisplay</span>
+					</a>
+					Valor
+					@if (contador > 0)
 					{
-						var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}_{3}", "rdbtn", typeof(TipoTarifa), tipoEnum, count));
-						@Html.RadioButtonFor(model => model.Valor[count].TipoTarifa, tipoEnum, new { id, @class = "option-input radio ctmErrorTipoTarifa" })
-						@Html.Label(tipoEnum.RetornaDisplayNameEnum(), new { @for = id })
-						<br />
+						<div style="text-align: right;">
+							<a style="font-size: 20px;" title="Remover valor" onclick="RemoverBlocoValor(document.getElementsByClassName('cst-panel-valor')[@contador]);">
+								<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
+							</a>
+						</div>
 					}
-				</div>
+				</h2>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-2">
-				<div id="@Html.IdFor(model => model.Valor[count].ValorUnitario)">
-					<label for="txtValorUnitario">Valor Unitário</label>
-					@Html.TextBoxFor(model => model.Valor[count].ValorUnitario, new { @class = "form-control mask-valor ctmErrorValorUnitario" })
-				</div>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-3">
-				<label>Vigência</label>
-				<div id="date_range_@Html.IdFor(model => model.Valor[count].VigenciaInicio)" class="input-group input-daterange">
-					<div id="@Html.IdFor(model => model.Valor[count].VigenciaInicio)">
-						@Html.TextBoxFor(model => model.Valor[count].VigenciaInicio, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
-					</div>
-					<div class="input-group-addon">a</div>
-					<div id="@Html.IdFor(model => model.Valor[count].VigenciaFim)">
-						@Html.TextBoxFor(model => model.Valor[count].VigenciaFim, new { type = "date", style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaFim" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-3">
+					<div id="@Html.IdFor(model => model.Valor[contador].TipoTarifa)">
+						<label for="txtTipoTarifa">Tipo Tarifa</label>
+						<br />
+						@foreach (TipoTarifa tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
+						{
+							var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}_{3}", "rdbtn", typeof(TipoTarifa), tipoEnum, contador));
+							@Html.RadioButtonFor(model => model.Valor[contador].TipoTarifa, tipoEnum, new { id, @class = "option-input radio ctmErrorTipoTarifa" })
+							@Html.Label(tipoEnum.RetornaDisplayNameEnum(), new { @for = id })
+							<br />
+						}
 					</div>
 				</div>
 			</div>
-			<div class="form-group col-xs-12 col-md-2">
-				<div id="@Html.IdFor(model => model.Valor[count].Franquia)">
-					<label for="txtFranquia">Franquia Km/mês</label>
-					@Html.TextBoxFor(model => model.Valor[count].Franquia, new { @class = "form-control ctmErrorFranquia" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-2">
+					<div id="@Html.IdFor(model => model.Valor[contador].ValorUnitario)">
+						<label for="txtValorUnitario">Valor Unitário</label>
+						@Html.TextBoxFor(model => model.Valor[contador].ValorUnitario, new { @class = "form-control  ctmErrorValorUnitario" })
+					</div>
 				</div>
 			</div>
-			<div class="form-group col-xs-12 col-md-2">
-				<div id="@Html.IdFor(model => model.Valor[count].FranquiaAdicional)">
-					<label for="txtFranquiaAdicional">Franquia Adicional</label>
-					@Html.TextBoxFor(model => model.Valor[count].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-3">
+					<label>Vigência</label>
+					<div id="date_range_@Html.IdFor(model => model.Valor[contador].VigenciaInicio)" class="input-group input-daterange">
+						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaInicio)">
+							@Html.TextBoxFor(model => model.Valor[contador].VigenciaInicio, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
+						</div>
+						<div class="input-group-addon">a</div>
+						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaFim)">
+							@Html.TextBoxFor(model => model.Valor[contador].VigenciaFim, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaFim" })
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-md-2">
+					<div id="@Html.IdFor(model => model.Valor[contador].Franquia)">
+						<label for="txtFranquia">Franquia Km/mês</label>
+						@Html.TextBoxFor(model => model.Valor[contador].Franquia, new { @class = "form-control ctmErrorFranquia" })
+					</div>
+				</div>
+				<div class="form-group col-xs-12 col-md-2">
+					<div id="@Html.IdFor(model => model.Valor[contador].FranquiaAdicional)">
+						<label for="txtFranquiaAdicional">Franquia Adicional</label>
+						@Html.TextBoxFor(model => model.Valor[contador].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="form-row">
-			<div class="form-group col-xs-12 col-md-6">
-				<div id="@Html.IdFor(model => model.Valor[count].Observacao)">
-					<label for="txaObservacoesValor">Observações</label>
-					@Html.TextBoxFor(model => model.Valor[count].Observacao, new { @class = "form-control ctmErrorObservacao" })
+			<div class="form-row">
+				<div class="form-group col-xs-12 col-md-6">
+					<div id="@Html.IdFor(model => model.Valor[contador].Observacao)">
+						<label for="txaObservacoesValor">Observações</label>
+						@Html.TextBoxFor(model => model.Valor[contador].Observacao, new { @class = "form-control ctmErrorObservacao" })
+					</div>
 				</div>
-			</div>
-			<div class="form-group col-xs-12 col-md-3">
-				<div id="@Html.IdFor(model => model.Valor[count].ValorAtivado)">
-					<div class="cst-ckb-Novo-Cliente">
-						<label class="label-cbx">
-							@Html.CheckBoxFor(model => model.Valor[count].ValorAtivado, new { @class = "form-control checkbox ctmErrorValorAtivado" })
-							<span>Contrato Ativo</span>
-						</label>
+				<div class="form-group col-xs-12 col-md-3">
+					<div id="@Html.IdFor(model => model.Valor[contador].ValorAtivado)">
+						<div class="cst-ckb-Novo-Cliente">
+							<label class="label-cbx">
+								@Html.CheckBoxFor(model => model.Valor[contador].ValorAtivado, new { @class = "form-control checkbox ctmErrorValorAtivado" })
+								<span>Contrato Ativo</span>
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+}
