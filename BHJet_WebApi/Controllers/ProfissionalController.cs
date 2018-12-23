@@ -206,7 +206,7 @@ namespace BHJet_WebApi.Controllers
                     decPercentualComissao = c.decPercentualComissao,
                     dtDataInicioVigencia = c.dtDataInicioVigencia,
                     dtDataFimVigencia = c.dtDataFimVigencia,
-                    vcObservacoes = c.Observacao 
+                    vcObservacoes = c.Observacao
                 }).ToArray() : new ProfissionalComissaoEntidade[] { }
             });
 
@@ -280,6 +280,35 @@ namespace BHJet_WebApi.Controllers
 
             // Return
             return Ok();
+        }
+
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("{idProfissional:long}/comissao")]
+        [ResponseType(typeof(ComissaoModel))]
+        public IHttpActionResult GetComissaoProfissional(long idProfissional)
+        {
+            // Busca Dados resumidos
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(idProfissional);
+
+            // Validacao
+            if (comissao == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(new ComissaoModel()
+            {
+                idComissaoColaboradorEmpresaSistema = comissao.idComissaoColaboradorEmpresaSistema,
+                idColaboradorEmpresaSistema = comissao.idColaboradorEmpresaSistema,
+                bitAtivo = comissao.bitAtivo,
+                decPercentualComissao = comissao.decPercentualComissao,
+                dtDataInicioVigencia = comissao.dtDataInicioVigencia,
+                dtDataFimVigencia = comissao.dtDataFimVigencia,
+                vcObservacoes = comissao.vcObservacoes
+            });
         }
 
     }

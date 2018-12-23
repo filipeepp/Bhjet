@@ -55,9 +55,9 @@
 										@foreach (var linha in Model.ListaMotorista)
 										{
 											<tr class="cst-tbl-linhaHover" id="@linha.ID">
-												<td> <a href="">@linha.ID</a></td>
-												<td> <a href=""> @linha.NomeCompleto </a></td>
-												<td> <a href="">@linha.TipoRegimeContratacao.ToString()</a></td>
+												<td> @linha.ID</td>
+												<td> @linha.NomeCompleto </td>
+												<td> @linha.TipoRegimeContratacao.ToString()</td>
 											</tr>
 										}
 									</tbody>

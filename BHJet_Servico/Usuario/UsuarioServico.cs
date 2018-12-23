@@ -9,6 +9,7 @@ namespace BHJet_Servico.Usuario
         void CadastrarUsuario(UsuarioDTO model);
         void AtualizaSituacao(int situacao, long id);
         void DeletaUsuario(long id);
+        UsuarioDTO BuscaUsuario(long id);
     }
 
     public class UsuarioServico : ServicoBase, IUsuarioServico
@@ -36,6 +37,11 @@ namespace BHJet_Servico.Usuario
         public void DeletaUsuario(long id)
         {
             this.Delete(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.DeleteUsuario, id)}"));
+        }
+
+        public UsuarioDTO BuscaUsuario(long id)
+        {
+            return this.Get<UsuarioDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.GetUsuario, id)}"));
         }
     }
 }

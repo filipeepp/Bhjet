@@ -511,5 +511,29 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
+
+        /// <summary>
+        /// Busca Comissao do Profissional
+        /// </summary>
+        /// <param name="idProfissional">idProfissional</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public ComissaoProfissionalEntidade BuscaComissaoProfissional(long idProfissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select TOP(1) * from tblComissaoColaboradorEmpresaSistema CC
+				                    join tblColaboradoresEmpresaSistema CE on (CC.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
+					                where CC.idColaboradorEmpresaSistema = @id
+						              and CC.bitAtivo = 1
+					             order by CC.dtDataInicioVigencia desc";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<ComissaoProfissionalEntidade>(query, new
+                {
+                    id = idProfissional
+                });
+            }
+        }
     }
 }

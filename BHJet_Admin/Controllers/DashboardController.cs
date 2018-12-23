@@ -3,6 +3,7 @@ using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
+using BHJet_DTO.Diaria;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
@@ -10,6 +11,7 @@ using BHJet_Servico.Diaria;
 using BHJet_Servico.Profissional;
 using BHJet_Servico.Tarifa;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -230,24 +232,25 @@ namespace BHJet_Admin.Controllers
         {
             try
             {
-                if (modelo.PeriodoInicial.ToDate() == null)
+                if (modelo.HorarioInicial == null)
                 {
-                    ModelState.AddModelError("", "Data hora inicio do expediente.");
+                    ModelState.AddModelError("", "Hora inicio do expediente.");
                     return View(modelo);
                 }
-                else if (modelo.PeriodoFinal.ToDate() == null)
+                else if (modelo.HorarioFim == null)
                 {
-                    ModelState.AddModelError("", "Data hora Fim do expediente.");
+                    ModelState.AddModelError("", "Hora Fim do expediente.");
                     return View(modelo);
                 }
-                else if (modelo.PeriodoFinal.ToDate() < modelo.PeriodoInicial.ToDate())
+                else if (modelo.HorarioFim < modelo.HorarioFim)
+                {
+                    ModelState.AddModelError("", "Hora Fim do expediente não pode ser menor que o horario inicial.");
+                    return View(modelo);
+                }
+
+                if (modelo.PeriodoFinal.ToString().ToDate() < modelo.PeriodoInicial.ToString().ToDate())
                 {
                     ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
-                    return View(modelo);
-                }
-                else if (modelo.PeriodoFinal.ToDate().Value.Date != modelo.PeriodoInicial.ToDate().Value.Date)
-                {
-                    ModelState.AddModelError("", "A dia de expediente deve ser o mesmo para inicio e fim de diaria, mudando apenas o horário.");
                     return View(modelo);
                 }
                 else if (modelo.ClienteSelecionado == null)
@@ -259,15 +262,18 @@ namespace BHJet_Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     // Incluir diaria
-                    diariaServico.IncluirDiaria(new BHJet_DTO.Diaria.DiariaAvulsaDTO()
+                    diariaServico.IncluirDiaria(new DiariaAvulsaFiltroDTO()
                     {
                         IDCliente = modelo.ClienteSelecionado ?? 0,
                         IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
-                        IDTarifario = modelo.TarifaCliente,
-                        DataHoraInicioExpediente = modelo.PeriodoInicial.ToDate() ?? DateTime.Now,
-                        DataHoraFimExpediente = modelo.PeriodoFinal.ToDate(),
+                        DataInicioExpediente = modelo.PeriodoInicial.ToDate() ?? new DateTime(),
+                        DataFimExpediente = modelo.PeriodoFinal.ToDate() ?? new DateTime(),
+                        HoraInicioExpediente = modelo.HorarioInicial ?? new TimeSpan(),
+                        HoraFimExpediente = modelo.HorarioFim ?? new TimeSpan(),
                         ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
-                        ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency()
+                        ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency(),
+                        FranquiaKMDiaria = modelo.FranquiaKMDiaria.ToDecimalCurrency(),
+                        ValorKMAdicionalNegociado = modelo.ValorKMAdicional.ToDecimalCurrency()
                     });
 
                     this.MensagemSucesso("Diaria avulsa cadastrada com sucesso.");
@@ -321,14 +327,39 @@ namespace BHJet_Admin.Controllers
         public JsonResult BuscaTarifas(long idCliente)
         {
             // Recupera dados
-            var entidade = tarifaServico.BuscaTaritasCliente(idCliente);
+            var entidade = tarifaServico.BuscaTaritaCliente(idCliente);
 
             // Return
-            return Json(entidade.Select(x => new AutoCompleteModel()
+            return Json(new
             {
-                label = x.ID + " - " + x.Descricao + " - " + x.ValorDiaria.ToString(),
-                value = x.ID
-            }), JsonRequestBehavior.AllowGet);
+                DecValorDiaria = entidade.decValorDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
+                decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
+                decFranquiaKMDiaria = entidade.decFranquiaKMDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BuscaComissao(long idProfissional)
+        {
+            try
+            {
+                // Recupera dados
+                var entidade = profissionalServico.BuscaComissaoProfissional(idProfissional);
+
+                // Return
+                return Json(new
+                {
+                    decPercentualComissao = entidade.decPercentualComissao.ToString("C", new CultureInfo("pt-BR")).Replace("R$ ", "") + "%" ?? string.Empty,
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new
+                {
+                    string.Empty,
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)

@@ -127,7 +127,7 @@ namespace BHJet_Admin.Controllers
             try
             {
                 // Validacoes
-                if (model.Comissao.Any())
+                if (model.Comissao != null && model.Comissao.Any())
                 {
                     model.Comissao.All(x =>
                     {
@@ -135,8 +135,15 @@ namespace BHJet_Admin.Controllers
                             throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
                         else if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
+                        else if(x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
+                            throw new Exception($"Preencha ao menos uma comissão para o profissional.");
                         return true;
                     });
+                }
+                else
+                {
+                    model.Comissao = new NovoMotoristaComissaoModel[] { };
+                    throw new Exception($"Preencha ao menos uma comissão para o profissional.");
                 }
 
                 // Modelo entidade

@@ -12,7 +12,7 @@
         public static class Erro
         {
             public static readonly string ErroPadrao = "Sistema indiponível.";
-            public static readonly string SemResultado = "Não foram encontrados resultado.";
+            public static readonly string SemResultado = "Não foram encontrados resultados.";
         }
 
 

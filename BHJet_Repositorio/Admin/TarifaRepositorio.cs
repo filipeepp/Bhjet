@@ -11,20 +11,19 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public IEnumerable<TarifaEntidade> BuscaTarificaPorCliente(long clienteID)
+        public TarifaEntidade BuscaTarificaPorCliente(long clienteID)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
+                // Adicionar busca de tarifia exclusia do cliente na NOVA TABELA
+
                 // Query
-                string query = @"select TFC.idTarifario as ID,
-	                                    TF.vcDescricaoTarifario as Descricao,
-	                                    TF.decValorDiaria as ValorDiaria
-	                            from tblClientesTarifario TFC
-		                                inner join tblTarifario TF ON (TF.idTarifario = TFC.idTarifario)
-		                        where TFC.idCliente = @idCli";
+                string query = @"select top(1) * from tblTarifario
+	                                where bitAtivo = 1
+		                        order by dtDataInicioVigencia desc";
 
                 // Execução
-                return sqlConnection.Query<TarifaEntidade>(query, new { idCli = clienteID });
+                return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { idCli = clienteID });
             }
         }
     }

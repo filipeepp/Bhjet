@@ -17,8 +17,8 @@ namespace BHJet_WebApi.Controllers
         /// <returns>IEnumerable<TarifaDTO></returns>
         [Authorize]
         [Route("cliente/{idCliente:long}")]
-        [ResponseType(typeof(IEnumerable<TarifaDTO>))]
-        public IHttpActionResult GetTarifasCliente(long idCliente)
+        [ResponseType(typeof(TarifaDTO))]
+        public IHttpActionResult GetTarifaCliente(long idCliente)
         {
             // Busca Dados resumidos
             var entidade = new TarifaRepositorio().BuscaTarificaPorCliente(idCliente);
@@ -28,12 +28,24 @@ namespace BHJet_WebApi.Controllers
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Return
-            return Ok(entidade.Select(trf => new TarifaDTO()
+            return Ok(new TarifaDTO()
             {
-                ID = trf.ID,
-                Descricao = trf.Descricao,
-                ValorDiaria = trf.ValorDiaria
-            }));
+                idTarifario = entidade.idTarifario,
+                bitPagamentoAVista = entidade.bitPagamentoAVista,
+                decFranquiaKMBandeirada = entidade.decFranquiaKMBandeirada,
+                decFranquiaKMDiaria = entidade.decFranquiaKMDiaria,
+                decFranquiaKMMensalidade = entidade.decFranquiaKMMensalidade,
+                decValorBandeirada = entidade.decValorBandeirada,
+                decValorDiaria = entidade.decValorDiaria,
+                decValorKMAdicionalCorrida = entidade.decValorKMAdicionalCorrida,
+                decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria,
+                decValorKMAdicionalMensalidade = entidade.decValorKMAdicionalMensalidade,
+                decValorMensalidade = entidade.decValorMensalidade,
+                decValorMinutoParado = entidade.decValorMinutoParado,
+                intFranquiaMinutosParados = entidade.intFranquiaMinutosParados,
+                timFaixaHorarioFinal = entidade.timFaixaHorarioFinal,
+                timFaixaHorarioInicial = entidade.timFaixaHorarioInicial
+            });
         }
 
 

@@ -102,7 +102,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
         /// Atualiza situacao Usuario
         /// </summary>
@@ -124,9 +123,8 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
-        /// Atualiza situacao Usuario
+        /// Deleta situacao Usuario
         /// </summary>
         /// <returns></returns>
         public void DeletaUsuario(long idUser)
@@ -145,6 +143,24 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        /// <summary>
+        /// Busca situacao Usuario
+        /// </summary>
+        /// <returns></returns>
+        public UsuarioEntidade BuscaUsuario(long idUser)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
 
+                // Query
+                string query = @"select * from tblUsuarios where idUsuario = @id";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
+                {
+                    id = idUser
+                });
+            }
+        }
     }
 }

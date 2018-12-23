@@ -52,7 +52,7 @@ namespace BHJet_WebApi.Controllers
 
             // Validacao
             if (entidade != null && entidade.Any() && entidade.Where(x => x.vcEmail == model.Email).Any())
-                return BadRequest("Já existe um usário cadastrado para o email informado.");
+                return BadRequest("Já existe um usuário cadastrado para o email informado.");
 
             // Cadastra Usuario
             usuRep.IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
@@ -69,13 +69,45 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Busca usuario especifico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{id:long}")]
+        public IHttpActionResult BuscaUsuario(long id)
+        {
+            // Instancia
+            var usuRep = new UsuarioRepositorio();
+
+            // Cadastra Usuario
+            var usuario = usuRep.BuscaUsuario(id);
+
+            // Validação
+            if (usuario == null)
+                BadRequest($"Usuário {id} não encontrado.");
+
+            // Return
+            return Ok(new UsuarioDTO()
+            {
+                ID = usuario.idUsuario,
+                ClienteSelecionado = usuario.ClienteSelecionado,
+                Email = usuario.vcEmail,
+                Senha = "",
+                Situacao = usuario.bitAtivo,
+                SituacaoDesc = usuario.bitDescAtivo,
+                TipoUsuario = usuario.idTipoUsuario
+            });
+        }
+
+        /// <summary>
         /// Deleta usuario especifico
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
         [Route("{id:long}")]
-        public IHttpActionResult DeleteSituacao(long id)
+        public IHttpActionResult DeletaUsuario(long id)
         {
             // Instancia
             var usuRep = new UsuarioRepositorio();

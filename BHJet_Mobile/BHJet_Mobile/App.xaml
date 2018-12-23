@@ -32,6 +32,7 @@
                 <Setter Property="BorderRadius" Value="0" />
                 <Setter Property="Margin" Value="-5" />
                 <Setter Property="TextColor" Value="#FFF" />
+                <Setter Property="FontFamily" Value="edp_preon_medium.ttf#edp_preon_medium"/>
             </Style>
             <Style Class="BotaoLogin" TargetType="Button" BaseResourceKey="BotaoBase">
                 <Setter Property="BackgroundColor" Value="#e8df2a"/>

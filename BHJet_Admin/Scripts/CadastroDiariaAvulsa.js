@@ -2,26 +2,26 @@
 function BuscaProfissionais() {
     var jqVariavel = $("#pesquisaProfissional");
     $("#ProfissionalSelecionado").find('option').remove().end();
-        $.ajax({
-            dataType: "json",
-            type: "GET",
-            url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val(),
-            success: function (data) {
-                if (data !== "" && data !== undefined) {
-                    $("#ProfissionalSelecionado").find('option').remove().end();
-                    var div_data = "<option value=></option>";
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val(),
+        success: function (data) {
+            if (data !== "" && data !== undefined) {
+                $("#ProfissionalSelecionado").find('option').remove().end();
+                var div_data = "<option value=></option>";
+                $(div_data).appendTo('#ProfissionalSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
                     $(div_data).appendTo('#ProfissionalSelecionado');
-                    $.each(data, function (i, obj) {
-                        var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
-                        $(div_data).appendTo('#ProfissionalSelecionado');
-                    });
-                    $("#ProfissionalSelecionado").mouseup();
-                }
-                else {
-                    AdicionarErroCampo('ProfissionalSelecionado', 'Não foi possível encontrar o profissional desejado.', 4000);
-                }
+                });
+                $("#ProfissionalSelecionado").mouseup();
             }
-        });
+            else {
+                AdicionarErroCampo('ProfissionalSelecionado', 'Não foi possível encontrar o profissional desejado.', 4000);
+            }
+        }
+    });
 }
 
 function BuscaTarifas(idCliente) {
@@ -31,13 +31,30 @@ function BuscaTarifas(idCliente) {
         url: "/Dashboard/BuscaTarifas?idCliente=" + idCliente,
         success: function (data) {
             if (data !== "" && data !== undefined) {
-                $("#TarifaCliente").find('option').remove().end();
-                var div_data = "<option value=></option>";
-                $(div_data).appendTo('#TarifaCliente');
-                $.each(data, function (i, obj) {
-                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
-                    $(div_data).appendTo('#TarifaCliente');
-                });
+                //$("#TarifaCliente").find('option').remove().end();
+                //var div_data = "<option value=></option>";
+                //$(div_data).appendTo('#TarifaCliente');
+                //$.each(data, function (i, obj) {
+                //    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                //    $(div_data).appendTo('#TarifaCliente');
+                //});
+                $("#ValorDiaria").val(data.DecValorDiaria);
+                $("#ValorKMAdicional").val(data.decValorKMAdicionalDiaria);
+                $("#FranquiaKMDiaria").val(data.decFranquiaKMDiaria);
+            }
+        }
+    });
+}
+
+function BuscaComissaoProfissional(idProfissional) {
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/Dashboard/BuscaComissao?idProfissional=" + idProfissional,
+        success: function (data) {
+            if (data !== "" && data !== undefined) {
+                $("#ValorComissao").val(data.decPercentualComissao);
+                $("#ValorComissao").mask('##0,00%', { reverse: true });
             }
         }
     });
@@ -46,28 +63,28 @@ function BuscaTarifas(idCliente) {
 function BuscaClientes() {
     var jqVariavel = $("#pesquisaCliente");
     $("#TarifaCliente").find('option').remove().end();
-    
-        $.ajax({
-            dataType: "json",
-            type: "GET",
-            url: "/Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
-            success: function (data) {
-                if (data !== "" && data !== undefined && data.length > 0) {
-                    $("#ClienteSelecionado").find('option').remove().end();
-                    var div_data = "<option value=></option>";
+
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "/Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
+        success: function (data) {
+            if (data !== "" && data !== undefined && data.length > 0) {
+                $("#ClienteSelecionado").find('option').remove().end();
+                var div_data = "<option value=></option>";
+                $(div_data).appendTo('#ClienteSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
                     $(div_data).appendTo('#ClienteSelecionado');
-                    $.each(data, function (i, obj) {
-                        var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
-                        $(div_data).appendTo('#ClienteSelecionado');
-                    });
-                    $("#ClienteSelecionado").mouseup();
-                }
-                else {
-                    AdicionarErroCampo('ClienteSelecionado', 'Não foi possível encotrar o cliente desejado.', 4000);
-                }
-            },
-        });
-    
+                });
+                $("#ClienteSelecionado").mouseup();
+            }
+            else {
+                AdicionarErroCampo('ClienteSelecionado', 'Não foi possível encotrar o cliente desejado.', 4000);
+            }
+        },
+    });
+
 }
 
 function validaDatePickerManual(id, valor) {
@@ -85,18 +102,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#ValorDiaria").mask('000.000.000.000.000,00', { reverse: true });
     $("#ValorComissao").mask('000.000.000.000.000,00', { reverse: true });
+    $("#FranquiaKMDiaria").mask('000.000.000.000.000,00', { reverse: true });
+    $("#ValorComissao").mask('##0,00%', { reverse: true });
+    $("#HorarioInicial").mask('00:00', { reverse: true, placeholder: "00:00" });
+    $("#HorarioFim").mask('00:00', { reverse: true, placeholder: "00:00" });
 
-    $("#PeriodoInicial").mask("00/00/0000 00:00", {
+    $("#PeriodoInicial").mask("00/00/0000", {
         onComplete: function (a) {
             validaDatePickerManual("PeriodoInicial", a)
         },
-        placeholder: "__/__/____ 00:00"
+        placeholder: "__/__/____"
     });
-    $("#PeriodoFinal").mask("00/00/0000 00:00", {
+    $("#PeriodoFinal").mask("00/00/0000", {
         onComplete: function (a) {
             validaDatePickerManual("PeriodoFinal", a)
         },
-        placeholder: "__/__/____ 00:00"
+        placeholder: "__/__/____"
     });
 
     $("#PeriodoInicial").datepicker({
@@ -108,10 +129,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         nextText: 'Próximo',
         prevText: 'Anterior',
-        minDate: 0,
-        onSelect: function () {
-            $("#PeriodoInicial").val($("#PeriodoInicial").val() + " 09:00")
-        }
+        minDate: 0
     });
 
     $("#PeriodoFinal").datepicker({
@@ -123,10 +141,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         nextText: 'Próximo',
         prevText: 'Anterior',
-        minDate: 0,
-        onSelect: function () {
-            $("#PeriodoFinal").val($("#PeriodoFinal").val() + " 18:00")
-        }
+        minDate: 0
     });
 
     $('#pesquisaCliente').click(function (event) {
@@ -142,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }, 500));
 
     $("#pesquisaProfissional").keyup(delay(function (e) {
-       BuscaProfissionais();
+        BuscaProfissionais();
     }, 500));
 
     $("#ClienteSelecionado").change(function () {
@@ -152,6 +167,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
             var text = $option.text();
             if (value != undefined && value != "") {
                 BuscaTarifas(value)
+            }
+        }
+    });
+
+    $("#ProfissionalSelecionado").change(function () {
+        var $option = $(this).find('option:selected');
+        if ($option != undefined) {
+            var value = $option.val();
+            var text = $option.text();
+            if (value != undefined && value != "") {
+                BuscaComissaoProfissional(value)
             }
         }
     });

@@ -10,6 +10,7 @@ namespace BHJet_Servico.Profissional
         ProfissionalCompletoModel BuscaProfissional(long id);
         void AtualizaDadosProfissional(ProfissionalCompletoModel proModel);
         void IncluirProfissional(ProfissionalCompletoModel proModel);
+        ComissaoModel BuscaComissaoProfissional(long id);
     }
 
     public class ProfissionalServico : ServicoBase, IProfissionalServico
@@ -92,6 +93,16 @@ namespace BHJet_Servico.Profissional
         public void IncluirProfissional(ProfissionalCompletoModel proModel)
         {
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.PostProfissional}"), proModel);
+        }
+
+
+        /// <summary>
+        /// Busca Detalhe de Profissional especifico
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public ComissaoModel BuscaComissaoProfissional(long id)
+        {
+            return this.Get<ComissaoModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Profissional.GetComissaoProfissional, id)}"));
         }
     }
 }

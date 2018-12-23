@@ -65,6 +65,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\edp_preon_medium.ttf" />
+    <AndroidAsset Include="Assets\edp_preon_thin.ttf" />
+    <AndroidAsset Include="Assets\Oswald-Regular.ttf" />
+    <AndroidAsset Include="Assets\Oswald-SemiBold.ttf" />
+    <AndroidAsset Include="Assets\RobotoCondensed-Bold.ttf" />
+    <AndroidAsset Include="Assets\RobotoCondensed-Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

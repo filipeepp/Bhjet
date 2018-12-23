@@ -1,195 +1,68 @@
-﻿@using BHJet_Admin.Models.Usuario
-@using BHJet_Core.Enum
-@model UsuariosModel
-
-@Scripts.Render("~/bundles/jqueryval")
-
+﻿@using System.Web.Http
 
 <ol class="breadcrumb">
-	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
-	<li><a href="#map_canvas">Manutenção Usuários</a></li>
+    <li><a onclick="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#map_canvas">Usuários</a></li>
 </ol>
 
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="titulo">
-						<h2>
-							<a href="@Url.Action("Index", "Home")">
-								<i class="fa fa-arrow-left" aria-hidden="true"></i>
-							</a>
-							Manutenção Usuários
-						</h2>
-					</div>
-					<br />
-					<div class="row">
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a href=" @Url.Action("Index", "Home")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Usuários
+                        </h2>
+                    </div>
+                    <div class="row">
 
-						@using (Html.BeginForm("Index", "Usuario", FormMethod.Post, new { @class = "form-horizontal" }))
-						{
-							<div class="row form-group ">
+                        <div class="col-xs-12 col-sm-7 col-lg-3">
+                            <a href="@Url.Action("Novo", "Usuario", new { Edicao = false, ID = "" })">
+                                <div class="small-box bg-light-gray">
+                                    <div class="inner">
+                                        <h3><i class="fa fa-plus-circle" aria-hidden="true"></i></h3>
+                                        <h6>Novo Usuário</h6>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <span class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></span>
+                                </div>
+                            </a>
+                        </div>
 
-								<div class="panel panel-default" style="margin:30px; margin-top:-25px">
-									<div class="panel-body">
-										<div class="titulo">
-											<h2>
-												<a onclick="history.go(-1);">
-													<i class="fa fa-user" aria-hidden="true"></i>
-												</a>
-												Adicionar usuário
-											</h2>
-										</div>
+                        <div class="col-xs-12 col-sm-7 col-lg-3">
+                            <a href="@Url.Action("Listar", "Usuario")">
+                                <div class="small-box bg-light-gray">
+                                    <div class="inner">
+                                        <h3><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
+                                        <h6>Manutenção Cadastro</h6>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <span class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></span>
+                                </div>
+                            </a>
+                        </div>
 
-										<div class="col-xs-12 col-sm-12 col-lg-12">
-											<div class="row">
-												<div class=" col-md-4 col-lg-3">
-													<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
-													@Html.TextBoxFor(model => model.novo.Email, new { @class = "form-control", @autocomplete = "off" })
-													@Html.ValidationMessageFor(model => model.novo.Email, null, new { @class = "text-danger" })
-												</div>
-												<div class=" col-md-3 col-lg-2">
-													<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
-													@Html.TextBoxFor(model => model.novo.Senha, new { @class = "form-control", @type = "password", @autocomplete = "off" })
-													@Html.ValidationMessageFor(model => model.novo.Senha, null, new { @class = "text-danger" })
-												</div>
+                    </div>
 
-												<div class=" col-md-2 col-lg-2">
-													<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Situação:</label>
-													<br />
-													<label class="label-cbx">
-														@Html.CheckBoxFor(model => model.novo.Situacao, new { @class = "checkbox" })
-														@Html.ValidationMessageFor(model => model.novo.Situacao, null, new { @class = "text-danger" })
-													</label>
-													<span>Ativo</span>
-												</div>
 
-											</div>
-											<br /><br />
-											<div class="row">
-												<div class=" col-md-3 col-lg-3">
-													<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Tipo Usuário</label>
-													@Html.DropDownListFor(model => model.novo.TipoUser, new SelectList(Enum.GetValues(typeof(TipoUsuario))), new { @class = "form-control" })
-													@Html.ValidationMessageFor(model => model.novo.TipoUser, null, new { @class = "text-danger" })
-												</div>
-
-												<div id="cliRefer" style="display:none" class=" col-md-3 col-lg-3">
-													<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Cliente</label>
-													<input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
-													@Html.DropDownListFor(model => model.novo.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
-												</div>
-
-												<div class="col-md-3 col-lg-3">
-													<br />
-													<button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
-														<i class="fa fa-share"></i>Cadastrar usuário
-													</button>
-												</div>
-											</div>
-
-											<div class="row">
-
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-						}
-
-					</div>
-
-					<div class="row">
-						<div class="row form-group ">
-
-							<div class="panel panel-default" style="margin:30px; margin-top:-25px">
-								<div class="panel-body">
-									<div class="titulo">
-										<h2>
-											<a onclick="history.go(-1);">
-												<i class="fa fa-users" aria-hidden="true"></i>
-											</a>
-											Usuários
-										</h2>
-									</div>
-									<div class="col-md-12">
-										<label for="txtPesquisarCliente">Pesquisar Usuário</label>
-
-										@using (Html.BeginForm("Index", "Usuario", FormMethod.Get))
-										{
-											<div class="form-group">
-												<div class="input-group">
-													<div class="input-group-addon"><i class="fa fa-search"></i></div>
-													<input style="max-width: 400px;" class="form-control" type="text" id="trechoPqs" placeholder="Digite o email do usuário." name="trechoPqs">
-													<button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
-												</div>
-											</div>
-
-										}
-
-									</div>
-									<div class="col-md-12">
-										<div class="table-responsive">
-											<br />
-											<table class="table table-bordered">
-												<thead>
-													<tr class="bg-light-gray">
-														<th scope="col">ID</th>
-														<th scope="col">Email</th>
-														<th scope="col">Tipo Usuário</th>
-														<th scope="col">Situação</th>
-														<th scope="col">Ações</th>
-													</tr>
-												</thead>
-												<tbody>
-													@foreach (var linha in Model.usuarios)
-													{
-														<tr>
-															<td> @linha.ID</td>
-															<td>  @linha.Email </td>
-															<td> @linha.TipoUser.ToString()</td>
-															<td> @linha.SituacaoDesc.ToString()</td>
-															<td>
-
-																<a onclick="ExcluirUsuario(@linha.ID)">
-																	<i class="fa fa-trash-o" style="color:indianred" aria-hidden="true"> Excluir</i>
-																</a>
-																@if (@linha.Situacao)
-																{
-																	<a onclick="AlterarSituacao(@linha.ID, 0)">
-																		<i class="fa fa-ban" style="color:darkred" aria-hidden="true"> Desativar</i>
-																	</a>
-																}
-																else
-																{
-																	<a onclick="AlterarSituacao(@linha.ID, 1)">
-																		<i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Ativar</i>
-																	</a>
-																}
-															</td>
-														</tr>
-													}
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="~/Scripts/Usuario.js"></script>
+
 @if (TempData["mensagemGeral"] != null)
 {
-	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
-	<script type="text/javascript">
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
 
 		window.onload = function () {
 			var mensagem = $("#mensagemController").val();
@@ -197,5 +70,5 @@
             $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
             $('#myModal').modal('show')
         };
-	</script>
+    </script>
 }

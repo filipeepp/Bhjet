@@ -31,29 +31,68 @@ namespace BHJet_WebApi.Controllers
         /// <returns></returns>
         [Authorize]
         [Route("")]
-        public IHttpActionResult PostDiariaAvulsa([FromBody]DiariaAvulsaDTO model)
+        public IHttpActionResult PostDiariaAvulsa([FromBody]DiariaAvulsaFiltroDTO model)
         {
-            // Busca Dados detalhados da corrida/OS
-            new DiariaRepositorio().IncluirDiariaAvulsa(new BHJet_Repositorio.Admin.Entidade.DiariaAvulsaEntidade()
+            // Busca Tarifa Cliente
+            var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente);
+
+            // Verifica periodo informado contem varios dias
+            if (model.DataFimExpediente.Date > model.DataInicioExpediente)
             {
-                IDCliente = model.IDCliente,
-                IDColaboradorEmpresa = model.IDColaboradorEmpresa,
-                IDTarifario = model.IDTarifario,
-                DataHoraFimExpediente = model.DataHoraFimExpediente,
-                DataHoraFimIntervalo = model.DataHoraFimIntervalo,
-                DataHoraInicioExpediente = model.DataHoraInicioExpediente,
-                DataHoraInicioIntervalo = model.DataHoraInicioIntervalo,
-                DataHoraSolicitacao = model.DataHoraSolicitacao,
-                FaturarComoDiaria = model.FaturarComoDiaria,
-                FranquiaKMDiaria = model.FranquiaKMDiaria,
-                IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
-                OdometroFimExpediente = model.OdometroFimExpediente,
-                OdometroInicioExpediente = model.OdometroInicioExpediente,
-                OdometroInicioIntervalo = model.OdometroInicioIntervalo,
-                ValorDiariaComissaoNegociado = model.ValorDiariaComissaoNegociado,
-                ValorDiariaNegociado = model.ValorDiariaNegociado,
-                ValorKMAdicionalNegociado = model.ValorKMAdicionalNegociado
-            });
+                // Quantos dias de diarias solicitados
+                double qtdDias = (model.DataFimExpediente.Date - model.DataInicioExpediente).TotalDays;
+
+                // Monta diarias por dia
+                for (int i = 0; i <= qtdDias; i++)
+                {
+                    // Monta periodos
+                    var dataRegistro = model.DataInicioExpediente.AddDays(i);
+
+                    // Inicio
+                    var horaInicio = model.HoraInicioExpediente < new System.TimeSpan(00, 00, 00) ? new System.TimeSpan(00, 00, 00) : model.HoraInicioExpediente;
+                    var dataInicio = new System.DateTime(dataRegistro.Year, dataRegistro.Month, dataRegistro.Day, horaInicio.Hours, horaInicio.Minutes, horaInicio.Seconds);
+
+                    // Fim
+                    var horaFim = model.HoraFimExpediente < new System.TimeSpan(00, 00, 00) ? new System.TimeSpan(00, 00, 00) : model.HoraFimExpediente;
+                    var dataFim = new System.DateTime(dataRegistro.Year, dataRegistro.Month, dataRegistro.Day, horaFim.Hours, horaFim.Minutes, horaFim.Seconds);
+
+                    // Busca Dados detalhados da corrida/OS
+                    new DiariaRepositorio().IncluirDiariaAvulsa(new BHJet_Repositorio.Admin.Filtro.NovaDiariaAvulsaFiltro()
+                    {
+                        IDCliente = model.IDCliente,
+                        IDTarifario = tarifa.idTarifario,
+                        IDColaboradorEmpresa = model.IDColaboradorEmpresa,
+                        IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
+                        DataHoraFimExpediente = dataInicio,
+                        DataHoraInicioExpediente = dataFim,
+                        FranquiaKMDiaria = model.FranquiaKMDiaria,
+                        ValorDiariaComissaoNegociado = model.ValorDiariaComissaoNegociado,
+                        ValorDiariaNegociado = model.ValorDiariaNegociado,
+                        ValorKMAdicionalNegociado = model.ValorKMAdicionalNegociado
+                    });
+                }
+            }
+            else
+            {
+                // Monta periodos
+                model.DataInicioExpediente = new System.DateTime(model.DataInicioExpediente.Year, model.DataInicioExpediente.Month, model.DataInicioExpediente.Day, model.HoraInicioExpediente.Hours, model.HoraInicioExpediente.Minutes, model.HoraInicioExpediente.Seconds);
+                model.DataFimExpediente = new System.DateTime(model.DataFimExpediente.Year, model.DataFimExpediente.Month, model.DataFimExpediente.Day, model.HoraFimExpediente.Hours, model.HoraFimExpediente.Minutes, model.HoraFimExpediente.Seconds);
+
+                // Busca Dados detalhados da corrida/OS
+                new DiariaRepositorio().IncluirDiariaAvulsa(new BHJet_Repositorio.Admin.Filtro.NovaDiariaAvulsaFiltro()
+                {
+                    IDCliente = model.IDCliente,
+                    IDTarifario = tarifa.idTarifario,
+                    IDColaboradorEmpresa = model.IDColaboradorEmpresa,
+                    IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
+                    DataHoraFimExpediente = model.DataFimExpediente,
+                    DataHoraInicioExpediente = model.DataInicioExpediente,
+                    FranquiaKMDiaria = model.FranquiaKMDiaria,
+                    ValorDiariaComissaoNegociado = model.ValorDiariaComissaoNegociado,
+                    ValorDiariaNegociado = model.ValorDiariaNegociado,
+                    ValorKMAdicionalNegociado = model.ValorKMAdicionalNegociado
+                });
+            }
 
             // Return
             return Ok();

@@ -56,6 +56,7 @@ namespace BHJet_Servico
             public const string GetUsuarios = "/Usuarios";
             public const string PostUsuario = "/Usuarios";
             public const string DeleteUsuario = "/Usuarios/{0}";
+            public const string GetUsuario = "/Usuarios/{0}";
             public const string PutSituacao = "/Usuarios/situacao/{0}/usuario/{1}";
         }
 
@@ -79,6 +80,7 @@ namespace BHJet_Servico
             public const string GetProfissionais = "/Profissional";
             public const string GetLocalizacoesProfissionais = "/Profissional/tipo/{0}/localizacao";
             public const string GetLocalizacaoProfissional = "/Profissional/{0}/localizacao";
+            public const string GetComissaoProfissional = "/Profissional/{0}/comissao";
         }
     }
 }

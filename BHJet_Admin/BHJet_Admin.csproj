@@ -287,6 +287,7 @@
     <Content Include="Scripts\NovoCliente.js" />
     <Content Include="Scripts\OSCliente.js" />
     <Content Include="Scripts\Usuario.js" />
+    <Content Include="Scripts\UsuarioListar.js" />
     <Content Include="Scripts\Utilitario.js" />
     <Content Include="Scripts\ViaCep.js" />
     <Content Include="Scripts\waypoints.min.js" />
@@ -333,6 +334,8 @@
     <Content Include="Views\ClienteAvulso\_DetalheClienteAvulso.cshtml" />
     <Content Include="Views\ClienteAvulso\_ListOsClienteAvulso.cshtml" />
     <Content Include="Views\ClienteAvulso\Index.cshtml" />
+    <Content Include="Views\Usuario\Listar.cshtml" />
+    <Content Include="Views\Usuario\Novo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿using BHJet_Repositorio.Admin.Entidade;
+﻿using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 
 namespace BHJet_Repositorio.Admin
@@ -8,9 +8,9 @@ namespace BHJet_Repositorio.Admin
         /// <summary>
         /// Busca Resumo de chamados concluidos e advertentes
         /// </summary>
-        /// <param name="filtro">ValidaUsuarioFiltro</param>
+        /// <param name="filtro">NovaDiariaAvulsaFiltro</param>
         /// <returns>UsuarioEntidade</returns>
-        public void IncluirDiariaAvulsa(DiariaAvulsaEntidade model)
+        public void IncluirDiariaAvulsa(NovaDiariaAvulsaFiltro model)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -20,39 +20,26 @@ namespace BHJet_Repositorio.Admin
                                                ,[idTarifario]
                                                ,[idColaboradorEmpresaSistema]
                                                ,[idUsuarioSolicitacao]
-                                               ,[dtDataHoraInicioExpediente]
-                                               ,[intOdometroInicioExpediente]
-                                               ,[dtDataHoraInicioIntervalo]
-                                               ,[intOdometroInicioIntervalo]
-                                               ,[dtDataHoraFimIntervalo]
-                                               ,[intOdometroFimIntervalo]
-                                               ,[dtDataHoraFimExpediente]
-                                               ,[intOdometroFimExpediente]
-                                               ,[decValorDiariaNegociado]
-                                               ,[decValorDiariaComissaoNegociado]
-                                               ,[decValorKMAdicionalNegociado]
-                                               ,[decFranquiaKMDiaria]
-                                               ,[dtDataHoraSolicitacao]
-                                               ,[timHoraInicioSolicitacao]
-                                               ,[timHoraFimSolicitacao]
-                                               ,[bitFaturarComoDiaria])
+                                               ,dtDataHoraInicioExpediente
+											   ,dtDataHoraFimExpediente
+											   ,decValorDiariaNegociado
+											   ,decValorDiariaComissaoNegociado
+											   ,decValorKMAdicionalNegociado
+											   ,decFranquiaKMDiaria
+											  ,dtDataHoraSolicitacao
+											  ,timHoraInicioSolicitacao
+											  ,timHoraFimSolicitacao, bitFaturarComoDiaria)
                                          VALUES
-                                               (@IDCliente
+										  (@IDCliente
                                                ,@IDTarifario
                                                ,@IDColaboradorEmpresa
                                                ,@IDUsuarioSolicitacao
                                                ,@DataHoraInicioExpediente
-                                               ,0
-                                               ,null
-                                               ,null
-                                               ,null
-                                               ,null
                                                ,@DataHoraFimExpediente
-                                               ,null
                                                ,@ValorDiariaNegociado
                                                ,@ValorDiariaComissaoNegociado
-                                               ,null
-                                               ,null
+                                               ,@ValorKMAdicionalNegociado
+                                               ,@FranquiaKMDiaria
                                                ,GETDATE()
                                                ,GETDATE()
                                                ,GETDATE()

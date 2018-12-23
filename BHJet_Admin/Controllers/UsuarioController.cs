@@ -20,9 +20,15 @@ namespace BHJet_Admin.Controllers
             clienteServico = _clienteServico;
         }
 
+        [ValidacaoUsuarioAttribute()]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         // GET: Usuario
         [ValidacaoUsuarioAttribute()]
-        public ActionResult Index(string trechoPqs = "")
+        public ActionResult Listar(string trechoPqs = "")
         {
             try
             {
@@ -33,26 +39,63 @@ namespace BHJet_Admin.Controllers
                 var model = usuariosServico.BuscaListaUsuarios(trechoPqs);
 
                 // Return
-                return View(new UsuariosModel()
+                return View(model.Select(usu => new UsuarioModel()
                 {
-                    usuarios = model.Select(usu => new UsuarioDetalheModel()
-                    {
-                        ID = usu.ID,
-                        Email = usu.Email,
-                        Situacao = usu.Situacao,
-                        SituacaoDesc = usu.SituacaoDesc,
-                        TipoUser = usu.TipoUsuario
-                    }).ToArray(),
-                    novo = null
-                });
+                    ID = usu.ID,
+                    Email = usu.Email,
+                    Situacao = usu.Situacao,
+                    SituacaoDesc = usu.SituacaoDesc,
+                    TipoUser = usu.TipoUsuario
+                }));
             }
             catch (Exception e)
             {
                 this.TrataErro(e);
                 // Return
-                return View(new UsuariosModel()
+                return View(new UsuarioModel());
+            }
+        }
+
+        [ValidacaoUsuarioAttribute()]
+        public ActionResult Novo(bool? Edicao, long? ID)
+        {
+            if (Edicao != null && Edicao == true && ID != null)
+            {
+                ModelState.Clear();
+
+                // Tipo de Execução
+                ViewBag.TipoAlteracao = "Editar";
+
+                // Busca dados do profissional
+                var usuario = usuariosServico.BuscaUsuario(ID ?? 0);
+
+                usuario = new BHJet_DTO.Usuario.UsuarioDTO()
                 {
-                    usuarios = new UsuarioDetalheModel[] { }
+                    TipoUsuario = BHJet_Core.Enum.TipoUsuario.FuncionarioCliente,
+                    ClienteSelecionado = 10
+                };
+
+                // Return
+                return View(new UsuarioModel()
+                {
+                    ID = usuario.ID,
+                    Email = usuario.Email,
+                    Senha = string.Empty,
+                    EdicaoCadastro = true,
+                    Situacao = usuario.Situacao,
+                    TipoUser = usuario.TipoUsuario,
+                    SituacaoDesc = usuario.SituacaoDesc,
+                    ClienteSelecionado = usuario.ClienteSelecionado,
+                    ClienteSelecionadoBKP = usuario.ClienteSelecionado
+                });
+            }
+            else
+            {
+                ViewBag.TipoAlteracao = "Adicionar";
+
+                return View(new UsuarioModel()
+                {
+                    EdicaoCadastro = false
                 });
             }
         }
@@ -60,35 +103,41 @@ namespace BHJet_Admin.Controllers
         // POST: Usuario
         [HttpPost]
         [ValidacaoUsuarioAttribute()]
-        public ActionResult Index(UsuariosModel model)
+        public ActionResult Novo(UsuarioModel model)
         {
             try
             {
-                // Cadastra usuario
-                usuariosServico.CadastrarUsuario(new BHJet_DTO.Usuario.UsuarioDTO()
+                // Modelo
+                var cliente = new BHJet_DTO.Usuario.UsuarioDTO()
                 {
-                    Email = model.novo.Email,
-                    Situacao = model.novo.Situacao,
-                    TipoUsuario = model.novo.TipoUser,
-                    Senha = model.novo.Senha,
-                    ClienteSelecionado = model.novo.ClienteSelecionado
-                });
+                    Email = model.Email,
+                    Situacao = model.Situacao,
+                    TipoUsuario = model.TipoUser,
+                    Senha = model.Senha,
+                    ClienteSelecionado = model.ClienteSelecionado
+                };
 
-                model.novo = new UsuarioDetalheModel();
+                // Ação
+                if (model.EdicaoCadastro)
+                    usuariosServico.CadastrarUsuario(cliente);
+                else
+                    usuariosServico.CadastrarUsuario(cliente);
+
+                model = new UsuarioModel();
                 this.MensagemSucesso("Usuário cadastrado com sucesso.");
 
                 // Busca Usuarios
-                return BuscaUsuariosSemValidacao(model);
+                return View(model);
             }
             catch (Exception e)
             {
                 this.TrataErro(e);
                 // Return
-                return BuscaUsuariosSemValidacao(model);
+                return View(model);
             }
         }
 
-        private ViewResult BuscaUsuariosSemValidacao(UsuariosModel model)
+        private ViewResult BuscaUsuariosSemValidacao(UsuarioModel model)
         {
             try
             {
@@ -96,26 +145,18 @@ namespace BHJet_Admin.Controllers
                 var modelRetorno = usuariosServico.BuscaListaUsuarios("");
 
                 // Return
-                return View(new UsuariosModel()
+                return View(modelRetorno.Select(usu => new UsuarioModel()
                 {
-                    usuarios = modelRetorno.Select(usu => new UsuarioDetalheModel()
-                    {
-                        ID = usu.ID,
-                        Email = usu.Email,
-                        Situacao = usu.Situacao,
-                        SituacaoDesc = usu.SituacaoDesc,
-                        TipoUser = usu.TipoUsuario
-                    }).ToArray(),
-                    novo = model.novo
-                });
+                    ID = usu.ID,
+                    Email = usu.Email,
+                    Situacao = usu.Situacao,
+                    SituacaoDesc = usu.SituacaoDesc,
+                    TipoUser = usu.TipoUsuario
+                }));
             }
             catch
             {
-                return View(new UsuariosModel()
-                {
-                    usuarios = new UsuarioDetalheModel[] { },
-                    novo = model.novo
-                });
+                return View(new UsuarioModel());
             }
         }
 
