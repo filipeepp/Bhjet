@@ -1,0 +1,68 @@
+﻿@using System.Web.Http
+@using BHJet_Admin.Models
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#map_canvas">@ViewBag.TituloSolicitacao</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="titulo">
+                        <h2>
+                            <a href=" @Url.Action("Index", "Home")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Área de Atuação
+                        </h2>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="txtPesquisarCliente">Pesquisar Localização</label>
+    
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                    <input id="pac-input" style="max-width: 400px;" class="form-control" type="text" placeholder="Digite a localização" name="palavraChave">
+                                </div>
+                            </div>
+
+                    </div>
+
+                    apenas para debug/testes:
+                    <div class="lngLat"><span class="one">Lat</span><span class="two">,Lng</span></div>
+                    <textarea id="info"></textarea>
+
+                    <div id="map_canvas">
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&libraries=places&callback=initAutocomplete"></script>
+<script type="text/javascript" src="~/Scripts/AreaAtuacao.js"></script>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}

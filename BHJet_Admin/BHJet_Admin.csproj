@@ -176,6 +176,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AtuacaoController.cs" />
     <Compile Include="Controllers\ClienteAvulsoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\FaturamentoController.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Images\mapCorrida.png" />
     <Content Include="Images\sucesso.png" />
     <Content Include="Images\warming.png" />
+    <Content Include="Scripts\AreaAtuacao.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -336,6 +338,7 @@
     <Content Include="Views\ClienteAvulso\Index.cshtml" />
     <Content Include="Views\Usuario\Listar.cshtml" />
     <Content Include="Views\Usuario\Novo.cshtml" />
+    <Content Include="Views\Atuacao\Area.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
