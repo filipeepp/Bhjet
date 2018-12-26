@@ -109,8 +109,7 @@ namespace BHJet_Admin.Models.Dashboard
         }
 
         private string _ValorComissao;
-        [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "Valor(R$) Comissão obrigatório.")]
+        [Required(ErrorMessage = "Percentual(%) de Comissão obrigatório.")]
         public string ValorComissao
         {
             get

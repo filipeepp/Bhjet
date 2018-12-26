@@ -75,7 +75,7 @@ namespace BHJet_WebApi.Controllers
         /// <returns></returns>
         [Authorize]
         [Route("{id:long}")]
-        public IHttpActionResult BuscaUsuario(long id)
+        public IHttpActionResult GetUsuario(long id)
         {
             // Instancia
             var usuRep = new UsuarioRepositorio();

@@ -66,12 +66,12 @@
 
                         <div class="form-group ">
                             <label class="control-label col-xs-12 col-sm-5"><small class="obrigatorio">*</small>Período das Diarias:</label>
-                            <div class="col-xs-12 col-md-1 col-sm-1">
+                            <div class="col-xs-12 col-md-2 col-sm-1 col-lg-1">
                                 @Html.TextBoxFor(model => model.PeriodoInicial, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoInicial, null, new { @class = "text-danger" })
                             </div>
                             <label class="control-label col-xs-12 col-sm-1" style="width: 30px; margin: 0px; padding: 0px;"><small class="obrigatorio">*</small>Até:</label>
-                            <div class="col-xs-12 col-md-1 col-sm-1">
+                            <div class="col-xs-12 col-md-2 col-sm-1 col-lg-1">
                                 @Html.TextBoxFor(model => model.PeriodoFinal, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoFinal, null, new { @class = "text-danger" })
                             </div>
@@ -111,7 +111,7 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da comissão:</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "R$", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "%", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorComissao, null, new { @class = "text-danger" })
                             </div>
                         </div>

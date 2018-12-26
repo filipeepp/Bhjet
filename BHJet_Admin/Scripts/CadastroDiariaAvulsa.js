@@ -101,7 +101,6 @@ function validaDatePickerManual(id, valor) {
 document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#ValorDiaria").mask('000.000.000.000.000,00', { reverse: true });
-    $("#ValorComissao").mask('000.000.000.000.000,00', { reverse: true });
     $("#FranquiaKMDiaria").mask('000.000.000.000.000,00', { reverse: true });
     $("#ValorComissao").mask('##0,00%', { reverse: true });
     $("#HorarioInicial").mask('00:00', { reverse: true, placeholder: "00:00" });

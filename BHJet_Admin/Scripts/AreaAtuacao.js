@@ -67,7 +67,7 @@ function adicionarArea(triangleCoords) {
     myPolygon2.setMap(map);
     google.maps.event.addListener(myPolygon2, 'rightclick', function (event) {
         if (confirm('Deseja remover esta Área de Atuação ?')) {
-            myPolygon.setMap(null);
+            myPolygon2.setMap(null);
         }
     });
     google.maps.event.addListener(myPolygon2.getPath(), "insert_at", getPolygonCoords);
@@ -116,7 +116,7 @@ function initAutocomplete() {
         ];
 
         adicionarArea(cords)
-
+        $("#pac-input").val("")
 
     });
 }
