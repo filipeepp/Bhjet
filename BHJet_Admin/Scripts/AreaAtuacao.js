@@ -1,59 +1,26 @@
-﻿//variavel cria para que seja criado o mapa Google Maps
+﻿// Vr
 var map = null;
-var areas = new Array(); ;
+var areas = new Array();;
 
-//Essa e a funcao que criara o mapa GoogleMaps
 function carregaMapa() {
     // Centro do mapa
     var myLatLng = new google.maps.LatLng(-19.878951, -43.933833);
-    //  Options
+    // Options
     var mapOptions = {
-        zoom: 7,
+        zoom: 6,
         center: myLatLng,
         mapTypeId: google.maps.MapTypeId.RoadMap
     };
     map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-
-    // new google.maps.LatLng(-16.81286,-46.54554), new google.maps.LatLng(-16.4904,-41.18104), new google.maps.LatLng(-21.20714,-42.74728), new google.maps.LatLng(-19.50577,-48.9168), 
-    // Cordenadas
-    var triangleCoords = [
-        new google.maps.LatLng(-17.002071, -47.072885),
-        new google.maps.LatLng(-15.719882, -44.367077),
-        new google.maps.LatLng(-21.512188, -43.654345)
-    ];
-
-    // SArea
-    myPolygon = new google.maps.Polygon({
-        paths: triangleCoords,
-        draggable: true, 
-        editable: true,
-        strokeColor: '#ffeb3b',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: '#ffeb3b',
-        fillOpacity: 0.35,
-       
-    });
-
-    areas.push(myPolygon);
-
-    myPolygon.setMap(map);
-    google.maps.event.addListener(myPolygon, 'rightclick', function (event) {
-        if (confirm('Deseja remover esta Área de Atuação ?')) {
-            myPolygon.setMap(null);
-        }
-    });
-    google.maps.event.addListener(myPolygon.getPath(), "insert_at", getPolygonCoords);
-    google.maps.event.addListener(myPolygon.getPath(), "set_at", getPolygonCoords);
+    // LDArea
+    BuscaAreasCadastradas();
 }
 
-
 function adicionarArea(triangleCoords) {
-
     // Area
     myPolygon2 = new google.maps.Polygon({
         paths: triangleCoords,
-        draggable: true, 
+        draggable: true,
         editable: true,
         strokeColor: '#ffeb3b',
         strokeOpacity: 0.8,
@@ -74,19 +41,29 @@ function adicionarArea(triangleCoords) {
     google.maps.event.addListener(myPolygon2.getPath(), "set_at", getPolygonCoords);
 }
 
-
 function getPolygonCoords() {
-
-    var htmlStr = "";
+    var htmlStr = "[\n ";
+    htmlStr += " {\n ";
 
     for (var i = 0; i < areas.length; i++) {
-        htmlStr += "\n Area " + i + " \n";
+        htmlStr += "\"Area\": [ \n";
         var polygon = areas[i];
         var len = polygon.getPath().getLength();
         for (var j = 0; j < len; j++) {
-            htmlStr += "new google.maps.LatLng(" + polygon.getPath().getAt(j).toUrlValue(5) + "), ";
+            htmlStr += "\n {";
+            htmlStr += "\n   \"Latitude\": \"" + polygon.getPath().getAt(j).lat() + "\",";
+            htmlStr += "\n   \"Longitude\": \"" + polygon.getPath().getAt(j).lng() + "\"";
+            htmlStr += "\n }";
+
+            if (j < (len - 1))
+                htmlStr += ",";
+
         }
+        htmlStr += "\n]\n";
     }
+
+    htmlStr += " }\n ";
+    htmlStr += "]";
 
     document.getElementById('info').innerHTML = htmlStr;
 }
@@ -95,12 +72,10 @@ function copyToClipboard(text) {
     window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
 }
 
-
 function initAutocomplete() {
-
     var input = document.getElementById('pac-input');
     var options = {
-       
+
     };
     autocomplete = new google.maps.places.Autocomplete(input, options);
 
@@ -117,20 +92,63 @@ function initAutocomplete() {
 
         adicionarArea(cords)
         $("#pac-input").val("")
-
     });
 }
 
+function BuscaAreasCadastradas(idCom) {
+    $.ajax({
+        url: '/Atuacao/BuscaAreas',
+        dataType: "json",
+        type: "GET",
+        success: function (dados) {
+
+            var obj = JSON.parse(dados);
+            $.each(obj, function (index, value) {
+                var cords = [];
+                for (var i = 0; i < value.GeoVertices.length; i++) {
+                    var lat = value.GeoVertices[i].Latitude;
+                    var long = value.GeoVertices[i].Longitude;
+                    cords.push(new google.maps.LatLng(lat, long));
+                }
+
+                adicionarArea(cords);
+            });
+            getPolygonCoords();
+            if (dados == "" || dados == undefined) {
+                $("#msgModal").text("Não foram encontrados Áreas de atuação para ser exibida no mapa.")
+                $("#imgMensagem").attr("src", "..\\Images\\warming.png");
+                $('#myModal').modal('show')
+            }
+        },
+        error: function (e) {
+            var teste = e;
+        }
+    });
+}
+
+function AtualizaAreas() {
+    $.ajax({
+        url: '/Atuacao/CadastraAreas',
+        type: "POST",
+        dataType: "json",
+        contentType: 'application/json',
+        data: $("#info").val(),
+        success: function (data) {
+
+
+
+        },
+        error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
+    });
+}
 
 $(document).ready(function () {
+    // ---
     carregaMapa();
-
+    // ---
     initAutocomplete();
-
-    //$("#pac-input").keyup(delay(function (e) {
-    //    if ($(this).val() != "") {
-    //        initAutocomplete();
-    //    }
-    //}, 500));
-
+    // ---
+    $("#bntAtualizaAreas").click(function () {
+        AtualizaAreas();
+    })
 });

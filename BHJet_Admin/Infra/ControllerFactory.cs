@@ -14,6 +14,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BHJet_Servico.Faturamento;
 using BHJet_Servico.Usuario;
+using BHJet_Servico.Area;
 
 namespace BHJet_Admin.Infra
 {
@@ -56,6 +57,8 @@ namespace BHJet_Admin.Infra
                 return Activator.CreateInstance(typeof(FaturamentoServico), BuscaToken());
             else if (tipo == typeof(IUsuarioServico))
                 return Activator.CreateInstance(typeof(UsuarioServico), BuscaToken());
+            else if(tipo == typeof(IAreaAtuacaoServico))
+                return Activator.CreateInstance(typeof(AreaAtuacaoServico), BuscaToken());
             else
                 return Activator.CreateInstance(tipo);
         }

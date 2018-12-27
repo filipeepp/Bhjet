@@ -45,11 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AreaAtuacaoRepositorio.cs" />
     <Compile Include="Admin\AutenticacaoRepositorio.cs" />
     <Compile Include="Admin\ClienteRepositorio.cs" />
     <Compile Include="Admin\CorridaRepositorio.cs" />
     <Compile Include="Admin\DashboardRepositorio.cs" />
     <Compile Include="Admin\DiariaRepositorio.cs" />
+    <Compile Include="Admin\Entidade\AreaAtuacaoEntidade.cs" />
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
     <Compile Include="Admin\Entidade\ComissaoProfissionalEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />

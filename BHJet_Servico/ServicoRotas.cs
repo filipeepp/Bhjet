@@ -26,6 +26,11 @@ namespace BHJet_Servico
 			public const string GetCorridaCliente = "/Corrida/cliente/{0}";
 		}
 
+        public class AreaAtuacao
+        {
+            public const string GetAreaAtuacao = "/AreaAtuacao";
+        }
+
         public class Diaria
         {
             public const string PostDiaria = "/Diaria";
