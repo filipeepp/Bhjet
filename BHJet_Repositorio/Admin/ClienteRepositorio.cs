@@ -117,7 +117,7 @@ namespace BHJet_Repositorio.Admin
 			{
 				// Query
 				string query = @"SELECT
-									Valor.idTarifario AS ID,
+									Valor.idClienteTarifario AS ID,
 									Valor.vcDescricaoTarifario AS TipoTarifa,
 									Valor.dtDataInicioVigencia AS VigenciaInicio,
 									Valor.dtDataFimVigencia AS VigenciaFim,
@@ -138,11 +138,9 @@ namespace BHJet_Repositorio.Admin
 									Valor.bitPagamentoAvista AS PagamentoAVista,
 									Valor.vcObservacao AS Observacao
 								FROM
-									tblTarifario Valor
-								INNER JOIN
-									tblClientesTarifario ON tblClientesTarifario.idTarifario = Valor.idTarifario 
+									tblClienteTarifario Valor
 								WHERE
-									tblClientesTarifario.idCliente = @ClienteID
+									idCliente = @ClienteID
 								ORDER BY Valor.bitAtivo desc";
 
 				// Execução
@@ -189,10 +187,8 @@ namespace BHJet_Repositorio.Admin
 									tblClientes Cliente
 								INNER JOIN
 									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
-								INNER JOIN
-									tblClientesTarifario ClienteValor ON ClienteValor.idCliente = Cliente.idCliente
-								INNER JOIN
-									tblTarifario Valor ON Valor.idTarifario = ClienteValor.idTarifario
+								LEFT JOIN
+									tblClienteTarifario Valor ON Valor.idCliente = Cliente.idCliente
 								WHERE
 									Valor.bitAtivo = 1 {parametroAvulso}";
 
@@ -218,9 +214,7 @@ namespace BHJet_Repositorio.Admin
 									Valor.bitAtivo
 								FROM tblClientes Cliente
 								INNER JOIN 
-									tblClientesTarifario on tblClientesTarifario.idCliente = Cliente.idCliente 
-								INNER JOIN
-									tblTarifario Valor on Valor.idTarifario = tblClientesTarifario.idTarifario 
+									tblClienteTarifario Valor on Valor.idCliente = Cliente.idCliente 
 								WHERE 
 									CONVERT(VARCHAR(250), Cliente.idCliente) LIKE @valorPesquisa OR
 									Cliente.vcNomeFantasia LIKE @valorPesquisa OR
@@ -277,9 +271,9 @@ namespace BHJet_Repositorio.Admin
 				string query = @"SELECT 
 									*
 								FROM
-									tblTarifario
+									tblClienteTarifario
 								WHERE
-									idTarifario = @ValorID";
+									idClienteTarifario = @ValorID";
 
 				// Execução
 				return sqlConnection.Query<ClienteValorEntidade>(query, new
@@ -327,10 +321,8 @@ namespace BHJet_Repositorio.Admin
 			int? idEndereco = null;
 			int? idContato = null;
 			int? idValor = null;
-			int? idValorCliente = null;
 			List<int?> Contatos = new List<int?>();
 			List<int?> Valores = new List<int?>();
-			List<int?> ValoresClientes = new List<int?>();
 
 			using (var sqlConnection = this.InstanciaConexao())
 			{
@@ -453,8 +445,9 @@ namespace BHJet_Repositorio.Admin
 						// Insere Tarifa
 						using (var sqlConnectionCom = this.InstanciaConexao())
 						{
-							string queryTarifario = @"INSERT INTO [dbo].[tblTarifario]
-                                           ([vcDescricaoTarifario]
+							string queryTarifario = @"INSERT INTO [dbo].[tblClienteTarifario]
+                                           ([idCliente]
+										   ,[vcDescricaoTarifario]
                                            ,[dtDataInicioVigencia]
                                            ,[dtDataFimVigencia]
                                            ,[decFranquiaKMMensalidade]
@@ -464,7 +457,8 @@ namespace BHJet_Repositorio.Admin
                                            ,[bitPagamentoAVista]
                                            ,[vcObservacao])
                                      VALUES
-                                           (@TipoTarifa
+                                           (@ClienteID
+											,@TipoTarifa
                                            ,@VigenciaInicio
                                            ,@VigenciaFim
                                            ,@Franquia
@@ -475,19 +469,12 @@ namespace BHJet_Repositorio.Admin
                                            ,@Observacao)
                                            select @@identity;";
 
-							string queryClienteTarifario = @"INSERT INTO [dbo].[tblClientesTarifario]
-                                           ([idCliente]
-                                           ,[idTarifario])
-                                     VALUES
-                                           (@codCliente
-                                           ,@codTarifario)
-                                           select @@identity;";
-
 							// Execute
 							foreach (var tarifa in cliente.Valor)
 							{
 								idValor = trans.Connection.ExecuteScalar<int?>(queryTarifario, new
 								{
+									ClienteID = idCliente,
 									TipoTarifa = tarifa.TipoTarifa,
 									VigenciaInicio = tarifa.VigenciaInicio,
 									VigenciaFim = tarifa.VigenciaFim,
@@ -500,14 +487,6 @@ namespace BHJet_Repositorio.Admin
 								}, trans);
 
 								Valores.Add(idValor);
-
-								idValorCliente = trans.Connection.ExecuteScalar<int?>(queryClienteTarifario, new
-								{
-									codCliente = idCliente,
-									codTarifario = idValor
-								}, trans);
-
-								ValoresClientes.Add(idValorCliente);
 							}
 						}
 
@@ -518,7 +497,7 @@ namespace BHJet_Repositorio.Admin
 					{
 						if (trans.Connection != null)
 							trans.Rollback();
-						RoolbackCliente(idCliente, idEndereco, Contatos.ToArray(), Valores.ToArray(), ValoresClientes.ToArray());
+						RoolbackCliente(idCliente, idEndereco, Contatos.ToArray(), Valores.ToArray());
 						throw e;
 					}
 				}
@@ -593,8 +572,9 @@ namespace BHJet_Repositorio.Admin
 				{
 					try
 					{
-						string queryTarifario = @"INSERT INTO [dbo].[tblTarifario]
-                                           ([vcDescricaoTarifario]
+						string queryTarifario = @"INSERT INTO [dbo].[tblClienteTarifario]
+                                           ([idCliente]
+										   ,[vcDescricaoTarifario]
                                            ,[dtDataInicioVigencia]
                                            ,[dtDataFimVigencia]
                                            ,[decFranquiaKMMensalidade]
@@ -604,7 +584,8 @@ namespace BHJet_Repositorio.Admin
                                            ,[bitPagamentoAVista]
                                            ,[vcObservacao])
                                      VALUES
-                                           (@TipoTarifa
+                                           (@ClienteID
+										   ,@TipoTarifa
                                            ,@VigenciaInicio
                                            ,@VigenciaFim
                                            ,@Franquia
@@ -614,17 +595,10 @@ namespace BHJet_Repositorio.Admin
 										   ,@PagamentoAVista
                                            ,@Observacao)
                                            select @@identity;";
-
-						string queryClienteTarifario = @"INSERT INTO [dbo].[tblClientesTarifario]
-                                           ([idCliente]
-                                           ,[idTarifario])
-                                     VALUES
-                                           (@codCliente
-                                           ,@codTarifario)
-                                           select @@identity;";
 						// Execute
 						var idValor = trans.Connection.ExecuteScalar<int?>(queryTarifario, new
 						{
+							ClienteID = clienteID,
 							TipoTarifa = tarifa.TipoTarifa,
 							VigenciaInicio = tarifa.VigenciaInicio,
 							VigenciaFim = tarifa.VigenciaFim,
@@ -634,12 +608,6 @@ namespace BHJet_Repositorio.Admin
 							TarifaAtivada = tarifa.ValorAtivado,
 							PagamentoAVista = 0,
 							Observacao = tarifa.Observacao
-						}, trans);
-
-						trans.Connection.ExecuteScalar(queryClienteTarifario, new
-						{
-							codCliente = clienteID,
-							codTarifario = idValor
 						}, trans);
 
 						//Comit
@@ -761,9 +729,9 @@ namespace BHJet_Repositorio.Admin
 						using (var sqlConnectionCom = this.InstanciaConexao())
 						{
 							string queryTarifario = @"UPDATE
-														[dbo].[tblTarifario]
+														[dbo].[tblClienteTarifario]
 													SET
-													   [vcDescricaoTarifario] = @TipoTarifa
+													    [vcDescricaoTarifario] = @TipoTarifa
 													   ,[dtDataInicioVigencia] = @VigenciaInicio
 													   ,[dtDataFimVigencia] = @VigenciaFim
 													   ,[decFranquiaKMMensalidade] = @Franquia
@@ -772,7 +740,7 @@ namespace BHJet_Repositorio.Admin
 													   ,[bitAtivo] = @TarifaAtivada
 													   ,[vcObservacao] = @Observacao
 													 WHERE
-														idTarifario = @ValorID";
+														idClienteTarifario = @ValorID";
 
 							// Execute
 							foreach (var tarifa in cliente.Valor)
@@ -843,23 +811,17 @@ namespace BHJet_Repositorio.Admin
 								FROM
 									tblClientesTarifario
 								WHERE
-									idTarifario = @TarifarioID
-
-								DELETE
-								FROM
-									tblTarifario
-								WHERE
-									idTarifario = @TarifarioID";
+									idClienteTarifario = @TarifarioID";
 
 				// Execução
-				sqlConnection.QueryMultiple(query, new
+				sqlConnection.ExecuteScalar(query, new
 				{
 					TarifarioID = idValor
 				});
 			}
 		}
 
-		private void RoolbackCliente(int? idCliente, int? idEndereco, int?[] contatos, int?[] valores, int?[] valoresClientes)
+		private void RoolbackCliente(int? idCliente, int? idEndereco, int?[] contatos, int?[] valores)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
 			{
@@ -870,9 +832,7 @@ namespace BHJet_Repositorio.Admin
 				if (contatos.Length <= 0)
 					sqlConnection.ExecuteScalar($"delete from tblColaboradoresCliente where idColaboradorCliente in ({string.Join(",", contatos)})");
 				if (valores.Length <= 0)
-					sqlConnection.ExecuteScalar($"delete from tblTarifario where idTarifario in ({string.Join(",", valores)})");
-				if (valoresClientes.Length <= 0)
-					sqlConnection.ExecuteScalar($"delete from tblClientesTarifario where idClienteTarifa in ({string.Join(",", valoresClientes)})");
+					sqlConnection.ExecuteScalar($"delete from tblClienteTarifario where idClienteTarifario in ({string.Join(",", valores)})");
 
 			}
 		}
