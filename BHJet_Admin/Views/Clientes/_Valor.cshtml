@@ -86,6 +86,17 @@ new ValorModel()
 					</h2>
 				</div>
 				<div class="form-row">
+					<div class="form-group col-xs-12 col-md-12" style="margin-bottom:30px;">
+						<div id="div_ValorPadrao_@Html.IdFor(model => model.Valor[i])">
+							<label class="label-cbx">
+								<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[i])" name="ValorPadrao_@Html.IdFor(model => model.Valor[i])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@i]);" />
+								<span>Tarifa padrão?</span>
+							</label>
+
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
 					<div class="form-group col-xs-12 col-md-3">
 						<div id="@Html.IdFor(model => model.Valor[i].TipoTarifa)">
 							<label for="txtTipoTarifa"><small class="obrigatorio">*</small>Tipo Tarifa</label>
