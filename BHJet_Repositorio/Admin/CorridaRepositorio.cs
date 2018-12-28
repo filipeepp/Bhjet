@@ -61,12 +61,12 @@ namespace BHJet_Repositorio.Admin
                                     EC.vcObservacao AS Observacao,
                                     PT.vcCaminhoProtocolo as CaminhoProtocolo
 							    from tblCorridas CD
-								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
-						        where LGCD.idCorrida = @id";
+						        where CD.idCorrida = @id";
 
                 // Execução
                 return sqlConnection.Query<OSCorridaEntidade>(query, new

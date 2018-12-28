@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BHJet_Mobile.Controls.ActivityIndicator">
+    <ContentView.Content>
+        <Grid ColumnSpacing="10" RowSpacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView Grid.Column="0" BackgroundColor="#FFF" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Opacity="0.45" />
+            <ActivityIndicator Grid.Row="0" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

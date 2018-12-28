@@ -41,7 +41,7 @@ namespace BHJet_DTO.Profissional
 
     public class ProfissionalComissaoModel
     {
-        public long ID { get; set; }
+        public long? ID { get; set; }
         public decimal decPercentualComissao { get; set; }
         public DateTime dtDataInicioVigencia { get; set; }
         public DateTime dtDataFimVigencia { get; set; }

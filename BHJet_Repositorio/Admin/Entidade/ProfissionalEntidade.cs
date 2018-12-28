@@ -41,7 +41,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 
     public class ProfissionalComissaoEntidade
     {
-        public long idComissaoColaboradorEmpresaSistema { get; set; }
+        public long? idComissaoColaboradorEmpresaSistema { get; set; }
         public decimal decPercentualComissao { get; set; }
         public DateTime dtDataInicioVigencia { get; set; }
         public DateTime dtDataFimVigencia { get; set; }

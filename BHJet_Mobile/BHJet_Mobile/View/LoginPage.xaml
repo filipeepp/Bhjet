@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImage="bgLogin.jpg"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.LoginPage">
+  
+    <ContentPage.Content>
+
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Aspect="AspectFill" Source="bg.jpg"/>
+            <!--<Image Grid.Row="0" Source="logo.jpg" VerticalOptions="CenterAndExpand" WidthRequest="240" Margin="0,20,0,-10" />-->
+            <Image Grid.Row="1" Source="bhjet.jpg" VerticalOptions="CenterAndExpand" WidthRequest="230" Margin="20,0,20,20" />
+
+            <StackLayout Grid.Row="2" VerticalOptions="FillAndExpand" HorizontalOptions="Center" WidthRequest="320">
+                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" RowSpacing="15">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Frame BackgroundColor="White" >
+                        <StackLayout Padding="-9"  Orientation="Horizontal">
+                            <Image Grid.Row="0" Source="ico_user.png" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="24"  />
+                            <Entry Grid.Row="0"  Keyboard="Email"  x:Name="username" Placeholder="Login"  StyleClass="InputLogin" 
+                           BackgroundColor="Transparent" >
+                            </Entry>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BackgroundColor="White" Grid.Row="1" >
+                        <StackLayout Padding="-9" Orientation="Horizontal">
+                            <Image  Source="ico_password.png" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="24" />
+                            <Entry x:Name="password" IsPassword="True" Placeholder="Senha" StyleClass="InputLogin" 
+                           BackgroundColor="Transparent">
+                            </Entry>
+                        </StackLayout>
+                    </Frame>
+
+                    <Button Grid.Row="2" x:Name="btnLogar" Text="Entrar" Clicked="btnLogar_Clicked" StyleClass="BotaoLogin"/>
+
+                </Grid>
+            </StackLayout>
+
+            <!-- Loading -->
+            <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding Loading}"/>
+
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

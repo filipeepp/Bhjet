@@ -131,9 +131,9 @@ namespace BHJet_Admin.Controllers
                 {
                     model.Comissao.All(x =>
                     {
-                        if(x.VigenciaInicio < DateTime.Now.Date)
+                        if (x.VigenciaInicio < DateTime.Now.Date)
                             throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
-                        else if(x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
+                        else if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
                         return true;
                     });
@@ -165,6 +165,7 @@ namespace BHJet_Admin.Controllers
                     UF = model.UF,
                     Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
                     {
+                        ID = x.ID,
                         decPercentualComissao = x.ValorComissao.ToDecimalCurrency(),
                         dtDataFimVigencia = x.VigenciaFim ?? new DateTime(),
                         dtDataInicioVigencia = x.VigenciaInicio ?? new DateTime()

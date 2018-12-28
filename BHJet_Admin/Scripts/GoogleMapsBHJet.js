@@ -22,6 +22,8 @@ function carregaMapa() {
 
 function FazMarcacao(lat, long, bcarro, bdesc) {
 
+    lat = lat.replace(",", ".");
+    long = long.replace(",", ".");
     var latlong = lat + "," + long;//colocando na conficuracao necessaria (lat,long)
     var myLatLgn = new google.maps.LatLng(lat, long);
     //criando variavel tipo google.maps.LatLng e

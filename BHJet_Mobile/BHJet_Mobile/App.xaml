@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BHJet_Mobile.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Dicionario de Cores -->
+            <Color x:Key="PageBackgroundColor">Yellow</Color>
+            <!---->
+
+            <!-- Dicionario de Button -->
+            <Style x:Key="InputBase" TargetType="Entry">
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="PlaceholderColor" Value="#CCC" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style Class="InputLogin" TargetType="Entry" BaseResourceKey="InputBase">
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="TextColor" Value="#4e90ff" />
+            </Style>
+            <!---->
+
+            <!-- Dicionario de Button -->
+            <Style x:Key="BotaoBase" TargetType="Button">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HeightRequest" Value="65" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="Margin" Value="-5" />
+                <Setter Property="TextColor" Value="#FFF" />
+            </Style>
+            <Style Class="BotaoLogin" TargetType="Button" BaseResourceKey="BotaoBase">
+                <Setter Property="BackgroundColor" Value="#e8df2a"/>
+                <Setter Property="TextColor" Value="#000" />
+                <Setter Property="BorderRadius" Value="5" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="15,0,15,0" />
+            </Style>
+            <!---->
+
+            <!-- Dicionario de StackLayout -->
+            <Style x:Key="LblMenu" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="#2B3D49" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="15,0,15,0" />
+            </Style>
+            <!---->
+            
+            <!-- Dicionario de StackLayout -->
+            <Style x:Key="BackgroundStackInput" TargetType="StackLayout">
+                <Setter Property="Padding" Value="-9"/>
+                <Setter Property="Orientation" Value="Horizontal" />
+            </Style>
+            <!---->
+
+            <!-- Dicionario de Labels -->
+            <Style x:Key="label_secondary" TargetType="Label" BaseResourceKey="LabelBase">
+                <Setter Property="TextColor" Value="#79CA97"/>
+            </Style>
+            <Style x:Key="label_accent" TargetType="Label" BaseResourceKey="LabelBase">
+                <Setter Property="TextColor" Value="#D96B5B"/>
+            </Style>
+            <Style Class="accent_sm" TargetType="Label" BaseResourceKey="label_accent">
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <!---->
+            
+              <Style x:Key="separador" TargetType="BoxView">
+                <!--<Setter Property="BackgroundColor" Value="#eee"/>-->
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
