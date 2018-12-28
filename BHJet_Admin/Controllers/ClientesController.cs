@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using BHJet_Core.Extension;
 using System.Globalization;
+using BHJet_DTO.Tarifa;
 
 namespace BHJet_Admin.Controllers
 {
@@ -171,12 +172,10 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public ActionResult NovoCliente(ClienteModel model)
 		{
-			//var teste = BHJet_Core.Customizavel.MetodoPagina.GetUrlParameter(Request, "edicao");
 			var edicao = false;
 			//Verifica se a requisição é edição
 			if (Request.UrlReferrer.Query.Contains("edicao"))
 				edicao = Request.UrlReferrer.Query.Split('&')[0].Split('=')[1].Trim().ToLower() == "true" ? true : false;
-		
 
 			try
 			{
@@ -332,6 +331,24 @@ namespace BHJet_Admin.Controllers
 			return PartialView("_Valor", model);
 		}
 
+		[HttpGet]
+		[ValidacaoUsuarioAttribute()]
+		public JsonResult BuscarTarifarioPadraoAtivo()
+		{
+
+			//var data = tarifaServico.BuscaTarifarioPadrao();
+			var data = new TarifaDTO()
+			{
+				Descricao = "abc",
+				ID = 1,
+				ValorDiaria = 300
+			};
+
+			var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+			return Json(json, JsonRequestBehavior.AllowGet);
+
+		}
 
 	}
 }

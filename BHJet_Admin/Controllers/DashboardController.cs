@@ -3,6 +3,7 @@ using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Enum;
 using BHJet_Core.Extension;
+using BHJet_DTO.Tarifa;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
@@ -331,7 +332,9 @@ namespace BHJet_Admin.Controllers
             }), JsonRequestBehavior.AllowGet);
         }
 
-        private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)
+		
+
+		private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)
         {
             return $"<b>ID:</b> {id} <br/><b>Nome:</b> {nomeMotorista}</br><b>Tipo:</b> {tipo.RetornaDescricaoEnum(typeof(TipoProfissional))}";
         }

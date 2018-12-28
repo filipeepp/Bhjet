@@ -26,6 +26,35 @@ namespace BHJet_Repositorio.Admin
                 // Execução
                 return sqlConnection.Query<TarifaEntidade>(query, new { idCli = clienteID });
             }
-        }
-    }
+		}
+
+		/// <summary>
+		/// Busca tarifa ativa na tabela de preço
+		/// </summary>
+		/// <param name="filtro">TipoProfissional</param>
+		/// <returns>TarifaDTO</returns>
+		public IEnumerable<TarifaEntidade> BuscaTarfaPadraoAtiva()
+		{
+			using (var sqlConnection = this.InstanciaConexao())
+			{
+				// Query
+				string query = @"SELECT 
+										dtDataInicioVigencia AS VigenciaInicio,
+										dtDataFimVigencia AS VigenciaFim,
+										decValorDiaria AS ValorDiaria,
+										decFranquiaKMDiaria AS FranquiaKMDiaria,
+										decValorKMAdicionalDiaria AS ValorKMAdicionalDiaria,
+										decFranquiaKMMensalidade AS FranquiaKMMensalidade,
+										decValorKMAdicionalMensalidade AS ValorKMAdicionalMensalidade,
+										bitAtivo AS Ativo
+									FROM
+										tblTarifario
+									WHERE
+										bitAtivo = 1";
+
+				// Execução
+				return sqlConnection.Query<TarifaEntidade>(query);
+			}
+		}
+	}
 }

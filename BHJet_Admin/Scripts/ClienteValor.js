@@ -213,3 +213,30 @@ window.ExcluirValor = function (divBlocoValor) {
 	}
 
 }
+
+window.PesquisaTarifarioPadrao = function (divBlocoValor) {
+
+	var idBloco = divBlocoValor.id;
+	var inputValorPadrao = $("#" + idBloco).find("input[id^='ValorPadrao']");
+
+	if (inputValorPadrao.prop("checked")) {
+
+		$.ajax({
+			url: '/Tarifario/BuscarTarifarioPadraoAtivo',
+			type: "GET",
+			dataType: "json",
+			success: function (data) {
+
+				var tarifarioPadrao = JSON.parse(data);
+
+				$("#" + idBloco).find("input[id$='ValorUnitario']").val(tarifarioPadrao.ValorDiaria);
+				$("#" + idBloco).find("input[id$='VigenciaInicio']").val(tarifarioPadrao.VigenciaInicio);
+				$("#" + idBloco).find("input[id$='VigenciaFim']").val(tarifarioPadrao.VigenciaFim);
+				$("#" + idBloco).find("input[id$='Franquia']").val(tarifarioPadrao.FranquiaKMDiaria);
+				$("#" + idBloco).find("input[id$='FranquiaAdicional']").val(tarifarioPadrao.ValorKMAdicionalMensalidade);
+				$("#" + idBloco).find("input[id$='Observacao']").val(tarifarioPadrao.Descricao);
+			},
+			error: function () { alert("Ops! Não foi possível buscar essa informação. Tente novamente mais tarde.") }
+		});
+	}
+}

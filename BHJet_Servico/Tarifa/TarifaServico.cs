@@ -6,7 +6,8 @@ namespace BHJet_Servico.Tarifa
     public interface ITarifaServico
     {
         TarifaDTO[] BuscaTaritasCliente(long idCliente);
-    }
+		TarifaDTO BuscaTarifarioPadrao();
+	}
 
     public class TarifaServico : ServicoBase, ITarifaServico
     {
@@ -29,5 +30,11 @@ namespace BHJet_Servico.Tarifa
 
             return this.Get<TarifaDTO[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Tarifa.GetTarifaCliente, idCliente)}"));
         }
-    }
+
+		public TarifaDTO BuscaTarifarioPadrao()
+		{
+			return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Tarifa.GetTarifaPadrao}"));
+		}
+
+	}
 }
