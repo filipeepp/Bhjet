@@ -18,7 +18,7 @@ function carregaMapa() {
 
 function adicionarArea(triangleCoords) {
     // Area
-    myPolygon2 = new google.maps.Polygon({
+    var myPolygon2 = new google.maps.Polygon({
         paths: triangleCoords,
         draggable: true,
         editable: true,
@@ -34,12 +34,20 @@ function adicionarArea(triangleCoords) {
     myPolygon2.setMap(map);
     google.maps.event.addListener(myPolygon2, 'rightclick', function (event) {
         if (confirm('Deseja remover esta Área de Atuação ?')) {
-            myPolygon2.setMap(null);
+
+            var index = areas.indexOf(this);
+            areas.splice(index, 1);
+            this.setMap(null);
+            getPolygonCoords();
         }
     });
+
     google.maps.event.addListener(myPolygon2.getPath(), "insert_at", getPolygonCoords);
     google.maps.event.addListener(myPolygon2.getPath(), "set_at", getPolygonCoords);
+
+    getPolygonCoords();
 }
+
 
 function getPolygonCoords() {
     var htmlStr = "[\n ";
@@ -65,11 +73,8 @@ function getPolygonCoords() {
     htmlStr += " }\n ";
     htmlStr += "]";
 
-    document.getElementById('info').innerHTML = htmlStr;
-}
-
-function copyToClipboard(text) {
-    window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+    //document.getElementById('info').value = htmlStr;
+    $("#info").val(htmlStr);
 }
 
 function initAutocomplete() {
@@ -113,7 +118,6 @@ function BuscaAreasCadastradas(idCom) {
 
                 adicionarArea(cords);
             });
-            getPolygonCoords();
             if (dados == "" || dados == undefined) {
                 $("#msgModal").text("Não foram encontrados Áreas de atuação para ser exibida no mapa.")
                 $("#imgMensagem").attr("src", "..\\Images\\warming.png");
@@ -134,11 +138,13 @@ function AtualizaAreas() {
         contentType: 'application/json',
         data: $("#info").val(),
         success: function (data) {
-
-
-
+            MensagemSucesso("Áreas de atuação atualizadas com sucesso.");
         },
-        error: function () { $("html, body").animate({ scrollTop: $(document).height() }, 1000); }
+        error: function () {
+            $("html, body").animate({
+                scrollTop: $(document).height()
+            }, 1000);
+        }
     });
 }
 
@@ -149,6 +155,15 @@ $(document).ready(function () {
     initAutocomplete();
     // ---
     $("#bntAtualizaAreas").click(function () {
-        AtualizaAreas();
+
+        var test = $("#info").val().replace(/[^\w\s]/gi, '');
+        test = test.replace(/\s/g, '');
+        if (test == "" || $("#info").val() == "" || $("#info").val() == undefined) {
+            MensagemAlerta("Não existem Áreas de atuação selecionadas no mapa.");
+            return false;
+        }
+        else {
+            AtualizaAreas();
+        }
     })
 });

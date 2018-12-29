@@ -26,9 +26,8 @@ namespace BHJet_WebApi.Controllers
             // Validacao
             if (entidade == null || !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
-
-            // Return
-            return Ok(entidade.Select(at => new AreaAtuacaoDTO()
+            
+            var resultado = entidade.Select(at => new AreaAtuacaoDTO()
             {
                 ID = at.idRegistro,
                 GeoVertices = at.vcGeoVertices.Split(';').Select(gc => new AreaAtuacaoGeoPosicao()
@@ -37,7 +36,10 @@ namespace BHJet_WebApi.Controllers
                     Longitude = gc.Split(',')[1]
                 }).ToArray(),
                 Ativo = at.bitDisponivel
-            }));
+            });
+
+            // Return
+            return Ok(resultado);
         }
 
         /// <summary>

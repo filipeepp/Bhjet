@@ -69,12 +69,6 @@ namespace BHJet_Admin.Controllers
                 // Busca dados do profissional
                 var usuario = usuariosServico.BuscaUsuario(ID ?? 0);
 
-                usuario = new BHJet_DTO.Usuario.UsuarioDTO()
-                {
-                    TipoUsuario = BHJet_Core.Enum.TipoUsuario.FuncionarioCliente,
-                    ClienteSelecionado = 10
-                };
-
                 // Return
                 return View(new UsuarioModel()
                 {

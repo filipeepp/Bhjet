@@ -109,6 +109,13 @@ function MensagemAlerta(msg) {
     $('#myModal').modal('show')
 }
 
+function MensagemSucesso(msg) {
+    $("#msgModal").text(msg)
+    $("#imgMensagem").attr("src", "..\\Images\\sucesso.png");
+    $('#myModal').modal('show')
+}
+
+
 
 function AdicionarErroCampo(idField, message, tempoAtivo) {
     var para = document.createElement("p");
