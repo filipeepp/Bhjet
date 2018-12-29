@@ -29,7 +29,7 @@ namespace BHJet_Admin.Controllers
 		public JsonResult BuscarTarifarioPadraoAtivo()
 		{
 
-			var data = tarifaServico.BuscaTarifarioPadrao();
+			var data = tarifaServico.BuscaTaritaCliente(null);
 
 			var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 

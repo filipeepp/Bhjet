@@ -2,28 +2,27 @@
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Clientes;
 using BHJet_Core.Enum;
+using BHJet_Core.Extension;
 using BHJet_DTO.Cliente;
 using BHJet_Servico.Cliente;
+using BHJet_Servico.Tarifa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using BHJet_Core.Extension;
-using System.Globalization;
-using BHJet_DTO.Tarifa;
 
 namespace BHJet_Admin.Controllers
 {
     public class ClientesController : Controller
     {
 		private readonly IClienteServico clienteServico;
+        private readonly ITarifaServico tarifaServico;
 
-		public ClientesController(IClienteServico _cliente)
+        public ClientesController(IClienteServico _cliente, ITarifaServico _tarifaServico)
 		{
 			clienteServico = _cliente;
-		}
+            tarifaServico = _tarifaServico;
+        }
 
 
 		[ValidacaoUsuarioAttribute()]
@@ -335,14 +334,7 @@ namespace BHJet_Admin.Controllers
 		[ValidacaoUsuarioAttribute()]
 		public JsonResult BuscarTarifarioPadraoAtivo()
 		{
-
-			//var data = tarifaServico.BuscaTarifarioPadrao();
-			var data = new TarifaDTO()
-			{
-				Descricao = "abc",
-				ID = 1,
-				ValorDiaria = 300
-			};
+			var data = tarifaServico.BuscaTaritaCliente(null);
 
 			var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 

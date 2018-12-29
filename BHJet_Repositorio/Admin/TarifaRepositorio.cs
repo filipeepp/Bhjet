@@ -11,7 +11,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public TarifaEntidade BuscaTarificaPorCliente(long clienteID)
+        public TarifaEntidade BuscaTarificaPorCliente(long? clienteID)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {

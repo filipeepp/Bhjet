@@ -5,7 +5,7 @@ namespace BHJet_Servico.Tarifa
 {
     public interface ITarifaServico
     {
-        TarifaDTO BuscaTaritaCliente(long idCliente);
+        TarifaDTO BuscaTaritaCliente(long? idCliente);
     }
 
     public class TarifaServico : ServicoBase, ITarifaServico
@@ -15,18 +15,8 @@ namespace BHJet_Servico.Tarifa
 
         }
 
-        public TarifaDTO BuscaTaritaCliente(long idCliente)
+        public TarifaDTO BuscaTaritaCliente(long? idCliente)
         {
-            //return new TarifaDTO[]
-            //{
-            //        new TarifaDTO()
-            //        {
-            //         ID = 1,
-            //         Descricao = "Tarifa composta",
-            //          ValorDiaria = 1552
-            //        }
-            //};
-
             return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Tarifa.GetTarifaCliente, idCliente)}"));
         }
     }
