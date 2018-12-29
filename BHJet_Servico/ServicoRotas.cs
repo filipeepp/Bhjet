@@ -68,7 +68,8 @@ namespace BHJet_Servico
         public class Tarifa
         {
             public const string GetTarifaCliente = "/Tarifa/cliente/{0}";
-        }
+			public const string GetTarifaPadrao = "/Tarifa/padrao";
+		}
 
         public class Faturamento
         {
