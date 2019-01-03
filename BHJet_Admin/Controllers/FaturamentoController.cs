@@ -258,6 +258,8 @@ namespace BHJet_Admin.Controllers
                 // Busca detalhe
                 var resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
 
+                ViewBag.Total = resultado.Sum(x => x.Valor);
+
                 // Return View
                 return View(new DetalheFaturamentoAvulso()
                 {
@@ -270,7 +272,8 @@ namespace BHJet_Admin.Controllers
                         NumeroOS = c.OS,
                         QuantidadeKM = c.KM,
                         Profissional = c.Profissional,
-                        Valor = c.Valor
+                        Valor = c.Valor,
+                        TipoContrato = c.Tipo
                     }).ToArray()
                 });
             }

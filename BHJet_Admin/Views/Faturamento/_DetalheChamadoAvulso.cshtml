@@ -13,33 +13,47 @@
                 </a>
                 Itens faturados
             </h2>
+
         </div>
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-lg-12">
+
+                @if (ViewBag.Total != null)
+                {
+                    <div class="box-total">
+                        <h5 class="box-total-tit">TOTAL</h5>
+                        <h5><i class="fa fa-money" aria-hidden="true"></i> @(((decimal)ViewBag.Total).ToString("C2"))</h5>
+                    </div>
+                }
+
                 <table class="table table-bordered">
                     <thead>
                         <tr class="bg-light-gray">
                             <th>Data</th>
                             <th>OS</th>
-                            <th>Profissional</th>
-                            <th>KM</th>
-                            <th>Valor</th>
+                            <th class="hidden-xs">Tipo Chamado</th>
+                            <th class="hidden-xs">Profissional</th>
+                            <th class="hidden-xs">KM</thclass="hidden-xs">
+                            <th class="text-right">Valor</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            @foreach (DetalheFaturamentoAvulsoRegistros fat in @Model)
-                            {
+
+                        @foreach (DetalheFaturamentoAvulsoRegistros fat in @Model)
+                        {
+                            <tr>
                                 <td>@fat.DataCorrida</td>
-                                <td class="hidden-xs">@fat.NumeroOS</td>
+                                <td>@fat.NumeroOS</td>
+                                <td class="hidden-xs">@fat.TipoContrato</td>
                                 <td class="hidden-xs">@fat.Profissional</td>
                                 <td class="hidden-xs">@fat.QuantidadeKM</td>
-                                <td class="hidden-xs">@fat.Valor.ToString("C")</td>
-                            }
-                        </tr>
+                                <td class="text-right">@fat.Valor.ToString("C")</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
+
             </div>
         </div>
 

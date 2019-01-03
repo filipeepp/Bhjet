@@ -58,7 +58,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <BoxView Grid.Column="0" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand"  Color="#141414" HeightRequest="2" 
+                <BoxView Grid.Column="0" Grid.ColumnSpan="4" HorizontalOptions="FillAndExpand"  Color="#141414" HeightRequest="1" 
                          VerticalOptions="Start"  />
 
                 <StackLayout Orientation="Vertical" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">

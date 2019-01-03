@@ -281,7 +281,7 @@ namespace BHJet_Repositorio.Admin
                     // Serpara por tipo
                     if (tipo != null)
                     {
-                        if (tipo == TipoContrato.ChamadosAvulsos)
+                        if (tipo == TipoContrato.ContratoLocacao)
                             retorno = fatDiaria.ToArray();
                         else
                             retorno = fatContrato.ToArray();
