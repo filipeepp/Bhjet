@@ -3,12 +3,21 @@
 @using BHJet_Core.Extension
 @model TabelaClienteModel
 
-<script src="@Url.Content("~/Scripts/Clientes.js")"></script>
-
 <ol class="breadcrumb">
 	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
 	<li><a href="#map_canvas">Clientes</a></li>
 </ol>
+<script src="@Url.Content("~/Scripts/Clientes.js")"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+		$(".cst-tbl-linhaHover").click(function () {
+			window.location = '@Url.Action("NovoCliente", "Clientes")?edicao=true&clienteID=' + $(this)[0].id;
+		});
+
+	});
+</script>
 
 <div class="container-fluid">
 
@@ -56,16 +65,20 @@
 									<tbody>
 										@foreach (var linha in Model.ListModel)
 										{
-											<tr>
-												<td> <a href="">@linha.ClienteID</a></td>
-												<td> <a href=""> @linha.NomeRazaoSocial </a></td>
-												<td> <a href="">@linha.TipoContrato</a></td>
-												<td> <a href="">@linha.ValorAtivado</a></td>
+											<tr class="cst-tbl-linhaHover" id="@linha.ClienteID">
+												<td> @linha.ClienteID</td>
+												<td>  @linha.NomeRazaoSocial</td>
+												<td> @linha.TipoContrato</td>
+												<td> @linha.ValorAtivado</td>
 											</tr>
 										}
+
 									</tbody>
 								</table>
 							</div>
+						</div>
+
+						<div class="col-md-12">
 
 						</div>
 
@@ -78,11 +91,14 @@
 </div>
 @if (TempData["mensagemGeral"] != null)
 {
+	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
 	<script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
 	</script>
 }

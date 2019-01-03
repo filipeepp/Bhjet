@@ -66,10 +66,10 @@
 										@foreach (var linha in Model.ListModel)
 										{
 											<tr class="cst-tbl-linhaHover" id="@linha.ClienteID">
-												<td> <a href="">@linha.ClienteID</a></td>
-												<td> <a href=""> @linha.NomeRazaoSocial </a></td>
-												<td> <a href="">@linha.TipoContrato</a></td>
-												<td> <a href="">@linha.ValorAtivado</a></td>
+												<td> @linha.ClienteID</td>
+												<td>  @linha.NomeRazaoSocial</td>
+												<td> @linha.TipoContrato</td>
+												<td> @linha.ValorAtivado</td>
 											</tr>
 										}
 

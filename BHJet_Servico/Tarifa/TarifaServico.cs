@@ -17,7 +17,7 @@ namespace BHJet_Servico.Tarifa
 
         public TarifaDTO BuscaTaritaCliente(long? idCliente)
         {
-            return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Tarifa.GetTarifaCliente, idCliente)}"));
+            return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Tarifa.GetTarifaCliente}?idCliente={idCliente}"));
         }
     }
 }

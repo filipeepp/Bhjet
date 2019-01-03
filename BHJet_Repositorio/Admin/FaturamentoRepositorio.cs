@@ -16,6 +16,133 @@ namespace BHJet_Repositorio.Admin
         /// <returns>UsuarioEntidade</returns>
         public void GeraFaturamento(long[] idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
         {
+            // Cadastra Periodo Faturamento
+            var idPeriodo = CadastraPeriodoFaturamento(periodoFatInico, periodoFatFim);
+
+            // Valida
+            if (idPeriodo == null)
+                throw new InvalidOperationException("Não foi possível cadastrar um novo período de fatuamento.");
+
+            // Busca Faturamentos
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+
+                        // Query
+                        string query = @"--- Busca Diarias ---
+		                               select  P.idRegistroDiaria,
+		                               P.idTarifario, 
+		                               P.idColaboradorEmpresaSistema,
+		                               P.idUsuarioSolicitacao as idUsuarioFaturado,
+                               		   P.decValorDiariaNegociado as decValor,
+		                               P.decValorDiariaComissaoNegociado as decValorComissao
+                                 from tblRegistroDiarias as P
+	                               where P.dtDataHoraInicioExpediente BETWEEN @dataInicio AND @dataFim
+		                             and P.intOdometroFimExpediente is not null
+		                             and P.idCliente not in (select RD.idCliente from tblItemFaturamento as IT left join tblRegistroDiarias as RD ON (IT.idRegistroDiaria = RD.idRegistroDiaria))
+                                     and P.idRegistroDiaria not in (select idRegistroDiaria from tblItemFaturamento where idRegistroDiaria = P.idRegistroDiaria)
+                                     %clienteCondition%
+
+		                        --- Busca Corridas ---
+		                                select P.idCorrida,
+                                               P.idUsuarioChamador as idUsuarioFaturado,
+	                                           P.idTarifario,
+	                                           P.idUsuarioColaboradorEmpresa as idColaboradorEmpresaSistema,
+	                                           P.decValorFinalizado as decValor,
+	                                           P.decValorComissaoNegociado as decValorComissao
+	                                        from tblCorridas as P
+	                                        where P.dtDataHoraInicio BETWEEN  @dataInicio AND @dataFim
+                                        	  and P.dtDataHoraTermino is not null 
+                                              and P.idCorrida not in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
+                                              %clienteCondition%";
+
+                        // Busca por cliente
+                        if (idCliente != null && idCliente.Any())
+                            query = query.Replace("%clienteCondition%", " and  P.idCliente in @IDCliente");
+                        else
+                            query = query.Replace("%clienteCondition%", "");
+
+                        // Query Multiple
+                        using (var multi = sqlConnection.QueryMultiple(query, new
+                        {
+                            dataInicio = periodoFatInico,
+                            dataFim = periodoFatFim,
+                            IDCliente = idCliente
+                        }, trans))
+                        {
+                            // Diarias a faturar no periodo
+                            var diarias = multi.Read<ItemFaturamentoEntidade>().AsList();
+
+                            // Corridas a faturar no periodo
+                            var corridas = multi.Read<ItemFaturamentoEntidade>().AsList();
+
+                            // Cria Periodo Faturamento
+                            //var servicosUnificados = new List<ItemFaturamentoEntidade>();
+
+                            // Faturamento unificado
+                            var servicosUnificados = diarias.Union(corridas).ToList();
+
+                            // Lista final a ser faturado
+                            //var servicosRealizados = servicosUnificados.GroupBy(fat => fat.idCorrida);
+
+                            if (servicosUnificados == null || !servicosUnificados.Any())
+                                throw new InvalidOperationException("Não existe item a faturar no período informado.");
+
+                            // Cria Item Faturamento
+                            string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
+                                                         ([idCorrida]
+                                                         ,[idRegistroDiaria]
+                                                         ,[idTarifario]
+                                                         ,[idColaboradorEmpresaSistema]
+                                                         ,[idUsuarioFaturado]
+                                                         ,[idPeriodoFaturamento]
+                                                         ,[decValor]
+                                                         ,[decValorComissao]
+                                                         ,[bitFaturado])
+                                                       VALUES
+                                                             (@PidCorrida
+                                                             ,@PidRegistroDiaria
+                                                             ,@PidTarifario
+                                                             ,@PidColaboradorEmpresaSistema
+                                                             ,@PidUsuarioFaturado
+                                                             ,@PidPeriodoFaturamento
+                                                             ,@PdecValor
+                                                             ,@PdecValorComissao
+                                                             ,@PbitFaturado) select @@IDENTITY";
+                            foreach (var nvItemFat in servicosUnificados)
+                            {
+                                // Execução 
+                                var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
+                                {
+                                    PidCorrida = nvItemFat.idCorrida,
+                                    PidRegistroDiaria = nvItemFat.idRegistroDiaria,
+                                    PidTarifario = nvItemFat.idTarifario,
+                                    PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
+                                    PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
+                                    PidPeriodoFaturamento = idPeriodo,
+                                    PdecValor = nvItemFat.decValor,
+                                    PdecValorComissao = nvItemFat.decValorComissao,
+                                    PbitFaturado = false
+                                }, trans);
+                            }
+                        }
+
+                        trans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        trans.Rollback();
+                        throw e;
+                    }
+                }
+            }
+        }
+
+        private int? CadastraPeriodoFaturamento(DateTime periodoFatInico, DateTime periodoFatFim)
+        {
             using (var sqlConnection = this.InstanciaConexao())
             {
                 using (var trans = sqlConnection.BeginTransaction())
@@ -48,113 +175,11 @@ namespace BHJet_Repositorio.Admin
                             }, trans);
                         }
 
-                        // Query
-                        string query = @"--- Busca Diarias ---
-		                               select  P.idRegistroDiaria,
-		                               P.idTarifario, 
-		                               P.idColaboradorEmpresaSistema,
-		                               P.idUsuarioSolicitacao as idUsuarioFaturado,
-                               		   P.decValorDiariaNegociado as decValor,
-		                               P.decValorDiariaComissaoNegociado as decValorComissao
-                                 from tblRegistroDiarias as P
-	                               where P.dtDataHoraInicioExpediente BETWEEN @dataInicio AND @dataFim
-		                             and P.intOdometroFimExpediente is not null
-		                             and P.idCliente not in (select RD.idCliente from tblItemFaturamento as IT left join tblRegistroDiarias as RD ON (IT.idRegistroDiaria = RD.idRegistroDiaria))
-                                     and P.idRegistroDiaria not in (select idRegistroDiaria from tblItemFaturamento where idRegistroDiaria = P.idRegistroDiaria)
-                                     %clienteCondition%
-
-		                        --- Busca Corridas ---
-		                                select P.idCorrida,
-                                               P.idUsuarioChamador as idUsuarioFaturado,
-	                                           P.idTarifario,
-	                                           P.idUsuarioColaboradorEmpresa,
-	                                           P.decValorFinalizado as decValor,
-	                                           P.decValorComissaoNegociado as decValorComissao
-	                                        from tblCorridas as P
-	                                        where P.dtDataHoraInicio BETWEEN  @dataInicio AND @dataFim
-                                        	  and P.dtDataHoraTermino is not null 
-                                              and P.idCorrida not in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
-                                              %clienteCondition%";
-
-                        // Busca por cliente
-                        if (idCliente != null && idCliente.Any())
-                            query = query.Replace("%clienteCondition%", " and  P.idCliente in @IDCliente");
-                        else
-                            query = query.Replace("%clienteCondition%", "");
-
-                        // Query Multiple
-                        using (var multi = sqlConnection.QueryMultiple(query, new
-                        {
-                            dataInicio = periodoFatInico,
-                            dataFim = periodoFatFim,
-                            IDCliente = idCliente
-                        }, trans))
-                        {
-                            // Diarias a faturar no periodo
-                            var diarias = multi.Read<ItemFaturamentoEntidade>().AsList();
-
-                            // Corridas a faturar no periodo
-                            var corridas = multi.Read<ItemFaturamentoEntidade>().AsList();
-
-                            // Cria Periodo Faturamento
-                            var servicosUnificados = new List<ItemFaturamentoEntidade>();
-
-                            // Atualiza id periodo faturamento nas itens a faturar
-                            if (idCliente != null && idCliente.Any())
-                                servicosUnificados = diarias.Union(corridas).ToList();
-
-                            // Lista final a ser faturado
-                            servicosUnificados = diarias.Select(x =>
-                            {
-                                x.idPeriodoFaturamento = idPeriodoFaturamento;
-                                x.bitFaturado = false;
-                                return x;
-                            }).ToList();
-
-                            if (servicosUnificados == null || !servicosUnificados.Any())
-                                throw new InvalidOperationException("Não existe item a faturar no período informado.");
-
-                            // Cria Item Faturamento
-                            string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
-                                                         ([idCorrida]
-                                                                       ,[idRegistroDiaria]
-                                                                       ,[idTarifario]
-                                                                       ,[idColaboradorEmpresaSistema]
-                                                                       ,[idUsuarioFaturado]
-                                                                       ,[idPeriodoFaturamento]
-                                                                       ,[decValor]
-                                                                       ,[decValorComissao]
-                                                                       ,[bitFaturado])
-                                                            VALUES
-                                                             (@PidCorrida
-                                                             ,@PidRegistroDiaria
-                                                             ,@PidTarifario
-                                                             ,@PidColaboradorEmpresaSistema
-                                                             ,@PidUsuarioFaturado
-                                                             ,@PidPeriodoFaturamento
-                                                             ,@PdecValor
-                                                             ,@PdecValorComissao
-                                                             ,@PbitFaturado) select @@IDENTITY";
-                            foreach (var nvItemFat in servicosUnificados)
-                            {
-                                // Execução 
-                                var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
-                                {
-                                    PidCorrida = nvItemFat.idCorrida,
-                                    PidRegistroDiaria = nvItemFat.idRegistroDiaria,
-                                    PidTarifario = nvItemFat.idTarifario,
-                                    PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
-                                    PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
-                                    PidPeriodoFaturamento = nvItemFat.idPeriodoFaturamento,
-                                    PdecValor = nvItemFat.decValor,
-                                    PdecValorComissao = nvItemFat.decValorComissao,
-                                    PbitFaturado = nvItemFat.bitFaturado
-                                }, trans);
-                            }
-                        }
-
                         // Commit
                         trans.Commit();
+
+                        // Return 
+                        return idPeriodoFaturamento;
                     }
                     catch (Exception e)
                     {
@@ -164,6 +189,7 @@ namespace BHJet_Repositorio.Admin
                 }
             }
         }
+
 
         /// <summary>
         /// Busca Profissionais Disponiveis
@@ -178,6 +204,7 @@ namespace BHJet_Repositorio.Admin
 
                 string query = @"-- fatu registro diaria
 	                       select
+                                IT.idItemFaturamento as ID, 
                                 CLI.idCliente,
  	                            CLI.vcNomeFantasia AS NomeCliente,
  	                            --concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
@@ -191,10 +218,11 @@ namespace BHJet_Repositorio.Admin
 						 and PF.dtDataFimPeriodoFaturamento = @dataFim  
 						 and it.idCorrida is null
 						 and IT.idRegistroDiaria is not null  %clienteCondition% 
-                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor
+                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor, IT.idItemFaturamento
 
                         -- fatu corridas                            
 					     select
+                                IT.idItemFaturamento as ID,
 								CLI.idCliente as IDCliente,
  	                            CLI.vcNomeFantasia AS NomeCliente,
  	                           -- concat(convert(varchar(11), PF.dtDataInicioPeriodoFaturamento, 103), ' até ', convert(varchar(11),PF.dtDataFimPeriodoFaturamento,103)) as Periodo,
@@ -208,7 +236,7 @@ namespace BHJet_Repositorio.Admin
 						 and PF.dtDataFimPeriodoFaturamento = @dataFim 
 						 and it.idRegistroDiaria is null
 						 and IT.idCorrida is not null  %clienteCondition2% 
-                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor";
+                    group by CLI.idCliente, CLI.vcNomeFantasia, IT.decValor, IT.idItemFaturamento";
 
                 if (idClientes != null && idClientes.Any())
                 {
@@ -234,7 +262,7 @@ namespace BHJet_Repositorio.Admin
                 {
                     // registra diaria
                     var fatDiaria = multi.Read<ItemFaturamentoResumidoEntidade>().AsList();
-                    fatDiaria = fatDiaria.Select(x => 
+                    fatDiaria = fatDiaria.Select(x =>
                     {
                         x.Periodo = $"{periodoFatInico.ToShortDateString()} a {periodoFatFim.ToShortDateString()}";
                         x.TipoDescContrato = "Diárias Avulsas";
@@ -260,6 +288,19 @@ namespace BHJet_Repositorio.Admin
                     }
                     else
                         retorno = fatDiaria.Union(fatContrato).ToArray();
+
+                    // Agrupa por cliente
+                    retorno = retorno.GroupBy(fat => fat.IDCliente).Select(g => new ItemFaturamentoResumidoEntidade()
+                    {
+                        //ID = g.Key,
+                         
+                        Valor = g.Sum(s => s.Valor),
+                        ID = g.First().ID,
+                        IDCliente = g.First().IDCliente,
+                        NomeCliente = g.First().NomeCliente,
+                        Periodo = g.First().Periodo,
+                        TipoDescContrato = tipo == null ? "Todos" : g.First().TipoDescContrato
+                    }).ToArray();
 
                 }
                 // Execução
@@ -329,17 +370,17 @@ namespace BHJet_Repositorio.Admin
                 // Query
 
                 string queryCorridas = @"-- busca todas diarias		
-						  select
+						    select
                                 it.idCorrida
    	                            from tblItemFaturamento IT
 						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
-						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+						join tblCorridas CR on (CR.idCorrida = it.idCorrida)
+						join tblClientes CLI on (CR.idCliente = CLI.idCliente)
 				where PF.dtDataInicioPeriodoFaturamento = @dtIni 
 						 and PF.dtDataFimPeriodoFaturamento = @dtFim  
 						 and it.idRegistroDiaria is null
 						 and IT.idCorrida is not null
-						 and RG.idCliente = @idCliente";
+						 and CR.idCliente = @idCliente";
 
 
                 // Retorno
@@ -363,11 +404,11 @@ namespace BHJet_Repositorio.Admin
                                                       from tblCorridas as CR
                                                             join tblColaboradoresEmpresaSistema CES on (CES.idColaboradorEmpresaSistema = CR.idUsuarioColaboradorEmpresa)
                                                             join tblClientes as CLI on (CLI.idCliente = CR.idCliente) 
-                                                         where idCorrida in (@ids)";
+                                                         where idCorrida in @ids";
 
                 var diariasDetalhe = sqlConnection.Query<ItemFaturamentoDetalheEntidade>(queryDetalheDiarias, new
                 {
-                    ids = string.Join(",", corridas)
+                    ids = corridas
                 });
 
                 // Execução

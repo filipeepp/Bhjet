@@ -115,6 +115,9 @@ function MensagemSucesso(msg) {
     $('#myModal').modal('show')
 }
 
+function Carregamento() {
+   // $("#loading").show();
+}
 
 
 function AdicionarErroCampo(idField, message, tempoAtivo) {

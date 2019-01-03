@@ -47,26 +47,14 @@ $("#pesquisaCliente").keyup(delay(function (e) {
     BuscaClientes();
 }, 500));
 
+window.onload = function () {
+    $("#loading").show();
+};
+
 document.addEventListener("DOMContentLoaded", function (event) {
 
     var x = document.getElementById("TipoUser");
     x.remove(2);
-
-    if ($("#EdicaoCadastro").val() === "True") {
-        necessarioCliente();
-        setTimeout(function afterTwoSeconds() {
-            $('#Senha').val("")
-        }, 80)
-
-        BuscaClientes($("#ClienteSelecionadoBKP").val());
-    }
-    else {
-        setTimeout(function afterTwoSeconds() {
-            $('#Senha').val("")
-            $('#Email').val("")
-        }, 80)
-        BuscaClientes();
-    }
 
     $("#TipoUser").change(function () {
         necessarioCliente();
@@ -92,5 +80,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     })
 
+    if ($("#EdicaoCadastro").val() === "True") {
+        necessarioCliente();
+        setTimeout(function afterTwoSeconds() {
+            $('#Senha').val("")
+            $("#loading").hide()
+        }, 100)
+
+        BuscaClientes($("#ClienteSelecionadoBKP").val());
+    }
+    else {
+        setTimeout(function afterTwoSeconds() {
+            $('#Senha').val("")
+            $('#Email').val("")
+            $("#loading").hide()
+        }, 700)
+        BuscaClientes();
+    }
 
 });
