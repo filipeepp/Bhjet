@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/25/2018 22:12:43</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.dll">
-      <publishTime>01/02/2019 22:18:08</publishTime>
+      <publishTime>01/02/2019 22:47:56</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.pdb">
-      <publishTime>01/02/2019 22:18:08</publishTime>
+      <publishTime>01/02/2019 22:47:56</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
       <publishTime>01/02/2019 22:18:05</publishTime>
@@ -603,6 +603,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
     </File>
+    <File Include="bundleconfig.json.bindings">
+      <publishTime>01/02/2019 22:45:57</publishTime>
+    </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>10/25/2018 22:12:34</publishTime>
     </File>
@@ -916,7 +919,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/03/2018 16:18:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/02/2019 22:18:09</publishTime>
+      <publishTime>01/02/2019 22:47:56</publishTime>
     </File>
   </ItemGroup>
 </Project>
