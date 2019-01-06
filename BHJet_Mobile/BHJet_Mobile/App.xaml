@@ -5,6 +5,11 @@
     <Application.Resources>
         <ResourceDictionary>
 
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#0595d4"/>
+                <Setter Property="BarTextColor" Value="White"/>
+            </Style>
+            
             <!-- Dicionario de Cores -->
             <Color x:Key="PageBackgroundColor">Yellow</Color>
             <!---->
