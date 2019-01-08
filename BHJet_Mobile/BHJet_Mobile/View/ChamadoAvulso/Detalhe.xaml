@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.ChamadoAvulso.Detalhe">
+
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#ffd423" >
+
+            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="50" Margin="0,50,0,0" ></Image>
+
+            <ScrollView BackgroundColor="Transparent" VerticalOptions="CenterAndExpand">
+
+                <Grid Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  RowSpacing="0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="End" Text="Número OS - 123456" TextColor="#193651"  />
+                    <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                    <Frame  Margin="0, 10" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+
+                        <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
+                            <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="Av. do contorno 2112, Sala 405 / Santa Efigencia - Belo Horizonte/MG" TextColor="#193651"  />
+
+                            <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
+                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Marcus Vinicius" TextColor="#193651" />
+
+                            <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
+                            <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Texto com innstruções de como proceder com a entrega" TextColor="#193651" />
+
+                            <Image Grid.Row="4" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="relogio.png" 
+                               WidthRequest="25" HeightRequest="25"  >
+                                <!--<Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>-->
+                            </Image>
+                            <Label Grid.Row="4" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Registrar chegada" TextColor="#193651"  />
+
+                            <Image Grid.Row="5" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="camera.png"  
+                               WidthRequest="25" HeightRequest="25" >
+                                <!--<Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>-->
+                            </Image>
+                            <Label Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Protocolo de Coleta/Entrega" TextColor="#193651"  />
+
+
+                            <Image Grid.Row="6" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="alerta.png" 
+                                WidthRequest="25" HeightRequest="25"  >
+                                <!--<Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>-->
+                            </Image>
+                            <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Registrar ocorrência" TextColor="#193651"  />
+
+
+                            <Image Grid.Row="7" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="waze.png" 
+                               WidthRequest="25" HeightRequest="25" >
+                                <!--<Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>-->
+                            </Image>
+                            <Label Grid.Row="7" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Nevagar com waze" TextColor="#193651"  />
+                        </Grid>
+
+                    </Frame>
+
+
+                    <BoxView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                </Grid>
+
+
+            </ScrollView>
+
+            <local:Menu></local:Menu>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+
+
+</ContentPage>

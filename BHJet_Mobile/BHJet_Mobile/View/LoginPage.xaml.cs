@@ -1,10 +1,6 @@
-﻿using BHJet_Mobile.ViewModel.Login;
+﻿using BHJet_Mobile.View.ChamadoAvulso;
+using BHJet_Mobile.ViewModel.Login;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -45,7 +41,7 @@ namespace BHJet_Mobile.View
                 // Executa o Login
                 await ViewModel.ExecutarLogin();
                 // Troca de página após Login
-                App.Current.MainPage = new MainPage();
+                App.Current.MainPage = new Index();
             }
             catch (Exception error)
             {

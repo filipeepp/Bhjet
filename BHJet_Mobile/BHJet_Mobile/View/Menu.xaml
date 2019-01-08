@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BHJet_Mobile.View.Menu">
+    
+  <ContentView.Content>
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="#ffd423" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="End"    BackgroundColor="#eff0f2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <BoxView Grid.Column="0" Grid.ColumnSpan="4"  HorizontalOptions="FillAndExpand"  Color="#141414" HeightRequest="1" 
+                         VerticalOptions="Start"  />
+
+                <StackLayout Orientation="Vertical" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+                    <Image  Source="home.png"   WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical"  Grid.Column="1"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+                    <Image  Source="money.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,40,8" />
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical"  Grid.Column="2"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+                    <Image  Source="bandeirada.png"  WidthRequest="30" HeightRequest="25" Margin="40,12,0,8" />
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical"  Grid.Column="3"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
+                    <Image  Source="motoqueiro.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
+                    <!--<Label Text="Atualizar Dados" TextColor="#474646" />-->
+                </StackLayout>
+            </Grid>
+
+            <Button Grid.Column="0" WidthRequest="60" FontSize="4"  BorderColor="Gray" VerticalOptions="Center" HorizontalOptions="Center"
+                        BackgroundColor="#193651" Clicked="Button_Clicked" Image="search2.png"
+                        HeightRequest="60"  BorderRadius="40"></Button>
+        </Grid>
+    </ContentView.Content>
+    
+</ContentView>
