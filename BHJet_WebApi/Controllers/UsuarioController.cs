@@ -36,7 +36,7 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
-        /// Busca lista de usuarios
+        /// Cadastra usuario
         /// </summary>
         /// <param name="model">UsuarioDTO</param>
         /// <returns></returns>
@@ -62,6 +62,40 @@ namespace BHJet_WebApi.Controllers
                 idTipoUsuario = model.TipoUsuario,
                 vbIncPassword = model.Senha,
                 ClienteSelecionado = model.ClienteSelecionado
+            });
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// Atualiza usuario
+        /// </summary>
+        /// <param name="model">UsuarioDTO</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("")]
+        public IHttpActionResult PutUsuarios([FromBody]UsuarioDTO model)
+        {
+            // Instancia
+            var usuRep = new UsuarioRepositorio();
+
+            // Busca Usuarios
+            var entidade = usuRep.BuscaUsuarios(model.Email);
+
+            // Validacao
+            if (entidade != null && entidade.Any() && entidade.Where(x => x.vcEmail == model.Email).Any())
+                return BadRequest("Já existe um usuário cadastrado para o email informado.");
+
+            // Busca Usuarios
+            usuRep.AtualizaUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+            {
+                idUsuario = model.ID,
+                bitAtivo = model.Situacao,
+                vcEmail = model.Email,
+                idTipoUsuario = model.TipoUsuario,
+                ClienteSelecionado = model.ClienteSelecionado,
+                vbIncPassword = model.Senha
             });
 
             // Return

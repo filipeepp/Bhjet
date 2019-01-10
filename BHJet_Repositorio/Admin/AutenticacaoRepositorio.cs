@@ -26,15 +26,17 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select * from tblUsuarios where
                                     vcEmail = @usuemaillogin and 
                                     vbPassword = @usupass and 
-                                    bitAtivo = 0 and
-                                    idTipoUsuario = @usutp";
+                                    bitAtivo = 1";
+
+                if (filtro.usuarioTipo != null)
+                    query += " and idTipoUsuario = @usutp";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
                 {
                     usuemaillogin = filtro.usuarioEmail,
                     usupass = senhaEncrypByte,
-                    usutp = ((int)filtro.usuarioTipo)
+                    usutp = filtro.usuarioTipo != null ? ((int)filtro.usuarioTipo) : 1
                 });
             }
         }

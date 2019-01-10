@@ -103,6 +103,56 @@ namespace BHJet_Repositorio.Admin
         }
 
         /// <summary>
+        /// Atualizar Usuario
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public void AtualizaUsuario(UsuarioEntidade usuario)
+        {
+            // Monta senha
+            var senhaOrigem = CriptografiaUtil.Descriptografa(usuario.vbIncPassword, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
+            var senhaEncryp = CriptografiaUtil.CriptografiaHash(senhaOrigem);
+            var senhaEncrypByte = Encoding.UTF8.GetBytes("");
+
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblUsuarios set vcEmail = @email, vbPassword = @pass, bitAtivo = @status, idTipoUsuario = @tp where idUsuario = @id";
+
+                // Execução
+                sqlConnection.ExecuteScalar(query, new
+                {
+                    id = usuario.idUsuario,
+                    email = usuario.vcEmail,
+                    pass = senhaEncrypByte,
+                    status = usuario.bitAtivo,
+                    tp = usuario.idTipoUsuario
+                });
+
+                // Atualiza cliente
+                switch (usuario.idTipoUsuario)
+                {
+                    case TipoUsuario.ClienteAvulsoSite:
+                        string queryCliente = @"update tblClientes set idUsuario = @IdUsu where idCliente = @idCli";
+                        sqlConnection.ExecuteScalar(queryCliente, new
+                        {
+                            IdUsu = usuario.idUsuario,
+                            idCli = usuario.ClienteSelecionado
+                        });
+                        break;
+                    case TipoUsuario.FuncionarioCliente:
+                        string queryClienteCol = @"update tblColaboradoresCliente set idUsuario = @IdUsu where idCliente = @idCli";
+                        sqlConnection.ExecuteScalar(queryClienteCol, new
+                        {
+                            IdUsu = usuario.idUsuario,
+                            idCli = usuario.ClienteSelecionado
+                        });
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Atualiza situacao Usuario
         /// </summary>
         /// <returns></returns>

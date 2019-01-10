@@ -68,6 +68,7 @@
     <Compile Include="Enum\DashboardTipos.cs" />
     <Compile Include="Enum\RegimeContratacao.cs" />
     <Compile Include="Enum\StatusCorrida.cs" />
+    <Compile Include="Enum\TipoAplicacao.cs" />
     <Compile Include="Enum\TipoCarteira.cs" />
     <Compile Include="Enum\TipoContrato.cs" />
     <Compile Include="Enum\TipoProfissional.cs" />

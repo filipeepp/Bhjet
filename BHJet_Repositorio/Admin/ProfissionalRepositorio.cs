@@ -443,9 +443,6 @@ namespace BHJet_Repositorio.Admin
                                 }
                             }
                         }
-
-                        // Commit
-                        trans.Commit();
                     }
                     catch (Exception e)
                     {

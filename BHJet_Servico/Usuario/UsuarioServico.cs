@@ -8,6 +8,7 @@ namespace BHJet_Servico.Usuario
         UsuarioDTO[] BuscaListaUsuarios(string trechoPesquisa);
         void CadastrarUsuario(UsuarioDTO model);
         void AtualizaSituacao(int situacao, long id);
+        void AtualizaUsuario(UsuarioDTO model);
         void DeletaUsuario(long id);
         UsuarioDTO BuscaUsuario(long id);
     }
@@ -27,6 +28,11 @@ namespace BHJet_Servico.Usuario
         public void CadastrarUsuario(UsuarioDTO model)
         {
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PostUsuario}"), model);
+        }
+
+        public void AtualizaUsuario(UsuarioDTO model)
+        {
+            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PutUsuario}"), model);
         }
 
         public void AtualizaSituacao(int situacao, long id)

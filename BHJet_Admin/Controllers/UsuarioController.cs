@@ -59,12 +59,13 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult Novo(bool? Edicao, long? ID)
         {
+
             if (Edicao != null && Edicao == true && ID != null)
             {
                 ModelState.Clear();
 
                 // Tipo de Execução
-                ViewBag.TipoAlteracao = "Editar";
+                SetaBotaoAcao(true);
 
                 // Busca dados do profissional
                 var usuario = usuariosServico.BuscaUsuario(ID ?? 0);
@@ -85,7 +86,8 @@ namespace BHJet_Admin.Controllers
             }
             else
             {
-                ViewBag.TipoAlteracao = "Adicionar";
+                // Tipo de Execução
+                SetaBotaoAcao(false);
 
                 return View(new UsuarioModel()
                 {
@@ -102,7 +104,7 @@ namespace BHJet_Admin.Controllers
             try
             {
                 // Modelo
-                var cliente = new BHJet_DTO.Usuario.UsuarioDTO()
+                var usuario = new BHJet_DTO.Usuario.UsuarioDTO()
                 {
                     Email = model.Email,
                     Situacao = model.Situacao,
@@ -113,9 +115,9 @@ namespace BHJet_Admin.Controllers
 
                 // Ação
                 if (model.EdicaoCadastro)
-                    usuariosServico.CadastrarUsuario(cliente);
+                    usuariosServico.AtualizaUsuario(usuario);
                 else
-                    usuariosServico.CadastrarUsuario(cliente);
+                    usuariosServico.CadastrarUsuario(usuario);
 
                 model = new UsuarioModel();
                 this.MensagemSucesso("Usuário cadastrado com sucesso.");
@@ -129,6 +131,18 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return View(model);
             }
+            finally
+            {
+                SetaBotaoAcao(model.EdicaoCadastro);
+            }
+        }
+
+        private void SetaBotaoAcao(bool edicao)
+        {
+            if (edicao)
+                ViewBag.TipoAlteracao = "Editar";
+            else
+                ViewBag.TipoAlteracao = "Adicionar";
         }
 
         private ViewResult BuscaUsuariosSemValidacao(UsuarioModel model)

@@ -60,6 +60,7 @@ namespace BHJet_Servico
         {
             public const string GetUsuarios = "/Usuarios";
             public const string PostUsuario = "/Usuarios";
+            public const string PutUsuario = "/Usuarios";
             public const string DeleteUsuario = "/Usuarios/{0}";
             public const string GetUsuario = "/Usuarios/{0}";
             public const string PutSituacao = "/Usuarios/situacao/{0}/usuario/{1}";
