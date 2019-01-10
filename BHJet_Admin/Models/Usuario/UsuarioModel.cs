@@ -12,6 +12,16 @@ namespace BHJet_Admin.Models.Usuario
 
     public class UsuarioModel //UsuarioDetalheModel
     {
+        public UsuarioModel()
+        {
+
+        }
+
+        public UsuarioModel(bool edicao)
+        {
+            this.EdicaoCadastro = edicao;
+        }
+
         public long ID { get; set; }
 
         private bool _EdicaoCadastro;

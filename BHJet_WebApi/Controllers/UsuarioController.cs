@@ -84,7 +84,8 @@ namespace BHJet_WebApi.Controllers
             var entidade = usuRep.BuscaUsuarios(model.Email);
 
             // Validacao
-            if (entidade != null && entidade.Any() && entidade.Where(x => x.vcEmail == model.Email).Any())
+            var idEncontrado = entidade.Where(x => x.vcEmail == model.Email)?.FirstOrDefault()?.idUsuario ?? model.ID;
+            if ((entidade != null && entidade.Count() > 1) || (entidade != null && idEncontrado != model.ID))
                 return BadRequest("Já existe um usuário cadastrado para o email informado.");
 
             // Busca Usuarios

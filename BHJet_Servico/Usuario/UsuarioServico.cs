@@ -32,7 +32,7 @@ namespace BHJet_Servico.Usuario
 
         public void AtualizaUsuario(UsuarioDTO model)
         {
-            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PutUsuario}"), model);
+            this.Put(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PutUsuario}"), model);
         }
 
         public void AtualizaSituacao(int situacao, long id)

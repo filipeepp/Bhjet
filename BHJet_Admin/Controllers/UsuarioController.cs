@@ -119,8 +119,8 @@ namespace BHJet_Admin.Controllers
                 else
                     usuariosServico.CadastrarUsuario(usuario);
 
-                model = new UsuarioModel();
-                this.MensagemSucesso("Usuário cadastrado com sucesso.");
+                model = new UsuarioModel(model.EdicaoCadastro);
+                this.MensagemSucesso("Solicitação realizada com sucesso.");
 
                 // Busca Usuarios
                 return View(model);
