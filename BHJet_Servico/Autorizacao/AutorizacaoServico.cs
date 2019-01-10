@@ -35,7 +35,7 @@ namespace BHJet_Servico.Autorizacao
                     new KeyValuePair<string, string>("password",  CriptografiaUtil.Criptografa(senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r")),
                     new KeyValuePair<string, string>("grant_type", "password"),
                     new KeyValuePair<string, string>("Modulo", "Web"),
-                    //new KeyValuePair<string, string>("Perfil", ((int)perfil).ToString()),
+                    new KeyValuePair<string, string>("area", "0"),
                 };
 
                 // Requisiçao
