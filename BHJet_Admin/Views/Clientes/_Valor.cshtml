@@ -92,7 +92,18 @@ new ValorModel()
 								<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[i])" name="ValorPadrao_@Html.IdFor(model => model.Valor[i])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@i]);" />
 								<span>Tarifa padrão?</span>
 							</label>
-
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-2">
+						<label>Vigência<small class="obrigatorio">*</small></label>
+						<div id="date_range_@Html.IdFor(model => model.Valor[i].VigenciaInicio)" class="input-daterange">
+							<div id="@Html.IdFor(model => model.Valor[i].VigenciaInicio)">
+								@Html.TextBoxFor(model => model.Valor[i].VigenciaInicio, new { type = campoData,  @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
+							</div>
+							<div class="input-group-addon">a</div>
+							<div id="@Html.IdFor(model => model.Valor[i].VigenciaFim)">
+								@Html.TextBoxFor(model => model.Valor[i].VigenciaFim, new { type = campoData, @class = "form-control mask-data ctmErrorVigenciaFim" })
+							</div>
 						</div>
 					</div>
 				</div>
@@ -120,18 +131,6 @@ new ValorModel()
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="form-group col-xs-12 col-md-3">
-						<label>Vigência<small class="obrigatorio">*</small></label>
-						<div id="date_range_@Html.IdFor(model => model.Valor[i].VigenciaInicio)" class="input-group input-daterange">
-							<div id="@Html.IdFor(model => model.Valor[i].VigenciaInicio)">
-								@Html.TextBoxFor(model => model.Valor[i].VigenciaInicio, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
-							</div>
-							<div class="input-group-addon">a</div>
-							<div id="@Html.IdFor(model => model.Valor[i].VigenciaFim)">
-								@Html.TextBoxFor(model => model.Valor[i].VigenciaFim, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaFim" })
-							</div>
-						</div>
-					</div>
 					<div class="form-group col-xs-12 col-md-2">
 						<div id="@Html.IdFor(model => model.Valor[i].Franquia)">
 							<label for="txtFranquia"><small class="obrigatorio">*</small>Franquia Km/mês</label>
@@ -140,7 +139,7 @@ new ValorModel()
 					</div>
 					<div class="form-group col-xs-12 col-md-2">
 						<div id="@Html.IdFor(model => model.Valor[i].FranquiaAdicional)">
-							<label for="txtFranquiaAdicional">Franquia Adicional</label>
+							<label for="txtFranquiaAdicional">Franquia&nbsp;Adicional</label>
 							@Html.TextBoxFor(model => model.Valor[i].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
 						</div>
 					</div>
@@ -197,10 +196,21 @@ else
 				<div class="form-group col-xs-12 col-md-12" style="margin-bottom:30px;">
 					<div id="div_ValorPadrao_@Html.IdFor(model => model.Valor[contador])">
 						<label class="label-cbx">
-							<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" name="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" class="form-control checkbox ctmValorPadrao"  onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@contador]);" />
+							<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" name="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@contador]);" />
 							<span>Tarifa padrão?</span>
 						</label>
-
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-2">
+					<label>Vigência</label>
+					<div id="date_range_@Html.IdFor(model => model.Valor[contador].VigenciaInicio)" class="input-daterange">
+						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaInicio)">
+							@Html.TextBoxFor(model => model.Valor[contador].VigenciaInicio, new { type = campoData, @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
+						</div>
+						<div class="input-group-addon">a</div>
+						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaFim)">
+							@Html.TextBoxFor(model => model.Valor[contador].VigenciaFim, new { type = campoData, @class = "form-control mask-data ctmErrorVigenciaFim" })
+						</div>
 					</div>
 				</div>
 			</div>
@@ -228,18 +238,6 @@ else
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="form-group col-xs-12 col-md-3">
-					<label>Vigência</label>
-					<div id="date_range_@Html.IdFor(model => model.Valor[contador].VigenciaInicio)" class="input-group input-daterange">
-						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaInicio)">
-							@Html.TextBoxFor(model => model.Valor[contador].VigenciaInicio, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
-						</div>
-						<div class="input-group-addon">a</div>
-						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaFim)">
-							@Html.TextBoxFor(model => model.Valor[contador].VigenciaFim, new { type = campoData, style = "width: 160px;", @class = "form-control mask-data ctmErrorVigenciaFim" })
-						</div>
-					</div>
-				</div>
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].Franquia)">
 						<label for="txtFranquia">Franquia Km/mês</label>
@@ -248,7 +246,7 @@ else
 				</div>
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].FranquiaAdicional)">
-						<label for="txtFranquiaAdicional">Franquia Adicional</label>
+						<label for="txtFranquiaAdicional">Franquia&nbsp;Adicional</label>
 						@Html.TextBoxFor(model => model.Valor[contador].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
 					</div>
 				</div>
