@@ -80,9 +80,9 @@
 
                                 <Image Grid.Row="8" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="alerta.png" 
                                 WidthRequest="25" HeightRequest="25"  >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="RegistrarOcorrencia" NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
                                 </Image>
                                 <Label Grid.Row="8" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Registrar ocorrência" TextColor="#193651"  />
 

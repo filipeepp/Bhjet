@@ -1,4 +1,5 @@
 ﻿using BHJet_Mobile.DependencyService;
+using BHJet_Mobile.View.Util;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
@@ -25,8 +26,14 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             Xamarin.Forms.DependencyService.Get<IIntegracaoWaze>().RedirecionaWaze("-19.879046", "-43.933999");
         }
 
+        private async void RegistrarOcorrencia(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new Ocorrencia());
+        }
+
         private async void TiraFoto(object sender, EventArgs e)
         {
+
             await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsTakePhotoSupported || !CrossMedia.Current.IsCameraAvailable)
