@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.Motorista.DadosBasicos">
+
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#ffd423" >
+
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
+
+                <Frame BackgroundColor="White" Margin="15,0,15,10" CornerRadius="5" VerticalOptions="CenterAndExpand">
+                    <Grid VerticalOptions="StartAndExpand" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.4*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Dados Cadastrais" TextColor="#193651"  />
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Nome:" TextColor="#193651"  />
+                        <Entry Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="JOÃO DA SILVA" FontSize="15" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Start" TextColor="#4e90ff" IsEnabled="False" />
+
+                        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Email:" TextColor="#193651"  />
+                        <Entry Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="joao silva@bhjet.com.br" FontSize="15" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Start" TextColor="#4e90ff" />
+
+                        <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Telefone Celular:" TextColor="#193651"  />
+                        <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="(031) 97777-7777" FontSize="15" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Start" TextColor="#4e90ff" />
+
+                        <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Telefone Fixo:" TextColor="#193651"  />
+                        <Entry Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="(031) 3777-7777" FontSize="15" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Start" TextColor="#4e90ff" />
+
+                        <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Categoria CNH:" TextColor="#193651"  />
+                        <Picker Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" Title="Categoria CNH:">
+                            <Picker.Items>
+                                <x:String>A</x:String>
+                                <x:String>B</x:String>
+                                <x:String>AB</x:String>
+                                <x:String>AD</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Grid>
+                </Frame>
+
+            </StackLayout>
+
+            <local:Menu></local:Menu>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>

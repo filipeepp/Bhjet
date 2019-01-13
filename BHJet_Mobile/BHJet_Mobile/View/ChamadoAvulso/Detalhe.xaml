@@ -5,182 +5,136 @@
              x:Class="BHJet_Mobile.View.ChamadoAvulso.Detalhe">
 
 
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="#ffd423" >
-            <StackLayout Margin="20,20,20,0">
-                <Label FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="End" Text="Número OS - 123456" TextColor="#193651"  />
-                <BoxView Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+  <ContentPage.Content>
+    <StackLayout BackgroundColor="#ffd423" >
+      <StackLayout Margin="20,20,20,0">
+        <Label FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="End" Text="Número OS - 123456" TextColor="#193651"  />
+        <BoxView Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+      </StackLayout>
+
+      <ScrollView BackgroundColor="Transparent" VerticalOptions="StartAndExpand">
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+          <Grid Margin="10, 0,10,0" RowSpacing="0" >
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Frame Margin="0,0,0,0" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+              <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="0*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.1*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="0.7*" />
+                  <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
+                <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="Av. do contorno 2112, Sala 405 / Santa Efigencia - Belo Horizonte/MG" TextColor="#193651"  />
+
+                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
+                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Marcus Vinicius" TextColor="#193651" />
+
+                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
+                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Texto com innstruções de como proceder com a entrega" TextColor="#193651" />
+
+                <Button Clicked="AbrirWaze"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                        Image="waze" TextColor="#193651" Text="Nevagar com waze" ></Button>
+
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5"
+                        Image="relogio" TextColor="#193651" Text="Registrar chegada"></Button>
+
+                <Button Clicked="TiraFoto"  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                        Image="camera" TextColor="#193651" Text="Protocolo de Coleta/Entrega"></Button>
+
+                <Button Clicked="RegistrarOcorrencia"  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                        Image="alerta" TextColor="#193651" Text="Registrar ocorrência"></Button>
+
+              </Grid>
+            </Frame>
+
+            <StackLayout Margin="0,0,0,-5"  Grid.Row="3" >
+              <Image Source="rua" WidthRequest="23" HeightRequest="23" ></Image>
             </StackLayout>
+          </Grid>
 
-            <ScrollView BackgroundColor="Transparent" VerticalOptions="StartAndExpand">
-                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
-                    <Grid Margin="10, 0,10,0" RowSpacing="0" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+          <Grid Margin="10, 0,10,0" RowSpacing="0" >
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+            <Frame Margin="0,0,0,0" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+              <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="0*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.1*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                  <RowDefinition Height="0.2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="0.7*" />
+                  <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
 
-                        <Frame Margin="0,0,0,0" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="0.7*" />
-                                    <RowDefinition Height="0.5*" />
-                                    <RowDefinition Height="0.7*" />
-                                    <RowDefinition Height="0.4*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*" />
-                                    <ColumnDefinition Width="2*" />
-                                </Grid.ColumnDefinitions>
+                <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
+                <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="Av. do contorno 2112, Sala 405 / Santa Efigencia - Belo Horizonte/MG" TextColor="#193651"  />
 
-                                <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
-                                <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="Av. do contorno 2112, Sala 405 / Santa Efigencia - Belo Horizonte/MG" TextColor="#193651"  />
+                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
+                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Marcus Vinicius" TextColor="#193651" />
 
-                                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
-                                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Marcus Vinicius" TextColor="#193651" />
+                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
+                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Texto com innstruções de como proceder com a entrega" TextColor="#193651" />
 
-                                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
-                                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Texto com innstruções de como proceder com a entrega" TextColor="#193651" />
+                <Button Clicked="AbrirWaze"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                                                     Image="waze" TextColor="#193651" Text="Pessoa procurada ausente" ></Button>
 
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5"
+                        Image="relogio" TextColor="#193651" Text="Registrar chegada"></Button>
 
-                                <Image Grid.Row="5" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="waze.png" 
-                               WidthRequest="25" HeightRequest="25" >
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="AbrirWaze" NumberOfTapsRequired="1" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Label Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Nevagar com waze" TextColor="#193651"  />
+                <Button Clicked="TiraFoto"  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                        Image="camera" TextColor="#193651" Text="Protocolo de Coleta/Entrega"></Button>
 
-                                <Image Grid.Row="6" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="relogio.png" 
-                               WidthRequest="25" HeightRequest="25"  >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
-                                </Image>
-                                <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Registrar chegada" TextColor="#193651"  />
+                <Button Clicked="RegistrarOcorrencia"  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                        Image="alerta" TextColor="#193651" Text="Registrar ocorrência"></Button>
 
-                                <Image Grid.Row="7" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="camera.png"  
-                               WidthRequest="25" HeightRequest="25" >
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TiraFoto" NumberOfTapsRequired="1" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Label Grid.Row="7" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Protocolo de Coleta/Entrega" TextColor="#193651"  />
-
-
-                                <Image Grid.Row="8" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="alerta.png" 
-                                WidthRequest="25" HeightRequest="25"  >
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="RegistrarOcorrencia" NumberOfTapsRequired="1" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Label Grid.Row="8" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Registrar ocorrência" TextColor="#193651"  />
-
-                            </Grid>
-                        </Frame>
-
-                        <StackLayout Margin="0,0,0,-5"  Grid.Row="3" >
-                            <Image Source="rua" WidthRequest="23" HeightRequest="23" ></Image>
-                        </StackLayout>
-                    </Grid>
-
-                    <Grid Margin="10, 0,10,0" RowSpacing="0" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Frame Margin="0,0,0,0" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0*" />
-                                    <RowDefinition Height="0.7*" />
-                                    <RowDefinition Height="0.5*" />
-                                    <RowDefinition Height="0.7*" />
-                                    <RowDefinition Height="0.4*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                    <RowDefinition Height="0.6*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*" />
-                                    <ColumnDefinition Width="2*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
-                                <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="Av. do contorno 2112, Sala 405 / Santa Efigencia - Belo Horizonte/MG" TextColor="#193651"  />
-
-                                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
-                                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Marcus Vinicius" TextColor="#193651" />
-
-                                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
-                                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Texto com innstruções de como proceder com a entrega" TextColor="#193651" />
-
-
-                                <Image Grid.Row="5" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="waze.png" 
-                               WidthRequest="25" HeightRequest="25" >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
-                                </Image>
-                                <Label Grid.Row="5" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Nevagar com waze" TextColor="#193651"  />
-
-                                <Image Grid.Row="6" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="relogio.png" 
-                               WidthRequest="25" HeightRequest="25"  >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
-                                </Image>
-                                <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Registrar chegada" TextColor="#193651"  />
-
-                                <Image Grid.Row="7" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="camera.png"  
-                               WidthRequest="25" HeightRequest="25" >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
-                                </Image>
-                                <Label Grid.Row="7" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Protocolo de Coleta/Entrega" TextColor="#193651"  />
-
-
-                                <Image Grid.Row="8" Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Start" Source="alerta.png" 
-                                WidthRequest="25" HeightRequest="25"  >
-                                    <!--<Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>-->
-                                </Image>
-                                <Label Grid.Row="8" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Registrar ocorrência" TextColor="#193651"  />
-
-                            </Grid>
-                        </Frame>
-                    </Grid>
-                </StackLayout>
-            </ScrollView>
-
-            <BoxView Margin="20,0,20,0" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
-
-            <local:Menu></local:Menu>
-
+              </Grid>
+            </Frame>
+          </Grid>
         </StackLayout>
-    </ContentPage.Content>
+      </ScrollView>
+
+      <BoxView Margin="20,0,20,0" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+      <local:Menu></local:Menu>
+
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

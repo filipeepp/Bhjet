@@ -1,5 +1,4 @@
 ﻿using BHJet_Mobile.Infra;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel.Login
@@ -24,7 +23,7 @@ namespace BHJet_Mobile.ViewModel.Login
         /// Metodo de Login
         /// </summary>
         /// <returns></returns>
-        public async Task ExecutarLogin()
+        public async Task<bool> ExecutarLogin()
         {
             try
             {
@@ -32,8 +31,12 @@ namespace BHJet_Mobile.ViewModel.Login
                 Loading = true;
                 OffLoading = false;
 
-                await Task.Delay(5000);
+                await Task.Delay(2000);
 
+                if (Login.Username == "diaria")
+                    return true;
+                else
+                    return false;
             }
             finally
             {

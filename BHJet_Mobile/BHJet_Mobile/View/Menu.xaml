@@ -21,7 +21,11 @@
                          VerticalOptions="Start"  />
 
                 <StackLayout Orientation="Vertical" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
-                    <Image  Source="home.png"   WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
+                    <Image  Source="home.png"   WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Home_Clicked" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </StackLayout>
 
                 <StackLayout Orientation="Vertical"  Grid.Column="1"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
@@ -33,8 +37,11 @@
                 </StackLayout>
 
                 <StackLayout Orientation="Vertical"  Grid.Column="3"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-                    <Image  Source="motoqueiro.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
-                    <!--<Label Text="Atualizar Dados" TextColor="#474646" />-->
+                    <Image  Source="motoqueiro.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="DadosMotorista_Clicked" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </StackLayout>
             </Grid>
 

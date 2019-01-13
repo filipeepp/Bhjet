@@ -65,7 +65,7 @@
                         <Entry Grid.Row="3" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm"  />
                         <Entry Grid.Row="3" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" />
 
-                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Clicked="IniciarDiaria_Clicked" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="OK"></Button>
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Clicked="IniciarDiaria_Clicked" Image="opcao" BackgroundColor="#193651" TextColor="White" Text="Iniciar"></Button>
                         
                     </Grid>
                 </Frame>

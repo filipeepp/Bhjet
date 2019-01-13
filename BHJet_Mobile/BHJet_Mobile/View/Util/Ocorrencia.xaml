@@ -40,7 +40,7 @@
 
                         <Button Clicked="Ligar_Clicked" Grid.Row="6" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" TextColor="White" Text="Ligar Cliente"></Button>
 
-                        <Button Clicked="Button_Clicked" Grid.Row="6" Grid.Coumn="1" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="Encerrar OS"></Button>
+                        <Button Clicked="Button_Clicked" Grid.Row="6" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="Encerrar OS"></Button>
                     </Grid>
                 </Frame>
 

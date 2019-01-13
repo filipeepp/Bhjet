@@ -1,4 +1,5 @@
 ﻿using BHJet_Mobile.View.ChamadoAvulso;
+using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel.Login;
 using System;
 using Xamarin.Forms;
@@ -39,9 +40,13 @@ namespace BHJet_Mobile.View
             try
             {
                 // Executa o Login
-                await ViewModel.ExecutarLogin();
+                var tsrue = await ViewModel.ExecutarLogin();
+
                 // Troca de página após Login
-                App.Current.MainPage = new Index();
+                if (tsrue)
+                    App.Current.MainPage = new DiariaDeBordo();
+                else
+                    App.Current.MainPage = new Index();
             }
             catch (Exception error)
             {

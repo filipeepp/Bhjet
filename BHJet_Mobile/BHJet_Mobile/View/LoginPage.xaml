@@ -36,7 +36,7 @@
                     <Frame BackgroundColor="White" >
                         <StackLayout Padding="-9"  Orientation="Horizontal">
                             <Image Grid.Row="0" Source="ico_user.png" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="24"  />
-                            <Entry Grid.Row="0"  Keyboard="Email"  x:Name="username" Placeholder="Login"  StyleClass="InputLogin" 
+                            <Entry Grid.Row="0"  Keyboard="Email"  x:Name="username" Placeholder="Login"  StyleClass="InputLogin" Text="{Binding Login.Username}"  
                            BackgroundColor="Transparent" >
                             </Entry>
                         </StackLayout>
@@ -45,7 +45,7 @@
                     <Frame BackgroundColor="White" Grid.Row="1" >
                         <StackLayout Padding="-9" Orientation="Horizontal">
                             <Image  Source="ico_password.png" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="24" />
-                            <Entry x:Name="password" IsPassword="True" Placeholder="Senha" StyleClass="InputLogin" 
+                            <Entry x:Name="password" IsPassword="True" Placeholder="Senha" StyleClass="InputLogin"  Text="{Binding Login.Password}" 
                            BackgroundColor="Transparent">
                             </Entry>
                         </StackLayout>
