@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BHJet_Core\BHJet_Core.csproj" />
-    <ProjectReference Include="..\..\BHJet_Servico\BHJet_Servico.csproj" />
   </ItemGroup>
 
   <ItemGroup>

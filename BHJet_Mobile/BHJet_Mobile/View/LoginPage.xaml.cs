@@ -1,7 +1,6 @@
 ﻿using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel.Login;
-using BHJet_Servico.Autorizacao;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,7 +13,7 @@ namespace BHJet_Mobile.View
         public LoginPage()
         {
             InitializeComponent();
-            ViewModel = new LoginViewModel(new AutorizacaoServico());
+            //ViewModel = new LoginViewModel(new AutorizacaoServico());
             BindingContext = ViewModel;
         }
 
