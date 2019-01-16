@@ -311,5 +311,37 @@ namespace BHJet_WebApi.Controllers
             });
         }
 
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("Perfil")]
+        [ResponseType(typeof(PerfilModel))]
+        public IHttpActionResult GetPerfil()
+        {
+            // Busca Dados resumidos
+            var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Validacao
+            if (perfil == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(new PerfilModel()
+            {
+                idUsuario = perfil.idUsuario,
+                idColaboradorEmpresaSistema = perfil.idColaboradorEmpresaSistema,
+                Email = perfil.vcEmail,
+                NomeCompleto = perfil.vcNomeCompleto,
+                idRegistroDiaria = perfil.idRegistroDiaria,
+                TipoProfissional = perfil.idTipoProfissional
+            });
+        }
+
+
+
+
+
     }
 }

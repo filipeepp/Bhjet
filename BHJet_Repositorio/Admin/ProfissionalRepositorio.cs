@@ -532,5 +532,37 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
+
+        /// <summary>
+        /// Busca Perfil do Profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public ProfissionalPerfilEntidade BuscaPerfilProfissional(string idUsuario)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select US.idUsuario, 
+                                           CE.idColaboradorEmpresaSistema,
+                                    	   RD.idRegistroDiaria,
+	                                       CE.vcNomeCompleto,
+	                                       CE.vcEmail,
+	                                       CE.idTipoProfissional
+	                                from tblUsuarios US
+		                               join tblDOMTiposUsuario TS on (US.idTipoUsuario = TS.idTipoUsuario)
+		                               join tblColaboradoresEmpresaSistema CE on (CE.idUsuario = US.idUsuario)
+		                               left join tblRegistroDiarias RD on (ce.idColaboradorEmpresaSistema = RD.idColaboradorEmpresaSistema AND
+		                                                                  convert(varchar(10), RD.dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120))
+                                    WHERE 
+		                                  US.idUsuario = @idUser";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<ProfissionalPerfilEntidade>(query, new
+                {
+                    idUser = idUsuario
+                });
+            }
+        }
     }
 }

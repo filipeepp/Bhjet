@@ -106,6 +106,7 @@ namespace BHJet_Admin.Controllers
                 // Modelo
                 var usuario = new BHJet_DTO.Usuario.UsuarioDTO()
                 {
+                    ID = model.ID,
                     Email = model.Email,
                     Situacao = model.Situacao,
                     TipoUsuario = model.TipoUser,

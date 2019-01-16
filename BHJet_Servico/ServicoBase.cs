@@ -12,6 +12,11 @@ namespace BHJet_Servico
 {
     public abstract class ServicoBase
     {
+        public ServicoBase()
+        {
+            ValidateResult = null;
+        }
+
         public ServicoBase(string Token)
         {
             ValidateResult = null;

@@ -97,6 +97,14 @@ namespace BHJet_Repositorio.Admin
                             idCli = usuario.ClienteSelecionado
                         });
                         break;
+                    //case TipoUsuario.Profissional:
+                    //    string queryColaborador = @"update tblColaboradoresEmpresaSistema set idUsuario = @IdUsu where idCliente = @idCli";
+                    //    sqlConnection.ExecuteScalar(queryColaborador, new
+                    //    {
+                    //        IdUsu = idUsurario,
+                    //        idCli = usuario.ClienteSelecionado
+                    //    });
+                    //    break;
                 }
 
             }
