@@ -2,6 +2,7 @@
 using BHJet_Admin.Models;
 using BHJet_Core.Variaveis;
 using BHJet_DTO.Autenticacao;
+using BHJet_Enumeradores;
 using BHJet_Servico.Autorizacao;
 using BHJet_Servico.Dashboard;
 using Newtonsoft.Json;
@@ -81,7 +82,7 @@ namespace BHJet_Admin.Controllers
                     {
                         usuario = model.Login,
                         senha = model.Senha,
-                        area = BHJet_Core.Enum.TipoAplicacao.Interna
+                        area = TipoAplicacao.Interna
                     });
 
                     // Tickets

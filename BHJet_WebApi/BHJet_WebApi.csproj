@@ -196,6 +196,10 @@
       <Project>{79F2E840-B418-4CC0-B2E8-328E79760679}</Project>
       <Name>BHJet_DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj">
+      <Project>{8fdb8d5d-9b4e-48d2-9877-70accf907e48}</Project>
+      <Name>BHJet_Enumeradores</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHJet_Repositorio\BHJet_Repositorio.csproj">
       <Project>{c4c90e6f-22f5-4af2-8df5-d67a9992e74e}</Project>
       <Name>BHJet_Repositorio</Name>

@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Faturamento;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Faturamento;
 using System;
@@ -216,7 +217,7 @@ namespace BHJet_Admin.Controllers
                                      FinalAlmoco = new TimeSpan(13,0,0),
                                       FinalDiaria = new TimeSpan(17,0,0),
                                        KMRodado = 170,
-                                         Tipo = BHJet_Core.Enum.TipoProfissional.Motociclista,
+                                         Tipo = TipoProfissional.Motociclista,
                                           ValorTransporte = 80.00
                               }
                          },

@@ -34,6 +34,16 @@
         "runtime": {
           "bin/placeholder/BHJet_Core.dll": {}
         }
+      },
+      "BHJet_Enumeradores/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/BHJet_Enumeradores.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BHJet_Enumeradores.dll": {}
+        }
       }
     }
   },
@@ -182,11 +192,17 @@
       "type": "project",
       "path": "../BHJet_Core/BHJet_Core.csproj",
       "msbuildProject": "../BHJet_Core/BHJet_Core.csproj"
+    },
+    "BHJet_Enumeradores/1.0.0": {
+      "type": "project",
+      "path": "../BHJet_Enumeradores/BHJet_Enumeradores.csproj",
+      "msbuildProject": "../BHJet_Enumeradores/BHJet_Enumeradores.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "BHJet_Core >= 1.0.0",
+      "BHJet_Enumeradores >= 1.0.0",
       "NETStandard.Library >= 2.0.3"
     ]
   },
@@ -222,6 +238,9 @@
           "projectReferences": {
             "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
               "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
+            },
+            "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
+              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
             }
           }
         }

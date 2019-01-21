@@ -2,10 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               Title="Bem vindo, João"
-             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
+             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile" 
+             xmlns:converter="clr-namespace:BHJet_Mobile.Infra.Converter;assembly=BHJet_Mobile"
              x:Class="BHJet_Mobile.View.ChamadoAvulso.Index">
 
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolReverseConverter x:Key="boolReverseConvert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
 
         <StackLayout BackgroundColor="#ffd423" >
@@ -30,124 +36,89 @@
                         <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
                         <Label Grid.Row="2" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Profissional:" TextColor="#193651"  />
-                        <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="JOÃO DA SILVA" TextColor="#193651"  />
+                        <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding NomeCompleto}" TextColor="#193651"  />
 
                         <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Status: " TextColor="#193651"  />
-                        <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="Online" TextColor="#009933" />
+                        <Label Grid.Row="3" Grid.Column="1" x:Name="lblStatus"  HorizontalOptions="Start" FontAttributes="Bold" VerticalOptions="Start" Text="" TextColor="#009933" />
                     </Grid>
                 </Frame>
 
-                <Frame x:Name="ctnProcurando" BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
-                    <Grid RowSpacing="0" VerticalOptions="StartAndExpand" MinimumHeightRequest="80" >
+                <StackLayout IsVisible="{Binding PermitePesquisaCorrida}" VerticalOptions="CenterAndExpand">
+                    <Frame x:Name="ctnProcurando" BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                        <Grid RowSpacing="0" VerticalOptions="StartAndExpand" MinimumHeightRequest="80" >
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.3*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.3*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0"  FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Aguardando chamado .." TextColor="#193651"  />
-                        <BoxView Grid.Row="1" Grid.Column="0"  Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+                            <Label Grid.Row="0" Grid.Column="0"  FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Aguardando chamado .." TextColor="#193651"  />
+                            <BoxView Grid.Row="1" Grid.Column="0"  Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
-                        <Image Grid.Row="2" Grid.Column="0" Margin="0,-5,0,14"  x:Name="findIcon" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Source="search.png"  WidthRequest="90" HeightRequest="40" />
-                    </Grid>
-                </Frame>
+                            <Image Grid.Row="2" Grid.Column="0" Margin="0,-5,0,14"  x:Name="findIcon" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Source="search.png"  WidthRequest="90" HeightRequest="40" />
+                        </Grid>
+                    </Frame>
 
-                <Frame  x:Name="ctnEncontrado" IsVisible="False"  BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
-                    <Grid RowSpacing="2" >
+                    <Frame  x:Name="ctnEncontrado" IsVisible="False"  BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                        <Grid RowSpacing="2" >
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.5*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Chamado encontrado" TextColor="#193651"  />
-                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+                            <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Chamado encontrado" TextColor="#193651"  />
+                            <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
-                        <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="Solicitante: " TextColor="#193651" FontAttributes="Bold" />
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="Cliente fulano" TextColor="#193651"  />
+                            <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="Solicitante: " TextColor="#193651" FontAttributes="Bold" />
+                            <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.NomeCliente}" TextColor="#193651"  />
 
-                        <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="Comissão: " TextColor="#193651"  FontAttributes="Bold"/>
-                        <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="R$ 250,00" TextColor="#193651"  />
+                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="Comissão: " TextColor="#193651"  FontAttributes="Bold"/>
+                            <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.Comissao }" TextColor="#193651"  />
 
-                        <Label Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Destino inicial: " TextColor="#193651" FontAttributes="Bold"  />
-                        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Rua teste de barros, 459" TextColor="#193651"  />
+                            <Label Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Destino inicial: " TextColor="#193651" FontAttributes="Bold"  />
+                            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.DestinoInicial }" TextColor="#193651"  />
 
-                        <Label Grid.Row="6" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" Text="Recusar" TextColor="#193651"  />
-                        <Image Grid.Row="7" Grid.Column="0"  HorizontalOptions="Center"  VerticalOptions="Start" Source="recusar.png" 
+                            <Label IsVisible="{Binding DiarioBordo, Converter={StaticResource boolReverseConvert}}" Grid.Row="6" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" Text="Recusar" TextColor="#193651"  />
+                            <Image IsVisible="{Binding DiarioBordo, Converter={StaticResource boolReverseConvert}}" Grid.Row="7" Grid.Column="0"  HorizontalOptions="Center"  VerticalOptions="Start" Source="recusar.png" 
                                WidthRequest="90" HeightRequest="50" >
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>
-                        </Image>
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
 
-                        <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" Text="Aceitar" TextColor="#193651"  />
-                        <Image Grid.Row="7" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Source="aceitar.png" 
+                            <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" Text="Aceitar" TextColor="#193651"  />
+                            <Image Grid.Row="7" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Source="aceitar.png" 
                                WidthRequest="90" HeightRequest="50" >
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AceitarCorrida" NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>
-                        </Image>
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AceitarCorrida" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
 
-                    </Grid>
+                        </Grid>
 
-                </Frame>
-                
+                    </Frame>
+                </StackLayout>
+
+                <Button IsVisible="{Binding DiarioBordo}" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="RegistrarBordo_Clicked" Text="Registrar início/fim de turno" ></Button>
+
             </StackLayout>
 
 
             <local:Menu></local:Menu>
-
-            <!--<Grid HorizontalOptions="FillAndExpand" VerticalOptions="End" BackgroundColor="#ffd423" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="End"    BackgroundColor="#eff0f2" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <BoxView Grid.Column="0" Grid.ColumnSpan="4"  HorizontalOptions="FillAndExpand"  Color="#141414" HeightRequest="1" 
-                         VerticalOptions="Start"  />
-
-                    <StackLayout Orientation="Vertical" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
-                        <Image  Source="home.png"   WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical"  Grid.Column="1"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-                        <Image  Source="money.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,40,8" />
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical"  Grid.Column="2"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-                        <Image  Source="bandeirada.png"  WidthRequest="30" HeightRequest="25" Margin="40,12,0,8" />
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical"  Grid.Column="3"  HorizontalOptions="CenterAndExpand" VerticalOptions="End">
-                        <Image  Source="motoqueiro.png"  WidthRequest="30" HeightRequest="25" Margin="0,12,0,8" />
-                        --><!--<Label Text="Atualizar Dados" TextColor="#474646" />--><!--
-                    </StackLayout>
-                </Grid>
-
-                <Button Grid.Column="0" WidthRequest="60" FontSize="4"  BorderColor="Gray" VerticalOptions="Center" HorizontalOptions="Center"
-                        BackgroundColor="#193651" Clicked="Button_Clicked" Image="search2.png"
-                        HeightRequest="60"  BorderRadius="40"></Button>
-            </Grid>-->
 
         </StackLayout>
 

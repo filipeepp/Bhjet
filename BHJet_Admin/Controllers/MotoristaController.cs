@@ -2,6 +2,7 @@
 using BHJet_Admin.Models.Motorista;
 using BHJet_Core.Extension;
 using BHJet_DTO.Profissional;
+using BHJet_Enumeradores;
 using BHJet_Servico.Profissional;
 using System;
 using System.Collections.Generic;
@@ -157,7 +158,7 @@ namespace BHJet_Admin.Controllers
                     TelefoneResidencial = model.TelefoneResidencial,
                     TelefoneCelular = model.TelefoneCelular,
                     CNH = model.CNH,
-                    ContratoCLT = model.TipoRegimeContratacao == BHJet_Core.Enum.RegimeContratacao.CLT ? true : false,
+                    ContratoCLT = model.TipoRegimeContratacao == RegimeContratacao.CLT ? true : false,
                     Observacao = model.Observacao,
                     TipoCNH = model.TipoCarteiraMotorista,
                     TipoRegime = model.TipoRegimeContratacao,

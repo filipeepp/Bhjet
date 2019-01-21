@@ -1,8 +1,8 @@
-﻿using BHJet_Core.Utilitario;
-using BHJet_Core.Variaveis;
-using BHJet_Mobile.Infra;
-using BHJet_Servico.Autorizacao;
-using System.Threading.Tasks;
+﻿using BHJet_Mobile.Infra;
+using BHJet_Mobile.Servico.Autenticacao;
+using BHJet_Mobile.Infra.Variaveis;
+using BHJet_Mobile.Servico.Motorista;
+using BHJet_Mobile.Sessao;
 
 namespace BHJet_Mobile.ViewModel.Login
 {
@@ -12,13 +12,19 @@ namespace BHJet_Mobile.ViewModel.Login
         /// Construtor LoginViewModel
         /// </summary>
         /// <param name="_BeneficiarioNegocio"></param>
-        public LoginViewModel(IAutorizacaoServico _autorizacaoServico)
+        public LoginViewModel(IAutenticacaoServico _autorizacaoServico, IMotoristaServico _motoristaServico, IUsuarioAutenticado _usuarioAutenticado)
         {
             Login = new LoginModel();
             autorizacaoServico = _autorizacaoServico;
+            motoristaServico = _motoristaServico;
+            usuarioAutenticado = _usuarioAutenticado;
         }
 
-        private readonly IAutorizacaoServico autorizacaoServico;
+        private readonly IAutenticacaoServico autorizacaoServico;
+
+        private readonly IMotoristaServico motoristaServico;
+
+        private readonly IUsuarioAutenticado usuarioAutenticado;
 
         /// <summary>
         /// Usuario Logado
@@ -29,7 +35,7 @@ namespace BHJet_Mobile.ViewModel.Login
         /// Metodo de Login
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> ExecutarLogin()
+        public void ExecutarLogin()
         {
             try
             {
@@ -42,16 +48,16 @@ namespace BHJet_Mobile.ViewModel.Login
                     throw new ErrorException(Mensagem.Validacao.UsuarioNaoEncontrato);
 
                 // Autenticacao
-                var modelUsu = autorizacaoServico.Autenticar(new BHJet_Servico.Autorizacao.Filtro.AutenticacaoFiltro()
-                {
-                    usuario = Login.Username,
-                    senha = Login.Password,
-                    area = BHJet_Core.Enum.TipoAplicacao.Colaborador
-                });
+                var modelUsu = autorizacaoServico.Autenticar(Login.Username, Login.Password);
 
                 // Busca perfil do usuario
+                var perfil = motoristaServico.BuscaPerfilMotorista();
 
-                return true;
+                // Usuario autenticado
+                usuarioAutenticado.Nome = perfil.NomeCompleto;
+                usuarioAutenticado.Tipo = perfil.TipoProfissional;
+                usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
+                usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
             }
             finally
             {

@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Utilitario;
+﻿using BHJet_CoreGlobal;
 using BHJet_Repositorio.Entidade;
 using BHJet_Repositorio.Filtro;
 using Dapper;

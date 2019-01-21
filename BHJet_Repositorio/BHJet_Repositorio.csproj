@@ -82,9 +82,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">
+      <Project>{1BF10E83-99FA-4055-990D-DF6FE2B7678F}</Project>
+      <Name>BHJet_CoreGlobal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1D890AFC-7AE5-45E4-A1E2-4161D00D46F3}</Project>
       <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj">
+      <Project>{8fdb8d5d-9b4e-48d2-9877-70accf907e48}</Project>
+      <Name>BHJet_Enumeradores</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

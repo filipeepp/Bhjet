@@ -16,7 +16,7 @@ namespace BHJet_Mobile.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send<ContentView, int>(this, "ObservableChamada", 1);
+            MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
         }
 
         private void Home_Clicked(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Clientes;
-using BHJet_Core.Enum;
+using BHJet_Enumeradores;
 using BHJet_Core.Extension;
 using BHJet_DTO.Cliente;
 using BHJet_Servico.Cliente;

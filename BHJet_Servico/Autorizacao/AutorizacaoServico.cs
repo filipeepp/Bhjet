@@ -1,5 +1,6 @@
 ﻿using BHJet_Core.Utilitario;
 using BHJet_Core.Variaveis;
+using BHJet_CoreGlobal;
 using BHJet_DTO.Autenticacao;
 using BHJet_Servico.Autorizacao.Filtro;
 using Newtonsoft.Json;

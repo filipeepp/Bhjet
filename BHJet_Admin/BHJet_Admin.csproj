@@ -375,6 +375,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">
+      <Project>{1BF10E83-99FA-4055-990D-DF6FE2B7678F}</Project>
+      <Name>BHJet_CoreGlobal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1D890AFC-7AE5-45E4-A1E2-4161D00D46F3}</Project>
       <Name>BHJet_Core</Name>
@@ -382,6 +386,10 @@
     <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj">
       <Project>{79F2E840-B418-4CC0-B2E8-328E79760679}</Project>
       <Name>BHJet_DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj">
+      <Project>{8fdb8d5d-9b4e-48d2-9877-70accf907e48}</Project>
+      <Name>BHJet_Enumeradores</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHJet_Servico\BHJet_Servico.csproj">
       <Project>{0310B10F-5E51-455A-ACB7-7FDE01E0EE0B}</Project>

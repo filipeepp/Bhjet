@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_DTO.Corrida;
 using BHJet_DTO.Dashboard;
 using BHJet_DTO.Profissional;

@@ -10,7 +10,9 @@
       "BHJet_Servico/1.0.0": {
         "dependencies": {
           "BHJet_Core": "1.0.0",
+          "BHJet_CoreGlobal": "1.0.0",
           "BHJet_DTO": "1.0.0",
+          "BHJet_Enumeradores": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "11.0.2",
           "System.Configuration": "4.0.0.0"
@@ -36,6 +38,7 @@
       "BHJet_Core/1.0.0": {
         "dependencies": {
           "System.Web.Mvc": "5.2.4.0",
+          "System.ComponentModel.DataAnnotations": "4.0.0.0",
           "System.Security": "4.0.0.0",
           "System.Web.WebPages": "3.0.0.0",
           "System.Web.WebPages.Razor": "3.0.0.0",
@@ -47,12 +50,23 @@
           "BHJet_Core.dll": {}
         }
       },
+      "BHJet_CoreGlobal/1.0.0": {
+        "runtime": {
+          "BHJet_CoreGlobal.dll": {}
+        }
+      },
       "BHJet_DTO/1.0.0": {
         "dependencies": {
-          "BHJet_Core": "1.0.0"
+          "BHJet_Core": "1.0.0",
+          "BHJet_Enumeradores": "1.0.0"
         },
         "runtime": {
           "BHJet_DTO.dll": {}
+        }
+      },
+      "BHJet_Enumeradores/1.0.0": {
+        "runtime": {
+          "BHJet_Enumeradores.dll": {}
         }
       },
       "System.Configuration/4.0.0.0": {
@@ -68,6 +82,14 @@
           "System.Web.Mvc.dll": {
             "assemblyVersion": "5.2.4.0",
             "fileVersion": "5.2.60201.0"
+          }
+        }
+      },
+      "System.ComponentModel.DataAnnotations.Reference/4.0.0.0": {
+        "runtime": {
+          "System.ComponentModel.DataAnnotations.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.1055.0"
           }
         }
       },
@@ -153,7 +175,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "BHJet_CoreGlobal/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "BHJet_DTO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BHJet_Enumeradores/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -164,6 +196,11 @@
       "sha512": ""
     },
     "System.Web.Mvc.Reference/5.2.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.ComponentModel.DataAnnotations.Reference/4.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

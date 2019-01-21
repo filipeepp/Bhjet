@@ -24,8 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj" />
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj" />
     <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj" />
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj" />
   </ItemGroup>
 
   <ItemGroup>

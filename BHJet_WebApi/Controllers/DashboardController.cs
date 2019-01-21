@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_DTO.Dashboard;
 using BHJet_Repositorio.Admin;
 using System.Collections.Generic;

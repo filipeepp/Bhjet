@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
 using System.Collections.Generic;
