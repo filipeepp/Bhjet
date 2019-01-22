@@ -564,5 +564,25 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
+
+        /// <summary>
+        /// Busca ID do Profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>long</returns>
+        public long BuscaIDProfissional(long idUsuario)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select idColaboradorEmpresaSistema as ID from tblColaboradoresEmpresaSistema where idUsuario = @idUser";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<long>(query, new
+                {
+                    idUser = idUsuario
+                });
+            }
+        }
     }
 }

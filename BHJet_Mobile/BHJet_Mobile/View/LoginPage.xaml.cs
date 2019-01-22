@@ -43,22 +43,22 @@ namespace BHJet_Mobile.View
             try
             {
                 // Executa o Login
-                //ViewModel.ExecutarLogin();
+                ViewModel.ExecutarLogin();
 
-                if (ViewModel.Login.Username == "123")
-                {
-                    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-                    UsuarioAutenticado.Instance.Nome = "Filipe ALOCADO teste";
-                    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motociclista;
-                    UsuarioAutenticado.Instance.StatusAplicatico = false;
-                }
-                else
-                {
-                    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ChamadosAvulsos;
-                    UsuarioAutenticado.Instance.Nome = "Leonardo AVULSO teste";
-                    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motorista;
-                    UsuarioAutenticado.Instance.StatusAplicatico = false;
-                }
+                //if (ViewModel.Login.Username == "123")
+                //{
+                //    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ContratoLocacao;
+                //    UsuarioAutenticado.Instance.Nome = "Filipe ALOCADO teste";
+                //    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motociclista;
+                //    UsuarioAutenticado.Instance.StatusAplicatico = false;
+                //}
+                //else
+                //{
+                //    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ChamadosAvulsos;
+                //    UsuarioAutenticado.Instance.Nome = "Leonardo AVULSO teste";
+                //    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motorista;
+                //    UsuarioAutenticado.Instance.StatusAplicatico = false;
+                //}
 
                 // Troca de página após Login
                 if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)

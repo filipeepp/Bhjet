@@ -66,6 +66,7 @@
     <Compile Include="Admin\Entidade\ResumoChamados.cs" />
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\TarifaEntidade.cs" />
+    <Compile Include="Admin\Entidade\TurnoEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
     <Compile Include="Admin\Entidade\ValidaClienteExistente.cs" />
     <Compile Include="Admin\Entidade\ValidaProfissionalExistente.cs" />

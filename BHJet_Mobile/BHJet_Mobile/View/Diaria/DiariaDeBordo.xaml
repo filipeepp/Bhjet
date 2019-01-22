@@ -28,9 +28,9 @@
                         <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
                         <Label Grid.Row="2" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Profissional:" TextColor="#193651"  />
-                        <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="JOÃO DA SILVA" TextColor="#193651"  />
+                        <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding NomeCompleto}" TextColor="#193651"  />
 
-                        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Text="Diário de bordo: 01/01/2019" TextColor="#193651"  />
+                        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Text="{Binding DataAtual, StringFormat='Diário de bordo: = {0}'}" TextColor="#193651"  />
                     </Grid>
                 </Frame>
  
@@ -50,20 +50,20 @@
                         </Grid.ColumnDefinitions> 
 
                         <Label Grid.Row="0" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Início jornada" TextColor="#193651"  />
-                        <Entry Grid.Row="0" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm"  />
-                        <Entry Grid.Row="0" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" />
+                        <Entry Grid.Row="0" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioJornada}" />
+                        <Entry Grid.Row="0" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMInicio}" />
 
                         <Label Grid.Row="1" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Início almoço" TextColor="#193651"  />
-                        <Entry Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm"  />
-                        <Entry Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" />
+                        <Entry Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioAlmoco}" />
+                        <Entry Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMAlmoco}" />
 
                         <Label Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Fim almoço" TextColor="#193651"  />
-                        <Entry Grid.Row="2" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm"  />
-                        <Entry Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" />
+                        <Entry Grid.Row="2" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimAlmoco}" />
+                        <Entry Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMFimAlmoco}" />
 
                         <Label Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Final jornada" TextColor="#193651"  />
-                        <Entry Grid.Row="3" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm"  />
-                        <Entry Grid.Row="3" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" />
+                        <Entry Grid.Row="3" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimJornada}" />
+                        <Entry Grid.Row="3" Grid.Column="2" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMFim}" />
 
                         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Clicked="IniciarDiaria_Clicked" Image="opcao" BackgroundColor="#193651" TextColor="White" Text="Iniciar"></Button>
                         

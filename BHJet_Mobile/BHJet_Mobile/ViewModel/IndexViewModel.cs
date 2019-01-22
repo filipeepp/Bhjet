@@ -1,19 +1,21 @@
 ﻿using BHJet_Mobile.Infra;
+using BHJet_Mobile.Servico.Diaria;
 using BHJet_Mobile.Sessao;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel
 {
     public class IndexViewModel : PropertyChangedClass
     {
-        public IndexViewModel(IUsuarioAutenticado _usuarioAutenticado)
+        public IndexViewModel(IUsuarioAutenticado _usuarioAutenticado, IDiariaServico _diariaServico)
         {
             usuarioAutenticado = _usuarioAutenticado;
+            diariaServico = _diariaServico;
         }
 
         private readonly IUsuarioAutenticado usuarioAutenticado;
+
+        private readonly IDiariaServico diariaServico;
 
         public bool DiarioBordo
         {
@@ -59,30 +61,40 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        public void Carrega(bool teste)
+        public async Task Carrega()
         {
-            // Carrega dados de corrida
-            if (usuarioAutenticado.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+            try
             {
-                // Verifica se a diaria foi aberta
-                if (teste) // aberta
-                    PermitePesquisaCorrida = false;
-                else
-                    PermitePesquisaCorrida = true;
+                // Load
+                Loading = true;
 
-                // Alerta Pesquisa
-                if (!PermitePesquisaCorrida)
-                    throw new DiariaException("Você está alocado para o cliente 'TALS', inicie o registro do turno para iniciar as corridas.");
+                // Carrega dados de corrida
+                if (usuarioAutenticado.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                {
+                    // Verifica se a diaria foi aberta
+                    if (await diariaServico.VerificaDiariaAberta())
+                        PermitePesquisaCorrida = true;
+                    else
+                        PermitePesquisaCorrida = false;
+
+                    // Alerta Pesquisa
+                    if (!PermitePesquisaCorrida)
+                        throw new DiariaException("Você está alocado para o cliente 'TALS', inicie o registro do turno para iniciar as corridas.");
+                }
+                else
+                {
+                    // Avulso sempre permite pesquisa
+                    PermitePesquisaCorrida = true;
+                }
             }
-            else
+            finally
             {
-                // Avulso sempre permite pesquisa
-                PermitePesquisaCorrida = true;
+                // Load
+                Loading = false;
             }
         }
 
-
-        public void BuscaCorrida()
+        public async Task BuscaCorrida()
         {
             // Buscando Corrida
             try

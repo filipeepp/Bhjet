@@ -1,7 +1,4 @@
 ﻿using BHJet_Mobile.Infra;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BHJet_Mobile.ViewModel
 {
@@ -48,7 +45,5 @@ namespace BHJet_Mobile.ViewModel
                 OnPropertyChanged();
             }
         }
-        
-
     }
 }

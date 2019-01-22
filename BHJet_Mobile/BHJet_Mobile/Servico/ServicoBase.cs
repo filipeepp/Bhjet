@@ -1,12 +1,15 @@
 ﻿using BHJet_Mobile.Infra;
 using BHJet_Mobile.Infra.Variaveis;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BHJet_Servico
 {
@@ -14,7 +17,7 @@ namespace BHJet_Servico
     {
         public ServicoBase()
         {
-            ValidateResult = null;
+            
         }
 
         /// <summary>
@@ -27,12 +30,14 @@ namespace BHJet_Servico
         /// </summary>
         protected readonly string BaseUrl = ServicoRotas.Base;
 
-        protected string Get(Uri url)
+        protected string serviceBaseUrl = "";
+
+        protected async Task<string> Get(Uri url)
         {
-            using (var client = GetHttpClient())
+            using (var client = await GetHttpClient())
             {
-                var result = client.GetAsync(url).Result;
-                return GetResult(result);
+                var result = await client.GetAsync(url);
+                return await GetResult(result);
             }
         }
 
@@ -40,117 +45,85 @@ namespace BHJet_Servico
         {
             get
             {
-                return new Uri(CombineUri(BaseUrl, string.Empty));
+                return new Uri(CombineUri(BaseUrl, serviceBaseUrl));
             }
         }
 
-        public static object JSchema { get; private set; }
-
-        protected T Get<T>(Uri url)
+        protected async Task<T> Get<T>(Uri url)
         {
-            var value = Get(url);
+            var value = await Get(url);
             return JsonConvert.DeserializeObject<T>(value);
         }
 
-
-        protected Stream GetStream(Uri url)
+        protected async Task<string> Delete(Uri url)
         {
-            using (var client = GetHttpClient())
+            using (var client = await GetHttpClient())
             {
-                // Resultado
-                var result = client.GetAsync(url).Result;
-                //Valida o resultado
-                ValidateStatusCode(result);
-                // Get Stream
-                var stream = result.Content.ReadAsStreamAsync().Result;
-                // Return
-                return stream;
+                var result = await client.DeleteAsync(url);
+                return await GetResult(result);
             }
         }
 
-        protected string Delete(Uri url)
+        protected async Task<T> Delete<T>(Uri url)
         {
-            using (var client = GetHttpClient())
-            {
-                var result = client.DeleteAsync(url).Result;
-                return GetResult(result);
-            }
-        }
-
-        protected T Delete<T>(Uri url)
-        {
-            var value = Delete(url);
+            var value = await Delete(url);
             return JsonConvert.DeserializeObject<T>(value);
         }
 
-        protected string Post(Uri url, string data)
+        protected async Task<string> Post(Uri url, string data)
         {
-            using (var client = GetHttpClient())
+            using (var client = await GetHttpClient())
             {
-                var result = client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json")).Result;
-                return GetResult(result);
+                var result = await client.PostAsync(url, new StringContent(data, Encoding.UTF8, "application/json"));
+                return await GetResult(result);
             }
         }
 
-        protected string Post<T>(Uri url, T data)
+        protected async Task<string> Post<T>(Uri url, T data)
         {
             var value = JsonConvert.SerializeObject(data);
-            return Post(url, value);
+            return await Post(url, value);
         }
 
-        protected TResult Post<T, TResult>(Uri url, T data)
+        protected async Task<TResult> Post<T, TResult>(Uri url, T data)
         {
-            var value = Post<T>(url, data);
+            var value = await Post<T>(url, data);
             return JsonConvert.DeserializeObject<TResult>(value);
         }
 
-        protected string Put(Uri url, string data)
+        protected async Task<string> Put(Uri url, string data)
         {
-            using (var client = GetHttpClient())
+            using (var client = await GetHttpClient())
             {
-                var result = client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json")).Result;
-                return GetResult(result);
+                var result = await client.PutAsync(url, new StringContent(data, Encoding.UTF8, "application/json"));
+                return await GetResult(result);
             }
         }
 
-        protected string Put<T>(Uri url, T data)
+        protected async Task<string> Put<T>(Uri url, T data)
         {
             var value = JsonConvert.SerializeObject(data);
-            return Put(url, value);
+            return await Put(url, value);
         }
 
-        protected TResult Put<T, TResult>(Uri url, T data)
+        protected async Task<TResult> Put<T, TResult>(Uri url, T data)
         {
-            var value = Put<T>(url, data);
+            var value = await Put<T>(url, data);
             return JsonConvert.DeserializeObject<TResult>(value);
         }
 
-        protected string GetResult(HttpResponseMessage result)
+        protected async Task<string> GetResult(HttpResponseMessage result)
         {
             //Valida o resultado
-            ExecuteValidateStatusCode(result);
-            // Return Content String
-            return result.Content.ReadAsStringAsync().Result;
+            await ValidateStatusCode(result);
+
+            if (result.StatusCode == HttpStatusCode.NoContent)
+                return "[]";
+
+            return await result.Content.ReadAsStringAsync();
         }
 
-        /// <summary>
-        /// Valida resultado do serviço
-        /// Entrada: HttpResponseMessage
-        /// Saida: Bool (true: validação base, false: não valida)
-        /// </summary>
-        public Func<HttpResponseMessage, bool> ValidateResult = null;
-
-        private void ExecuteValidateStatusCode(HttpResponseMessage response)
-        {
-            if (ValidateResult != null)
-            {
-                if (!ValidateResult.Invoke(response))
-                    return;
-            }
-            ValidateStatusCode(response);
-        }
-
-        private void ValidateStatusCode(HttpResponseMessage response)
+        private async Task ValidateStatusCode(HttpResponseMessage response)
         {
             var statusClass = ((int)response.StatusCode) / 100;
             switch (statusClass)
@@ -223,15 +196,13 @@ namespace BHJet_Servico
             return sb.ToString();
         }
 
-        private HttpClient GetHttpClient(bool authorize = true)
+        private async Task<HttpClient> GetHttpClient(bool authorize = true)
         {
             // Instancia novo HttpClient
-            var client = new HttpClient
-            {
-                BaseAddress = this.ServiceUri
-            };
+            HttpClient client = new HttpClient();
+            client.BaseAddress = this.ServiceUri;
 
-            if (authorize && !string.IsNullOrWhiteSpace(AuthorizationToken))
+            if (authorize && AuthorizationToken != null)
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AuthorizationToken);
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -255,5 +226,6 @@ namespace BHJet_Servico
             public string error { get; set; }
             public string error_description { get; set; }
         }
+
     }
 }

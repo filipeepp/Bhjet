@@ -13,5 +13,11 @@
         {
             public const string GetPerfil = "/Profissional/perfil";
         }
+        public class Diaria
+        {
+            public const string GetVerificacaoAberta = "/Diaria/turno/verifica";
+            public const string GetTurno = "/Diaria/turno";
+            public const string PostTurno = "/Diaria/turno";
+        }
     }
 }

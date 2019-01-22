@@ -1,6 +1,7 @@
 ﻿using BHJet_Core.Extension;
 using BHJet_DTO.Diaria;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
 using System.Web.Http;
 
@@ -96,6 +97,57 @@ namespace BHJet_WebApi.Controllers
 
             // Return
             return Ok();
+        }
+
+        [Authorize]
+        [Route("/turno/verifica")]
+        public IHttpActionResult GetTurnoAberto()
+        {
+            // Variaveis
+            var id = long.Parse(UsuarioAutenticado.LoginID);
+
+            // Busca ID Profissional
+            var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
+
+            // Busca verificação
+            var diariaAberta = new DiariaRepositorio().VerificaDiariaAberta(idProfissional);
+
+            // Retorna
+            return Ok(diariaAberta);
+        }
+
+        [Authorize]
+        [Route("/turno")]
+        public IHttpActionResult GetTurnoProfissional()
+        {
+            // Variaveis
+            var id = long.Parse(UsuarioAutenticado.LoginID);
+
+            // Busca ID Profissional
+            var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
+
+            // Busca verificação
+            var turno = new DiariaRepositorio().BuscaDadosTurno(idProfissional);
+
+            // Retorna
+            return Ok(turno);
+        }
+
+        [Authorize]
+        [Route("/turno")]
+        public IHttpActionResult PostTurnoProfissional([FromBody]TurnoEntidade filtro)
+        {
+            // Variaveis
+            var id = long.Parse(UsuarioAutenticado.LoginID);
+
+            // Busca ID Profissional
+            var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
+
+            // Busca verificação
+            var turno = new DiariaRepositorio().BuscaDadosTurno(idProfissional);
+
+            // Retorna
+            return Ok(turno);
         }
     }
 }

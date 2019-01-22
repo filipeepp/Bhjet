@@ -7,6 +7,7 @@ namespace BHJet_Mobile.Sessao
         TipoProfissional Tipo { get; set; }
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
+        long? IDDiariaAtendimento { get; set; }
     }
 
     public sealed class UsuarioAutenticado : IUsuarioAutenticado

@@ -1,4 +1,5 @@
 ﻿using BHJet_Mobile.Infra;
+using BHJet_Mobile.Servico.Diaria;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
@@ -15,7 +16,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         public Index()
         {
             InitializeComponent();
-            ViewModel = new IndexViewModel(UsuarioAutenticado.Instance);
+            ViewModel = new IndexViewModel(UsuarioAutenticado.Instance, new DiariaServico());
 
             MessagingCenter.Subscribe<string, int>("ObservableChamada", "ObservableChamada", async (s, a) =>
             {
@@ -50,7 +51,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             try
             {
                 // Carrega Inicio
-                ViewModel.Carrega(await this.DisplayAlert("teste", "Ver diaria iniciada ?", "nao", "sim"));
+                //ViewModel.Carrega(await this.DisplayAlert("teste", "Ver diaria iniciada ?", "nao", "sim"));
+                await ViewModel.Carrega();
 
                 // Inicia Pesquisa
                 MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
@@ -82,7 +84,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                         Device.BeginInvokeOnMainThread(async () => {
 
                             // Busca Corrida
-                            ViewModel.BuscaCorrida();
+                            await ViewModel.BuscaCorrida();
 
                             // Atualiza tela
                             await ChamadoEncontradoPainel();
@@ -93,13 +95,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                         UsuarioAutenticado.Instance.StatusAplicatico = false;
                         return false;
                     }
-
-                    // Repete
-                    return true;
                 }
                 else
                     return false;
-
             });
         }
 

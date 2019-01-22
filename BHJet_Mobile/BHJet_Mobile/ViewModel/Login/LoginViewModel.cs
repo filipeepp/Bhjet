@@ -58,6 +58,7 @@ namespace BHJet_Mobile.ViewModel.Login
                 usuarioAutenticado.Tipo = perfil.TipoProfissional;
                 usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
                 usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
+                usuarioAutenticado.IDDiariaAtendimento = perfil.idRegistroDiaria;
             }
             finally
             {
