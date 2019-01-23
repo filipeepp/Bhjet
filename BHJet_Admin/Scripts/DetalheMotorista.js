@@ -2,7 +2,7 @@
 function mascaraComissoes() {
     $("input[id*='ValorComissao']").each(function () {
         $(this).maskMoney({
-            prefix: "R$ ",
+            prefix: "% ",
             decimal: ",",
             thousands: "."
         });

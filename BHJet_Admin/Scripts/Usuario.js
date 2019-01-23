@@ -32,7 +32,7 @@ function BuscaClientes(idPreCliente) {
 
 function necessarioCliente() {
     var $option = $("#TipoUser").prop('selectedIndex');
-    if ($option != undefined && ($option === 2 || $option === 3)) {
+    if ($option != undefined && ($option === 1)) {
         $("#cliRefer").css("display", "unset")
         return true;
     }
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     var x = document.getElementById("TipoUser");
     x.remove(2);
+    x.remove(1);
 
     $("#TipoUser").change(function () {
         necessarioCliente();

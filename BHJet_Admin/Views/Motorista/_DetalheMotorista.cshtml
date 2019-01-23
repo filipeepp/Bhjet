@@ -230,12 +230,12 @@
 							}
 							@Html.HiddenFor(model => model.Comissao[i].ID)
 							<div class="col-sm-1 col-md-2  col-lg-2">
-								<label for="txtNomeFantasia">Percentual</label>
+								<label for="txtNomeFantasia">Percentual (%)</label>
 								<br />
 								@Html.TextBoxFor(model => model.Comissao[i].ValorComissao, new { @class = "form-control" })
 							</div>
 							<div class="col-1 col-sm-1 col-xs-12 col-md-5 col-lg-4">
-								<label>Vigência</label>
+								<label>Data Vigência</label>
 								<div class="input-group input-daterange">
 									@Html.TextBoxFor(model => model.Comissao[i].VigenciaInicio, new { style = "width: 160px;", @class = "form-control" })
 									<div style="margin-left:-2px" class="input-group-addon">a</div>
