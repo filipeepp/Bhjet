@@ -116,6 +116,32 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Busca lista de Profissionais Disponiveis para corrida ou diaria
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("Disponivel")]
+        [ResponseType(typeof(IEnumerable<ProfissionalModel>))]
+        public IHttpActionResult GetListaProfissionaisDisponiveis([FromUri]int? tipoProfissional = null, [FromUri]string trecho = "")
+        {
+            // Busca Dados resumidos
+            var entidade = new ProfissionalRepositorio().BuscaProfissionaisDisponiveis(trecho, tipoProfissional);
+
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(pro => new ProfissionalModel()
+            {
+                ID = pro.ID,
+                NomeCompleto = pro.NomeCompleto,
+                TipoRegime = pro.TipoRegime,
+                TipoProfissional = pro.TipoProfissional
+            }));
+        }
+
+        /// <summary>
         /// Busca lista de Profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>

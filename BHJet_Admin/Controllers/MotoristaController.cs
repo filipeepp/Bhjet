@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
@@ -102,10 +101,7 @@ namespace BHJet_Admin.Controllers
                         Bairro = "",
                         Comissao = new NovoMotoristaComissaoModel[]
                           {
-                               new NovoMotoristaComissaoModel()
-                               {
-
-                               }
+                               MontaComissaoPadrao()
                           }
                     });
                 }
@@ -136,7 +132,7 @@ namespace BHJet_Admin.Controllers
                             throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
                         else if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
-                        else if(x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
+                        else if (x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
                             throw new Exception($"Preencha ao menos uma comissão para o profissional.");
                         return true;
                     });
@@ -220,7 +216,7 @@ namespace BHJet_Admin.Controllers
                     throw new Exception("Favor preencher todos os campos da comissão anterior antes de incluir uma nova.");
 
                 var listaNovaComissao = data.Comissao?.ToList() ?? new List<NovoMotoristaComissaoModel>();
-                listaNovaComissao.Add(new NovoMotoristaComissaoModel());
+                listaNovaComissao.Add(MontaComissaoPadrao());
                 data.Comissao = listaNovaComissao.ToArray();
 
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
@@ -305,5 +301,15 @@ namespace BHJet_Admin.Controllers
         }
         #endregion
 
+        #region Apoio
+        private NovoMotoristaComissaoModel MontaComissaoPadrao()
+        {
+            return new NovoMotoristaComissaoModel()
+            {
+                VigenciaInicio = DateTime.Now,
+                VigenciaFim = DateTime.Now.AddYears(50)
+            };
+        }
+        #endregion
     }
 }

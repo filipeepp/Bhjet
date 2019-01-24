@@ -2,12 +2,13 @@
 using BHJet_Mobile.Servico.Motorista.Model;
 using BHJet_Servico;
 using System;
+using System.Threading.Tasks;
 
 namespace BHJet_Mobile.Servico.Motorista
 {
     public interface IMotoristaServico
     {
-        PerfilMotoristaModel BuscaPerfilMotorista();
+        Task<PerfilMotoristaModel> BuscaPerfilMotorista();
     }
 
     public class MotoristaServico : ServicoBase, IMotoristaServico
@@ -16,9 +17,9 @@ namespace BHJet_Mobile.Servico.Motorista
         /// Busca Detalhe Corrida
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public PerfilMotoristaModel BuscaPerfilMotorista()
+        public async Task<PerfilMotoristaModel> BuscaPerfilMotorista()
         {
-            return this.Get<PerfilMotoristaModel>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Motorista.GetPerfil}"));
+            return await this.Get<PerfilMotoristaModel>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Motorista.GetPerfil}"));
         }
     }
 }

@@ -85,6 +85,7 @@ namespace BHJet_Servico
             public const string PostProfissional = "/Profissional";
             public const string GetProfissional = "/Profissional/{0}";
             public const string GetProfissionais = "/Profissional";
+            public const string GetProfissionaisDisponiveis = "/Profissional/Disponivel";
             public const string GetLocalizacoesProfissionais = "/Profissional/tipo/{0}/localizacao";
             public const string GetLocalizacaoProfissional = "/Profissional/{0}/localizacao";
             public const string GetComissaoProfissional = "/Profissional/{0}/comissao";

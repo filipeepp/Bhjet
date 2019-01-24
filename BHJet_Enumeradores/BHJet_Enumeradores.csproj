@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
+    <Compile Remove="TipoVeiculo.cs" />
   </ItemGroup>
 
   <ItemGroup>

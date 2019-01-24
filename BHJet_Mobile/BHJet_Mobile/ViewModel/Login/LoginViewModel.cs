@@ -35,7 +35,7 @@ namespace BHJet_Mobile.ViewModel.Login
         /// Metodo de Login
         /// </summary>
         /// <returns></returns>
-        public void ExecutarLogin()
+        public async void ExecutarLogin()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace BHJet_Mobile.ViewModel.Login
                 var modelUsu = autorizacaoServico.Autenticar(Login.Username, Login.Password);
 
                 // Busca perfil do usuario
-                var perfil = motoristaServico.BuscaPerfilMotorista();
+                var perfil = await motoristaServico.BuscaPerfilMotorista();
 
                 // Usuario autenticado
                 usuarioAutenticado.Nome = perfil.NomeCompleto;

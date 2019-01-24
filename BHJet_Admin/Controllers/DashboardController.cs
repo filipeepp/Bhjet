@@ -14,6 +14,8 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using BHJet_DTO.Profissional;
+using System.Collections.Generic;
 
 namespace BHJet_Admin.Controllers
 {
@@ -294,10 +296,10 @@ namespace BHJet_Admin.Controllers
 
         [HttpGet]
         [ValidacaoUsuarioAttribute()]
-        public JsonResult BuscaProfissionais(string trechoPesquisa)
+        public JsonResult BuscaProfissionais(string trechoPesquisa, string tipoProfissional)
         {
             // Recupera dados
-            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa);
+            var entidade = profissionalServico.BuscaProfissionaisDisponiveis(trechoPesquisa, (TipoProfissional)Enum.Parse(typeof(TipoProfissional), tipoProfissional));
 
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()

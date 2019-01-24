@@ -100,7 +100,7 @@ namespace BHJet_WebApi.Controllers
         }
 
         [Authorize]
-        [Route("/turno/verifica")]
+        [Route("turno/verifica")]
         public IHttpActionResult GetTurnoAberto()
         {
             // Variaveis
@@ -117,7 +117,7 @@ namespace BHJet_WebApi.Controllers
         }
 
         [Authorize]
-        [Route("/turno")]
+        [Route("turno")]
         public IHttpActionResult GetTurnoProfissional()
         {
             // Variaveis
@@ -134,7 +134,7 @@ namespace BHJet_WebApi.Controllers
         }
 
         [Authorize]
-        [Route("/turno")]
+        [Route("turno")]
         public IHttpActionResult PostTurnoProfissional([FromBody]TurnoEntidade filtro)
         {
             // Variaveis

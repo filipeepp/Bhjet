@@ -93,6 +93,20 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
+        private string _TipoProfissional;
+        [Required(ErrorMessage = "Tipo de Veículo obrigatório.")]
+        public string TipoProfissional
+        {
+            get
+            {
+                return _TipoProfissional;
+            }
+            set
+            {
+                _TipoProfissional = value;
+            }
+        }
+
         private string _ValorDiaria;
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Valor(R$) Diária obrigatório.")]
@@ -132,20 +146,6 @@ namespace BHJet_Admin.Models.Dashboard
             set
             {
                 _Observacao = value;
-            }
-        }
-
-        private TipoVeiculo _TipoVeiculo;
-        [Required(ErrorMessage = "Tipo de veículo obrigatório.")]
-        public TipoVeiculo TipoVeiculo
-        {
-            get
-            {
-                return _TipoVeiculo;
-            }
-            set
-            {
-                _TipoVeiculo = value;
             }
         }
 

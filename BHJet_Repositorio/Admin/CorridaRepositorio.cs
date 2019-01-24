@@ -25,7 +25,7 @@ namespace BHJet_Repositorio.Admin
 								join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 									where LGCD.idStatusCorrida = @StatusCorrida
-										AND CLB.idTipoProfissional = @TipoProfissional";
+										AND CD.idTipoProfissional = @TipoProfissional";
 
                 // Execução
                 return sqlConnection.Query<LocalizacaoCorridaEntidade>(query, new

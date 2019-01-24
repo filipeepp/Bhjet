@@ -2,10 +2,11 @@
 function BuscaProfissionais() {
     var jqVariavel = $("#pesquisaProfissional");
     $("#ProfissionalSelecionado").find('option').remove().end();
+    var tipoProfissional = $('input[name=TipoProfissional]:checked').val();
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val(),
+        url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoProfissional,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ProfissionalSelecionado").find('option').remove().end();

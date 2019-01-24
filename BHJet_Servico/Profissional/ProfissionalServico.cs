@@ -1,4 +1,5 @@
 ﻿using BHJet_DTO.Profissional;
+using BHJet_Enumeradores;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace BHJet_Servico.Profissional
     public interface IProfissionalServico
     {
         IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa);
+        IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional tipoProfissional);
         ProfissionalCompletoModel BuscaProfissional(long id);
         void AtualizaDadosProfissional(ProfissionalCompletoModel proModel);
         void IncluirProfissional(ProfissionalCompletoModel proModel);
@@ -27,6 +29,15 @@ namespace BHJet_Servico.Profissional
         public IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa)
         {
             return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionais}?trecho={trechoPesquisa}"));
+        }
+
+        /// <summary>
+        /// Busca Lista de profissionais Disponiveis
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional tipoProfissional)
+        {
+            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionaisDisponiveis}?tipoProfissional={(int)tipoProfissional}&trecho={trechoPesquisa}"));
         }
 
         /// <summary>

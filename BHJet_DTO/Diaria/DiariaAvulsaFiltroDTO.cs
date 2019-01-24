@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHJet_Enumeradores;
+using System;
 
 namespace BHJet_DTO.Diaria
 {

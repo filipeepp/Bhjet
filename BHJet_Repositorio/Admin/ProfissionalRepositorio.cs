@@ -21,8 +21,9 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"select  geoPosicao.STY  as vcLatitude, 
-       geoPosicao.STX  as vcLongitude,
-	   idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel from tblColaboradoresEmpresaDisponiveis CED
+                                    geoPosicao.STX  as vcLongitude,
+	                                idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel 
+                                        from tblColaboradoresEmpresaDisponiveis CED
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
@@ -65,8 +66,8 @@ namespace BHJet_Repositorio.Admin
         /// <summary>
         /// Busca Lista de Profissionais
         /// </summary>
-        /// <param name="filtro">TipoProfissional</param>
-        /// <returns>UsuarioEntidade</returns>
+        /// <param name="filtro">trecho</param>
+        /// <returns>IEnumerable<ProfissionalEntidade></returns>
         public IEnumerable<ProfissionalEntidade> BuscaProfissionais(string trecho)
         {
             using (var sqlConnection = this.InstanciaConexao())
@@ -83,12 +84,57 @@ namespace BHJet_Repositorio.Admin
 									       PRO.vcNomeCompleto like @valorPesquisa";
 
                 if (string.IsNullOrWhiteSpace(trecho))
-                    query.Replace("*", "top(50)");
+                    query.Replace("select", "select top(50)");
 
                 // Execução
                 return sqlConnection.Query<ProfissionalEntidade>(query, new
                 {
                     valorPesquisa = "%" + trecho + "%",
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Lista de Profissionais Disponiveis
+        /// </summary>
+        /// <param name="filtro">trecho</param>
+        /// <returns>IEnumerable<ProfissionalEntidade></returns>
+        public IEnumerable<ProfissionalEntidade> BuscaProfissionaisDisponiveis(string trecho, int? tipoProfissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select DISTINCT (CE.idColaboradorEmpresaSistema) as ID,
+				                        CE.vcNomeCompleto as NomeCompleto,
+				                        TP.idTipoProfissional as TipoProfissional,
+				  				        CE.bitRegimeContratacaoCLT TipoRegime
+							    from tblColaboradoresEmpresaSistema CE
+				 				   join tblColaboradoresEmpresaDisponiveis CEO ON (CE.idColaboradorEmpresaSistema = CEO.idColaboradorEmpresaSistema) 
+				 				   left join tblRegistroDiarias RD on (CE.idColaboradorEmpresaSistema = RD.idColaboradorEmpresaSistema)
+				 				   left join tblCorridas CR on (CR.idUsuarioColaboradorEmpresa = CE.idColaboradorEmpresaSistema)
+				                   join tblDOMTipoProfissional TP on (TP.idTipoProfissional = ce.idTipoProfissional)
+						       WHERE 
+										CEO.bitDisponivel = 1  
+							     AND 
+										(convert(varchar(10), RD.dtDataHoraInicioExpediente, 120) != convert(varchar(10), getdate(), 120) or RD.idRegistroDiaria IS NULL )
+							     AND 
+					    				(CR.idStatusCorrida not in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0) or CR.idStatusCorrida IS NULL)
+                                  %CONDICAO_TRECHO% 
+                                  %CONDICAO_TIPO% ";
+
+
+                // Validacao extra
+                query = string.IsNullOrWhiteSpace(trecho) ? query.Replace("%CONDICAO_TRECHO%", "") 
+                                                          : query.Replace("%CONDICAO_TRECHO%", "AND convert(varchar(250), CE.idColaboradorEmpresaSistema) like @valorPesquisa or CE.vcNomeCompleto like @valorPesquisa");
+
+                query = tipoProfissional != null ? query.Replace("%CONDICAO_TIPO%", "AND (CEO.idTipoProfissional = @tipoProf)")
+                                            : query.Replace("%CONDICAO_TIPO%", "");
+
+                // Execução
+                return sqlConnection.Query<ProfissionalEntidade>(query, new
+                {
+                    valorPesquisa = "%" + trecho + "%",
+                    tipoProf = tipoProfissional
                 });
             }
         }
@@ -325,7 +371,7 @@ namespace BHJet_Repositorio.Admin
                                            ,[vcUF]
                                            ,[vcCEP]
                                            ,[vcPontoDeReferencia]
-                                           ,[bitPrincipal])
+                                           ,[bitPrincipal], [dtDataHoraRegistro])
                                      VALUES
                                            (@Rua
                                            ,@RuaNumero
@@ -335,7 +381,7 @@ namespace BHJet_Repositorio.Admin
                                            ,@UF
                                            ,@Cep
                                            ,@PontoReferencia
-                                           ,@EnderecoPrincipal)
+                                           ,@EnderecoPrincipal, getdate())
                                            select @@identity;";
                         // Execute
                         idEndereco = trans.Connection.ExecuteScalar<int?>(query, new
