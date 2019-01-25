@@ -182,6 +182,7 @@ namespace BHJet_WebApi.Controllers
                 TipoCNH = entidade.TipoCNH,
                 TipoRegime = entidade.TipoRegime,
                 TipoProfissional = entidade.TipoProfissional,
+                DocumentoRG = entidade.DocumentoRG,
                 Comissoes = entidade.Comissoes.Select(c => new ProfissionalComissaoModel()
                 {
                     ID = c.idComissaoColaboradorEmpresaSistema,
@@ -226,6 +227,7 @@ namespace BHJet_WebApi.Controllers
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
                 PontoReferencia = model.PontoReferencia,
+                DocumentoRG = model.DocumentoRG,
                 Comissoes = model.Comissoes != null ? model.Comissoes.Select(c => new ProfissionalComissaoEntidade()
                 {
                     idComissaoColaboradorEmpresaSistema = c.ID,

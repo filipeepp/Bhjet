@@ -74,6 +74,7 @@ namespace BHJet_Admin.Controllers
                         RuaNumero = profissional.RuaNumero,
                         UF = profissional.UF,
                         EdicaoCadastro = true,
+                        DocumentoRG = profissional.DocumentoRG,
                         Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
                         {
                             ID = c.ID,
@@ -167,6 +168,7 @@ namespace BHJet_Admin.Controllers
                     PontoReferencia = model.PontoReferencia,
                     RuaNumero = model.RuaNumero,
                     UF = model.UF,
+                    DocumentoRG = model.DocumentoRG,
                     Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
                     {
                         ID = x.ID,

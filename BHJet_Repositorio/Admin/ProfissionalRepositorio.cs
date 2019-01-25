@@ -124,7 +124,7 @@ namespace BHJet_Repositorio.Admin
 
 
                 // Validacao extra
-                query = string.IsNullOrWhiteSpace(trecho) ? query.Replace("%CONDICAO_TRECHO%", "") 
+                query = string.IsNullOrWhiteSpace(trecho) ? query.Replace("%CONDICAO_TRECHO%", "")
                                                           : query.Replace("%CONDICAO_TRECHO%", "AND convert(varchar(250), CE.idColaboradorEmpresaSistema) like @valorPesquisa or CE.vcNomeCompleto like @valorPesquisa");
 
                 query = tipoProfissional != null ? query.Replace("%CONDICAO_TIPO%", "AND (CEO.idTipoProfissional = @tipoProf)")
@@ -169,10 +169,11 @@ namespace BHJet_Repositorio.Admin
 				                            PRO.vcEmail as Email,
 				                            PRO.bitRegimeContratacaoCLT as ContratoCLT,
 				                            PRO.vcObservacoes as Observacao,
+                                            PRO.vcRG as DocumentoRG,
 				                            TP.idTipoProfissional as TipoProfissional,
-				                                CASE (PRO.bitRegimeContratacaoCLT)
-                                   WHEN  0 THEN 'CLT'
-                                   WHEN 1 THEN 'MEI' END as TipoContrato
+				                   CASE (PRO.bitRegimeContratacaoCLT)
+                                     WHEN  0 THEN 'CLT'
+                                     WHEN 1 THEN 'MEI' END as TipoContrato
 			                            from tblColaboradoresEmpresaSistema as PRO
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)
@@ -214,7 +215,7 @@ namespace BHJet_Repositorio.Admin
                     try
                     {
                         // Update tblColaboradoresEmpresaSistema
-                        string query = @" UPDATE dbo.tblColaboradoresEmpresaSistema
+                        string query = @"UPDATE dbo.tblColaboradoresEmpresaSistema
                                     SET vcNomeCompleto = @NomeCompleto,
 	                                    vcCPFCNPJ = @CPF,
 	                                    vcDocumentoHabilitacao = @CNH,
@@ -224,7 +225,8 @@ namespace BHJet_Repositorio.Admin
 	                                    bitTelefoneCelularWhatsApp = @CelularWpp,
 	                                    bitRegimeContratacaoCLT = @TipoContrato,
 	                                    vcObservacoes = @Observacao,
-	                                    vcEmail = @Email
+	                                    vcEmail = @Email,
+                                        vcRG = @DocumentoRG  
                                     where 
                                         idColaboradorEmpresaSistema = @ID";
                         // Execução 
@@ -240,7 +242,8 @@ namespace BHJet_Repositorio.Admin
                             TipoContrato = profissional.TipoRegime,
                             Observacao = profissional.Observacao,
                             Email = profissional.Email,
-                            ID = profissional.ID
+                            ID = profissional.ID,
+                            DocumentoRG = profissional.DocumentoRG
                         }, trans);
 
                         // Insert Novo Endereco

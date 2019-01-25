@@ -60,32 +60,38 @@
 						<br class="hidden-lg" />
 					</div>
 
-					<div class="row">
+                    <div class="row">
 
-						<div class="col-md-4">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
-							@Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
-						</div>
+                        <div class="col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                        </div>
 
-						<div class="col-md-4">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>CNH</label>
-							@Html.TextBoxFor(model => model.CNH, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.CNH, null, new { @class = "text-danger" })
-						</div>
+                        <div class="col-md-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>CNH</label>
+                            @Html.TextBoxFor(model => model.CNH, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CNH, null, new { @class = "text-danger" })
+                        </div>
 
-						<div class=" col-md-4">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Categoria</label>
-							<br>
-							@foreach (var tipoEnum in Enum.GetValues(typeof(TipoCarteira)))
-							{
-								var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoCarteira), tipoEnum));
-								@Html.RadioButtonFor(s => s.TipoCarteiraMotorista, tipoEnum, new { id, @class = "option-input radio" })
-								@Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
-							}
-							@Html.ValidationMessageFor(model => model.TipoCarteiraMotorista, null, new { @class = "text-danger" })
-						</div>
-					</div>
+                        <div class="col-md-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Documento RG</label>
+                            @Html.TextBoxFor(model => model.DocumentoRG, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DocumentoRG, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class=" col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Categoria</label>
+                            <br>
+                            @foreach (var tipoEnum in Enum.GetValues(typeof(TipoCarteira)))
+                            {
+                                var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoCarteira), tipoEnum));
+                                @Html.RadioButtonFor(s => s.TipoCarteiraMotorista, tipoEnum, new { id, @class = "option-input radio" })
+                                @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+                            }
+                            @Html.ValidationMessageFor(model => model.TipoCarteiraMotorista, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
 				</div>
 
 			</div>

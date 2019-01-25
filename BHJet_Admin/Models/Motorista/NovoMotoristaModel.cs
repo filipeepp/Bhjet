@@ -15,6 +15,9 @@ namespace BHJet_Admin.Models.Motorista
         [Required(ErrorMessage = "Nome Completo obrigatório.")]
         public string NomeCompleto { get; set; }
 
+        [Required(ErrorMessage = "Documento RG obrigatório.")]
+        public string DocumentoRG { get; set; }
+
         [Required(ErrorMessage = "CPF/CNPJ Completo obrigatório.")]
         [StringLength(18, ErrorMessage = "Formato de CPF/CNPJ inválido.", MinimumLength = 14)]
         [RegularExpression(@"([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})", ErrorMessage = "Formato de CPF/CNPJ inválido.")]
