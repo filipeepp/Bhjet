@@ -83,7 +83,7 @@ namespace BHJet_Admin.Controllers
 						TelefoneCelular = entidadeDadosCliente.Contato.FirstOrDefault().TelefoneCelular,
 						TelefoneWhatsapp = entidadeDadosCliente.Contato.FirstOrDefault().TelefoneWhatsapp == 1 ? true : false,
 						Email = entidadeDadosCliente.Contato.FirstOrDefault().Email,
-						DataNascimento = entidadeDadosCliente.Contato.FirstOrDefault().DataNascimento.ToString("dd/MM/yyyy")
+						DataNascimento = entidadeDadosCliente.Contato.FirstOrDefault().DataNascimento?.ToString("dd/MM/yyyy")
 					},
 					OrdemServico = entidadeOs.Any() ? entidadeOs.Select(eos => new OsClienteAvulsoModel()
 					{

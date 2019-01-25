@@ -37,27 +37,28 @@ namespace BHJet_Repositorio.Admin
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>TarifaDTO</returns>
-		public IEnumerable<TarifaEntidade> BuscaTarfaPadraoAtiva()
+		public IEnumerable<TarifaEntidade> BuscaTarfaPadraoAtiva(int codigoTipoVeiculo)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
 			{
 				// Query
-				string query = @"SELECT 
-										dtDataInicioVigencia AS VigenciaInicio,
-										dtDataFimVigencia AS VigenciaFim,
-										decValorDiaria AS ValorDiaria,
-										decFranquiaKMDiaria AS FranquiaKMDiaria,
-										decValorKMAdicionalDiaria AS ValorKMAdicionalDiaria,
-										decFranquiaKMMensalidade AS FranquiaKMMensalidade,
-										decValorKMAdicionalMensalidade AS ValorKMAdicionalMensalidade,
-										bitAtivo AS Ativo
+				string query = @"SELECT
+										idTarifario,
+										vcObservacao,
+										decValorDiaria,
+										decFranquiaKMDiaria,
+										decValorKMAdicionalDiaria,
+										decFranquiaKMMensalidade,
+										decValorKMAdicionalMensalidade
 									FROM
 										tblTarifario
 									WHERE
+										idTipoVeiculo = @TipoVeiculo
+									AND
 										bitAtivo = 1";
 
 				// Execução
-				return sqlConnection.Query<TarifaEntidade>(query);
+				return sqlConnection.Query<TarifaEntidade>(query, new { TipoVeiculo = codigoTipoVeiculo });
 			}
 		}
 	}

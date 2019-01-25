@@ -26,6 +26,11 @@
 	});
 	//OBS: RETIRAR MASCARA PARA ENVIO SERVIÇO: $('##Valor_ValorUnitario').maskMoney('unmasked')[0];
 
+	//Faz com que o checkbox de valor padrão seja unico
+	$('input[type="checkbox"]').on('change', function () {
+		$('input[type="checkbox"]').not(this).not('.ctmErrorValorAtivado').prop('checked', false);
+	});
+
 	//Valor ativado
 	$("input[id='Valor_0__ValorAtivado']").prop("checked", true);
 	$('.ctmErrorValorAtivado').on('change', function () {
@@ -150,7 +155,7 @@ window.ValidarValor = function () {
 			//Franquia Adicional
 			aux.hasClass("ctmErrorFranquiaAdicional") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Franquia adicional é obrigatória." + fechamentoSpan) : "";
 			//Observação
-			aux.hasClass("ctmErrorObservacao") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Observação é obrigatório." + fechamentoSpan) : "";
+			//aux.hasClass("ctmErrorObservacao") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Observação é obrigatório." + fechamentoSpan) : "";
 
 		}
 	});
@@ -214,7 +219,7 @@ window.ExcluirValor = function (divBlocoValor) {
 
 }
 
-window.PesquisaTarifarioPadrao = function (divBlocoValor) {
+window.PesquisaTarifarioPadrao = function (divBlocoValor, codigoTipoVeiculo) {
 
 	var idBloco = divBlocoValor.id;
 	var inputValorPadrao = $("#" + idBloco).find("input[id^='ValorPadrao']");
@@ -222,7 +227,7 @@ window.PesquisaTarifarioPadrao = function (divBlocoValor) {
 	if (inputValorPadrao.prop("checked")) {
 
 		$.ajax({
-			url: '/Tarifario/BuscarTarifarioPadraoAtivo',
+			url: '/Tarifario/BuscarTarifarioPadraoAtivo?codigoTipoVeiculo=' + codigoTipoVeiculo,
 			type: "GET",
 			dataType: "json",
 			success: function (data) {

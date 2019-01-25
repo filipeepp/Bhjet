@@ -26,10 +26,9 @@ namespace BHJet_Admin.Controllers
 
 		[HttpGet]
 		[ValidacaoUsuarioAttribute()]
-		public JsonResult BuscarTarifarioPadraoAtivo()
+		public JsonResult BuscarTarifarioPadraoAtivo(int codigoTipoVeiculo)
 		{
-
-			var data = tarifaServico.BuscaTaritaCliente(null);
+			var data = tarifaServico.BuscaTarifaAtiva(codigoTipoVeiculo);
 
 			var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 

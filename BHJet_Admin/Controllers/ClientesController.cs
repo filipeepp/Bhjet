@@ -101,7 +101,7 @@ namespace BHJet_Admin.Controllers
 							TelefoneComercial = c.TelefoneComercial,
 							TelefoneCelular = c.TelefoneCelular,
 							Setor = c.Setor,
-							DataNascimento = c.DataNascimento.ToShortDateString(),
+							DataNascimento = c.DataNascimento?.ToShortDateString(),
 
 						}).ToList() : new List<ContatoModel>() { },
 
@@ -221,7 +221,7 @@ namespace BHJet_Admin.Controllers
 						TelefoneComercial = c.TelefoneComercial,
 						TelefoneCelular = c.TelefoneCelular,
 						Setor = c.Setor,
-						DataNascimento = Convert.ToDateTime(c.DataNascimento)
+						DataNascimento = string.IsNullOrEmpty(c.DataNascimento) ? (DateTime?)null : Convert.ToDateTime(c.DataNascimento)
 
 					}).ToArray(),
 					Valor = listValorTratada.Select(v => new ClienteValorModel()
@@ -329,18 +329,5 @@ namespace BHJet_Admin.Controllers
 		{
 			return PartialView("_Valor", model);
 		}
-
-		[HttpGet]
-		[ValidacaoUsuarioAttribute()]
-		public JsonResult BuscarTarifarioPadraoAtivo()
-		{
-			var data = tarifaServico.BuscaTaritaCliente(null);
-
-			var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-
-			return Json(json, JsonRequestBehavior.AllowGet);
-
-		}
-
 	}
 }

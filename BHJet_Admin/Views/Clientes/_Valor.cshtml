@@ -87,10 +87,16 @@ new ValorModel()
 				</div>
 				<div class="form-row">
 					<div class="form-group col-xs-12 col-md-12" style="margin-bottom:30px;">
-						<div id="div_ValorPadrao_@Html.IdFor(model => model.Valor[i])">
+						<div id="div_ValorPadraoMoto_@Html.IdFor(model => model.Valor[i])">
 							<label class="label-cbx">
-								<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[i])" name="ValorPadrao_@Html.IdFor(model => model.Valor[i])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@i]);" />
-								<span>Tarifa padrão?</span>
+								<input type="checkbox" value="1" id="ValorPadraoMoto_@Html.IdFor(model => model.Valor[i])" name="ValorPadraoMoto_@Html.IdFor(model => model.Valor[i])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@i], this.value);" />
+								<span>Tarifa padrão Moto</span>
+							</label>
+						</div>
+						<div id="div_ValorPadraoCarro_@Html.IdFor(model => model.Valor[i])">
+							<label class="label-cbx">
+								<input type="checkbox" value="2" id="ValorPadraoCarro_@Html.IdFor(model => model.Valor[i])" name="ValorPadraoCarro_@Html.IdFor(model => model.Valor[i])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@i], this.value);" />
+								<span>Tarifa padrão Carro</span>
 							</label>
 						</div>
 					</div>
@@ -98,7 +104,7 @@ new ValorModel()
 						<label>Vigência<small class="obrigatorio">*</small></label>
 						<div id="date_range_@Html.IdFor(model => model.Valor[i].VigenciaInicio)" class="input-daterange">
 							<div id="@Html.IdFor(model => model.Valor[i].VigenciaInicio)">
-								@Html.TextBoxFor(model => model.Valor[i].VigenciaInicio, new { type = campoData,  @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
+								@Html.TextBoxFor(model => model.Valor[i].VigenciaInicio, new { type = campoData, @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
 							</div>
 							<div class="input-group-addon">a</div>
 							<div id="@Html.IdFor(model => model.Valor[i].VigenciaFim)">
@@ -133,13 +139,13 @@ new ValorModel()
 				<div class="form-row">
 					<div class="form-group col-xs-12 col-md-2">
 						<div id="@Html.IdFor(model => model.Valor[i].Franquia)">
-							<label for="txtFranquia"><small class="obrigatorio">*</small>Franquia Km/mês</label>
+							<label for="txtFranquia"><small class="obrigatorio">*</small>Franquia&nbsp;Km/mês</label>
 							@Html.TextBoxFor(model => model.Valor[i].Franquia, new { @class = "form-control ctmErrorFranquia" })
 						</div>
 					</div>
 					<div class="form-group col-xs-12 col-md-2">
 						<div id="@Html.IdFor(model => model.Valor[i].FranquiaAdicional)">
-							<label for="txtFranquiaAdicional">Franquia&nbsp;Adicional</label>
+							<label for="txtFranquiaAdicional">KM&nbsp;Excedente</label>
 							@Html.TextBoxFor(model => model.Valor[i].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
 						</div>
 					</div>
@@ -202,7 +208,7 @@ else
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-2">
-					<label>Vigência</label>
+					<label>Vigência<small class="obrigatorio">*</small></label>
 					<div id="date_range_@Html.IdFor(model => model.Valor[contador].VigenciaInicio)" class="input-daterange">
 						<div id="@Html.IdFor(model => model.Valor[contador].VigenciaInicio)">
 							@Html.TextBoxFor(model => model.Valor[contador].VigenciaInicio, new { type = campoData, @class = "form-control mask-data ctmErrorVigenciaInicio", value = "digite" })
@@ -217,7 +223,7 @@ else
 			<div class="form-row">
 				<div class="form-group col-xs-12 col-md-3">
 					<div id="@Html.IdFor(model => model.Valor[contador].TipoTarifa)">
-						<label for="txtTipoTarifa">Tipo Tarifa</label>
+						<label for="txtTipoTarifa">Tipo Tarifa<small class="obrigatorio">*</small></label>
 						<br />
 						@foreach (TipoTarifa tipoEnum in Enum.GetValues(typeof(TipoTarifa)))
 						{
@@ -232,7 +238,7 @@ else
 			<div class="form-row">
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].ValorUnitario)">
-						<label for="txtValorUnitario">Valor Unitário</label>
+						<label for="txtValorUnitario">Valor Unitário<small class="obrigatorio">*</small></label>
 						@Html.TextBoxFor(model => model.Valor[contador].ValorUnitario, new { @class = "form-control  ctmErrorValorUnitario" })
 					</div>
 				</div>
@@ -240,13 +246,13 @@ else
 			<div class="form-row">
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].Franquia)">
-						<label for="txtFranquia">Franquia Km/mês</label>
+						<label for="txtFranquia">Franquia Km/mês<small class="obrigatorio">*</small></label>
 						@Html.TextBoxFor(model => model.Valor[contador].Franquia, new { @class = "form-control ctmErrorFranquia" })
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].FranquiaAdicional)">
-						<label for="txtFranquiaAdicional">Franquia&nbsp;Adicional</label>
+						<label for="txtFranquiaAdicional">KM&nbsp;Excedente<small class="obrigatorio">*</small></label>
 						@Html.TextBoxFor(model => model.Valor[contador].FranquiaAdicional, new { @class = "form-control ctmErrorFranquiaAdicional" })
 					</div>
 				</div>
@@ -263,7 +269,7 @@ else
 						<div class="cst-ckb-Novo-Cliente">
 							<label class="label-cbx">
 								@Html.CheckBoxFor(model => model.Valor[contador].ValorAtivado, new { @class = "form-control checkbox ctmErrorValorAtivado" })
-								<span>Contrato Ativo</span>
+								<span>Contrato Ativo<small class="obrigatorio">*</small></span>
 							</label>
 						</div>
 					</div>

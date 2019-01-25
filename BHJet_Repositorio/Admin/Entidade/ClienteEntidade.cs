@@ -71,7 +71,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public string TelefoneCelular { get; set; }
 		public string Setor { get; set; }
 		public int Whatsapp { get; set; }
-		public DateTime DataNascimento { get; set; }
+		public DateTime? DataNascimento { get; set; }
 	}
 
 	public class ClienteValorEntidade

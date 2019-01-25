@@ -19,5 +19,7 @@ namespace BHJet_DTO.Tarifa
         public decimal decFranquiaKMMensalidade { get; set; }
         public decimal decValorKMAdicionalMensalidade { get; set; }
         public bool bitPagamentoAVista { get; set; }
-    }
+		//ADICIONADO POR DIOGO - 24/01/2019 - CAMPO DE OBSERVAÇÃO PARA TARIFA PADRÃO
+		public string vcObservacao { get; set; }
+	}
 }
