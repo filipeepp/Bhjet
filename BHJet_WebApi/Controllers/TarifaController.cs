@@ -44,42 +44,41 @@ namespace BHJet_WebApi.Controllers
                 decValorMinutoParado = entidade.decValorMinutoParado,
                 intFranquiaMinutosParados = entidade.intFranquiaMinutosParados,
                 timFaixaHorarioFinal = entidade.timFaixaHorarioFinal,
-                timFaixaHorarioInicial = entidade.timFaixaHorarioInicial
+                timFaixaHorarioInicial = entidade.timFaixaHorarioInicial,
             });
         }
 
-		///// <summary>
-		///// Busca tarifário padrão ativo
-		///// </summary>
-		///// <returns>IEnumerable<TarifaDTO></returns>
-		//[Authorize]
-		//[Route("padrao")]
-		//[ResponseType(typeof(TarifaDTO))]
-		//public IHttpActionResult GetTarifaPadrao()
-		//{
-		//	// Busca tarifa
-		//	var entidade = new TarifaRepositorio().BuscaTarfaPadraoAtiva();
+		/// <summary>
+		/// Busca tarifário padrão ativo
+		/// </summary>
+		/// <returns>IEnumerable<TarifaDTO></returns>
+		[Authorize]
+		[Route("tipoVeiculo/{codigoTipoVeiculo:int}")]
+		[ResponseType(typeof(TarifaDTO))]
+		public IHttpActionResult GetTarifaPadrao(int codigoTipoVeiculo)
+		{
+			// Busca tarifa
+			var entidade = new TarifaRepositorio().BuscaTarfaPadraoAtiva(codigoTipoVeiculo);
 
-		//	// Validacao
-		//	if (entidade == null)
-		//		return StatusCode(System.Net.HttpStatusCode.NoContent);
+			// Validacao
+			if (entidade == null)
+				return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-		//	// Return
-		//	return Ok(entidade.Select(trf => new TarifaDTO()
-		//	{
-		//		ID = trf.ID,
-		//		Descricao = trf.Descricao,
-		//		ValorDiaria = trf.ValorDiaria,
-		//		VigenciaInicio = trf.VigenciaInicio,
-		//		VigenciaFim = trf.VigenciaFim,
-		//		FranquiaKMDiaria = trf.FranquiaKMDiaria,
-		//		ValorKMAdicionalDiaria = trf.ValorKMAdicionalDiaria,
-		//		FranquiaKMMensalidade = trf.FranquiaKMMensalidade,
-		//		ValorKMAdicionalMensalidade = trf.ValorKMAdicionalMensalidade,
-		//		Ativo = trf.Ativo
-				
-		//	}));
-		//}
+			// Return
+			return Ok(entidade.Select(trf => new TarifaDTO()
+			{
+				idTarifario = trf.idTarifario,
+				vcObservacao = trf.vcObservacao,
+				decValorDiaria = trf.decValorDiaria,
+				//VigenciaInicio = trf.VigenciaInicio,
+				//VigenciaFim = trf.VigenciaFim,
+				decFranquiaKMDiaria = trf.decFranquiaKMDiaria,
+				decValorKMAdicionalDiaria = trf.decValorKMAdicionalDiaria,
+				decFranquiaKMMensalidade = trf.decFranquiaKMMensalidade,
+				decValorKMAdicionalMensalidade = trf.decValorKMAdicionalMensalidade
+				//Ativo = trf.Ativo
+			}));
+		}
 	}
 }
  

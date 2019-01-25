@@ -105,7 +105,7 @@
 					</div>
 					<div class="form-group col-xs-12 col-md-4">
 						<div id="@Html.IdFor(model => model.Contato[i].TelefoneCelular)">
-							<label for="txtTelefoneCelular"><small class="obrigatorio">*</small>Celular</label>
+							<label for="txtTelefoneCelular">Celular</label>
 							@Html.TextBoxFor(model => model.Contato[i].TelefoneCelular, new { type = "text", @class = "form-control mask-celular ctmErrorTelefoneCelular" })
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 					</div>
 					<div class="form-group col-xs-12 col-md-4">
 						<div id="@Html.IdFor(model => model.Contato[i].DataNascimento)">
-							<label for="txtDataNascimento"><small class="obrigatorio">*</small>Aniversário</label>
+							<label for="txtDataNascimento">Aniversário</label>
 							@Html.TextBoxFor(model => model.Contato[i].DataNascimento, new { type = campoData, @class = "form-control ctmErrorDataNascimento" })
 						</div>
 					</div>
@@ -177,7 +177,7 @@ else
 				</div>
 				<div class="form-group col-xs-12 col-md-4">
 					<div id="@Html.IdFor(model => model.Contato[contador].TelefoneCelular)">
-						<label for="txtTelefoneCelular"><small class="obrigatorio">*</small>Celular</label>
+						<label for="txtTelefoneCelular">Celular</label>
 						@Html.TextBoxFor(model => model.Contato[contador].TelefoneCelular, new { type = "text", @class = "form-control mask-celular ctmErrorTelefoneCelular" })
 					</div>
 				</div>
@@ -191,7 +191,7 @@ else
 				</div>
 				<div class="form-group col-xs-12 col-md-4">
 					<div id="@Html.IdFor(model => model.Contato[contador].DataNascimento)">
-						<label for="txtDataNascimento"><small class="obrigatorio">*</small>Aniversário</label>
+						<label for="txtDataNascimento">Aniversário</label>
 						@Html.TextBoxFor(model => model.Contato[contador].DataNascimento, new { type = campoData, @class = "form-control ctmErrorDataNascimento" })
 					</div>
 				</div>
