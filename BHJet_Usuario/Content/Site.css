@@ -7,8 +7,34 @@
 }
 
 /***************************************DIOGO*************************************/
+.cts-titulo-side-bar {
+	text-align: center;
+	font-size: 18px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
 
+.cts-buttom-side-bar {
+	background-color: rgb(51, 122, 183);
+	color: rgb(255, 255, 255);
+	width: 85%;
+}
 
+.cts-buttom-side-bar:hover {
+	background-color: rgb(116, 175, 226);
+	color: rgb(255, 255, 255);
+}
+
+.div-buttom-side-bar{
+	padding-bottom: 30px;
+}
+.cts-page-home {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	background-image: url('/./Images/bh-aerea.jpg');
+	filter: grayscale(50%);
+}
 /*************************************END DIOGO***********************************/
 #footer {
 	position: fixed;
@@ -92,7 +118,7 @@ input[type="radio"], input[type="checkbox"] {
 	top: 0;
 	left: 0;
 	min-height: 100%;
-	width: 230px;
+	width: 20%;
 	z-index: 900;
 	-webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
 	-moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
@@ -217,8 +243,9 @@ input[type="radio"], input[type="checkbox"] {
 	min-height: 650px;
 	vertical-align: top;
 	height: 100%;
-	padding-left: 230px;
-	width: 100%;
+	/*padding-left: 30px;*/
+	padding-left: 250px;
+	width: 18%;
 	margin-top: 50px;
 }
 
@@ -460,6 +487,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 /* different techniques for iPad screening */
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+
 	/* For portrait layouts only */
 }
 
@@ -482,7 +510,7 @@ input[type="radio"], input[type="checkbox"] {
 	}
 
 	.main-sidebar {
-		transition: opacity 1s ease-out;
+		/*transition: opacity 1s ease-out;
 		overflow: hidden;
 		height: unset;
 		width: 100%;
@@ -490,7 +518,11 @@ input[type="radio"], input[type="checkbox"] {
 		display: none;
 		border-bottom: 2px solid #e6cb0a;
 		border-right: none;
-		box-shadow: 0px 10px 22px -8px rgba(0,0,0,0.75);
+		box-shadow: 0px 10px 22px -8px rgba(0,0,0,0.75);*/
+		width: 40%;
+	}
+	.cts-buttom-side-bar {
+		width: 180%;
 	}
 
 	.content-wrapper {

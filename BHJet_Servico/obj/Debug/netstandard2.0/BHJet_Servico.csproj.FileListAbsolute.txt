@@ -26,24 +26,6 @@ C:\Users\lhsilva\Source\Repos\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet
 C:\Users\lhsilva\Source\Repos\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
 C:\Users\lhsilva\Source\Repos\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
 C:\Users\lhsilva\Source\Repos\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.deps.json
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.pdb
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.pdb
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.pdb
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csprojAssemblyReference.cache
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CoreCompileInputs.cache
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfoInputs.cache
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfo.cs
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Configuration.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Security.dll
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Configuration.xml
-E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Security.xml
 D:\Projetos\BHJet_Web\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.deps.json
 D:\Projetos\BHJet_Web\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.dll
 D:\Projetos\BHJet_Web\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.pdb
@@ -79,20 +61,38 @@ D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.Assem
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
 D:\Projetos\BHJet_Web\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.deps.json
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Servico.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_CoreGlobal.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Enumeradores.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Configuration.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.Mvc.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Security.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.Razor.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.Razor.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\Microsoft.Web.Infrastructure.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.Deployment.dll
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_CoreGlobal.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Core.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_DTO.pdb
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\BHJet_Enumeradores.pdb
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Configuration.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.Mvc.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.xml
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Security.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.Razor.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.Razor.xml
 E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\bin\Debug\netstandard2.0\System.Web.WebPages.Deployment.xml
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csprojAssemblyReference.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CoreCompileInputs.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfoInputs.cache
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.AssemblyInfo.cs
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.csproj.CopyComplete
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.dll
+E:\Repositorio Visual Studio\Bhjet\BHJet_Servico\obj\Debug\netstandard2.0\BHJet_Servico.pdb
