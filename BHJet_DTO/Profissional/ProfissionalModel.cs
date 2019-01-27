@@ -34,6 +34,8 @@ namespace BHJet_DTO.Profissional
         public bool ContratoCLT { get; set; }
         public string Observacao { get; set; }
         public string DocumentoRG { get; set; }
+        public string Senha { get; set; }
+        public bool Status { get; set; }
         public TipoProfissional TipoProfissional { get; set; }
         public RegimeContratacao TipoRegime { get; set; }
         public ProfissionalComissaoModel[] Comissoes { get; set; }

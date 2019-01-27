@@ -55,6 +55,7 @@
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
     <Compile Include="Admin\Entidade\ComissaoProfissionalEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />
+    <Compile Include="Admin\Entidade\DisponibilidadeEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoDetalheEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoEntidade.cs" />
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Admin\Entidade\ValidaClienteExistente.cs" />
     <Compile Include="Admin\Entidade\ValidaProfissionalExistente.cs" />
     <Compile Include="Admin\FaturamentoRepositorio.cs" />
+    <Compile Include="Admin\Filtro\DisponibilidadeFiltro.cs" />
     <Compile Include="Admin\Filtro\NovaDiariaAvulsaFiltro.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />
     <Compile Include="Admin\ProfissionalRepositorio.cs" />

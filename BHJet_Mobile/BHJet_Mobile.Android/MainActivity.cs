@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Plugin.Media;
+using Plugin.Permissions;
 
 namespace BHJet_Mobile.Droid
 {
@@ -19,6 +20,7 @@ namespace BHJet_Mobile.Droid
             base.OnCreate(savedInstanceState);
 
             await CrossMedia.Current.Initialize();
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this.Application);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -26,7 +28,8 @@ namespace BHJet_Mobile.Droid
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
-            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public static Activity Instance { get; private set; }

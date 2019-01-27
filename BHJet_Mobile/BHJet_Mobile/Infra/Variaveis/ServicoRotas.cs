@@ -12,6 +12,9 @@
         public class Motorista
         {
             public const string GetPerfil = "/Profissional/perfil";
+            public const string GetDadosBasicos = "/Profissional/{0}";
+            public const string PutDadosBasicos = "/Profissional/{0}/basico";
+            public const string PutDisponibilidade = "/Profissional/Disponivel";
         }
         public class Diaria
         {

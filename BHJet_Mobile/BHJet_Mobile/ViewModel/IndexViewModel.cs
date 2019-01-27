@@ -68,24 +68,11 @@ namespace BHJet_Mobile.ViewModel
                 // Load
                 Loading = true;
 
-                // Carrega dados de corrida
-                if (usuarioAutenticado.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                {
-                    // Verifica se a diaria foi aberta
-                    if (await diariaServico.VerificaDiariaAberta())
-                        PermitePesquisaCorrida = true;
-                    else
-                        PermitePesquisaCorrida = false;
-
-                    // Alerta Pesquisa
-                    if (!PermitePesquisaCorrida)
-                        throw new DiariaException("Você está alocado para o cliente 'TALS', inicie o registro do turno para iniciar as corridas.");
-                }
-                else
-                {
-                    // Avulso sempre permite pesquisa
+                // Permite pesquisar corrida
+                if (UsuarioAutenticado.Instance.StatusAplicatico)
                     PermitePesquisaCorrida = true;
-                }
+                else
+                    PermitePesquisaCorrida = false;
             }
             finally
             {

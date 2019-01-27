@@ -3,6 +3,7 @@ using BHJet_Mobile.Servico.Autenticacao;
 using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
+using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel.Login
 {
@@ -35,7 +36,7 @@ namespace BHJet_Mobile.ViewModel.Login
         /// Metodo de Login
         /// </summary>
         /// <returns></returns>
-        public async void ExecutarLogin()
+        public async Task ExecutarLogin()
         {
             try
             {
@@ -54,6 +55,7 @@ namespace BHJet_Mobile.ViewModel.Login
                 var perfil = await motoristaServico.BuscaPerfilMotorista();
 
                 // Usuario autenticado
+                usuarioAutenticado.IDProfissional = perfil.idColaboradorEmpresaSistema;
                 usuarioAutenticado.Nome = perfil.NomeCompleto;
                 usuarioAutenticado.Tipo = perfil.TipoProfissional;
                 usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;

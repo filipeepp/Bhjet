@@ -1,5 +1,6 @@
 ﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -334,6 +335,32 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        /// <summary>
+        /// Atualiza dados simples do profissional
+        /// Email, Telefone fixo/celular e CHN
+        /// </summary>
+        /// <param name="profissional"></param>
+        public void AtualizaProfissionalSimples(ProfissionalCompletoEntidade profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblColaboradoresEmpresaSistema 
+                                    set vcTelefoneCelular = @Celular, 
+                                        vcTelefoneResidencial = @Telefone, bitTelefoneCelularWhatsApp = @wpp
+                                 where idColaboradorEmpresaSistema = @id";
+
+                // Query Multiple
+                sqlConnection.Execute(query, new
+                {
+                    id = profissional.ID,
+                    Celular = profissional.TelefoneCelular,
+                    Telefone = profissional.TelefoneResidencial,
+                    wpp = profissional.CelularWpp
+                });
+            }
+        }
+
         private bool ExisteComissao(SqlTransaction con, long? idComissao, long idColaborador)
         {
             // Query
@@ -364,6 +391,7 @@ namespace BHJet_Repositorio.Admin
                 {
                     try
                     {
+                        #region Incluir Profissional
                         // Insert Novo Endereco
                         string query = @"INSERT INTO [dbo].[tblEnderecos]
                                            ([vcRua]
@@ -374,7 +402,7 @@ namespace BHJet_Repositorio.Admin
                                            ,[vcUF]
                                            ,[vcCEP]
                                            ,[vcPontoDeReferencia]
-                                           ,[bitPrincipal], [dtDataHoraRegistro])
+                                           ,[bitPrincipal])
                                      VALUES
                                            (@Rua
                                            ,@RuaNumero
@@ -384,7 +412,7 @@ namespace BHJet_Repositorio.Admin
                                            ,@UF
                                            ,@Cep
                                            ,@PontoReferencia
-                                           ,@EnderecoPrincipal, getdate())
+                                           ,@EnderecoPrincipal)
                                            select @@identity;";
                         // Execute
                         idEndereco = trans.Connection.ExecuteScalar<int?>(query, new
@@ -397,7 +425,7 @@ namespace BHJet_Repositorio.Admin
                             UF = profissional.UF,
                             Cep = profissional.Cep,
                             PontoReferencia = profissional.PontoReferencia,
-                            EnderecoPrincipal = profissional.EnderecoPrincipal
+                            EnderecoPrincipal = profissional.EnderecoPrincipal,
                         }, trans);
 
                         int tipoProfissional = profissional.TipoCNH == TipoCarteira.A ? 1 : 2;
@@ -416,7 +444,9 @@ namespace BHJet_Repositorio.Admin
                                                      ,[bitTelefoneCelularWhatsApp]
                                                      ,[bitRegimeContratacaoCLT]
                                                      ,[vcObservacoes]
-                                                     ,[vcEmail])
+                                                     ,[vcEmail]
+                                                     ,[dtDataHoraRegistro]
+                                                     ,[vcRG])
                                                VALUES
                                                      (@IDGestor
                                                      ,@idEndereco
@@ -430,7 +460,7 @@ namespace BHJet_Repositorio.Admin
                                                      ,@WPP
                                                      ,@CLT
                                                      ,@Observacao
-                                                     ,@Email) select @@identity;";
+                                                     ,@Email, getdate(), @RG) select @@identity;";
                         // Execução 
                         idColaborador = trans.Connection.ExecuteScalar<int?>(query, new
                         {
@@ -446,10 +476,25 @@ namespace BHJet_Repositorio.Admin
                             WPP = profissional.CelularWpp,
                             CLT = profissional.ContratoCLT,
                             Observacao = profissional.Observacao,
-                            Email = profissional.Email
+                            Email = profissional.Email,
+                            RG = profissional.DocumentoRG
                         }, trans);
 
-                        // Commit
+                      
+                        #endregion
+
+                        #region Incluir Usuario
+                        new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+                        {
+                            bitAtivo = profissional.StatusUsuario,
+                            ClienteSelecionado = null,
+                            idTipoUsuario = TipoUsuario.Profissional,
+                            vcEmail = profissional.Email,
+                            vbIncPassword = profissional.Senha
+                        });
+                        #endregion
+
+                        // Commit Profissional
                         trans.Commit();
 
                         // Insere comissões
@@ -611,6 +656,66 @@ namespace BHJet_Repositorio.Admin
                 {
                     idUser = idUsuario
                 });
+            }
+        }
+
+        /// <summary>                                                       
+        /// Atualiza Disponibilidade do profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public void AtualizaDisponibilidadeProfissional(long idColaboradorEmpresa, DisponibilidadeFiltro filtro)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Verifica se já existe o registro
+                string queryVer = @"select count(*) as bit from tblColaboradoresEmpresaDisponiveis where idColaboradorEmpresaSistema = @id";
+                var resultado = sqlConnection.QueryFirstOrDefault<bool>(queryVer, new { id = idColaboradorEmpresa });
+
+                // Update ou insert
+                if (resultado)
+                {
+                    // Query
+                    string query = @"update tblColaboradoresEmpresaDisponiveis 
+	                                set bitDisponivel = @disponivel, 
+	                                    geoPosicao = (select geometry::Point(@lat, @log, 4326)),
+		                                idTipoProfissional = @tipoProfissional1
+                                  where idColaboradorEmpresaSistema = @id";
+
+                    // Query Multiple
+                    sqlConnection.Execute(query, new
+                    {
+                        id = idColaboradorEmpresa,
+                        disponivel = filtro.bitDisponivel,
+                        lat = filtro.latitude,
+                        log = filtro.longitude,
+                        tipoProfissional1 = filtro.idTipoProfissional
+                    });
+                }
+                else
+                {
+                    // Query
+                    string query = @"INSERT INTO [dbo].[tblColaboradoresEmpresaDisponiveis]
+                                                       ([idColaboradorEmpresaSistema]
+                                                                  ,[idTipoProfissional]
+                                                                  ,[geoPosicao]
+                                                                  ,[bitDisponivel])
+                                                            VALUES
+                                                                  (@id
+                                                                  ,@tipoProfissional1
+                                                                  ,(select geometry::Point(@lat, @log, 4326))
+                                                                  ,@disponivel)";
+
+                    // Query Multiple
+                    sqlConnection.Execute(query, new
+                    {
+                        id = idColaboradorEmpresa,
+                        disponivel = filtro.bitDisponivel,
+                        lat = filtro.latitude,
+                        log = filtro.longitude,
+                        tipoProfissional1 = filtro.idTipoProfissional
+                    });
+                }
             }
         }
 

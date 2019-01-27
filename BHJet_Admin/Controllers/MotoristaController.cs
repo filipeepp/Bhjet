@@ -169,6 +169,8 @@ namespace BHJet_Admin.Controllers
                     RuaNumero = model.RuaNumero,
                     UF = model.UF,
                     DocumentoRG = model.DocumentoRG,
+                    Senha = model.Senha,
+                    Status = model.Situacao,
                     Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
                     {
                         ID = x.ID,

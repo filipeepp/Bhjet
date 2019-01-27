@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.View.ChamadoAvulso;
+﻿using BHJet_Mobile.Servico.Diaria;
+using BHJet_Mobile.Sessao;
 using BHJet_Mobile.ViewModel.DiariaDeBordo;
 using System;
 using Xamarin.Forms;
@@ -12,6 +13,8 @@ namespace BHJet_Mobile.View.Diaria
         public DiariaDeBordo()
         {
             InitializeComponent();
+            ViewModel = new DiariaDeBordoViewModel(UsuarioAutenticado.Instance, new DiariaServico());
+            BindingContext = ViewModel;
         }
 
         /// <summary>
@@ -43,9 +46,6 @@ namespace BHJet_Mobile.View.Diaria
 
                 // Mensagem
                 await this.DisplayAlert("Atenção", "Dados do turno atualizados com sucesso.", "OK");
-
-                // Navega
-                App.Current.MainPage = new Index();
             }
             catch (Exception ex)
             {

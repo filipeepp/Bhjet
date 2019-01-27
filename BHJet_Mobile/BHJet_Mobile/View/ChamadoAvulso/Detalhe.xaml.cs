@@ -1,12 +1,9 @@
 ﻿using BHJet_Mobile.DependencyService;
+using BHJet_Mobile.Infra.Permissao;
 using BHJet_Mobile.View.Util;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,6 +33,10 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
             await CrossMedia.Current.Initialize();
 
+            // Verifica Permissao
+            PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Camera, PermissaoNegada);
+
+
             if (!CrossMedia.Current.IsTakePhotoSupported || !CrossMedia.Current.IsCameraAvailable)
             {
                 await DisplayAlert("Ops", "Nenhuma câmera detectada.", "OK");
@@ -60,6 +61,14 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 return stream;
 
             });
+        }
+
+        public async void PermissaoNegada()
+        {
+            if (await this.DisplayAlert("Atenção", "Para registrar uma ocorrência do tipo FOTO, voce deve permitir ao app acesso a mesma. Deseje ativar o recurso ?", "Sim", "Não"))
+                PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
+            else
+                App.Current.MainPage = new LoginPage();
         }
     }
 }

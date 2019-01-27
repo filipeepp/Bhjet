@@ -113,7 +113,7 @@
                     </Frame>
                 </StackLayout>
 
-                <Button IsVisible="{Binding DiarioBordo}" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="RegistrarBordo_Clicked" Text="Registrar início/fim de turno" ></Button>
+                <!--<Button IsVisible="{Binding DiarioBordo}" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="RegistrarBordo_Clicked" Text="Registrar início/fim de turno" ></Button>-->
 
             </StackLayout>
 

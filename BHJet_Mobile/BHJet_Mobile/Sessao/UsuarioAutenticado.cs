@@ -4,6 +4,7 @@ namespace BHJet_Mobile.Sessao
 {
     public interface IUsuarioAutenticado
     {
+        long IDProfissional { get; set; }
         TipoProfissional Tipo { get; set; }
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
@@ -27,6 +28,8 @@ namespace BHJet_Mobile.Sessao
                 return instance;
             }
         }
+
+        public long IDProfissional { get; set; }
 
         public TipoProfissional Tipo { get; set; }
 

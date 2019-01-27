@@ -1,4 +1,5 @@
-﻿using BHJet_Enumeradores;
+﻿using BHJet_CoreGlobal;
+using BHJet_Enumeradores;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -75,6 +76,22 @@ namespace BHJet_Admin.Models.Motorista
         public RegimeContratacao TipoRegimeContratacao { get; set; }
 
         public string Observacao { get; set; }
+
+        private string _senha;
+        [Required(ErrorMessage = "Senha obrigatória.")]
+        public string Senha
+        {
+            get
+            {
+                return _senha;
+            }
+            set
+            {
+                _senha = CriptografiaUtil.Criptografa(value, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
+            }
+        }
+
+        public bool Situacao { get; set; }
 
         public NovoMotoristaComissaoModel[] Comissao { get; set; }
     }

@@ -10,7 +10,7 @@ namespace BHJet_Mobile
         public App()
         {
             InitializeComponent();
-
+            
             MainPage = new LoginPage();
         }
 

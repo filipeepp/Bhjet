@@ -129,6 +129,13 @@ namespace BHJet_WebApi.Controllers
             // Busca verificação
             var turno = new DiariaRepositorio().BuscaDadosTurno(idProfissional);
 
+            if (turno == null)
+                return Ok(new TurnoEntidade()
+                {
+
+
+                });
+
             // Retorna
             return Ok(turno);
         }

@@ -4,7 +4,6 @@ using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,6 +17,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             InitializeComponent();
             ViewModel = new IndexViewModel(UsuarioAutenticado.Instance, new DiariaServico());
 
+            MessagingCenter.Unsubscribe<string, int>("ObservableChamada", "ObservableChamada");
             MessagingCenter.Subscribe<string, int>("ObservableChamada", "ObservableChamada", async (s, a) =>
             {
                 // If Status Motoristas
@@ -51,7 +51,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             try
             {
                 // Carrega Inicio
-                //ViewModel.Carrega(await this.DisplayAlert("teste", "Ver diaria iniciada ?", "nao", "sim"));
                 await ViewModel.Carrega();
 
                 // Inicia Pesquisa
@@ -83,7 +82,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                     {
                         Device.BeginInvokeOnMainThread(async () => {
 
-                            // Busca Corrida
+                            // Busca Corrida - Diaria
                             await ViewModel.BuscaCorrida();
 
                             // Atualiza tela

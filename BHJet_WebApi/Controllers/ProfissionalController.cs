@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using BHJet_Repositorio.Admin.Filtro;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -195,6 +196,27 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Atualiza dados simplificados do profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("{idProfissional:long}/basico")]
+        public IHttpActionResult PutProfissionalMobile(long idProfissional, [FromBody]ProfissionalCompletoModel model)
+        {
+            // Busca Dados resumidos
+            new ProfissionalRepositorio().AtualizaProfissionalSimples(new ProfissionalCompletoEntidade()
+            {
+                ID = idProfissional,
+                TelefoneCelular = model.TelefoneCelular,
+                TelefoneResidencial = model.TelefoneResidencial,
+                CelularWpp = model.CelularWpp,
+            });
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
         /// Atualiza profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
@@ -298,6 +320,9 @@ namespace BHJet_WebApi.Controllers
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
                 PontoReferencia = model.PontoReferencia,
+                DocumentoRG = model.DocumentoRG,
+                Senha = model.Senha,
+                StatusUsuario = model.Status,
                 Comissoes = model.Comissoes.Any() ? model.Comissoes.Select(x => new ProfissionalComissaoEntidade()
                 {
                     decPercentualComissao = x.decPercentualComissao,
@@ -367,7 +392,30 @@ namespace BHJet_WebApi.Controllers
             });
         }
 
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("Disponivel")]
+        public IHttpActionResult PutDisponibilidade([FromBody]DisponibilidadeFiltro filtro)
+        {
+            // Variaveis
+            var rep = new ProfissionalRepositorio();
 
+            // Busca Dados resumidos
+            var perfil = rep.BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Validacao
+            if (perfil == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Atualiza
+            rep.AtualizaDisponibilidadeProfissional(perfil.idColaboradorEmpresaSistema, filtro);
+
+            // Return
+            return Ok();
+        }
 
 
 

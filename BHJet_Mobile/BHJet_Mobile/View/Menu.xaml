@@ -45,7 +45,7 @@
                 </StackLayout>
             </Grid>
 
-            <Button Grid.Column="0" WidthRequest="60" FontSize="4"  BorderColor="Gray" VerticalOptions="Center" HorizontalOptions="Center"
+            <Button x:Name="btnStatus" Grid.Column="0" WidthRequest="60" FontSize="4"  BorderColor="Gray" VerticalOptions="Center" HorizontalOptions="Center"
                         BackgroundColor="#193651" Clicked="Button_Clicked" Image="search2.png"
                         HeightRequest="60"  BorderRadius="40"></Button>
         </Grid>

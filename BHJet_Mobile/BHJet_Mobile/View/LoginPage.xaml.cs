@@ -3,6 +3,7 @@ using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Diaria;
+using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
 using System;
 using Xamarin.Forms;
@@ -38,33 +39,15 @@ namespace BHJet_Mobile.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnLogar_Clicked(object sender, EventArgs e)
+        private async void btnLogar_Clicked(object sender, EventArgs e)
         {
             try
             {
                 // Executa o Login
-                ViewModel.ExecutarLogin();
+                await ViewModel.ExecutarLogin();
 
-                //if (ViewModel.Login.Username == "123")
-                //{
-                //    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-                //    UsuarioAutenticado.Instance.Nome = "Filipe ALOCADO teste";
-                //    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motociclista;
-                //    UsuarioAutenticado.Instance.StatusAplicatico = false;
-                //}
-                //else
-                //{
-                //    UsuarioAutenticado.Instance.Contrato = BHJet_Enumeradores.TipoContrato.ChamadosAvulsos;
-                //    UsuarioAutenticado.Instance.Nome = "Leonardo AVULSO teste";
-                //    UsuarioAutenticado.Instance.Tipo = BHJet_Enumeradores.TipoProfissional.Motorista;
-                //    UsuarioAutenticado.Instance.StatusAplicatico = false;
-                //}
-
-                // Troca de página após Login
-                if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                    App.Current.MainPage = new DiariaDeBordo();
-                else
-                    App.Current.MainPage = new Index();
+                // Redirect Seleção de Tipo de veiculo
+                App.Current.MainPage = new TipoVeiculo();
             }
             catch (Exception error)
             {

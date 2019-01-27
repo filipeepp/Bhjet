@@ -9,59 +9,58 @@
 
 @using (Html.BeginForm("Novo", "Motorista", FormMethod.Post, new { @id = "DetalheMotorista", @class = "form-horizontal" }))
 {
-	<div class="row form-group ">
-		@Html.HiddenFor(model => model.EdicaoCadastro);
-		@Html.HiddenFor(model => model.ID);
+    <div class="row form-group ">
+        @Html.HiddenFor(model => model.EdicaoCadastro);
+        @Html.HiddenFor(model => model.ID);
 
-		<div class="panel panel-default" style="margin:30px; margin-top:-25px">
-			<div class="panel-body">
-				<div class="titulo">
-					<h2>
-						<a onclick="history.go(-1);">
-							<i class="fa fa-id-card-o" aria-hidden="true"></i>
-						</a>
-						Dados Pessoais
-					</h2>
-				</div>
+        <div class="panel panel-default" style="margin:30px; margin-top:-25px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                        </a>
+                        Dados Pessoais
+                    </h2>
+                </div>
 
-				<div class="col-xs-12 col-sm-12 col-lg-12">
-					<div class="row">
-						<div class="col-md-8">
-							<label for="txtNome"><small class="obrigatorio">*</small>Nome Completo</label>
-							@Html.TextBoxFor(model => model.NomeCompleto, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.NomeCompleto, null, new { @class = "text-danger" })
-						</div>
-						<div class="col-md-4">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>CPF / CNPJ</label>
-							@Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.CpfCnpj, null, new { @class = "text-danger" })
-						</div>
-					</div>
-
-					<div class="row">
-						<div class=" col-md-5">
-							<label for="txtNomeFantasia">Telefone Residencial</label>
-							@Html.TextBoxFor(model => model.TelefoneResidencial, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.TelefoneResidencial, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-5">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Telefone Celular</label>
-							@Html.TextBoxFor(model => model.TelefoneCelular, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.TelefoneCelular, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-2">
-							<div style="margin-top:25px;">
-								<label class="label-cbx">
-									@Html.CheckBoxFor(model => model.CelularWhatsapp, new { @class = "checkbox" })
-									<span>Whatsapp</span>
-								</label>
-							</div>
-						</div>
-						<br class="hidden-lg" />
-					</div>
+                <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="txtNome"><small class="obrigatorio">*</small>Nome Completo</label>
+                            @Html.TextBoxFor(model => model.NomeCompleto, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NomeCompleto, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>CPF / CNPJ</label>
+                            @Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CpfCnpj, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
 
                     <div class="row">
+                        <div class=" col-md-5">
+                            <label for="txtNomeFantasia">Telefone Residencial</label>
+                            @Html.TextBoxFor(model => model.TelefoneResidencial, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TelefoneResidencial, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-5">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Telefone Celular</label>
+                            @Html.TextBoxFor(model => model.TelefoneCelular, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TelefoneCelular, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-2">
+                            <div style="margin-top:25px;">
+                                <label class="label-cbx">
+                                    @Html.CheckBoxFor(model => model.CelularWhatsapp, new { @class = "checkbox" })
+                                    <span>Whatsapp</span>
+                                </label>
+                            </div>
+                        </div>
+                        <br class="hidden-lg" />
+                    </div>
 
+                    <div class="row">
                         <div class="col-md-4">
                             <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
                             @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
@@ -92,186 +91,199 @@
                             @Html.ValidationMessageFor(model => model.TipoCarteiraMotorista, null, new { @class = "text-danger" })
                         </div>
                     </div>
-				</div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
+                            @Html.TextBoxFor(model => model.Senha, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger" })
+                        </div>
 
-			</div>
-		</div>
+                        <div class="col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Ativo</label>
+                            @Html.CheckBoxFor(model => model.Situacao, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Situacao, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
 
-		<div class="panel panel-default" style="margin:30px">
-			<div class="panel-body">
-				<div class="titulo">
-					<h2>
-						<a onclick="history.go(-1);">
-							<i class="fa fa-map-marker" aria-hidden="true"></i>
-						</a>
-						Endereço
-					</h2>
-				</div>
+            </div>
+        </div>
 
-				<div class="col-xs-12 col-sm-12 col-lg-12">
-					<div class="row">
-						<div class="col-md-3 col-lg-2">
-							<label class="label-cbx">
-								@Html.CheckBoxFor(model => model.EnderecoPrincipal, new { @class = "checkbox" })
-								<span><small class="obrigatorio">*</small>Endereço Principal</span>
-							</label>
-						</div>
-					</div>
-					<br class="hidden-sm" />
-					<div class="row">
-						<div class=" col-md-3 col-lg-2">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>CEP</label>
-							@Html.TextBoxFor(model => model.Cep, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.Cep, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-3 col-lg-4">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Rua</label>
-							@Html.TextBoxFor(model => model.Rua, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.Rua, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-2 col-lg-2">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Número</label>
-							@Html.TextBoxFor(model => model.RuaNumero, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.RuaNumero, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-3 col-lg-2">
-							<label for="txtNomeFantasia">Complemento</label>
-							@Html.TextBoxFor(model => model.Complemento, new { @class = "form-control" })
-						</div>
-						<div class=" col-md-3 col-lg-2">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Bairro</label>
-							@Html.TextBoxFor(model => model.Bairro, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.Bairro, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-3 col-lg-2">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Cidade</label>
-							@Html.TextBoxFor(model => model.Cidade, new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.Cidade, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-1 col-lg-2">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>UF</label>
-							@Html.DropDownListFor(model => model.UF, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
-							@Html.ValidationMessageFor(model => model.UF, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-3 col-lg-2">
-							<label for="txtNomeFantasia">Ponto de Referência</label>
-							@Html.TextBoxFor(model => model.PontoReferencia, new { @class = "form-control" })
-						</div>
+        <div class="panel panel-default" style="margin:30px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </a>
+                        Endereço
+                    </h2>
+                </div>
 
-					</div>
-				</div>
+                <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2">
+                            <label class="label-cbx">
+                                @Html.CheckBoxFor(model => model.EnderecoPrincipal, new { @class = "checkbox" })
+                                <span><small class="obrigatorio">*</small>Endereço Principal</span>
+                            </label>
+                        </div>
+                    </div>
+                    <br class="hidden-sm" />
+                    <div class="row">
+                        <div class=" col-md-3 col-lg-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>CEP</label>
+                            @Html.TextBoxFor(model => model.Cep, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Cep, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-3 col-lg-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Rua</label>
+                            @Html.TextBoxFor(model => model.Rua, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Rua, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-2 col-lg-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Número</label>
+                            @Html.TextBoxFor(model => model.RuaNumero, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RuaNumero, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-3 col-lg-2">
+                            <label for="txtNomeFantasia">Complemento</label>
+                            @Html.TextBoxFor(model => model.Complemento, new { @class = "form-control" })
+                        </div>
+                        <div class=" col-md-3 col-lg-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Bairro</label>
+                            @Html.TextBoxFor(model => model.Bairro, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Bairro, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-3 col-lg-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Cidade</label>
+                            @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Cidade, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-1 col-lg-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>UF</label>
+                            @Html.DropDownListFor(model => model.UF, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UF, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-3 col-lg-2">
+                            <label for="txtNomeFantasia">Ponto de Referência</label>
+                            @Html.TextBoxFor(model => model.PontoReferencia, new { @class = "form-control" })
+                        </div>
 
-			</div>
-		</div>
+                    </div>
+                </div>
 
-		<div class="panel panel-default" style="margin:30px">
-			<div class="panel-body">
-				<div class="titulo">
-					<h2>
-						<a onclick="history.go(-1);">
-							<i class="fa fa-files-o" aria-hidden="true"></i>
-						</a>
-						Dados Extras
-					</h2>
-				</div>
+            </div>
+        </div>
 
-				<div class="col-xs-12 col-sm-12 col-lg-12">
-					<div class="row">
-						<div class="col-md-12">
-							<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Regime de contratação</label>
-							<br />
-							@foreach (var tipoEnum in Enum.GetValues(typeof(RegimeContratacao)))
-							{
-								var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(RegimeContratacao), tipoEnum));
-								@Html.RadioButtonFor(s => s.TipoRegimeContratacao, tipoEnum, new { id, @class = "option-input radio" })
-								@Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
-							}
-							@Html.ValidationMessageFor(model => model.TipoRegimeContratacao, null, new { @class = "text-danger" })
-						</div>
-						<div class=" col-md-12">
-							<br class="hidden-sm" />
-							<label for="txtNomeFantasia">Observações</label>
-							@Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="panel panel-default" style="margin:30px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-files-o" aria-hidden="true"></i>
+                        </a>
+                        Dados Extras
+                    </h2>
+                </div>
 
-		<!-- Com -->
-		<div class="panel panel-default" style="margin:30px">
-			<div class="panel-body">
-				<div class="titulo">
-					<h2>
-						<a onclick="history.go(-1);">
-							<i class="fa fa-files-o" aria-hidden="true"></i>
-						</a>
-						Comissionamento
-					</h2>
+                <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Regime de contratação</label>
+                            <br />
+                            @foreach (var tipoEnum in Enum.GetValues(typeof(RegimeContratacao)))
+                            {
+                                var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(RegimeContratacao), tipoEnum));
+                                @Html.RadioButtonFor(s => s.TipoRegimeContratacao, tipoEnum, new { id, @class = "option-input radio" })
+                                @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+                            }
+                            @Html.ValidationMessageFor(model => model.TipoRegimeContratacao, null, new { @class = "text-danger" })
+                        </div>
+                        <div class=" col-md-12">
+                            <br class="hidden-sm" />
+                            <label for="txtNomeFantasia">Observações</label>
+                            @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-					<button id="btnNovoContatos" style="margin-bottom:2px" name="btnNovoContato" class="btn btn-primary pull-right" type="button">
-						<i class="fa fa-plus" aria-hidden="true"></i>Nova comissão
-					</button>
+        <!-- Com -->
+        <div class="panel panel-default" style="margin:30px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);">
+                            <i class="fa fa-files-o" aria-hidden="true"></i>
+                        </a>
+                        Comissionamento
+                    </h2>
 
-				</div>
+                    <button id="btnNovoContatos" style="margin-bottom:2px" name="btnNovoContato" class="btn btn-primary pull-right" type="button">
+                        <i class="fa fa-plus" aria-hidden="true"></i>Nova comissão
+                    </button>
 
-				@for (int i = 0; i < Model.Comissao.Count(); i++)
-				{
-					<div class="col-xs-12 col-sm-12 col-lg-12">
-						<div class="row rowList">
+                </div>
 
-							<div class="col-sm-1 col-md-2  col-lg-1" style="margin-top: 20px; text-align: center;">
-								<a onclick="removeComissao(@i)">
-									<i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
-								</a>
-							</div>
+                @for (int i = 0; i < Model.Comissao.Count(); i++)
+                {
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <div class="row rowList">
 
-							@if (Model.EdicaoCadastro == true)
-							{
-								<div class="col-sm-1 col-md-1  col-lg-1">
-									<label for="txtNomeFantasia">ID</label>
-									<br />
-									@Html.TextBoxFor(model => model.Comissao[i].ID, new { @class = "form-control", @readonly = "readonly" })
-								</div>
-							}
-							@Html.HiddenFor(model => model.Comissao[i].ID)
-							<div class="col-sm-1 col-md-2  col-lg-2">
-								<label for="txtNomeFantasia">Percentual (%)</label>
-								<br />
-								@Html.TextBoxFor(model => model.Comissao[i].ValorComissao, new { @class = "form-control" })
-							</div>
-							<div class="col-1 col-sm-1 col-xs-12 col-md-5 col-lg-4">
-								<label>Data Vigência</label>
-								<div class="input-group input-daterange">
-									@Html.TextBoxFor(model => model.Comissao[i].VigenciaInicio, new { style = "width: 160px;", @class = "form-control" })
-									<div style="margin-left:-2px" class="input-group-addon">a</div>
-									@Html.TextBoxFor(model => model.Comissao[i].VigenciaFim, new { style = "width: 160px;", @class = "form-control" })
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-3  col-lg-4">
-								<label for="txtNomeFantasia">Observações</label>
-								@Html.TextAreaFor(model => model.Comissao[i].Observacao, new { @class = "form-control" })
-							</div>
-						</div>
-					</div>
-				}
-			</div>
-		</div>
+                            <div class="col-sm-1 col-md-2  col-lg-1" style="margin-top: 20px; text-align: center;">
+                                <a onclick="removeComissao(@i)">
+                                    <i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
+                                </a>
+                            </div>
 
-	</div>
+                            @if (Model.EdicaoCadastro == true)
+                            {
+                                <div class="col-sm-1 col-md-1  col-lg-1">
+                                    <label for="txtNomeFantasia">ID</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.Comissao[i].ID, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                            @Html.HiddenFor(model => model.Comissao[i].ID)
+                            <div class="col-sm-1 col-md-2  col-lg-2">
+                                <label for="txtNomeFantasia">Percentual (%)</label>
+                                <br />
+                                @Html.TextBoxFor(model => model.Comissao[i].ValorComissao, new { @class = "form-control" })
+                            </div>
+                            <div class="col-1 col-sm-1 col-xs-12 col-md-5 col-lg-4">
+                                <label>Data Vigência</label>
+                                <div class="input-group input-daterange">
+                                    @Html.TextBoxFor(model => model.Comissao[i].VigenciaInicio, new { style = "width: 160px;", @class = "form-control" })
+                                    <div style="margin-left:-2px" class="input-group-addon">a</div>
+                                    @Html.TextBoxFor(model => model.Comissao[i].VigenciaFim, new { style = "width: 160px;", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3  col-lg-4">
+                                <label for="txtNomeFantasia">Observações</label>
+                                @Html.TextAreaFor(model => model.Comissao[i].Observacao, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-xs-12 col-md-12 text-center">
-			<button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
-				<i class="fa fa-share"></i>Confirmar Solicitação
-			</button>
-		</div>
-	</div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12 text-center">
+            <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
+                <i class="fa fa-share"></i>Confirmar Solicitação
+            </button>
+        </div>
+    </div>
 }
 @if (TempData["mensagemGeral"] != null)
 {
-	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
-	<script type="text/javascript">
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
 
 		window.onload = function () {
 			var mensagem = $("#mensagemController").val();
@@ -279,7 +291,7 @@
             $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
             $('#myModal').modal('show')
         };
-	</script>
+    </script>
 }
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
