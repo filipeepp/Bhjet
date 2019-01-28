@@ -11,7 +11,7 @@
 		<div class="div-buttom-side-bar">
 			<div class="row">
 				<div class="col-xs-12 col-sm-7 col-md-12 text-center">
-					<button class="btn btn-default btn-lg cts-buttom-side-bar">Solicitar entrega avulsa</button>
+					<button class="btn btn-default btn-lg cts-buttom-side-bar" onclick="location.href='@Url.Action("Index", "Entregas")'">Solicitar entrega avulsa</button>
 				</div>
 			</div>
 		</div>
@@ -48,6 +48,10 @@
 		</ul>
 	</section>
 
+	@{
+		Html.RenderPartial("~/Views/Shared/_Loading.cshtml");
+	}
+
 </div>
-<div class="container-fluid cts-page-home">
+<div class="container-fluid cts-page-home" style="background-image: url('/./Images/bh-aerea.jpg');">
 </div>
