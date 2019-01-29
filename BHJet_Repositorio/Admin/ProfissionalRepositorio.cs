@@ -119,7 +119,7 @@ namespace BHJet_Repositorio.Admin
 							     AND 
 										(convert(varchar(10), RD.dtDataHoraInicioExpediente, 120) != convert(varchar(10), getdate(), 120) or RD.idRegistroDiaria IS NULL )
 							     AND 
-					    				(CR.idStatusCorrida not in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0) or CR.idStatusCorrida IS NULL)
+					    				(CR.idStatusCorrida not in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0) or CR.idStatusCorrida IS NULL)
                                   %CONDICAO_TRECHO% 
                                   %CONDICAO_TIPO% ";
 

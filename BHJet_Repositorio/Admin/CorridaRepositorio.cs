@@ -105,5 +105,37 @@ namespace BHJet_Repositorio.Admin
 				});
 			}
 		}
-	}
+
+        /// <summary>
+        /// Busca Corrida Aberta
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public CorridaEncontradaEntidade BuscaCorridaAberta(int tipo)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select top(1) CD.idCorrida as ID,
+							        CD.decValorComissaoNegociado as Comissao,
+							        E.vcRua + ' - ' + E.vcNumero + ', ' + E.vcBairro + ' / ' + E.vcCidade as EnderecoCompleto,
+                                    C.vcNomeFantasia as NomeCliente
+							     from tblCorridas CD
+								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
+                                    join tblClientes as C on (CD.idCliente = C.idCliente)
+								 where LGCD.idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0)
+										AND CD.idTipoProfissional = @tp or CD.idTipoProfissional is null
+										order by CD.dtDataHoraRegistroCorrida DESC";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
+                {
+                    tp = tipo
+                });
+            }
+        }
+    }
 }

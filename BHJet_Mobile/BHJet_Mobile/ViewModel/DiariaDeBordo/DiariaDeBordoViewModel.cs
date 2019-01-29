@@ -40,7 +40,7 @@ namespace BHJet_Mobile.ViewModel.DiariaDeBordo
         }
 
 
-        public async void Carrega()
+        public async Task Carrega()
         {
             try
             {

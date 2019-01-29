@@ -54,6 +54,7 @@
     <Compile Include="Admin\Entidade\AreaAtuacaoEntidade.cs" />
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
     <Compile Include="Admin\Entidade\ComissaoProfissionalEntidade.cs" />
+    <Compile Include="Admin\Entidade\CorridaEncontradaEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />
     <Compile Include="Admin\Entidade\DisponibilidadeEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoDetalheEntidade.cs" />

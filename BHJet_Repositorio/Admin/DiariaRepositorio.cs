@@ -63,7 +63,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select 
 		                            cast(count(intOdometroInicioExpediente) as bit) as DiariaAberta
 	                            from tblRegistroDiarias
-		                        where idColaboradorEmpresaSistema = 13
+		                        where idColaboradorEmpresaSistema = @id
 		                            and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
 
                 return sqlConnection.QueryFirstOrDefault<bool>(query, new

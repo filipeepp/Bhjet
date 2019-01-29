@@ -25,11 +25,11 @@ namespace BHJet_Mobile.View.Diaria
             get; set;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             try
             {
-                ViewModel.Carrega();
+                await ViewModel.Carrega();
             }
             catch (Exception e)
             {

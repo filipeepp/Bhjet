@@ -55,12 +55,7 @@ namespace BHJet_Mobile.ViewModel.Login
                 var perfil = await motoristaServico.BuscaPerfilMotorista();
 
                 // Usuario autenticado
-                usuarioAutenticado.IDProfissional = perfil.idColaboradorEmpresaSistema;
-                usuarioAutenticado.Nome = perfil.NomeCompleto;
-                usuarioAutenticado.Tipo = perfil.TipoProfissional;
-                usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-                usuarioAutenticado.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-                usuarioAutenticado.IDDiariaAtendimento = perfil.idRegistroDiaria;
+                usuarioAutenticado.SetPerfil(perfil);
             }
             finally
             {

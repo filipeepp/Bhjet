@@ -43,6 +43,12 @@ namespace BHJet_Mobile.View
         {
             try
             {
+                ViewModel.Login = new LoginModel()
+                {
+                    Username = "fulanociclano@teste.com",
+                    Password = "12345678"
+                };
+
                 // Executa o Login
                 await ViewModel.ExecutarLogin();
 

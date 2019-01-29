@@ -1,9 +1,10 @@
-﻿using BHJet_Mobile.Infra;
-using BHJet_Mobile.Servico.Diaria;
+﻿using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,14 +16,17 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         public Index()
         {
             InitializeComponent();
-            ViewModel = new IndexViewModel(UsuarioAutenticado.Instance, new DiariaServico());
-
+            ViewModel = new IndexViewModel(UsuarioAutenticado.Instance, new MotoristaServico(), new CorridaServico());
+            BindingContext = ViewModel;
             MessagingCenter.Unsubscribe<string, int>("ObservableChamada", "ObservableChamada");
             MessagingCenter.Subscribe<string, int>("ObservableChamada", "ObservableChamada", async (s, a) =>
             {
                 // If Status Motoristas
                 if (UsuarioAutenticado.Instance.StatusAplicatico)
                 {
+                    // Cancela pesquisa
+                    UsuarioAutenticado.Instance.StatusAplicatico = false;
+                    UsuarioAutenticado.Instance.CancelaPesquisaChamado();
                     // Desativa Efeito
                     EfeitoPesquisaDesativada();
                 }
@@ -45,23 +49,22 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             get; set;
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
 
             try
             {
                 // Carrega Inicio
-                await ViewModel.Carrega();
+                ViewModel.Carrega();
 
                 // Inicia Pesquisa
-                MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
-            }
-            catch (DiariaException e)
-            {
-                // Alerta
-                await this.DisplayAlert("Atenção", e.Message, "OK");
-                // Redirect
-                App.Current.MainPage = new DiariaDeBordo();
+                if (UsuarioAutenticado.Instance.StatusAplicatico)
+                {
+                    EfeitoPesquisaAtivada();
+                    DoWorkAsyncInfiniteLoop();
+                }
+                else
+                    EfeitoPesquisaDesativada();
             }
             catch (Exception e)
             {
@@ -71,33 +74,45 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         private async void DoWorkAsyncInfiniteLoop()
         {
+            try
+            {
+                UsuarioAutenticado.Instance.CancelaPesquisaChamado();
+                UsuarioAutenticado.Instance.CancelaPesquisa = new CancellationTokenSource();
 
-            Device.StartTimer(TimeSpan.FromSeconds(5),  () => {
-
-                // Verifica se pesquisa esta ativa
-                if (UsuarioAutenticado.Instance.StatusAplicatico)
+                await System.Threading.Tasks.Task.Run(() =>
                 {
-                    // Busca Chamado Corrida
-                    if (true)
-                    {
-                        Device.BeginInvokeOnMainThread(async () => {
+                    Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+                   {
+                       // Verifica se pesquisa esta ativa
+                       if (UsuarioAutenticado.Instance.StatusAplicatico)
+                       {
+                           // Cancela
+                           if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
 
-                            // Busca Corrida - Diaria
-                            await ViewModel.BuscaCorrida();
+                           // Busca Corrida - Diaria
+                           if (ViewModel.BuscaCorrida())
+                           {
+                               Device.BeginInvokeOnMainThread(async () =>
+                               {
+                                   // Atualiza tela
+                                   await ChamadoEncontradoPainel();
+                               });
 
-                            // Atualiza tela
-                            await ChamadoEncontradoPainel();
-
-                        });
-
-                        // Encerra busca
-                        UsuarioAutenticado.Instance.StatusAplicatico = false;
-                        return false;
-                    }
-                }
-                else
-                    return false;
-            });
+                               // Encerra busca
+                               UsuarioAutenticado.Instance.StatusAplicatico = false;
+                               return false;
+                           }
+                           return true;
+                       }
+                       else
+                           return false;
+                   });
+                }).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                this.TrataExceptionMobile(e);
+            }
         }
 
         private async void EfeitoPesquisaAtivada()
@@ -148,6 +163,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         public async void RecusarCorrida(object sender, EventArgs args)
         {
             await ProcurandoChamadoPainel();
+            EfeitoPesquisaAtivada();
+            DoWorkAsyncInfiniteLoop();
         }
 
         private async System.Threading.Tasks.Task ChamadoEncontradoPainel()

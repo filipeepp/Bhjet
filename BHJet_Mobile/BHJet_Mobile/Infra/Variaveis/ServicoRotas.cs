@@ -22,5 +22,10 @@
             public const string GetTurno = "/Diaria/turno";
             public const string PostTurno = "/Diaria/turno";
         }
+
+        public class Corrida
+        {
+            public const string GetAberta = "/Corrida/aberta/{0}";
+        }
     }
 }

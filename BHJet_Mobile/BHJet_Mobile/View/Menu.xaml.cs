@@ -20,7 +20,7 @@ namespace BHJet_Mobile.View
         {
             MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
 
-            if (UsuarioAutenticado.Instance.StatusAplicatico)
+            if (!UsuarioAutenticado.Instance.StatusAplicatico)
                 this.btnStatus.BackgroundColor = Color.Red;
             else
                 this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
@@ -28,10 +28,15 @@ namespace BHJet_Mobile.View
 
         private void Home_Clicked(object sender, EventArgs e)
         {
-            if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                App.Current.MainPage = new DiariaDeBordo();
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+                App.Current.MainPage = new Detalhe();
             else
-                App.Current.MainPage = new Index();
+            {
+                if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                    App.Current.MainPage = new DiariaDeBordo();
+                else
+                    App.Current.MainPage = new Index();
+            }
         }
 
         private void DadosMotorista_Clicked(object sender, EventArgs e)

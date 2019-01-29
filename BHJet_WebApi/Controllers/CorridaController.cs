@@ -59,6 +59,26 @@ namespace BHJet_WebApi.Controllers
             });
         }
 
+        /// <summary>
+        /// Busca Corrida em aberto
+        /// </summary>
+        /// <returns>CorridaEncontradaEntidade</returns>
+        [Authorize]
+        [Route("aberta/{tipoProfissional:int}")]
+        [ResponseType(typeof(CorridaEncontradaEntidade))]
+        public IHttpActionResult GetCorridaAberta(int tipoProfissional)
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaCorridaAberta(tipoProfissional);
+
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade);
+        }
+
         private string Realizar(OSCorridaEntidade entidade)
         {
             List<string> realizar = new List<string>();
@@ -140,3 +160,28 @@ namespace BHJet_WebApi.Controllers
 
 	}
 }
+
+
+
+//select
+//    LC.idCorrida,
+//     ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
+//     EC.vcPessoaContato,
+//     EC.vcObservacao,
+//     EC.bitEntregarDocumento,
+//       EC.bitColetarAssinatura,
+//     EC.bitRetirarDocumento,
+//     EC.bitRetirarObjeto,
+//     EC.bitEntregarObjeto,
+//     EC.bitOutros,
+//     LC.geoPosicao
+//				 -- TELEFONE NAO TEM
+// from tblLogCorrida LC
+//        join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
+//                    JOIN tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
+//                    where LC.idCorrida = 6
+
+
+
+//                    select* from
+//                        tblDOMTipoOcorrenciaCorrida

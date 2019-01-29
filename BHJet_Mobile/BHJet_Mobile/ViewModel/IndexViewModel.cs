@@ -1,5 +1,8 @@
 ﻿using BHJet_Mobile.Infra;
-using BHJet_Mobile.Servico.Diaria;
+using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Servico.Corrida.Model;
+using BHJet_Mobile.Servico.Motorista;
+using BHJet_Mobile.Servico.Motorista.Model;
 using BHJet_Mobile.Sessao;
 using System.Threading.Tasks;
 
@@ -7,15 +10,18 @@ namespace BHJet_Mobile.ViewModel
 {
     public class IndexViewModel : PropertyChangedClass
     {
-        public IndexViewModel(IUsuarioAutenticado _usuarioAutenticado, IDiariaServico _diariaServico)
+        public IndexViewModel(IUsuarioAutenticado _usuarioAutenticado, IMotoristaServico _motoristaServico, ICorridaServico _corrida)
         {
             usuarioAutenticado = _usuarioAutenticado;
-            diariaServico = _diariaServico;
+            motoristaServico = _motoristaServico;
+            corridaServico = _corrida;
         }
 
         private readonly IUsuarioAutenticado usuarioAutenticado;
 
-        private readonly IDiariaServico diariaServico;
+        private readonly IMotoristaServico motoristaServico;
+
+        private readonly ICorridaServico corridaServico;
 
         public bool DiarioBordo
         {
@@ -61,7 +67,7 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        public async Task Carrega()
+        public void Carrega()
         {
             try
             {
@@ -69,7 +75,7 @@ namespace BHJet_Mobile.ViewModel
                 Loading = true;
 
                 // Permite pesquisar corrida
-                if (UsuarioAutenticado.Instance.StatusAplicatico)
+                if (usuarioAutenticado.StatusAplicatico)
                     PermitePesquisaCorrida = true;
                 else
                     PermitePesquisaCorrida = false;
@@ -81,24 +87,81 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        public async Task BuscaCorrida()
+        public bool BuscaCorrida()
         {
-            // Buscando Corrida
             try
             {
-                chamadoItem = new ChamadoEncontradoItemViewModel()
+                // Busca perfil do usuario
+                var perfil = new PerfilMotoristaModel();
+                Task.Run(async () =>
                 {
-                    NomeCliente = "Cliente fulano",
-                    Comissao = "R$ 50,00",
-                    DestinoInicial = "Rua teste, nº 10 - Bairro Centro"
-                };
+                    perfil = await BuscaPerfilMotorista();
+                }).Wait();
+
+                // Se existe diaria
+                if (perfil != null && perfil.idRegistroDiaria != null)
+                {
+                    usuarioAutenticado.SetPerfil(perfil);
+                    return false;
+                }
+                else // Se nao - busca Corrida
+                {
+                    // Busca Corrida
+                    var corrida = new CorridaAbertaModel();
+                    Task.Run(async () =>
+                    {
+                        corrida = await BuscaCorridaAberta();
+                    }).Wait();
+
+                    // Corrida
+                    if (corrida != null)
+                    {
+                        // ID Corrida
+                        usuarioAutenticado.IDCorridaAtendimento = corrida.ID;
+
+                        // Binding
+                        chamadoItem = new ChamadoEncontradoItemViewModel()
+                        {
+                            NomeCliente = corrida.NomeCliente,
+                            Comissao = corrida.Comissao.ToString("C"),
+                            DestinoInicial = corrida.EnderecoCompleto
+                        };
+
+                        return true;
+                    }
+                    else
+                        return false;
+                }
             }
-            catch
+            finally
             {
 
             }
         }
 
+        private async Task<PerfilMotoristaModel> BuscaPerfilMotorista()
+        {
+            try
+            {
+                return await motoristaServico.BuscaPerfilMotorista();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private async Task<CorridaAbertaModel> BuscaCorridaAberta()
+        {
+            try
+            {
+                return await corridaServico.BuscaCorridaAberta(usuarioAutenticado.Tipo);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
 }
