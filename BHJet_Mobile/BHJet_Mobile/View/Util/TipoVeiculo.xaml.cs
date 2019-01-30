@@ -33,7 +33,7 @@ namespace BHJet_Mobile.View.Util
             try
             {
                 // Verifica Permissao
-                PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
+                await PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
 
                 // Grava registro profissional ativo
                 await ViewModel.SelecionaVeiculo(BHJet_Enumeradores.TipoProfissional.Motociclista);
@@ -52,7 +52,7 @@ namespace BHJet_Mobile.View.Util
             try
             {
                 // Verifica Permissao
-                PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
+                await PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
 
                 // Grava registro profissional ativo
                 await ViewModel.SelecionaVeiculo(BHJet_Enumeradores.TipoProfissional.Motociclista);
@@ -69,7 +69,7 @@ namespace BHJet_Mobile.View.Util
         public async void PermissaoNegada()
         {
             if (await this.DisplayAlert("Atenção", "Para o funcionamento do app, você deve permitir acesso a sua localização. Deseje ativar o recurso ?", "Sim", "Não"))
-                PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
+                await PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
             else
                 App.Current.MainPage = new LoginPage();
         }

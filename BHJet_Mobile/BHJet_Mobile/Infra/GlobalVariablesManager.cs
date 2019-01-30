@@ -26,7 +26,8 @@ namespace BHJet_Mobile.Infra
 
         public enum VariaveisGlobais
         {
-            Token
+            Token,
+            OcorrenciaID
         }
     }
 }

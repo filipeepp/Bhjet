@@ -131,57 +131,141 @@ namespace BHJet_WebApi.Controllers
             }));
         }
 
-		/// <summary>
-		/// Busca detalhes da corrida por cliente
+        /// <summary>
+        /// Busca detalhes da corrida por cliente
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Authorize]
+        [Route("cliente/{clienteID:long}")]
+        [ResponseType(typeof(DetalheCorridaModel))]
+        public IHttpActionResult GetCorridaCliente(long clienteID)
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaDetalheCorridaCliente(clienteID);
+
+            // Validacao
+            if (entidade == null || !entidade.Any())
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(dtm => new DetalheCorridaModel()
+            {
+                IDCliente = dtm.IDCliente,
+                NumeroOS = dtm.NumeroOS,
+                DataInicio = dtm.DataHoraInicio,
+                NomeProfissional = dtm.NomeProfissional,
+                ValorFinalizado = dtm.ValorFinalizado
+            }));
+        }
+
+        /// <summary>
+		/// Busca LOG corrida
 		/// </summary>
 		/// <returns>List<DetalheCorridaModel></returns>
 		[Authorize]
-		[Route("cliente/{clienteID:long}")]
-		[ResponseType(typeof(DetalheCorridaModel))]
-		public IHttpActionResult GetCorridaCliente(long clienteID)
-		{
-			// Busca Dados detalhados da corrida/OS
-			var entidade = new CorridaRepositorio().BuscaDetalheCorridaCliente(clienteID);
+        [Route("log/{idCorrida:long}")]
+        [ResponseType(typeof(IEnumerable<LogCorridaModel>))]
+        public IHttpActionResult GetLogCorrida(long idCorrida)
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaLogCorrida(idCorrida);
 
-			// Validacao
-			if (entidade == null || !entidade.Any())
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-			// Return
-			return Ok(entidade.Select(dtm => new DetalheCorridaModel()
-			{
-				IDCliente = dtm.IDCliente,
-				NumeroOS = dtm.NumeroOS,
-				DataInicio = dtm.DataHoraInicio,
-				NomeProfissional = dtm.NomeProfissional,
-				ValorFinalizado = dtm.ValorFinalizado
-			}));
-		}
+            // Return
+            return Ok(entidade.Select(c => new LogCorridaModel()
+            {
+                idCorrida = c.idCorrida,
+                idEnderecoCorrida = c.idEnderecoCorrida,
+                IDOcorrencia = c.IDOcorrencia,
+                dtHoraChegada = c.dtHoraChegada,
+                EnderecoCompleto = c.EnderecoCompleto,
+                Observacao = c.vcObservacao,
+                Latitude = c.vcLatitude,
+                Longitude = c.vcLongitude,
+                Status = c.Status,
+                TelefoneContato = c.vcTelefoneContato,
+                RegistroFoto = c.Foto,
+                PessoaContato = c.vcPessoaContato,
+                Atividade = MontaAtividade(c)
+            }));
+        }
 
-	}
+        /// <summary>
+        /// Cadastra foto de protocolo
+        /// </summary>
+        /// <param name="filtro">CadastraProtocoloModel</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("protocolo")]
+        public IHttpActionResult PostRegistroProtocolo([FromBody]CadastraProtocoloModel filtro)
+        {
+            // Instancia
+            new CorridaRepositorio().InsereRegistroProtocolo(filtro.fotoProtocolo, filtro.idEnderecoCorrida);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// Altera CHEGADA em um endereco de uma corrida
+        /// </summary>
+        /// /// <param name="idEnderecoCorrida">long</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("chegada/{idEnderecoCorrida:long}")]
+        public IHttpActionResult PutRegistrarChegadaEnderecoCorrida(long idEnderecoCorrida)
+        {
+            // Instancia
+            new CorridaRepositorio().RegistraChegadaEndereco(idEnderecoCorrida);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary
+        /// Busca LOG corrida
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Authorize]
+        [Route("ocorrencias")]
+        [ResponseType(typeof(IEnumerable<OcorrenciaModel>))]
+        public IHttpActionResult GetTipoOcorrenciaCorrida()
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaOcorrenciasCorrida();
+
+            // Validacao
+            if (entidade == null || !entidade.Any())
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(oc => new OcorrenciaModel()
+            {
+                idStatusCorrida = oc.idStatusCorrida,
+                vcDescricaoStatus = oc.vcDescricaoStatus
+            }));
+        }
+
+        private string MontaAtividade(LogCorridaEntidade entidade)
+        {
+            if (entidade.bitEntregarDocumento)
+                return "Entregar Documento";
+            else if (entidade.bitColetarAssinatura)
+                return "Coletar Assinatura";
+            else if (entidade.bitRetirarDocumento)
+                return "Retirar Documento";
+            else if (entidade.bitRetirarObjeto)
+                return "Retirar Objeto";
+            else if (entidade.bitEntregarObjeto)
+                return "Entregar Objeto";
+            else
+                return "Outros";
+        }
+    }
 }
 
 
 
-//select
-//    LC.idCorrida,
-//     ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
-//     EC.vcPessoaContato,
-//     EC.vcObservacao,
-//     EC.bitEntregarDocumento,
-//       EC.bitColetarAssinatura,
-//     EC.bitRetirarDocumento,
-//     EC.bitRetirarObjeto,
-//     EC.bitEntregarObjeto,
-//     EC.bitOutros,
-//     LC.geoPosicao
-//				 -- TELEFONE NAO TEM
-// from tblLogCorrida LC
-//        join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
-//                    JOIN tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
-//                    where LC.idCorrida = 6
-
-
-
-//                    select* from
-//                        tblDOMTipoOcorrenciaCorrida

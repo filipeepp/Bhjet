@@ -60,6 +60,8 @@
     <Compile Include="Admin\Entidade\ItemFaturamentoDetalheEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoEntidade.cs" />
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
+    <Compile Include="Admin\Entidade\LogCorridaEntidade.cs" />
+    <Compile Include="Admin\Entidade\OcorrenciaEntidade.cs" />
     <Compile Include="Admin\Entidade\OSCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalDisponivelEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalEntidade.cs" />

@@ -171,7 +171,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             await this.ctnProcurando.TranslateTo(-500, -20, 500);
             this.ctnProcurando.IsVisible = false;
-
+            this.imgLogo.IsVisible = false;
             await this.ctnEncontrado.TranslateTo(-500, -20, 400);
             this.ctnEncontrado.IsVisible = true;
             await this.ctnEncontrado.TranslateTo(0, 0, 400);
@@ -181,7 +181,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             await this.ctnProcurando.TranslateTo(0, 0, 300);
             this.ctnProcurando.IsVisible = true;
-
+            this.imgLogo.IsVisible = true;
             await this.ctnEncontrado.TranslateTo(-500, -20, 300);
             this.ctnEncontrado.IsVisible = false;
         }

@@ -79,4 +79,17 @@ namespace BHJet_Mobile.Infra
 
         }
     }
+
+    public class CorridaException : Exception
+    {
+        public CorridaException()
+        {
+
+        }
+
+        public CorridaException(string name) : base(name)
+        {
+
+        }
+    }
 }

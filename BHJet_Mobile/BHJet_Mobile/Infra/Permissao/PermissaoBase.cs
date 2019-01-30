@@ -1,12 +1,13 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
+using System.Threading.Tasks;
 
 namespace BHJet_Mobile.Infra.Permissao
 {
     public static class PermissaoBase
     {
-        public static async void VerificaPermissao(Permission permissao, Action permissaoNegadaAction)
+        public static async Task VerificaPermissao(Permission permissao, Action permissaoNegadaAction)
         {
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permissao);
             if (status != PermissionStatus.Granted)

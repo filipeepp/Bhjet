@@ -26,6 +26,10 @@
         public class Corrida
         {
             public const string GetAberta = "/Corrida/aberta/{0}";
+            public const string GetLog = "/Corrida/log/{0}";
+            public const string PostProtocolo = "/Corrida/protocolo";
+            public const string PutChegada = "/Corrida/chegada/{0}/";
+            public const string GetOcorrencias = "/Corrida/ocorrencias";
         }
     }
 }

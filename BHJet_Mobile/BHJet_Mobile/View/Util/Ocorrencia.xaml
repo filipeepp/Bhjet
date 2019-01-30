@@ -15,12 +15,14 @@
                     <Grid VerticalOptions="StartAndExpand" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="0.2*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="1.2*" />
+                            <!--<RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="1.2*" />-->
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -30,17 +32,32 @@
                         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Registrar ocorrência" TextColor="#193651"  />
                         <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
-                        <Button Clicked="Button_Clicked" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Pessoa procurada ausente"></Button>
+                        <ListView CachingStrategy="RecycleElement" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
+                          ItemsSource="{Binding ListaOcorrencias}" HasUnevenRows="True" SeparatorVisibility="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+
+                                        <Button Clicked="SelecionaOcorrencia" BackgroundColor="#193651" Margin="0,0,0,15"
+                                                Image="opcao" TextColor="White" CommandParameter="{Binding IDOcorrencia}" 
+                                                Text="{Binding Descricao}"></Button>
+
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!--<Button Clicked="Button_Clicked" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Pessoa procurada ausente"></Button>
 
                         <Button Clicked="Button_Clicked" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Material não disponível"></Button>
 
                         <Button Clicked="Button_Clicked" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Não fui atendido"></Button>
 
-                        <Button Clicked="Button_Clicked" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Outros"></Button>
+                        <Button Clicked="Button_Clicked" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Outros"></Button>-->
 
-                        <Button Clicked="Ligar_Clicked" Grid.Row="6" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" TextColor="White" Text="Ligar Cliente"></Button>
+                        <Button Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" TextColor="White" Text="Ligar Cliente"></Button>
 
-                        <Button Clicked="Button_Clicked" Grid.Row="6" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="Encerrar OS"></Button>
+                        <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="Encerrar OS"></Button>
                     </Grid>
                 </Frame>
 

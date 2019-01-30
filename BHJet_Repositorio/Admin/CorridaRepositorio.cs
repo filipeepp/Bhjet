@@ -137,5 +137,109 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
+
+        /// <summary>
+        /// Busca LOG Corrida
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<LogCorridaEntidade> BuscaLogCorrida(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select
+                                        LC.idCorrida,
+                                        LC.idStatusCorrida as Status,
+                                        EC.idEnderecoCorrida,
+                                        EC.dtHoraChegada,
+                                        ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
+                                        EC.vcPessoaContato,
+                                        EC.vcObservacao,
+                                        EC.bitEntregarDocumento,
+                                        EC.bitColetarAssinatura,
+                                        EC.bitRetirarDocumento,
+                                        EC.bitRetirarObjeto,
+                                        EC.bitEntregarObjeto,
+                                        EC.bitOutros,
+                                        LC.geoPosicao.STY  as vcLatitude, 
+	                                    LC.geoPosicao.STX  as vcLongitude,
+                                       PEC.vcCaminhoProtocolo as Foto
+				                        -- TELEFONE NAO TEM
+                                  from tblLogCorrida LC
+                                  join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
+                                  join tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
+                                  left join tblProtocoloEnderecoCorrida PEC on (PEC.idEnderecoCorrida = EC.idEnderecoCorrida)
+                                 where LC.idCorrida = @id";
+
+                // Execução
+                return sqlConnection.Query<LogCorridaEntidade>(query, new
+                {
+                    id = idCorrida
+                });
+            }
+        }
+
+        /// <summary>
+        /// Insere registro de protocolo
+        /// </summary>
+        /// <param name="protocolo"></param>
+        /// <param name="idEnderecoCorrida"></param>
+        public void InsereRegistroProtocolo(byte[] protocolo, long idEnderecoCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"INSERT INTO [dbo].[tblProtocoloEnderecoCorrida]
+                                                   ([idEnderecoCorrida]
+                                                   ,[vcCaminhoProtocolo])
+                                      VALUES
+                                                   (@idEndCorrida
+                                                   ,@fotoProtocolo)";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    idEndCorrida = idEnderecoCorrida,
+                    fotoProtocolo = protocolo
+                });
+            }
+        }
+
+        /// <summary>
+        /// Altera status corrida
+        /// </summary>
+        /// <param name="idStatus"></param>
+        /// <param name="idCorrida"></param>
+        public void RegistraChegadaEndereco(long idEnderecoCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblEnderecosCorrida set dtHoraChegada = GETDATE() where idEnderecoCorrida = @id";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    id = idEnderecoCorrida
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Ocorrencias
+        /// </summary>
+        /// <returns>OcorrenciaEntidade</returns>
+        public IEnumerable<OcorrenciaEntidade> BuscaOcorrenciasCorrida()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select * from tblDOMStatusCorrida where bitCancela = 1";
+
+                // Execução
+                return sqlConnection.Query<OcorrenciaEntidade>(query);
+            }
+        }
     }
 }
