@@ -1,7 +1,4 @@
 ﻿
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="~/Scripts/jquery.counterup.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 
 <div class="main-sidebar">
 
@@ -9,15 +6,33 @@
 		<div class="cts-titulo-side-bar">
 			<span>Solicitar entrega / serviço</span>
 		</div>
-		<input id="origin-input" class="controls" type="text"
-			   placeholder="Enter an origin location">
+		<form method="post" action="index.html">
+			<div>
+				<label for="txtEnderecoPartida">Endereço de partida:</label>
+				<input type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+			</div>
 
-		<input id="destination-input" class="controls" type="text"
-			   placeholder="Enter a destination location">
+			<div>
+				<label for="txtEnderecoChegada">Endereço de chegada:</label>
+				<input type="text" id="txtEnderecoChegada" name="txtEnderecoChegada" />
+			</div>
 
+			<div>
+				<input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar" />
+			</div>
+		</form>
 	</section>
 
 </div>
 <div class="container-fluid cts-page-home">
+	<div id="map_canvas" style="overflow: unset !important">
+	</div>
 </div>
+
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery.counterup.min.js"></script>
+@*<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>*@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/ExibeLocalizacao.js"></script>
 
