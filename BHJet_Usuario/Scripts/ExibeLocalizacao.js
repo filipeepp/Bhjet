@@ -1,25 +1,58 @@
 ﻿document.addEventListener("DOMContentLoaded", function (event) {
-    function atualizarMarcacoes() {
-        $.ajax({
-            dataType: "json",
-            type: "GET",
-            url: "/Dashboard/BuscaLocalizacao",
-            success: function (dados) {
-                $(dados).each(function (i) {
-                    var lat = dados[i].geoPosicao.split(';')[0]
-                    var long = dados[i].geoPosicao.split(';')[1]
-                    var desc = dados[i].desc
-                    FazMarcacao(lat, long, dados[i].psCorrida, desc)
-                });
 
-                if (dados == "" || dados == undefined) {
-                    $("#msgModal").text("Não foram encontrados localizações para marcação no mapa.")
-                    $("#imgMensagem").attr("src", "..\\Images\\warming.png");
-                    $('#myModal').modal('show')
-                }
-            }
-        });
-    }
-    carregaMapa();
-    atualizarMarcacoes();
+	$("#trajeto-texto").change(function () {
+		$(".adp-directions").hide();// Esconde trajeto e mostra apenas ponteiro
+	});
+	//Auto completa os campos de endereço de partida e de chegada
+	$(".cst-endereco-maps").autocomplete({
+		source: function (request, response) {
+			geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
+				response($.map(results, function (item) {
+					return {
+						label: item.formatted_address,
+						value: item.formatted_address,
+						latitude: item.geometry.location.lat(),
+						longitude: item.geometry.location.lng()
+					}
+				}));
+			})
+		},
+		select: function (event, ui) {
+			$("#txtLatitude").val(ui.item.latitude);
+			$("#txtLongitude").val(ui.item.longitude);
+			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
+			marker.setPosition(location);
+			map.setCenter(location);
+			map.setZoom(16);
+		}
+	});
+
+	$("form").submit(function (event) {
+		event.preventDefault();
+
+		var enderecoPartida = $("#txtEnderecoPartida").val();
+		var enderecoChegada = $("#txtEnderecoChegada").val();
+
+		var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
+			origin: enderecoPartida, // origem
+			destination: enderecoChegada, // destino
+			waypoints: [{ location: $("#txtTerceiroEndereco").val() }],
+			travelMode: google.maps.TravelMode.DRIVING // meio de transporte, nesse caso, de carro
+		};
+
+		//var request = {
+		//	origin: enderecoPartida,
+		//	destination: enderecoChegada,
+		//	waypoints: [{ location: 'Rodoviária, Campinas' }, { location: 'Taquaral, Campinas' }],
+		//	travelMode: google.maps.TravelMode.DRIVING
+		//};
+
+		directionsService.route(request, function (result, status) {
+			if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+				directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+			}
+		});
+	});
+
+	carregaMapa();
 });

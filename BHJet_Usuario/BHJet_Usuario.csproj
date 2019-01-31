@@ -164,6 +164,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Images\bgLogin.jpg" />
     <Content Include="Images\bh-aerea.jpg" />
+    <Content Include="Images\loader.gif" />
     <Content Include="Images\logoLogisticaPreto.jpg" />
     <Content Include="Images\mapCar.png" />
     <Content Include="Images\mapCorrida.png" />
@@ -201,6 +202,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -255,6 +257,7 @@
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\TratamentoErro.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
+    <Compile Include="Models\Entregas\ExibeLocalizacaoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +275,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">

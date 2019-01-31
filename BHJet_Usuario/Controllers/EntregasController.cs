@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BHJet_Enumeradores;
+using BHJet_Servico.Dashboard;
+using BHJet_Usuario.Models.Entregas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +11,15 @@ namespace BHJet_Usuario.Controllers
 {
     public class EntregasController : Controller
     {
-        // GET: Entregas
-        public ActionResult Index()
-        {
-            return View();
-        }
-    }
+
+		public EntregasController()
+		{ }
+
+		// GET: Entregas
+		public ActionResult Index()
+		{
+			return View();
+		}
+		
+	}
 }
