@@ -13,17 +13,23 @@ namespace BHJet_Mobile.View
     {
         public Menu()
         {
+            // Inicializa Componente
             InitializeComponent();
+
+            // Estiliza o menu
+            EstiloMenu();
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+            {
+                // Envia ordem
+                MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
 
-            if (!UsuarioAutenticado.Instance.StatusAplicatico)
-                this.btnStatus.BackgroundColor = Color.Red;
-            else
-                this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
+                // Estiliza o menu
+                EstiloMenu();
+            }
         }
 
         private void Home_Clicked(object sender, EventArgs e)
@@ -42,6 +48,14 @@ namespace BHJet_Mobile.View
         private void DadosMotorista_Clicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new DadosBasicos();
+        }
+
+        private void EstiloMenu()
+        {
+            if (!UsuarioAutenticado.Instance.StatusAplicatico)
+                this.btnStatus.BackgroundColor = Color.Red;
+            else
+                this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
         }
     }
 }

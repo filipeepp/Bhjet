@@ -2,7 +2,10 @@
 {
     public class OcorrenciaModel
     {
-        public int idStatusCorrida { get; set; }
-        public string vcDescricaoStatus { get; set; }
+        public int StatusCorrida { get; set; }
+        public string DescricaoStatus { get; set; }
+        public bool Inicia { get; set; }
+        public bool Finaliza { get; set; }
+        public bool Cancela { get; set; }
     }
 }

@@ -235,10 +235,53 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblDOMStatusCorrida where bitCancela = 1";
+                string query = @"select * from tblDOMStatusCorrida";
 
                 // Execução
                 return sqlConnection.Query<OcorrenciaEntidade>(query);
+            }
+        }
+
+        /// <summary>
+        /// Busca Ocorrencias
+        /// </summary>
+        /// <returns>OcorrenciaEntidade</returns>
+        public void AtualizaOcorrenciasCorrida(int ocorrencia, long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblCorridas set idStatusCorrida = @status where idCorrida = @id";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    id = idCorrida,
+                    idStatusCorrida = ocorrencia
+                });
+            }
+        }
+
+        /// <summary>
+        /// Encerrar Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblCorridas set idStatusCorrida    = @status, 
+			            	                            dtDataHoraTermino  = getdate(),
+							                            decValorFinalizado = (select decValorFinalizado from tblCorridas where idCorrida = @id) 
+							                      where idCorrida = @id";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    id = idCorrida,
+                    status = (idOcorrencia != null) ? idOcorrencia : 11
+                });
             }
         }
     }

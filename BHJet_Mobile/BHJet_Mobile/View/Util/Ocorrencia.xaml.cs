@@ -1,5 +1,7 @@
 ﻿using BHJet_Mobile.Infra;
 using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Sessao;
+using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.ViewModel.Corrida;
 using System;
 using Xamarin.Essentials;
@@ -11,10 +13,10 @@ namespace BHJet_Mobile.View.Util
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Ocorrencia : ContentPage
     {
-        public Ocorrencia()
+        public Ocorrencia(long idCorrida)
         {
             InitializeComponent();
-            ViewModel = new OcorrenciaViewModel(new CorridaServico());
+            ViewModel = new OcorrenciaViewModel(new CorridaServico(), idCorrida);
             BindingContext = ViewModel;
         }
 
@@ -40,15 +42,49 @@ namespace BHJet_Mobile.View.Util
 
         private async void SelecionaOcorrencia(object sender, EventArgs e)
         {
-            // Busca ID Ocorrencia
-            var param = ((Button)sender).CommandParameter;
-            var idOcorrencia = (long)param;
+            try
+            {
+                // Busca ID Ocorrencia
+                var param = ((Button)sender).CommandParameter;
+                var idOcorrencia = (int)param;
 
-            // Seta Ocorrencia
-            GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.OcorrenciaID, idOcorrencia);
+                // Trata OS
+                ViewModel.OcorrenciaSelecionada(idOcorrencia);
 
-            // Troca de página após Login
-            await Navigation.PopModalAsync();
+                // Troca de página após Login
+                await Navigation.PopModalAsync();
+            }
+            catch (CorridaException)
+            {
+                // Finaliza Atendimento
+                UsuarioAutenticado.Instance.FinalizaAtendimento();
+                // Navega
+                App.Current.MainPage = new Index();
+            }
+            catch (Exception ex)
+            {
+                this.TrataExceptionMobile(ex);
+            }
+        }
+
+
+        private async void EncerrarOS(object sender, EventArgs e)
+        {
+            try
+            {
+                await ViewModel.EncerrarOrdemServico();
+            }
+            catch (CorridaException)
+            {
+                // Finaliza Atendimento
+                UsuarioAutenticado.Instance.FinalizaAtendimento();
+                // Navega
+                App.Current.MainPage = new Index();
+            }
+            catch (Exception ex)
+            {
+                this.TrataExceptionMobile(ex);
+            }
         }
 
         private void Ligar_Clicked(object sender, EventArgs e)
@@ -63,16 +99,5 @@ namespace BHJet_Mobile.View.Util
             }
         }
 
-        private void EncerrarOS(object sender, EventArgs e)
-        {
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                this.TrataExceptionMobile(ex);
-            }
-        }
     }
 }

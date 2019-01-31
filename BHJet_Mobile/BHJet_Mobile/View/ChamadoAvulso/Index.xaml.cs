@@ -121,13 +121,17 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             UsuarioAutenticado.Instance.StatusAplicatico = true;
 
             // Animação pesquisa ativa
-            if (findIcon.AnimationIsRunning("RotateTo"))
-                ViewExtensions.CancelAnimations(findIcon);
-            else
-            {
-                await findIcon.RotateTo(360, 2000);
-                findIcon.Rotation = 0;
-            }
+            //if (findIcon.AnimationIsRunning("RotateTo"))
+            //    ViewExtensions.CancelAnimations(findIcon);
+            //else
+            //{
+            this.AbortAnimation("PesquisaIcon");
+            new Animation {
+                                 { 0, 0.5, new Animation (v => findIcon.Scale = v, 1, 2) },
+                                 { 0, 1, new Animation (v => findIcon.Rotation = v, 0, 360) },
+                                 { 0.5, 1, new Animation (v => findIcon.Scale = v, 2, 1) }
+                              }.Commit(this, "PesquisaIcon", 16, 4000, null, (v, c) => findIcon.Rotation = 0, () => true);
+            //}
 
             // Altera Label
             lblStatus.Text = "ONLINE";
@@ -143,9 +147,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             UsuarioAutenticado.Instance.StatusAplicatico = false;
 
             // Cancela animação
-            if (findIcon.AnimationIsRunning("RotateTo"))
-                ViewExtensions.CancelAnimations(findIcon);
-
+            //if (findIcon.AnimationIsRunning("RotateTo"))
+            //    ViewExtensions.CancelAnimations(findIcon);
+            this.AbortAnimation("PesquisaIcon");
             // Altera Label
             lblStatus.Text = "OFFLINE";
             lblStatus.TextColor = Color.Red;

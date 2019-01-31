@@ -225,8 +225,8 @@ namespace BHJet_WebApi.Controllers
             return Ok();
         }
 
-        /// <summary
-        /// Busca LOG corrida
+        /// <summary>
+        /// Busca ocorrencia corrida
         /// </summary>
         /// <returns>List<DetalheCorridaModel></returns>
         [Authorize]
@@ -244,9 +244,44 @@ namespace BHJet_WebApi.Controllers
             // Return
             return Ok(entidade.Select(oc => new OcorrenciaModel()
             {
-                idStatusCorrida = oc.idStatusCorrida,
-                vcDescricaoStatus = oc.vcDescricaoStatus
+                StatusCorrida = oc.idStatusCorrida,
+                DescricaoStatus = oc.vcDescricaoStatus,
+                Cancela = oc.bitCancela,
+                Finaliza = oc.bitFinaliza,
+                Inicia = oc.bitInicia
             }));
+        }
+
+        /// <summary>
+        /// Atualiza OCORRENICA corrida
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("ocorrencias/{idOcorrencia:int}/{idCorrida:long}")]
+        public IHttpActionResult PutTipoOcorrenciaCorrida(int idOcorrencia, long idCorrida)
+        {
+            // Busca Dados detalhados da corrida/OS
+            new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, idCorrida);
+  
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// Encerrar OS
+        /// </summary>
+        /// /// <param name="idCorrida">long</param>
+        /// /// /// <param name="idOcorrencia">int?</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int}")]
+        public IHttpActionResult PutEncerrarOS(long idCorrida, int? idOcorrencia = null)
+        {
+            // Instancia
+            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia);
+
+            // Return
+            return Ok();
         }
 
         private string MontaAtividade(LogCorridaEntidade entidade)

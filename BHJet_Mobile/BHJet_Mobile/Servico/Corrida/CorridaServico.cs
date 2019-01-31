@@ -14,6 +14,8 @@ namespace BHJet_Mobile.Servico.Corrida
         Task CadastraProtocolo(byte[] protocolo, long idEnderecoCorrida);
         Task RegistraChegaLogCorrida(long idEnderecoCorrida);
         Task<OcorrenciaModel[]> BuscaOcorrencias();
+        Task EncerrarOrdemServico(int? statusCorrida, long idCorrida);
+        Task AtualizaOcorrenciaCorrida(int statusCorrida, long idCorrida);
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -66,6 +68,26 @@ namespace BHJet_Mobile.Servico.Corrida
         public async Task<OcorrenciaModel[]> BuscaOcorrencias()
         {
             return await this.Get<OcorrenciaModel[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.GetOcorrencias}"));
+        }
+
+        /// <summary>
+        /// Encerrar OS
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public async Task AtualizaOcorrenciaCorrida(int statusCorrida, long idCorrida)
+        {
+            // status/{idStatus:long}/{idCorrida:long}
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutOcorrenciaCorrida, statusCorrida, idCorrida)}"), "");
+        }
+
+        /// <summary>
+        /// Encerrar OS 
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public async Task EncerrarOrdemServico(int? statusCorrida, long idCorrida)
+        {
+            // status/{idStatus:long}/{idCorrida:long}
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutEncerrarOS, idCorrida, statusCorrida)}"), "");
         }
     }
 }

@@ -11,10 +11,10 @@ namespace BHJet_Mobile.Sessao
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
         long? IDCorridaAtendimento { get; set; }
-        long? IDDiariaAtendimento { get; set; }
         CancellationTokenSource CancelaPesquisa { get; set; }
         bool StatusAplicatico { get; set; }
         void SetPerfil(PerfilMotoristaModel perfil);
+        void FinalizaAtendimento();
     }
 
     public sealed class UsuarioAutenticado : IUsuarioAutenticado
@@ -47,8 +47,6 @@ namespace BHJet_Mobile.Sessao
 
         public long? IDCorridaAtendimento { get; set; }
 
-        public long? IDDiariaAtendimento { get; set; }
-
         public CancellationTokenSource CancelaPesquisa { get; set; }
 
         public void SetPerfil(PerfilMotoristaModel perfil)
@@ -58,13 +56,18 @@ namespace BHJet_Mobile.Sessao
             Instance.Tipo = perfil.TipoProfissional;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-            Instance.IDDiariaAtendimento = perfil.idRegistroDiaria;
         }
 
         public void CancelaPesquisaChamado()
         {
-            if (UsuarioAutenticado.Instance.CancelaPesquisa != null)
-                UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
+            if (Instance.CancelaPesquisa != null)
+                Instance.CancelaPesquisa.Cancel();
+        }
+
+        public void FinalizaAtendimento()
+        {
+            Instance.IDCorridaAtendimento = null;
+            Instance.StatusAplicatico = true;
         }
     }
 }

@@ -76,6 +76,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\LongRunningTaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\edp_preon_medium.ttf" />

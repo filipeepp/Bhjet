@@ -6,6 +6,7 @@ using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Corrida;
+using Plugin.Geolocator;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
@@ -40,12 +41,46 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             try
             {
+                // Carrega dados da corrida
                 await ViewModel.Carrega();
+
+                // Inicia compartilhamento de localizacao
+                if (!CrossGeolocator.Current.IsListening)
+                    StartListening();
             }
             catch (Exception e)
             {
                 this.TrataExceptionMobile(e);
             }
+        }
+
+        async Task StartListening()
+        {
+            if (CrossGeolocator.Current.IsListening)
+                return;
+
+            ///This logic will run on the background automatically on iOS, however for Android and UWP you must put logic in background services. Else if your app is killed the location updates will be killed.
+            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true, new Plugin.Geolocator.Abstractions.ListenerSettings
+            {
+                ActivityType = Plugin.Geolocator.Abstractions.ActivityType.AutomotiveNavigation,
+                AllowBackgroundUpdates = true,
+                DeferLocationUpdates = true,
+                DeferralDistanceMeters = 1,
+                DeferralTime = TimeSpan.FromSeconds(1),
+                ListenForSignificantChanges = true,
+                PauseLocationUpdatesAutomatically = false
+            });
+
+            CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
+        }
+
+        private void Current_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var test = e.Position;
+                await this.DisplayAlert("Localizacao", e.Position.Latitude.ToString() + '-' + e.Position.Longitude.ToString(), "OK");
+            });
         }
 
         private void AbrirWaze(object sender, EventArgs e)
@@ -81,14 +116,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 var idEnderecoCorridaParam = ((Button)sender).CommandParameter;
                 var id = (long)idEnderecoCorridaParam;
 
-                // Limpa cache
-                GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.OcorrenciaID, null);
-
                 // Registra Ocorrencia
-                await Navigation.PushModalAsync(new Ocorrencia());
-
-                //
-                var teste = 1;
+                await Navigation.PushModalAsync(new Ocorrencia(ViewModel.idCorrida));
             }
             catch (Exception ex)
             {

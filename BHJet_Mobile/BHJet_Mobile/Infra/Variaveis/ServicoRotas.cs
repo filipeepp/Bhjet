@@ -30,6 +30,8 @@
             public const string PostProtocolo = "/Corrida/protocolo";
             public const string PutChegada = "/Corrida/chegada/{0}/";
             public const string GetOcorrencias = "/Corrida/ocorrencias";
+            public const string PutEncerrarOS = "/Corrida/encerrar/{0}/ocorrencia/{1}";
+            public const string PutOcorrenciaCorrida = "/Corrida/ocorrencias/{0}/{1}";
         }
     }
 }
