@@ -111,7 +111,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public CorridaEncontradaEntidade BuscaCorridaAberta(int tipo)
+        public CorridaEncontradaEntidade BuscaCorridaAberta(long colaborador,int tipo)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -126,14 +126,17 @@ namespace BHJet_Repositorio.Admin
 								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
                                     join tblClientes as C on (CD.idCliente = C.idCliente)
+                               left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
 								 where LGCD.idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0)
-										AND CD.idTipoProfissional = @tp or CD.idTipoProfissional is null
+										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
+                                        AND CR.idColaboradorEmpresaSistema IS NULL or (CR.idColaboradorEmpresaSistema != @profissional AND cr.idCorrida != cd.idCorrida)
 										order by CD.dtDataHoraRegistroCorrida DESC";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
                 {
-                    tp = tipo
+                    tp = tipo,
+                    profissional = colaborador
                 });
             }
         }
@@ -266,21 +269,55 @@ namespace BHJet_Repositorio.Admin
         /// Encerrar Ordem Servico
         /// </summary>
         /// <param name="idCorrida"></param>
-        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia)
+        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, long kmPercorrido)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
+                // Query tarifas
+                string queryTarifa = @"	select C.decValorNegociado +  (T.decValorKMAdicionalCorrida * @kmRodado)
+			                              from tblCorridas C
+				                          join tblTarifario T on (C.idTarifario = t.idTarifario)
+						                 where idCorrida = @id";
+
+                // Execução
+                var valorFinalizado = sqlConnection.QueryFirstOrDefault<decimal>(queryTarifa, new
+                {
+                    kmRodado = kmPercorrido,
+                    id = idCorrida
+                });
+
                 // Query
                 string query = @"update tblCorridas set idStatusCorrida    = @status, 
 			            	                            dtDataHoraTermino  = getdate(),
-							                            decValorFinalizado = (select decValorFinalizado from tblCorridas where idCorrida = @id) 
+							                            decValorFinalizado = @valor
 							                      where idCorrida = @id";
 
                 // Execução
                 sqlConnection.Execute(query, new
                 {
                     id = idCorrida,
-                    status = (idOcorrencia != null) ? idOcorrencia : 11
+                    status = (idOcorrencia != null) ? idOcorrencia : 11,
+                    valor = valorFinalizado
+                });
+            }
+        }
+
+        /// <summary>
+        /// RECUSAR Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void RecusarOrdemServico(long idCorrida, long profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"INSERT INTO [tblCorridasRecusadas] VALUES (@corrida, @profissional)";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    corrida = idCorrida,
+                    profissional = profissional
                 });
             }
         }

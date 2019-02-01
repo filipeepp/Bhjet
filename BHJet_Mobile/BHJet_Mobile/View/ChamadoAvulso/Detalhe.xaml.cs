@@ -1,5 +1,7 @@
 ﻿using BHJet_Mobile.DependencyService;
 using BHJet_Mobile.Infra;
+using BHJet_Mobile.Infra.Database;
+using BHJet_Mobile.Infra.Database.Tabelas;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Infra.Permissao;
 using BHJet_Mobile.Servico.Corrida;
@@ -56,8 +58,18 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         async Task StartListening()
         {
+            // Verifica listening
             if (CrossGeolocator.Current.IsListening)
                 return;
+
+            // Database
+            using (var db = new Database())
+            {
+                if (await db.ExisteTabela("BHJetLocalizacaoCorrida") == false)
+                    await db.CriaTabela<LocalizacaoCorrida>();
+                else
+                    await db.LimpaTabela("BHJetLocalizacaoCorrida");
+            }
 
             ///This logic will run on the background automatically on iOS, however for Android and UWP you must put logic in background services. Else if your app is killed the location updates will be killed.
             await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(5), 10, true, new Plugin.Geolocator.Abstractions.ListenerSettings
@@ -78,8 +90,17 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                var test = e.Position;
-                await this.DisplayAlert("Localizacao", e.Position.Latitude.ToString() + '-' + e.Position.Longitude.ToString(), "OK");
+                // Database
+                using (var db = new Database())
+                {
+                    // Insere localizacao
+                    await db.InsereItem<LocalizacaoCorrida>(new LocalizacaoCorrida()
+                    {
+                        IDCorrida = ViewModel.idCorrida,
+                        Latitude = e.Position.Latitude,
+                        Longitude = e.Position.Longitude
+                    });
+                }
             });
         }
 

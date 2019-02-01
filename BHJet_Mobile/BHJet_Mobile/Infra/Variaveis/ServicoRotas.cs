@@ -25,13 +25,14 @@
 
         public class Corrida
         {
-            public const string GetAberta = "/Corrida/aberta/{0}";
+            public const string GetAberta = "/Corrida/aberta/{0}/{1}";
             public const string GetLog = "/Corrida/log/{0}";
             public const string PostProtocolo = "/Corrida/protocolo";
             public const string PutChegada = "/Corrida/chegada/{0}/";
             public const string GetOcorrencias = "/Corrida/ocorrencias";
-            public const string PutEncerrarOS = "/Corrida/encerrar/{0}/ocorrencia/{1}";
+            public const string PutEncerrarCorrida = "/Corrida/encerrar/{0}/ocorrencia/{1}";
             public const string PutOcorrenciaCorrida = "/Corrida/ocorrencias/{0}/{1}";
+            public const string PostRecusarCorrida = "/Corrida/recusar/{0}";
         }
     }
 }

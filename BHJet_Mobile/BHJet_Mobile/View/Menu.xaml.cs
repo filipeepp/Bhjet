@@ -22,7 +22,7 @@ namespace BHJet_Mobile.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
             {
                 // Envia ordem
                 MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
@@ -52,7 +52,9 @@ namespace BHJet_Mobile.View
 
         private void EstiloMenu()
         {
-            if (!UsuarioAutenticado.Instance.StatusAplicatico)
+            if(UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+                this.btnStatus.BackgroundColor = Color.Green;
+            else if (!UsuarioAutenticado.Instance.StatusAplicatico)
                 this.btnStatus.BackgroundColor = Color.Red;
             else
                 this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);

@@ -9,13 +9,14 @@ namespace BHJet_Mobile.Servico.Corrida
 {
     public interface ICorridaServico
     {
-        Task<CorridaAbertaModel> BuscaCorridaAberta(TipoProfissional tipo);
+        Task<CorridaAbertaModel> BuscaCorridaAberta(long idProfissional, TipoProfissional tipo);
         Task<LogCorridaModel[]> BuscaLogCorrida(long idCorrida);
         Task CadastraProtocolo(byte[] protocolo, long idEnderecoCorrida);
         Task RegistraChegaLogCorrida(long idEnderecoCorrida);
         Task<OcorrenciaModel[]> BuscaOcorrencias();
-        Task EncerrarOrdemServico(int? statusCorrida, long idCorrida);
+        Task EncerrarOrdemServico(int? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro);
         Task AtualizaOcorrenciaCorrida(int statusCorrida, long idCorrida);
+        Task RecusarOrdemServico(long idCorrida);
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -24,7 +25,7 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Busca Corrida aberta
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task<CorridaAbertaModel> BuscaCorridaAberta(TipoProfissional tipo)
+        public async Task<CorridaAbertaModel> BuscaCorridaAberta(long idProfissional,TipoProfissional tipo)
         {
             return await this.Get<CorridaAbertaModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetAberta, (int)tipo)}"));
         }
@@ -84,10 +85,20 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Encerrar OS 
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task EncerrarOrdemServico(int? statusCorrida, long idCorrida)
+        public async Task EncerrarOrdemServico(int? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro)
         {
             // status/{idStatus:long}/{idCorrida:long}
-            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutEncerrarOS, idCorrida, statusCorrida)}"), "");
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutEncerrarCorrida, idCorrida, statusCorrida)}"), filtro);
+        }
+
+        /// <summary>
+        /// RECUSAR OS 
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public async Task RecusarOrdemServico(long idCorrida)
+        {
+            // status/{idStatus:long}/{idCorrida:long}
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostRecusarCorrida, idCorrida)}"), "");
         }
     }
 }

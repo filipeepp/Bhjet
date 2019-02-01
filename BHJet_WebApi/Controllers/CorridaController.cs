@@ -8,12 +8,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using BHJet_WebApi.Util;
 
 namespace BHJet_WebApi.Controllers
 {
     [RoutePrefix("api/Corrida")]
     public class CorridaController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
+        public UsuarioLogado UsuarioAutenticado
+        {
+            get
+            {
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
+
+                return _usuarioAutenticado;
+            }
+        }
+
         /// <summary>
         /// Busca localização de chamados de um tipo especifico para um tipo especifico de motorista
         /// </summary>
@@ -64,12 +81,12 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>CorridaEncontradaEntidade</returns>
         [Authorize]
-        [Route("aberta/{tipoProfissional:int}")]
+        [Route("aberta/{idProfissional:long}/{tipoProfissional:int}")]
         [ResponseType(typeof(CorridaEncontradaEntidade))]
-        public IHttpActionResult GetCorridaAberta(int tipoProfissional)
+        public IHttpActionResult GetCorridaAberta(long idProfissional, int tipoProfissional)
         {
             // Busca Dados detalhados da corrida/OS
-            var entidade = new CorridaRepositorio().BuscaCorridaAberta(tipoProfissional);
+            var entidade = new CorridaRepositorio().BuscaCorridaAberta(idProfissional, tipoProfissional);
 
             // Validacao
             if (entidade == null)
@@ -272,13 +289,33 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// /// <param name="idCorrida">long</param>
         /// /// /// <param name="idOcorrencia">int?</param>
+        /// /// /// /// <param name="filtro">EncerrarCorridaFiltro</param>
         /// <returns></returns>
         [Authorize]
         [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int}")]
-        public IHttpActionResult PutEncerrarOS(long idCorrida, int? idOcorrencia = null)
+        public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idOcorrencia = null)
         {
             // Instancia
-            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia);
+            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia, filtro.KilometragemRodada ?? 0);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// RECUSAR OS
+        /// </summary>
+        /// /// <param name="idCorrida">long</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("recusar/{idCorrida:long}")]
+        public IHttpActionResult PostRecusarOS(long idCorrida)
+        {
+            // Busca profissional
+            var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Instancia
+            new CorridaRepositorio().RecusarOrdemServico(idCorrida, perfil.idColaboradorEmpresaSistema);
 
             // Return
             return Ok();

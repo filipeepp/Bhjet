@@ -1,6 +1,10 @@
-﻿using BHJet_Mobile.Infra;
+﻿using BHJet_CoreGlobal;
+using BHJet_Mobile.Infra;
+using BHJet_Mobile.Infra.Database;
+using BHJet_Mobile.Infra.Database.Tabelas;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Servico.Corrida.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -99,7 +103,12 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 // Verificacoes
                 if (ocorrencia.Finaliza || ocorrencia.Cancela)
                 {
-                    await corridaServico.EncerrarOrdemServico(idOcorrencia, IDCorrida);
+                    // Encerrar OS
+                    var kmPercorrido = await BuscaDistanciaPercorrida();
+                    await corridaServico.EncerrarOrdemServico(idOcorrencia, IDCorrida, new EncerrarCorridaFiltro()
+                    {
+                        KilometragemRodada = kmPercorrido
+                    });
                     throw new CorridaException("Corrida Encerrada"); // Finaliza
                 }
             }
@@ -122,7 +131,11 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 Loading = false;
 
                 // Encerrar OS
-                await corridaServico.EncerrarOrdemServico(null, IDCorrida);
+                var kmPercorrido = await BuscaDistanciaPercorrida();
+                await corridaServico.EncerrarOrdemServico(null, IDCorrida, new EncerrarCorridaFiltro()
+                {
+                    KilometragemRodada = kmPercorrido
+                });
 
                 // Finaliza
                 throw new CorridaException("Corrida Encerrada");
@@ -131,6 +144,23 @@ namespace BHJet_Mobile.ViewModel.Corrida
             {
                 // Off
                 Loading = false;
+            }
+        }
+
+
+        private async Task<double> BuscaDistanciaPercorrida()
+        {
+            using (var db = new Database())
+            {
+                // Insere localizacao
+                var trajetoPercorrido = await db.BuscaItems<LocalizacaoCorrida>();
+
+                // Calcula distancia
+                return DistanciaUtil.CalculaDistancia(trajetoPercorrido.Select(dist => new Localidade()
+                {
+                    Latitude = dist.Latitude,
+                    Longitude = dist.Longitude
+                }).ToArray());
             }
         }
     }

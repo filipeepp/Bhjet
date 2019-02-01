@@ -155,7 +155,7 @@ namespace BHJet_Mobile.ViewModel
         {
             try
             {
-                return await corridaServico.BuscaCorridaAberta(usuarioAutenticado.Tipo);
+                return await corridaServico.BuscaCorridaAberta(usuarioAutenticado.IDProfissional, usuarioAutenticado.Tipo);
             }
             catch
             {
@@ -163,5 +163,10 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
+        public async Task RecusarCorrida()
+        {
+                if (usuarioAutenticado?.IDCorridaAtendimento != null)
+                    await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+        }
     }
 }

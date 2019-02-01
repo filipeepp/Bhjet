@@ -166,9 +166,20 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         public async void RecusarCorrida(object sender, EventArgs args)
         {
-            await ProcurandoChamadoPainel();
-            EfeitoPesquisaAtivada();
-            DoWorkAsyncInfiniteLoop();
+            try
+            {
+                await ViewModel.RecusarCorrida();
+            }
+            catch (Exception e)
+            {
+                this.TrataExceptionMobile(e);
+            }
+            finally
+            {
+                await ProcurandoChamadoPainel();
+                EfeitoPesquisaAtivada();
+                DoWorkAsyncInfiniteLoop();
+            }
         }
 
         private async System.Threading.Tasks.Task ChamadoEncontradoPainel()
