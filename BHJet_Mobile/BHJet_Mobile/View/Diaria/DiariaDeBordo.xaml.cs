@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.Servico.Diaria;
+﻿using BHJet_Mobile.Infra.Variaveis;
+using BHJet_Mobile.Servico.Diaria;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.ViewModel.DiariaDeBordo;
 using System;
@@ -45,7 +46,7 @@ namespace BHJet_Mobile.View.Diaria
                 await ViewModel.AtualizaTurno();
 
                 // Mensagem
-                await this.DisplayAlert("Atenção", "Dados do turno atualizados com sucesso.", "OK");
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.TurnoCadastradado, "OK");
             }
             catch (Exception ex)
             {

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BHJet_WebApi.Util;
+using System.Web;
+using System.IO;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -213,14 +215,28 @@ namespace BHJet_WebApi.Controllers
         /// <summary>
         /// Cadastra foto de protocolo
         /// </summary>
-        /// <param name="filtro">CadastraProtocoloModel</param>
+        /// <param name="idEndereco">long</param>
         /// <returns></returns>
         [Authorize]
-        [Route("protocolo")]
-        public IHttpActionResult PostRegistroProtocolo([FromBody]CadastraProtocoloModel filtro)
+        [Route("protocolo/endereco/{idEndereco:long}")]
+        public IHttpActionResult PostRegistroProtocolo(long idEndereco)
         {
-            // Instancia
-            new CorridaRepositorio().InsereRegistroProtocolo(filtro.fotoProtocolo, filtro.idEnderecoCorrida);
+            if (HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                // Busca arquivo na requisição
+                var httpPostedFile = HttpContext.Current.Request.Files["arquivoUp"];
+                if (httpPostedFile != null)
+                {
+                    // Monta imagem
+                    byte[] image = new byte[] { };
+                    httpPostedFile.InputStream.Read(image, 0, httpPostedFile.ContentLength);
+
+                    // Instancia
+                    new CorridaRepositorio().InsereRegistroProtocolo(image, idEndereco);
+                }
+            }
+            else
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Return
             return Ok();

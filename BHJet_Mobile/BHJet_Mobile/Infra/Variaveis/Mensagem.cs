@@ -2,6 +2,17 @@
 {
     public static class Mensagem
     {
+
+        public static class Sucesso
+        {
+            public static readonly string OK = "Dados atualizados com sucesso.";
+            public static readonly string OcorrenciaOS = "Ocorrência registrada com sucesso.";
+            public static readonly string EncerraOS = "Corrida encerrada com sucesso.";
+            public static readonly string TurnoCadastradado = "Dados do turno atualizados com sucesso.";
+            public static readonly string ProtocoloCadastrado = "Protocolo registrado com sucesso.";
+            public static readonly string RegistrarChegada = "Chegada ao destino registrada com sucesso.";
+        }
+
         public static class Validacao
         {
             public static readonly string UsuarioNaoEncontrato = "Usuário e/ou senha inválidos. Tente novamente.";

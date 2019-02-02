@@ -17,7 +17,7 @@ namespace BHJet_Servico
     {
         public ServicoBase()
         {
-            
+
         }
 
         /// <summary>
@@ -110,6 +110,22 @@ namespace BHJet_Servico
         {
             var value = await Put<T>(url, data);
             return JsonConvert.DeserializeObject<TResult>(value);
+        }
+
+        public async Task<System.IO.Stream> Upload(Uri url, byte[] paramFileBytes)
+        {
+            HttpContent bytesContent = new ByteArrayContent(paramFileBytes);
+            using (var client = await GetHttpClient())
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(bytesContent, "arquivoUp", "file2");
+                var response = await client.PostAsync(url, formData);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+                return await response.Content.ReadAsStreamAsync();
+            }
         }
 
         protected async Task<string> GetResult(HttpResponseMessage result)

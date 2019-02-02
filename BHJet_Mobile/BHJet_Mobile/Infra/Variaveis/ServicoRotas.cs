@@ -27,7 +27,7 @@
         {
             public const string GetAberta = "/Corrida/aberta/{0}/{1}";
             public const string GetLog = "/Corrida/log/{0}";
-            public const string PostProtocolo = "/Corrida/protocolo";
+            public const string PostProtocolo = "/Corrida/protocolo/endereco/{0}";
             public const string PutChegada = "/Corrida/chegada/{0}/";
             public const string GetOcorrencias = "/Corrida/ocorrencias";
             public const string PutEncerrarCorrida = "/Corrida/encerrar/{0}/ocorrencia/{1}";

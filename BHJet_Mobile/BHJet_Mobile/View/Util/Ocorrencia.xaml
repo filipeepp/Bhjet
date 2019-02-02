@@ -9,9 +9,9 @@
 
             <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="50" Margin="0,50,0,0" ></Image>
 
-            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
 
-                <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="FillAndExpand">
                     <Grid VerticalOptions="StartAndExpand" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*" />
@@ -19,10 +19,6 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <!--<RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="1.2*" />-->
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -39,21 +35,13 @@
                                     <ViewCell>
 
                                         <Button Clicked="SelecionaOcorrencia" BackgroundColor="#193651" Margin="0,0,0,15"
-                                                Image="opcao" TextColor="White" CommandParameter="{Binding IDOcorrencia}" 
-                                                Text="{Binding Descricao}"></Button>
+                                                Image="opcao" TextColor="White" CommandParameter="{Binding StatusCorrida}" 
+                                                Text="{Binding DescricaoStatus}"></Button>
 
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
-                        <!--<Button Clicked="Button_Clicked" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Pessoa procurada ausente"></Button>
-
-                        <Button Clicked="Button_Clicked" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Material não disponível"></Button>
-
-                        <Button Clicked="Button_Clicked" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Não fui atendido"></Button>
-
-                        <Button Clicked="Button_Clicked" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" Image="opcao" TextColor="White" Text="Outros"></Button>-->
 
                         <Button Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" TextColor="White" Text="Ligar Cliente"></Button>
 

@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.Servico.Motorista;
+﻿using BHJet_Mobile.Infra.Variaveis;
+using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.ViewModel.Motorista;
 using System;
@@ -41,7 +42,11 @@ namespace BHJet_Mobile.View.Motorista
         {
             try
             {
+                // Atualizado dados
                 await  ViewModel.AtualizarDados();
+
+                // Mensagem
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.OK, "OK");
             }
             catch (Exception ex)
             {

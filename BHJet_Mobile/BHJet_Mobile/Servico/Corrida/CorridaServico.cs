@@ -25,9 +25,9 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Busca Corrida aberta
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task<CorridaAbertaModel> BuscaCorridaAberta(long idProfissional,TipoProfissional tipo)
+        public async Task<CorridaAbertaModel> BuscaCorridaAberta(long idProfissional, TipoProfissional tipo)
         {
-            return await this.Get<CorridaAbertaModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetAberta, (int)tipo)}"));
+            return await this.Get<CorridaAbertaModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetAberta, idProfissional, (int)tipo)}"));
         }
 
         /// <summary>
@@ -55,11 +55,7 @@ namespace BHJet_Mobile.Servico.Corrida
         /// <returns>ResumoModel</returns>
         public async Task CadastraProtocolo(byte[] protocolo, long idEnderecoCorrida)
         {
-            await this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.PostProtocolo}"), new
-            {
-                fotoProtocolo = protocolo,
-                idEnderecoCorrida = idEnderecoCorrida
-            });
+            await this.Upload(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostProtocolo, idEnderecoCorrida)}"), protocolo);
         }
 
         /// <summary>

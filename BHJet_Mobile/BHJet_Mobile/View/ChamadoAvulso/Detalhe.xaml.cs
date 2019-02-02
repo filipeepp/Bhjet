@@ -4,6 +4,7 @@ using BHJet_Mobile.Infra.Database;
 using BHJet_Mobile.Infra.Database.Tabelas;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Infra.Permissao;
+using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Util;
@@ -164,6 +165,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
                 // Carrega Foto
                 await ViewModel.RegistroFotoDocumento(id, registroFoto);
+
+                // Ocorrencia
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.ProtocoloCadastrado, "OK");
             }
             catch (Exception ex)
             {
@@ -216,6 +220,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
                 // Registra Chegada
                 await ViewModel.RegistrarChegada(id);
+
+                // Mensagem
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.RegistrarChegada, "OK");
             }
             catch (Exception ex)
             {

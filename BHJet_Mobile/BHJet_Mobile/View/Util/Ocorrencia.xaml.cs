@@ -1,4 +1,5 @@
 ﻿using BHJet_Mobile.Infra;
+using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.ChamadoAvulso;
@@ -53,6 +54,9 @@ namespace BHJet_Mobile.View.Util
 
                 // Troca de página após Login
                 await Navigation.PopModalAsync();
+
+                // Mensagem
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.OcorrenciaOS, "OK");
             }
             catch (CorridaException)
             {
@@ -72,7 +76,11 @@ namespace BHJet_Mobile.View.Util
         {
             try
             {
+                // Encerra OS
                 await ViewModel.EncerrarOrdemServico();
+
+                // Menszagem
+                await this.DisplayAlert("Atenção", Mensagem.Sucesso.EncerraOS, "OK");
             }
             catch (CorridaException)
             {
