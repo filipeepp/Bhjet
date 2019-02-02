@@ -19,10 +19,11 @@ namespace BHJet_Mobile.View
                     await me.DisplayAlert("Atenção!", "Serviço Indisponível no momento.", "OK");
                     break;
                 case "WarningException":
+                case "DiariaException":
+                case "CorridaException":
+                case "ErrorException":
+                case "NoContentException":
                     await me.DisplayAlert("Atenção!", ex.Message, "OK");
-                    // Exibe a mensagem
-                    if (me.Navigation.NavigationStack.Count() > 1)
-                        await me.Navigation.PopAsync(false);
                     break;
                 case "UnauthorizedAccessException":
                     await me.DisplayAlert("Atenção!", "Sessão expirada, favor realizar o login novamente.", "OK");

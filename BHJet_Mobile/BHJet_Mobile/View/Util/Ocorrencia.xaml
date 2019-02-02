@@ -16,8 +16,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.5*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -47,6 +46,7 @@
 
                         <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" TextColor="White" Text="Encerrar OS"></Button>
                     </Grid>
+ 
                 </Frame>
 
             </StackLayout>

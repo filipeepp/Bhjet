@@ -188,6 +188,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">
+      <Project>{1bf10e83-99fa-4055-990d-df6fe2b7678f}</Project>
+      <Name>BHJet_CoreGlobal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1d890afc-7ae5-45e4-a1e2-4161d00d46f3}</Project>
       <Name>BHJet_Core</Name>

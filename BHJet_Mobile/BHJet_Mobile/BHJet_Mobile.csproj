@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infra\Extensao\StreamExtensao.cs" />
     <Compile Remove="ViewModel\Motorista\DadosBasicosItemViewModel.cs" />
     <Compile Remove="View\ChamadoAvulso.xaml.cs" />
     <Compile Remove="View\ChamadoAvulso\IDirecionaAppExternoIOs.cs" />

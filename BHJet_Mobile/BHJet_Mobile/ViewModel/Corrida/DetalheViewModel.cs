@@ -111,7 +111,10 @@ namespace BHJet_Mobile.ViewModel.Corrida
 
             // Verifica
             if (log.HoraChegada == null)
+            {
                 await corridaServico.RegistraChegaLogCorrida(idEnderecoCorrida);
+                log.HoraChegada = DateTime.Now;
+            }
             else
                 throw new CorridaException($"A Hora de chegada foi registrada em {log.HoraChegada}.");
         }

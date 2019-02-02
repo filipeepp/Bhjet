@@ -160,6 +160,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         public void AceitarCorrida(object sender, EventArgs args)
         {
+            // Controle
+            ViewModel.AceitarCorrida();
             // Troca de página após Login
             App.Current.MainPage = new Detalhe();
         }
@@ -176,6 +178,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             }
             finally
             {
+                UsuarioAutenticado.Instance.FinalizaAtendimento();
                 await ProcurandoChamadoPainel();
                 EfeitoPesquisaAtivada();
                 DoWorkAsyncInfiniteLoop();

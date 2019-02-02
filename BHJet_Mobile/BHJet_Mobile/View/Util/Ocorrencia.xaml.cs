@@ -47,16 +47,16 @@ namespace BHJet_Mobile.View.Util
             {
                 // Busca ID Ocorrencia
                 var param = ((Button)sender).CommandParameter;
-                var idOcorrencia = (int)param;
+                var idOcorrencia = (long)param;
 
                 // Trata OS
-                ViewModel.OcorrenciaSelecionada(idOcorrencia);
-
-                // Troca de página após Login
-                await Navigation.PopModalAsync();
+                await ViewModel.OcorrenciaSelecionada(idOcorrencia);
 
                 // Mensagem
                 await this.DisplayAlert("Atenção", Mensagem.Sucesso.OcorrenciaOS, "OK");
+
+                // Troca de página após Login
+                await Navigation.PopModalAsync();
             }
             catch (CorridaException)
             {

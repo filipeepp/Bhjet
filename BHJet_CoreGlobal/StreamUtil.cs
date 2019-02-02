@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace BHJet_Mobile.Infra.Extensao
+namespace BHJet_CoreGlobal
 {
-    public static class StreamExtensao
+    public static class StreamUtil
     {
         public static byte[] ReadFully(this Stream input)
         {

@@ -87,7 +87,7 @@ namespace BHJet_Mobile.ViewModel.Corrida
         /// Tratamento Ocorrencia selecionada
         /// </summary>
         /// <param name="idOcorrencia"></param>
-        public async void OcorrenciaSelecionada(int idOcorrencia)
+        public async Task OcorrenciaSelecionada(long idOcorrencia)
         {
             try
             {

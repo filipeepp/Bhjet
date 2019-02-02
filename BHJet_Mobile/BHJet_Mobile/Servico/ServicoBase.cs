@@ -112,19 +112,23 @@ namespace BHJet_Servico
             return JsonConvert.DeserializeObject<TResult>(value);
         }
 
-        public async Task<System.IO.Stream> Upload(Uri url, byte[] paramFileBytes)
+        public async Task<string> Upload(Uri url, byte[] paramFileBytes)
         {
+            // Bytes arquivo
             HttpContent bytesContent = new ByteArrayContent(paramFileBytes);
+
+            // Requisicao
             using (var client = await GetHttpClient())
             using (var formData = new MultipartFormDataContent())
             {
-                formData.Add(bytesContent, "arquivoUp", "file2");
+                // Adicionar arquivo na requisição
+                formData.Add(bytesContent, "arquivo", "arquivo");
+
+                // Post Imagem
                 var response = await client.PostAsync(url, formData);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return null;
-                }
-                return await response.Content.ReadAsStreamAsync();
+
+                // Strem
+                return await GetResult(response);
             }
         }
 

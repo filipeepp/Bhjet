@@ -11,6 +11,9 @@ using System.Web.Http.Description;
 using BHJet_WebApi.Util;
 using System.Web;
 using System.IO;
+using System.Net.Http;
+using System.Net;
+using BHJet_CoreGlobal;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -221,22 +224,20 @@ namespace BHJet_WebApi.Controllers
         [Route("protocolo/endereco/{idEndereco:long}")]
         public IHttpActionResult PostRegistroProtocolo(long idEndereco)
         {
-            if (HttpContext.Current.Request.Files.AllKeys.Any())
-            {
-                // Busca arquivo na requisição
-                var httpPostedFile = HttpContext.Current.Request.Files["arquivoUp"];
-                if (httpPostedFile != null)
-                {
-                    // Monta imagem
-                    byte[] image = new byte[] { };
-                    httpPostedFile.InputStream.Read(image, 0, httpPostedFile.ContentLength);
+            Dictionary<string, object> dict = new Dictionary<string, object>();
 
-                    // Instancia
-                    new CorridaRepositorio().InsereRegistroProtocolo(image, idEndereco);
-                }
-            }
-            else
-                return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Request
+            var httpRequest = HttpContext.Current.Request;
+
+            // Arquivo
+            var arquivo = httpRequest.Files[0];
+
+            // COnverte arquivo
+            byte[] arquivoBytes = new byte[] { };
+            arquivoBytes = arquivo.InputStream.ReadFully();
+
+            // Instancia
+            new CorridaRepositorio().InsereRegistroProtocolo(arquivoBytes, idEndereco);
 
             // Return
             return Ok();
@@ -295,7 +296,7 @@ namespace BHJet_WebApi.Controllers
         {
             // Busca Dados detalhados da corrida/OS
             new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, idCorrida);
-  
+
             // Return
             return Ok();
         }

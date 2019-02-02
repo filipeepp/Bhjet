@@ -14,8 +14,8 @@ namespace BHJet_Mobile.Servico.Corrida
         Task CadastraProtocolo(byte[] protocolo, long idEnderecoCorrida);
         Task RegistraChegaLogCorrida(long idEnderecoCorrida);
         Task<OcorrenciaModel[]> BuscaOcorrencias();
-        Task EncerrarOrdemServico(int? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro);
-        Task AtualizaOcorrenciaCorrida(int statusCorrida, long idCorrida);
+        Task EncerrarOrdemServico(long? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro);
+        Task AtualizaOcorrenciaCorrida(long statusCorrida, long idCorrida);
         Task RecusarOrdemServico(long idCorrida);
     }
 
@@ -71,7 +71,7 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Encerrar OS
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task AtualizaOcorrenciaCorrida(int statusCorrida, long idCorrida)
+        public async Task AtualizaOcorrenciaCorrida(long statusCorrida, long idCorrida)
         {
             // status/{idStatus:long}/{idCorrida:long}
             await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutOcorrenciaCorrida, statusCorrida, idCorrida)}"), "");
@@ -81,7 +81,7 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Encerrar OS 
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task EncerrarOrdemServico(int? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro)
+        public async Task EncerrarOrdemServico(long? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro)
         {
             // status/{idStatus:long}/{idCorrida:long}
             await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutEncerrarCorrida, idCorrida, statusCorrida)}"), filtro);
@@ -94,7 +94,7 @@ namespace BHJet_Mobile.Servico.Corrida
         public async Task RecusarOrdemServico(long idCorrida)
         {
             // status/{idStatus:long}/{idCorrida:long}
-            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostRecusarCorrida, idCorrida)}"), "");
+            await this.Post(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostRecusarCorrida, idCorrida)}"), "");
         }
     }
 }

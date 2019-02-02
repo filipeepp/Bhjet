@@ -59,6 +59,20 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
+        private long? _IDCorridaEncontrada;
+        public long? IDCorridaEncontrada
+        {
+            get
+            {
+                return _IDCorridaEncontrada;
+            }
+            set
+            {
+                _IDCorridaEncontrada = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string NomeCompleto
         {
             get
@@ -108,6 +122,7 @@ namespace BHJet_Mobile.ViewModel
                 {
                     // Busca Corrida
                     var corrida = new CorridaAbertaModel();
+                    IDCorridaEncontrada = null;
                     Task.Run(async () =>
                     {
                         corrida = await BuscaCorridaAberta();
@@ -117,7 +132,7 @@ namespace BHJet_Mobile.ViewModel
                     if (corrida != null)
                     {
                         // ID Corrida
-                        usuarioAutenticado.IDCorridaAtendimento = corrida.ID;
+                        IDCorridaEncontrada = corrida.ID;
 
                         // Binding
                         chamadoItem = new ChamadoEncontradoItemViewModel()
@@ -130,13 +145,22 @@ namespace BHJet_Mobile.ViewModel
                         return true;
                     }
                     else
+                    {
+                        IDCorridaEncontrada = null;
+                        usuarioAutenticado.IDCorridaAtendimento = null;
                         return false;
+                    }
                 }
             }
             finally
             {
 
             }
+        }
+
+        public void AceitarCorrida()
+        {
+            usuarioAutenticado.IDCorridaAtendimento = IDCorridaEncontrada;
         }
 
         private async Task<PerfilMotoristaModel> BuscaPerfilMotorista()
@@ -165,8 +189,8 @@ namespace BHJet_Mobile.ViewModel
 
         public async Task RecusarCorrida()
         {
-                if (usuarioAutenticado?.IDCorridaAtendimento != null)
-                    await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+            if (usuarioAutenticado?.IDCorridaAtendimento != null)
+                await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
         }
     }
 }

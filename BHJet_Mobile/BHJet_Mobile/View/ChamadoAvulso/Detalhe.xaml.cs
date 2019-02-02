@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.DependencyService;
+﻿using BHJet_CoreGlobal;
+using BHJet_Mobile.DependencyService;
 using BHJet_Mobile.Infra;
 using BHJet_Mobile.Infra.Database;
 using BHJet_Mobile.Infra.Database.Tabelas;
@@ -215,7 +216,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             try
             {
                 // Busca ID Corrida
-                var idEnderecoCorridaParam = ((MenuItem)sender).CommandParameter;
+                var idEnderecoCorridaParam = ((Button)sender).CommandParameter;
                 var id = (long)idEnderecoCorridaParam;
 
                 // Registra Chegada
