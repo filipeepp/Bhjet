@@ -28,8 +28,10 @@ namespace BHJet_Mobile.ViewModel.Util
                 Loading = true;
 
                 // Start Motorista
+                usuarioAutenticado.Tipo = tipo;
                 var locator = CrossGeolocator.Current;
 
+                // Busca Localizacao
                 locator.DesiredAccuracy = 50;
                 var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
 
