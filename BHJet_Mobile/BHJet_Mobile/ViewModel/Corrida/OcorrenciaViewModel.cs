@@ -107,7 +107,7 @@ namespace BHJet_Mobile.ViewModel.Corrida
                     var kmPercorrido = await BuscaDistanciaPercorrida();
                     await corridaServico.EncerrarOrdemServico(idOcorrencia, IDCorrida, new EncerrarCorridaFiltro()
                     {
-                        KilometragemRodada = kmPercorrido
+                        KilometragemRodada = long.Parse(kmPercorrido.ToString())
                     });
                     throw new CorridaException("Corrida Encerrada"); // Finaliza
                 }
@@ -155,12 +155,21 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 // Insere localizacao
                 var trajetoPercorrido = await db.BuscaItems<LocalizacaoCorrida>();
 
-                // Calcula distancia
-                return DistanciaUtil.CalculaDistancia(trajetoPercorrido.Select(dist => new Localidade()
+                // Verificacao
+                if (trajetoPercorrido != null && trajetoPercorrido.Any())
                 {
-                    Latitude = dist.Latitude,
-                    Longitude = dist.Longitude
-                }).ToArray());
+                    // Limpa registros identicos
+                    trajetoPercorrido = trajetoPercorrido.Distinct().ToList();
+
+                    // Calcula distancia
+                    return DistanciaUtil.CalculaDistancia(trajetoPercorrido.Select(dist => new Localidade()
+                    {
+                        Latitude = dist.Latitude,
+                        Longitude = dist.Longitude
+                    }).ToArray());
+                }
+
+                return 0;
             }
         }
     }

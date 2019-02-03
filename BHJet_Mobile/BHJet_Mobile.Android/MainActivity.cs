@@ -1,17 +1,13 @@
 ﻿
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using BHJet_Mobile.Droid.Service;
-using BHJet_Mobile.Infra.Service;
 using Plugin.Media;
 using Plugin.Permissions;
-using Xamarin.Forms;
 
 namespace BHJet_Mobile.Droid
 {
-    [Activity(Label = "BHJet", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "BHJet", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait ,ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override async void OnCreate(Bundle savedInstanceState)

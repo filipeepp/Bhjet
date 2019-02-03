@@ -1,6 +1,7 @@
 ﻿using BHJet_Mobile.Infra;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using System;
 using System.Collections.ObjectModel;
@@ -11,15 +12,18 @@ namespace BHJet_Mobile.ViewModel.Corrida
 {
     public class DetalheViewModel : PropertyChangedClass
     {
-        public DetalheViewModel(IUsuarioAutenticado _usuarioAutenticado, ICorridaServico _corridaServico)
+        public DetalheViewModel(IUsuarioAutenticado _usuarioAutenticado, ICorridaServico _corridaServico, IMotoristaServico _motoristaServico)
         {
             usuarioAutenticado = _usuarioAutenticado;
             corridaServico = _corridaServico;
+            motoristaServico = _motoristaServico;
         }
 
         private readonly IUsuarioAutenticado usuarioAutenticado;
 
         private readonly ICorridaServico corridaServico;
+
+        private readonly IMotoristaServico motoristaServico;
 
         private ObservableCollection<DetalheItemViewModel> _ListaLogs;
         public ObservableCollection<DetalheItemViewModel> ListaLogs
@@ -117,6 +121,18 @@ namespace BHJet_Mobile.ViewModel.Corrida
             }
             else
                 throw new CorridaException($"A Hora de chegada foi registrada em {log.HoraChegada}.");
+        }
+
+        public async Task AtualizaLocalizacaoMotorista(double lat, double longi)
+        { 
+            // Altera situacao de pesquisa do aplicativo
+            await motoristaServico.AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
+            {
+                bitDisponivel = true,
+                idTipoProfissional = usuarioAutenticado.Tipo,
+                latitude = lat,
+                longitude = longi
+            });
         }
     }
 }

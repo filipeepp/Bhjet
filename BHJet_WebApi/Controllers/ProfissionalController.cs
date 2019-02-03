@@ -91,6 +91,21 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Atualia localização de profissionais disponíveis
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("{idProfissional:long}/localizacao")]
+        public IHttpActionResult PutlocalizacaoMotoristaDisponiveil(long idProfissional)
+        {
+            // Busca Dados resumidos
+            new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
         /// Busca lista de Profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>

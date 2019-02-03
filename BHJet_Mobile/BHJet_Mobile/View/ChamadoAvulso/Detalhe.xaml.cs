@@ -1,12 +1,11 @@
 ﻿using BHJet_CoreGlobal;
 using BHJet_Mobile.DependencyService;
-using BHJet_Mobile.Infra;
 using BHJet_Mobile.Infra.Database;
 using BHJet_Mobile.Infra.Database.Tabelas;
-using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Infra.Permissao;
 using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Corrida;
+using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Corrida;
@@ -26,7 +25,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         public Detalhe()
         {
             InitializeComponent();
-            ViewModel = new DetalheViewModel(UsuarioAutenticado.Instance, new CorridaServico());
+            ViewModel = new DetalheViewModel(UsuarioAutenticado.Instance, new CorridaServico(), new MotoristaServico());
             BindingContext = ViewModel;
         }
 
@@ -95,13 +94,25 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 // Database
                 using (var db = new Database())
                 {
-                    // Insere localizacao
-                    await db.InsereItem<LocalizacaoCorrida>(new LocalizacaoCorrida()
+                    try
                     {
-                        IDCorrida = ViewModel.idCorrida,
-                        Latitude = e.Position.Latitude,
-                        Longitude = e.Position.Longitude
-                    });
+                        // Altera localizacao motorista disponivel
+                        await ViewModel.AtualizaLocalizacaoMotorista(e.Position.Latitude, e.Position.Longitude);
+                    }
+                    catch
+                    {
+                        // continua
+                    }
+                    finally
+                    {
+                        // Grava localizacao
+                        await db.InsereItem<LocalizacaoCorrida>(new LocalizacaoCorrida()
+                        {
+                            IDCorrida = ViewModel.idCorrida,
+                            Latitude = e.Position.Latitude,
+                            Longitude = e.Position.Longitude
+                        });
+                    }
                 }
             });
         }
@@ -164,11 +175,15 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 // Tira Foto
                 var registroFoto = await TiraFotoOcorrencia();
 
-                // Carrega Foto
-                await ViewModel.RegistroFotoDocumento(id, registroFoto);
+                // Valicadao
+                if (registroFoto != null)
+                {
+                    // Carrega Foto
+                    await ViewModel.RegistroFotoDocumento(id, registroFoto);
 
-                // Ocorrencia
-                await this.DisplayAlert("Atenção", Mensagem.Sucesso.ProtocoloCadastrado, "OK");
+                    // Ocorrencia
+                    await this.DisplayAlert("Atenção", Mensagem.Sucesso.ProtocoloCadastrado, "OK");
+                }
             }
             catch (Exception ex)
             {

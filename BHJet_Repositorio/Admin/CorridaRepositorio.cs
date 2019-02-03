@@ -127,7 +127,7 @@ namespace BHJet_Repositorio.Admin
 								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
                                     join tblClientes as C on (CD.idCliente = C.idCliente)
                                left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
-								 where LGCD.idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0)
+								 where CD.idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0)
 										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
                                         AND CR.idColaboradorEmpresaSistema IS NULL or (CR.idColaboradorEmpresaSistema != @profissional AND cr.idCorrida != cd.idCorrida)
 										order by CD.dtDataHoraRegistroCorrida DESC";
@@ -260,7 +260,7 @@ namespace BHJet_Repositorio.Admin
                 sqlConnection.Execute(query, new
                 {
                     id = idCorrida,
-                    idStatusCorrida = ocorrencia
+                    status = ocorrencia
                 });
             }
         }
@@ -269,7 +269,7 @@ namespace BHJet_Repositorio.Admin
         /// Encerrar Ordem Servico
         /// </summary>
         /// <param name="idCorrida"></param>
-        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, long kmPercorrido)
+        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, double kmPercorrido)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {

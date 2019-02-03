@@ -55,7 +55,7 @@ namespace BHJet_Mobile.View.Util
                 await PermissaoBase.VerificaPermissao(Plugin.Permissions.Abstractions.Permission.Location, PermissaoNegada);
 
                 // Grava registro profissional ativo
-                await ViewModel.SelecionaVeiculo(BHJet_Enumeradores.TipoProfissional.Motociclista);
+                await ViewModel.SelecionaVeiculo(BHJet_Enumeradores.TipoProfissional.Motorista);
 
                 // Troca de página após seleção
                 RedirecionaProfissional();

@@ -2,6 +2,6 @@
 {
     public class EncerrarCorridaFiltro
     {
-        public long? KilometragemRodada { get; set; }
+        public double? KilometragemRodada { get; set; }
     }
 }

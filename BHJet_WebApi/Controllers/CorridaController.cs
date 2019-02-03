@@ -309,7 +309,7 @@ namespace BHJet_WebApi.Controllers
         /// /// /// /// <param name="filtro">EncerrarCorridaFiltro</param>
         /// <returns></returns>
         [Authorize]
-        [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int}")]
+        [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int?}")]
         public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idOcorrencia = null)
         {
             // Instancia
