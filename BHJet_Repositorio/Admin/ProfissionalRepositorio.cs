@@ -480,10 +480,13 @@ namespace BHJet_Repositorio.Admin
                             RG = profissional.DocumentoRG
                         }, trans);
 
-                      
+
                         #endregion
 
                         #region Incluir Usuario
+                        // Commit Profissional
+                        trans.Commit();
+
                         new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
                         {
                             bitAtivo = profissional.StatusUsuario,
@@ -493,9 +496,6 @@ namespace BHJet_Repositorio.Admin
                             vbIncPassword = profissional.Senha
                         });
                         #endregion
-
-                        // Commit Profissional
-                        trans.Commit();
 
                         // Insere comissões
                         using (var sqlConnectionCom = this.InstanciaConexao())
@@ -542,14 +542,14 @@ namespace BHJet_Repositorio.Admin
                     {
                         if (trans.Connection != null)
                             trans.Rollback();
-                        RoolbackColaborador(idEndereco, idColaborador, Comissoes.ToArray());
+                        RoolbackColaborador(idEndereco, idColaborador, Comissoes.ToArray(), profissional.Email);
                         throw e;
                     }
                 }
             }
         }
 
-        private void RoolbackColaborador(int? idEndereco, int? idColaborador, int[] comissoes)
+        private void RoolbackColaborador(int? idEndereco, int? idColaborador, int[] comissoes, string email)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -559,6 +559,8 @@ namespace BHJet_Repositorio.Admin
                     sqlConnection.ExecuteScalar($"delete from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = {idColaborador}");
                 if (idEndereco != null)
                     sqlConnection.ExecuteScalar($"delete from tblEnderecos where idEndereco = {idEndereco}");
+                if (!string.IsNullOrWhiteSpace(email))
+                    sqlConnection.ExecuteScalar($"delete from tblUsuarios where vcEmail = {email}");
             }
         }
 

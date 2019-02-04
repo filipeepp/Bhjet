@@ -171,6 +171,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 
+    $('input[type=radio][name=TipoProfissional]').change(function () {
+        $("#ProfissionalSelecionado").find('option').remove().end();
+        BuscaProfissionais();
+    });
+
     $("#ProfissionalSelecionado").change(function () {
         var $option = $(this).find('option:selected');
         if ($option != undefined) {

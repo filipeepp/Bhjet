@@ -77,18 +77,10 @@ namespace BHJet_Admin.Models.Motorista
 
         public string Observacao { get; set; }
 
-        private string _senha;
         [Required(ErrorMessage = "Senha obrigatória.")]
         public string Senha
         {
-            get
-            {
-                return _senha;
-            }
-            set
-            {
-                _senha = CriptografiaUtil.Criptografa(value, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
-            }
+            get; set;
         }
 
         public bool Situacao { get; set; }

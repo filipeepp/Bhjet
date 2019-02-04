@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models.Motorista;
 using BHJet_Core.Extension;
+using BHJet_CoreGlobal;
 using BHJet_DTO.Profissional;
 using BHJet_Enumeradores;
 using BHJet_Servico.Profissional;
@@ -75,6 +76,7 @@ namespace BHJet_Admin.Controllers
                         UF = profissional.UF,
                         EdicaoCadastro = true,
                         DocumentoRG = profissional.DocumentoRG,
+                        Senha = "",
                         Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
                         {
                             ID = c.ID,
@@ -169,7 +171,7 @@ namespace BHJet_Admin.Controllers
                     RuaNumero = model.RuaNumero,
                     UF = model.UF,
                     DocumentoRG = model.DocumentoRG,
-                    Senha = model.Senha,
+                    Senha = CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r"),
                     Status = model.Situacao,
                     Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
                     {

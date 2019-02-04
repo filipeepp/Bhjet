@@ -99,10 +99,17 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Ativo</label>
-                            @Html.CheckBoxFor(model => model.Situacao, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Situacao, null, new { @class = "text-danger" })
+                            <div style="margin-top:25px;">
+                                <label class="label-cbx">
+                                    @Html.CheckBoxFor(model => model.Situacao, new { @class = "checkbox" })
+                                    @Html.ValidationMessageFor(model => model.Situacao, null, new { @class = "text-danger" })
+                                    <span><small class="obrigatorio">*</small>Ativo</span>
+                                </label>
+                            </div>
                         </div>
+
+                        
+
                     </div>
                 </div>
 
