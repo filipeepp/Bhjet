@@ -1,4 +1,10 @@
-﻿using BHJet_Mobile.View;
+﻿using BHJet_Mobile.Servico.Autenticacao;
+using BHJet_Mobile.Servico.Motorista;
+using BHJet_Mobile.Sessao;
+using BHJet_Mobile.View;
+using BHJet_Mobile.View.Util;
+using BHJet_Mobile.ViewModel.Login;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +17,26 @@ namespace BHJet_Mobile
         {
             InitializeComponent();
             
-            MainPage = new LoginPage();
+            try
+            {
+                var VM = new LoginViewModel(new AutenticacaoServico(), new MotoristaServico(), UsuarioAutenticado.Instance);
+
+                System.Threading.Tasks.Task.Run(async () =>
+                {
+                    var resultado = await VM.BuscaUsuario();
+                    if (resultado)
+                    {
+                        await VM.ExecutarLogin();
+                        MainPage = new TipoVeiculo();
+                    }
+                    else
+                        MainPage = new LoginPage();
+                }).Wait();
+            }
+            catch
+            {
+                MainPage = new LoginPage();
+            }
         }
 
         protected override void OnStart()

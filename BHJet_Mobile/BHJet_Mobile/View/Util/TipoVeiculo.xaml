@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
              x:Class="BHJet_Mobile.View.Util.TipoVeiculo">
 
     <ContentPage.Content>
@@ -36,11 +37,15 @@
                         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" 
                                 BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5" Clicked="CarroSelecionado_Clicked"
                                 Image="carro" TextColor="#193651" Text="Carro"></Button>
+
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+
                     </Grid>
                 </Frame>
             </StackLayout>
 
         </StackLayout>
+
 
     </ContentPage.Content>
     

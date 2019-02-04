@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
              x:Class="BHJet_Mobile.View.Util.Ocorrencia">
 
     <ContentPage.Content>
 
         <StackLayout BackgroundColor="#ffd423" >
-            
+
             <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
 
                 <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="FillAndExpand">
@@ -43,13 +44,17 @@
                         <Button Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
 
                         <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" VerticalOptions="End" TextColor="White" Text="Encerrar OS"></Button>
+
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+
                     </Grid>
- 
+
                 </Frame>
 
             </StackLayout>
 
         </StackLayout>
+
 
     </ContentPage.Content>
 

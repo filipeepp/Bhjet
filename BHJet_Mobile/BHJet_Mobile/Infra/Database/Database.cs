@@ -14,7 +14,7 @@ namespace BHJet_Mobile.Infra.Database
 
         public Database()
         {
-            database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), 
+            database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                                                             "todosqlib4j3t.db3"));
         }
 
@@ -75,19 +75,16 @@ namespace BHJet_Mobile.Infra.Database
             await database.ExecuteAsync($"delete from {nome}");
         }
 
-        public Task<bool> ExisteTabela(string nomeTabela)
+        public async Task<bool> ExisteTabela<T>() where T : new()
         {
-            // Sqlite Connection
-            using (var con = new SQLiteConnection(diretorioDatabase))
+            try
             {
-                // Busca Info Tabela
-                var info = con.GetTableInfo(nomeTabela);
-                if (!info.Any())
-                {
-                    return Task.FromResult(false);
-                }
-                else
-                    return Task.FromResult(true);
+                var item = await BuscaItems<T>();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

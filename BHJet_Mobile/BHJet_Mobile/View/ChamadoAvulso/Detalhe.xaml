@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
              x:Class="BHJet_Mobile.View.ChamadoAvulso.Detalhe">
-
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#ffd423" >
@@ -88,6 +88,10 @@
 
             <local:Menu></local:Menu>
 
+            <control:ActivityIndicator IsVisible="{Binding Loading}"/>
+
         </StackLayout>
+
+        
     </ContentPage.Content>
 </ContentPage>

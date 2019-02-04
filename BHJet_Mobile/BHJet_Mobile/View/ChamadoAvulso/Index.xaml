@@ -4,6 +4,7 @@
               Title="Bem vindo, João"
              xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile" 
              xmlns:converter="clr-namespace:BHJet_Mobile.Infra.Converter;assembly=BHJet_Mobile"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
              x:Class="BHJet_Mobile.View.ChamadoAvulso.Index">
 
     <ContentPage.Resources>
@@ -113,10 +114,9 @@
                     </Frame>
                 </StackLayout>
 
-                <!--<Button IsVisible="{Binding DiarioBordo}" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="RegistrarBordo_Clicked" Text="Registrar início/fim de turno" ></Button>-->
+                <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
 
             </StackLayout>
-
 
             <local:Menu></local:Menu>
 

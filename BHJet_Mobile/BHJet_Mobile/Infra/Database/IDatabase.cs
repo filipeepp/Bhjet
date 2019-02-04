@@ -26,6 +26,6 @@ namespace BHJet_Mobile.Infra.Database
 
         Task<CreateTableResult> CriaTabela<T>() where T : new();
 
-        Task<bool> ExisteTabela(string nomeTabela);
+        Task<bool> ExisteTabela<T>() where T : new();
     }
 }

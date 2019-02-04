@@ -50,24 +50,11 @@
                         <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Telefone Fixo:" TextColor="#193651"  />
                         <Entry Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding TelefoneFixo}" FontSize="15" HorizontalOptions="FillAndExpand" FontAttributes="Bold" VerticalOptions="Start" TextColor="#4e90ff" />
 
-                        <!--<Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Senha:" TextColor="#193651"  />
-                        <Entry Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" x:Name="password" IsPassword="True" Placeholder="Senha" 
-                               StyleClass="InputLogin"  Text="{Binding Login.Password}" BackgroundColor="Transparent">
-                        </Entry>-->
-
-                        <!--<Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Start" FontAttributes="Bold" Text="Categoria CNH:" TextColor="#193651"  />
-                        <Picker Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" Title="Categoria CNH:">
-                            <Picker.Items>
-                                <x:String>A</x:String>
-                                <x:String>B</x:String>
-                                <x:String>AB</x:String>
-                                <x:String>AD</x:String>
-                            </Picker.Items>
-                        </Picker>-->
-
                         <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="AtualizaDados_Clicked" 
                                 Text="Atualizar dados" ></Button>
 
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="9" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+                        
                     </Grid>
                 </Frame>
 
@@ -76,6 +63,7 @@
             <local:Menu></local:Menu>
 
         </StackLayout>
+
 
     </ContentPage.Content>
 

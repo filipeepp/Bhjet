@@ -66,8 +66,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             // Database
             using (var db = new Database())
             {
-                if (await db.ExisteTabela("BHJetLocalizacaoCorrida") == false)
-                    await db.CriaTabela<LocalizacaoCorrida>();
+                if (await db.ExisteTabela<LocalizacaoCorrida>() == false)
+                    return;
                 else
                     await db.LimpaTabela("BHJetLocalizacaoCorrida");
             }

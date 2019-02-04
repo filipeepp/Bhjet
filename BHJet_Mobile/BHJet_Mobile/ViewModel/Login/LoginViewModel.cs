@@ -4,6 +4,10 @@ using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using System.Threading.Tasks;
+using BHJet_Mobile.Infra.Database;
+using BHJet_Mobile.Infra.Database.Tabelas;
+using BHJet_CoreGlobal;
+using System.Linq;
 
 namespace BHJet_Mobile.ViewModel.Login
 {
@@ -26,6 +30,8 @@ namespace BHJet_Mobile.ViewModel.Login
         private readonly IMotoristaServico motoristaServico;
 
         private readonly IUsuarioAutenticado usuarioAutenticado;
+
+        private string protSenha = "lg4v5S3m2nt3BAHJ0e1tA@u4t4hu1533r";
 
         /// <summary>
         /// Usuario Logado
@@ -56,6 +62,9 @@ namespace BHJet_Mobile.ViewModel.Login
 
                 // Usuario autenticado
                 usuarioAutenticado.SetPerfil(perfil);
+
+                // Salva login
+                await GravaUsuario();
             }
             finally
             {
@@ -65,5 +74,69 @@ namespace BHJet_Mobile.ViewModel.Login
             }
 
         }
+
+        private async Task GravaUsuario()
+        {
+            // Database
+            using (var db = new Database())
+            {
+                await db.LimpaTabela("BHJetMotorista");
+                await db.InsereItem(new UsuarioLogado()
+                {
+                    IDMotorista = usuarioAutenticado.IDProfissional,
+                    usuario = Login.Username,
+                    senha = CriptografiaUtil.Criptografa(Login.Password, protSenha)
+                });
+            }
+        }
+
+        public async Task<bool> BuscaUsuario()
+        {
+            try
+            {
+                // Carregando
+                Loading = true;
+                OffLoading = false;
+
+                // Database
+                using (var db = new Database())
+                {
+                    if (await db.ExisteTabela<UsuarioLogado>() == false)
+                    {
+                        await db.CriaTabela<UsuarioLogado>();
+                        return false;
+                    }
+                    else
+                    {
+                        var item = await db.BuscaItems<UsuarioLogado>();
+
+                        if (item == null || !item.Any())
+                            return false;
+
+                        var usuario = item.FirstOrDefault();
+
+                        if (usuario != null)
+                        {
+                            Login = new LoginModel()
+                            {
+                                Username = usuario.usuario,
+                                Password = CriptografiaUtil.Descriptografa(usuario.senha, protSenha)
+                            };
+
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                }
+            }
+            finally
+            {
+                // Finaliza loading
+                Loading = false;
+                OffLoading = true;
+            }
+        }
+
     }
 }
