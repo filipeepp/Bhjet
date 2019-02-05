@@ -41,7 +41,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <Button Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
+                        <Button  Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
 
                         <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" VerticalOptions="End" TextColor="White" Text="Encerrar OS"></Button>
 

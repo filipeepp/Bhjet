@@ -52,9 +52,7 @@ namespace BHJet_Repositorio.Admin
         public void IncluirUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaOrigem = CriptografiaUtil.Descriptografa(usuario.vbIncPassword, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
-            var senhaEncryp = CriptografiaUtil.CriptografiaHash(senhaOrigem);
-            var senhaEncrypByte = Encoding.UTF8.GetBytes(senhaEncryp);
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbIncPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -99,10 +97,11 @@ namespace BHJet_Repositorio.Admin
                         });
                         break;
                     case TipoUsuario.Profissional:
-                        string queryColaborador = @"update tblColaboradoresEmpresaSistema set idUsuario = @IdUsu";
+                        string queryColaborador = @"update tblColaboradoresEmpresaSistema set idUsuario = @IdUsu where idColaboradorEmpresaSistema = @col";
                         sqlConnection.ExecuteScalar(queryColaborador, new
                         {
-                            IdUsu = idUsurario
+                            IdUsu = idUsurario,
+                            col = usuario.ColaboradorSelecionado
                         });
                         break;
                 }
@@ -118,9 +117,7 @@ namespace BHJet_Repositorio.Admin
         public void AtualizaUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaOrigem = CriptografiaUtil.Descriptografa(usuario.vbIncPassword, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
-            var senhaEncryp = CriptografiaUtil.CriptografiaHash(senhaOrigem);
-            var senhaEncrypByte = Encoding.UTF8.GetBytes("");
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbIncPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -219,6 +216,13 @@ namespace BHJet_Repositorio.Admin
                     id = idUser
                 });
             }
+        }
+
+        public byte[] RetornaSenhaEncriptada(string senha)
+        {
+            var senhaOrigem = CriptografiaUtil.Descriptografa(senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r");
+            var senhaEncryp = CriptografiaUtil.CriptografiaHash(senhaOrigem);
+            return Encoding.UTF8.GetBytes(senhaEncryp);
         }
     }
 }
