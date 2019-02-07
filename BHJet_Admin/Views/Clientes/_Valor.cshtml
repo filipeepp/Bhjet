@@ -200,10 +200,16 @@ else
 			</div>
 			<div class="form-row">
 				<div class="form-group col-xs-12 col-md-12" style="margin-bottom:30px;">
-					<div id="div_ValorPadrao_@Html.IdFor(model => model.Valor[contador])">
+					<div id="div_ValorPadraoMoto_@Html.IdFor(model => model.Valor[contador])">
 						<label class="label-cbx">
-							<input type="checkbox" id="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" name="ValorPadrao_@Html.IdFor(model => model.Valor[contador])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@contador]);" />
-							<span>Tarifa padrão?</span>
+							<input type="checkbox" value="1" id="ValorPadraoMoto_@Html.IdFor(model => model.Valor[contador])" name="ValorPadraoMoto_@Html.IdFor(model => model.Valor[contador])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@contador], this.value);" />
+							<span>Tarifa padrão Moto</span>
+						</label>
+					</div>
+					<div id="div_ValorPadraoCarro_@Html.IdFor(model => model.Valor[contador])">
+						<label class="label-cbx">
+							<input type="checkbox" value="2" id="ValorPadraoCarro_@Html.IdFor(model => model.Valor[contador])" name="ValorPadraoCarro_@Html.IdFor(model => model.Valor[contador])" class="form-control checkbox ctmValorPadrao" onclick="PesquisaTarifarioPadrao(document.getElementsByClassName('cst-panel-valor')[@contador], this.value);" />
+							<span>Tarifa padrão Carro</span>
 						</label>
 					</div>
 				</div>
@@ -239,7 +245,7 @@ else
 				<div class="form-group col-xs-12 col-md-2">
 					<div id="@Html.IdFor(model => model.Valor[contador].ValorUnitario)">
 						<label for="txtValorUnitario">Valor Unitário<small class="obrigatorio">*</small></label>
-						@Html.TextBoxFor(model => model.Valor[contador].ValorUnitario, new { @class = "form-control  ctmErrorValorUnitario" })
+						@Html.TextBoxFor(model => model.Valor[contador].ValorUnitario, new { @class = "form-control mask-valor ctmErrorValorUnitario" })
 					</div>
 				</div>
 			</div>

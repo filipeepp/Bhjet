@@ -49,10 +49,12 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -207,23 +209,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LEOZI\\.nuget\\packages\\": {},
+    "C:\\Users\\Diogo Nominato\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj",
+      "projectUniqueName": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj",
       "projectName": "BHJet_DTO",
-      "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj",
-      "packagesPath": "C:\\Users\\LEOZI\\.nuget\\packages\\",
-      "outputPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\obj\\",
+      "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj",
+      "packagesPath": "C:\\Users\\Diogo Nominato\\.nuget\\packages\\",
+      "outputPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_DTO\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LEOZI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Diogo Nominato\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -236,11 +238,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
+            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             },
-            "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
-              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
+            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
+              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
             }
           }
         }
