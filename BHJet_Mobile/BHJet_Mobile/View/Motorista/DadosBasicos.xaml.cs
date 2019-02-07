@@ -36,7 +36,7 @@ namespace BHJet_Mobile.View.Motorista
             {
                 this.TrataExceptionMobile(e);
             }
-        }
+        } 
 
         private async void AtualizaDados_Clicked(object sender, EventArgs e)
         {
