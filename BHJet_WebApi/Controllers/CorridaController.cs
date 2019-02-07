@@ -1,19 +1,16 @@
-﻿using BHJet_Enumeradores;
-using BHJet_Core.Variaveis;
+﻿using BHJet_Core.Variaveis;
+using BHJet_CoreGlobal;
 using BHJet_DTO.Corrida;
+using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using BHJet_WebApi.Util;
-using System.Web;
-using System.IO;
-using System.Net.Http;
-using System.Net;
-using BHJet_CoreGlobal;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -333,6 +330,25 @@ namespace BHJet_WebApi.Controllers
 
             // Instancia
             new CorridaRepositorio().RecusarOrdemServico(idCorrida, perfil.idColaboradorEmpresaSistema);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// LIBERAR OS
+        /// </summary>
+        /// /// <param name="idCorrida">long</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("liberar/{idCorrida:long}")]
+        public IHttpActionResult PostLiberarOS(long idCorrida)
+        {
+            // Busca profissional
+            var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Instancia
+            new CorridaRepositorio().LiberarOrdemServico(idCorrida, perfil.idColaboradorEmpresaSistema);
 
             // Return
             return Ok();

@@ -21,8 +21,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"--- Quantidade de chamados abertos esperando profissional 
 		                               select CD.idTipoProfissional AS TipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
 							                    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-							                    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
-								            where LGCD.idStatusCorrida = 4
+								            where CD.idStatusCorrida = 3
 								                group by CD.idTipoProfissional
 
 		                        --- Quantidade de motorista e motociclista disponiveis

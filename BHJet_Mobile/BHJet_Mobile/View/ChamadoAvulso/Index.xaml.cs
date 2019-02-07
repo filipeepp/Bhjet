@@ -178,10 +178,35 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             }
             finally
             {
-                UsuarioAutenticado.Instance.FinalizaAtendimento();
-                await ProcurandoChamadoPainel();
-                EfeitoPesquisaAtivada();
-                DoWorkAsyncInfiniteLoop();
+                await FinalizaAtendimento();
+            }
+        }
+
+        private async System.Threading.Tasks.Task FinalizaAtendimento()
+        {
+            UsuarioAutenticado.Instance.FinalizaAtendimento();
+            await ProcurandoChamadoPainel();
+            EfeitoPesquisaAtivada();
+            DoWorkAsyncInfiniteLoop();
+        }
+
+        protected async override void OnDisappearing()
+        {
+            try
+            {
+                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
+                {
+                    ViewModel.Loading = true;
+                    await ViewModel.LiberarCorrida();
+                }
+            }
+            catch (Exception e)
+            {
+                this.TrataExceptionMobile(e);
+            }
+            finally
+            {
+                await FinalizaAtendimento();
             }
         }
 

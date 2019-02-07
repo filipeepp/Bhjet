@@ -1,6 +1,8 @@
 ﻿using BHJet_Mobile.Infra;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
+using Plugin.Geolocator;
+using System;
 using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel.Motorista
@@ -116,6 +118,24 @@ namespace BHJet_Mobile.ViewModel.Motorista
                 // Load
                 Loading = false;
             }
+        }
+
+
+        public async Task SairApp()
+        {     
+            // Localizacao
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
+            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+            // Atualiza
+            await motoristaServico.AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
+            {
+                bitDisponivel = false,
+                idTipoProfissional = usuarioAutenticado.Tipo,
+                latitude = position.Latitude,
+                longitude = position.Longitude
+            });
         }
 
     }

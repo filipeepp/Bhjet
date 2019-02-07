@@ -53,5 +53,23 @@ namespace BHJet_Mobile.View.Motorista
                 this.TrataExceptionMobile(ex);
             }
         }
+
+        private async void Sair_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                // Atualizado dados
+                await ViewModel.SairApp();
+                UsuarioAutenticado.Instance.Sair();
+            }
+            catch (Exception ex)
+            {
+                this.TrataExceptionMobile(ex);
+            }
+            finally
+            {
+                App.Current.MainPage = new LoginPage();
+            }
+        }
     }
 }

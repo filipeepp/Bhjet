@@ -179,7 +179,7 @@ namespace BHJet_Mobile.ViewModel
         {
             try
             {
-                return await corridaServico.BuscaCorridaAberta(usuarioAutenticado.IDProfissional, usuarioAutenticado.Tipo);
+                return await corridaServico.BuscaCorridaAberta(usuarioAutenticado.IDProfissional ?? 0, usuarioAutenticado.Tipo);
             }
             catch
             {
@@ -189,8 +189,13 @@ namespace BHJet_Mobile.ViewModel
 
         public async Task RecusarCorrida()
         {
+            await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+        }
+
+        public async Task LiberarCorrida()
+        {
             if (usuarioAutenticado?.IDCorridaAtendimento != null)
-                await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+                await corridaServico.LiberarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
         }
     }
 }

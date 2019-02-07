@@ -76,17 +76,17 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-		/// <summary>
-		/// Busca Profissionais Disponiveis
-		/// </summary>
-		/// <param name="filtro">TipoProfissional</param>
-		/// <returns>UsuarioEntidade</returns>
-		public IEnumerable<OSCorridaEntidade> BuscaDetalheCorridaCliente(long clienteID)
-		{
-			using (var sqlConnection = this.InstanciaConexao())
-			{
-				// Query
-				string query = @"SELECT
+        /// <summary>
+        /// Busca Profissionais Disponiveis
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<OSCorridaEntidade> BuscaDetalheCorridaCliente(long clienteID)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT
 									Corrida.idCorrida AS NumeroOS,
 									Corrida.dtDataHoraInicio AS DataHoraInicio,
 									Corrida.decValorFinalizado AS ValorFinalizado,
@@ -98,46 +98,66 @@ namespace BHJet_Repositorio.Admin
 								WHERE 
 									Corrida.idCliente = @ClienteID";
 
-				// Execução
-				return sqlConnection.Query<OSCorridaEntidade>(query, new
-				{
-					ClienteID = clienteID,
-				});
-			}
-		}
+                // Execução
+                return sqlConnection.Query<OSCorridaEntidade>(query, new
+                {
+                    ClienteID = clienteID,
+                });
+            }
+        }
 
         /// <summary>
         /// Busca Corrida Aberta
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public CorridaEncontradaEntidade BuscaCorridaAberta(long colaborador,int tipo)
+        public CorridaEncontradaEntidade BuscaCorridaAberta(long colaborador, int tipo)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
-                string query = @"select top(1) CD.idCorrida as ID,
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    // Query
+                    string query = @"select top(1) CD.idCorrida as ID,
 							        CD.decValorComissaoNegociado as Comissao,
 							        E.vcRua + ' - ' + E.vcNumero + ', ' + E.vcBairro + ' / ' + E.vcCidade as EnderecoCompleto,
                                     C.vcNomeFantasia as NomeCliente
 							     from tblCorridas CD
-								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								     join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
                                     join tblClientes as C on (CD.idCliente = C.idCliente)
-                               left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
-								 where CD.idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0)
+                                    left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
+								 where CD.idStatusCorrida = 3
 										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
-                                        AND CR.idColaboradorEmpresaSistema IS NULL or (CR.idColaboradorEmpresaSistema != @profissional AND cr.idCorrida != cd.idCorrida)
+                                        AND (CD.idUsuarioColaboradorEmpresa IS NULL or CD.idUsuarioColaboradorEmpresa = @profissional)
+                                        AND (CR.idCorrida IS NULL OR  CR.idCorrida != CD.idCorrida)
 										order by CD.dtDataHoraRegistroCorrida DESC";
 
-                // Execução
-                return sqlConnection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
-                {
-                    tp = tipo,
-                    profissional = colaborador
-                });
+                    // Execução
+                    var corrida = trans.Connection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
+                    {
+                        tp = tipo,
+                        profissional = colaborador
+                    }, trans);
+
+                    // Trava corrida temporariamente
+                    string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 1, 
+                                                                      idUsuarioColaboradorEmpresa = @idCol
+                                                                where idCorrida = @corrida";
+                    trans.Connection.Execute(queryAceitaTemp, new
+                    {
+                        idCol = colaborador,
+                        corrida = corrida.ID
+                    }, trans);
+
+                    // Commit
+                    trans.Commit();
+
+                    // Return
+                    return corrida;
+                }
             }
         }
 
@@ -310,15 +330,54 @@ namespace BHJet_Repositorio.Admin
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
-                string query = @"INSERT INTO [tblCorridasRecusadas] VALUES (@corrida, @profissional)";
-
-                // Execução
-                sqlConnection.Execute(query, new
+                using (var trans = sqlConnection.BeginTransaction())
                 {
-                    corrida = idCorrida,
-                    profissional = profissional
+                    try
+                    {
+                        // Query recusar
+                        string query = @"INSERT INTO [tblCorridasRecusadas] VALUES (@corrida, @profissional)";
+                        trans.Connection.Execute(query, new
+                        {
+                            corrida = idCorrida,
+                            profissional = profissional
+                        }, trans);
+
+                        // Query STATUS
+                        string queryCorrida = @"update tblCorridas set idStatusCorrida  = 3, idUsuarioColaboradorEmpresa = null
+                                                                 where idCorrida = @id";
+                        trans.Connection.Execute(queryCorrida, new
+                        {
+                            id = idCorrida
+                        }, trans);
+
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  Liberar Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void LiberarOrdemServico(long idCorrida, long profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query STATUS
+                string queryCorrida = @"update tblCorridas set idUsuarioColaboradorEmpresa = @prof, idStatusCorrida  = 3 where idCorrida = @id";
+                // Executa
+                sqlConnection.Execute(queryCorrida, new
+                {
+                    prof = profissional,
+                    id = idCorrida
                 });
+
             }
         }
     }

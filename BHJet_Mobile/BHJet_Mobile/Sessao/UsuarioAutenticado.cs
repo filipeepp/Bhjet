@@ -1,4 +1,5 @@
 ﻿using BHJet_Enumeradores;
+using BHJet_Mobile.Infra.Database;
 using BHJet_Mobile.Servico.Motorista.Model;
 using System.Threading;
 
@@ -6,7 +7,7 @@ namespace BHJet_Mobile.Sessao
 {
     public interface IUsuarioAutenticado
     {
-        long IDProfissional { get; set; }
+        long? IDProfissional { get; set; }
         TipoProfissional Tipo { get; set; }
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
@@ -35,7 +36,7 @@ namespace BHJet_Mobile.Sessao
             }
         }
 
-        public long IDProfissional { get; set; }
+        public long? IDProfissional { get; set; }
 
         public TipoProfissional Tipo { get; set; }
 
@@ -68,6 +69,17 @@ namespace BHJet_Mobile.Sessao
         {
             Instance.IDCorridaAtendimento = null;
             Instance.StatusAplicatico = true;
+        }
+
+        public async void Sair()
+        {
+            using (var db = new Database())
+            {
+                await db.LimpaTabela("BHJetMotorista");
+            };
+            Instance.IDProfissional = null;
+            Instance.StatusAplicatico = false;
+            instance = null;
         }
     }
 }

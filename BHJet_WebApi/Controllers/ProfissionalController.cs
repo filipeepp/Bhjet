@@ -71,7 +71,7 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("{idProfissional:long}/localizacao")]
         [ResponseType(typeof(LocalizacaoProfissionalModel))]
-        public IHttpActionResult GetLocalizacaoMotoristaDisponiveil(long idProfissional)
+        public IHttpActionResult GetLocalizacaoMotoristaDisponivel(long idProfissional)
         {
             // Busca Dados resumidos
             var entidade = new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
@@ -96,7 +96,7 @@ namespace BHJet_WebApi.Controllers
         /// <returns>List<LocalizacaoProfissional></returns>
         [Authorize]
         [Route("{idProfissional:long}/localizacao")]
-        public IHttpActionResult PutlocalizacaoMotoristaDisponiveil(long idProfissional)
+        public IHttpActionResult PutlocalizacaoMotoristaDisponivel(long idProfissional)
         {
             // Busca Dados resumidos
             new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);

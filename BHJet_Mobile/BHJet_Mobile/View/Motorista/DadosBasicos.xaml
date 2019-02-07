@@ -25,6 +25,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -53,6 +54,9 @@
                         <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="AtualizaDados_Clicked" 
                                 Text="Atualizar dados" ></Button>
 
+                        <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="Red" TextColor="White" Margin="20, 5, 20, 0" Clicked="Sair_Clicked" 
+                            Text="Sair/Logoff" ></Button>
+                        
                         <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="9" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
                         
                     </Grid>

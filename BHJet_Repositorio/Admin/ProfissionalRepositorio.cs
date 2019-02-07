@@ -680,7 +680,7 @@ namespace BHJet_Repositorio.Admin
                     // Query
                     string query = @"update tblColaboradoresEmpresaDisponiveis 
 	                                set bitDisponivel = @disponivel, 
-	                                    geoPosicao = (select geometry::Point(@lat, @log, 4326)),
+	                                    geoPosicao = (select geometry::Point(@log, @lat, 4326)),
 		                                idTipoProfissional = @tipoProfissional1
                                   where idColaboradorEmpresaSistema = @id";
 
@@ -705,7 +705,7 @@ namespace BHJet_Repositorio.Admin
                                                             VALUES
                                                                   (@id
                                                                   ,@tipoProfissional1
-                                                                  ,(select geometry::Point(@lat, @log, 4326))
+                                                                  ,(select geometry::Point(@log, @lat, 4326))
                                                                   ,@disponivel)";
 
                     // Query Multiple
