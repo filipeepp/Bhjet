@@ -61,6 +61,10 @@
                             <BoxView Grid.Row="1" Grid.Column="0"  Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
                             <Image Grid.Row="2" Grid.Column="0" Margin="0,-5,0,14"  x:Name="findIcon" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Source="search.png"  WidthRequest="90" HeightRequest="40" />
+
+                            <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"  
+                                           IsVisible="{Binding Loading}"/>
+                            
                         </Grid>
                     </Frame>
 
@@ -109,13 +113,15 @@
                                 </Image.GestureRecognizers>
                             </Image>
 
+                            <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="7" Grid.Column="0" Grid.ColumnSpan="2" 
+                                           IsVisible="{Binding Loading}"/>
+
                         </Grid>
 
                     </Frame>
                 </StackLayout>
 
-                <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
-
+             
             </StackLayout>
 
             <local:Menu></local:Menu>

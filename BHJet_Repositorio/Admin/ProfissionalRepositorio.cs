@@ -323,6 +323,24 @@ namespace BHJet_Repositorio.Admin
                                 }, trans);
                         }
 
+                        // Atualiza senha
+                        if (!string.IsNullOrWhiteSpace(profissional.Senha))
+                        {
+                            string queryUpdateUsuario = @"update tblUsuarios set vbPassword = @pass where idUsuario = (select idUsuario from tblComissaoColaboradorEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                            trans.Connection.Execute(queryUpdateUsuario, new
+                            {
+                                pass = new UsuarioRepositorio().RetornaSenhaEncriptada(profissional.Senha),
+                                idCol = profissional.ID
+                            }, trans);
+                        }
+                        // Atualiza status
+                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status where idUsuario = (select idUsuario from tblComissaoColaboradorEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                        trans.Connection.Execute(queryUpdateStatus, new
+                        {
+                            status = profissional.StatusUsuario,
+                            idCol = profissional.ID
+                        }, trans);
+
                         // Commit
                         trans.Commit();
                     }
@@ -493,7 +511,8 @@ namespace BHJet_Repositorio.Admin
                             ClienteSelecionado = null,
                             idTipoUsuario = TipoUsuario.Profissional,
                             vcEmail = profissional.Email,
-                            vbIncPassword = profissional.Senha
+                            vbIncPassword = profissional.Senha,
+                            ColaboradorSelecionado = idColaborador
                         });
                         #endregion
 

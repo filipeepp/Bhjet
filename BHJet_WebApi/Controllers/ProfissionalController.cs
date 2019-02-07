@@ -264,6 +264,8 @@ namespace BHJet_WebApi.Controllers
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
                 PontoReferencia = model.PontoReferencia,
+                Senha = model.Senha,
+                StatusUsuario = model.Status,
                 DocumentoRG = model.DocumentoRG,
                 Comissoes = model.Comissoes != null ? model.Comissoes.Select(c => new ProfissionalComissaoEntidade()
                 {

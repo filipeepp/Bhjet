@@ -38,6 +38,10 @@ namespace BHJet_Admin.Controllers
                 // Busca Usuarios
                 var model = usuariosServico.BuscaListaUsuarios(trechoPqs);
 
+                // Tira profissionais da lista
+                if (model != null && model.Any())
+                    model = model.Where(usu => usu.TipoUsuario != BHJet_Enumeradores.TipoUsuario.Profissional).ToArray();
+
                 // Return
                 return View(model.Select(usu => new UsuarioModel()
                 {

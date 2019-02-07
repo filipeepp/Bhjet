@@ -77,6 +77,7 @@ namespace BHJet_Admin.Controllers
                         EdicaoCadastro = true,
                         DocumentoRG = profissional.DocumentoRG,
                         Senha = "",
+                        Situacao = profissional.Status,
                         Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
                         {
                             ID = c.ID,
@@ -131,9 +132,10 @@ namespace BHJet_Admin.Controllers
                 {
                     model.Comissao.All(x =>
                     {
-                        if (x.VigenciaInicio < DateTime.Now.Date)
-                            throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
-                        else if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
+                        //if (x.VigenciaInicio < DateTime.Now.Date)
+                        //    throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
+                        //else
+                        if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
                         else if (x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
                             throw new Exception($"Preencha ao menos uma comissão para o profissional.");
@@ -186,7 +188,11 @@ namespace BHJet_Admin.Controllers
                 if (model.EdicaoCadastro)
                     profissionalServico.AtualizaDadosProfissional(entidade); // Atualiza dados do profissional
                 else
+                {
+                    if (string.IsNullOrWhiteSpace(model.Senha))
+                        throw new Exception($"Na inclusão de um motorista, o campo SENHA é de preenchimento obrigatório.");
                     profissionalServico.IncluirProfissional(entidade); // Atualiza dados do profissional
+                }
 
                 this.MensagemSucesso("Profissional atualizado com sucesso.");
 

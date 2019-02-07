@@ -207,7 +207,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 new StoreCameraMediaOptions
                 {
                     SaveToAlbum = true,
-                    Directory = "Demo"
+                    Directory = "Pictures"
                 });
 
             // Valida arquivo foto

@@ -13,9 +13,16 @@
             </StackLayout>
 
             <ScrollView BackgroundColor="Transparent" VerticalOptions="FillAndExpand" >
-                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
 
-                    <ListView CachingStrategy="RecycleElement" VerticalOptions="FillAndExpand"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView  Grid.Row="0" CachingStrategy="RecycleElement" VerticalOptions="FillAndExpand"
                           ItemsSource="{Binding ListaLogs}" HasUnevenRows="True" SeparatorVisibility="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -81,14 +88,15 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                </StackLayout>
+                    <control:ActivityIndicator Grid.Row="0" IsVisible="{Binding Loading}"/>
+                    
+                </Grid>
             </ScrollView>
 
             <BoxView Margin="20,0,20,0" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
             <local:Menu></local:Menu>
 
-            <control:ActivityIndicator IsVisible="{Binding Loading}"/>
 
         </StackLayout>
 
