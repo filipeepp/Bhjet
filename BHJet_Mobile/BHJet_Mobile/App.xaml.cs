@@ -2,6 +2,7 @@
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View;
+using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
 using System;
@@ -16,7 +17,7 @@ namespace BHJet_Mobile
         public App()
         {
             InitializeComponent();
-            
+
             try
             {
                 var VM = new LoginViewModel(new AutenticacaoServico(), new MotoristaServico(), UsuarioAutenticado.Instance);
@@ -27,7 +28,10 @@ namespace BHJet_Mobile
                     if (resultado)
                     {
                         await VM.ExecutarLogin();
-                        MainPage = new TipoVeiculo();
+                        if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+                            MainPage = new Index();
+                        else
+                            MainPage = new TipoVeiculo();
                     }
                     else
                         MainPage = new LoginPage();

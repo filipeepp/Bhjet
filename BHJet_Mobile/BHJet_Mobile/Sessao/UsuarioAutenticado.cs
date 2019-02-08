@@ -57,6 +57,7 @@ namespace BHJet_Mobile.Sessao
             Instance.Tipo = perfil.TipoProfissional;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
+            Instance.IDCorridaAtendimento = perfil.idCorrida;
         }
 
         public void CancelaPesquisaChamado()
@@ -78,6 +79,7 @@ namespace BHJet_Mobile.Sessao
                 await db.LimpaTabela("BHJetMotorista");
             };
             Instance.IDProfissional = null;
+            Instance.IDCorridaAtendimento = null;
             Instance.StatusAplicatico = false;
             instance = null;
         }

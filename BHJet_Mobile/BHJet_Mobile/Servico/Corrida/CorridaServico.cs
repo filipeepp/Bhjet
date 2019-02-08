@@ -15,7 +15,7 @@ namespace BHJet_Mobile.Servico.Corrida
         Task RegistraChegaLogCorrida(long idEnderecoCorrida);
         Task<OcorrenciaModel[]> BuscaOcorrencias();
         Task EncerrarOrdemServico(long? statusCorrida, long idCorrida, EncerrarCorridaFiltro filtro);
-        Task AtualizaOcorrenciaCorrida(long statusCorrida, long idCorrida);
+        Task AtualizaOcorrenciaCorrida(long statusCorrida, long idLog, long idCorrida);
         Task RecusarOrdemServico(long idCorrida);
         Task LiberarOrdemServico(long idCorrida);
     }
@@ -72,10 +72,10 @@ namespace BHJet_Mobile.Servico.Corrida
         /// Encerrar OS
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public async Task AtualizaOcorrenciaCorrida(long statusCorrida, long idCorrida)
+        public async Task AtualizaOcorrenciaCorrida(long statusCorrida, long idLog, long idCorrida)
         {
             // status/{idStatus:long}/{idCorrida:long}
-            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutOcorrenciaCorrida, statusCorrida, idCorrida)}"), "");
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutOcorrenciaCorrida, statusCorrida, idLog, idCorrida)}"), "");
         }
 
         /// <summary>

@@ -31,7 +31,7 @@
             public const string PutChegada = "/Corrida/chegada/{0}/";
             public const string GetOcorrencias = "/Corrida/ocorrencias";
             public const string PutEncerrarCorrida = "/Corrida/encerrar/{0}/ocorrencia/{1}";
-            public const string PutOcorrenciaCorrida = "/Corrida/ocorrencias/{0}/{1}";
+            public const string PutOcorrenciaCorrida = "/Corrida/ocorrencias/{0}/log/{1}/corrida/{2}";
             public const string PostRecusarCorrida = "/Corrida/recusar/{0}";
             public const string PostLiberarCorrida = "/Corrida/liberar/{0}";
         }

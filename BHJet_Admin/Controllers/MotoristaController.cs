@@ -103,6 +103,8 @@ namespace BHJet_Admin.Controllers
                         EdicaoCadastro = false,
                         ID = 0,
                         Bairro = "",
+                        Senha = "",
+                        Email = "",
                         Comissao = new NovoMotoristaComissaoModel[]
                           {
                                MontaComissaoPadrao()

@@ -18,13 +18,12 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"select CD.idCorrida ,
-							EC.geoPosicao.STY  as vcLatitude, 
-							EC.geoPosicao.STX  as vcLongitude
-							 from tblCorridas CD
-								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-								join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
-								join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
-									where LGCD.idStatusCorrida = @StatusCorrida
+							        EC.geoPosicao.STY  as vcLatitude, 
+							        EC.geoPosicao.STX  as vcLongitude
+							    from tblCorridas CD
+								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+							  where cd.idStatusCorrida = @StatusCorrida
 										AND CD.idTipoProfissional = @TipoProfissional";
 
                 // Execução
@@ -61,7 +60,7 @@ namespace BHJet_Repositorio.Admin
                                     EC.vcObservacao AS Observacao,
                                     PT.vcCaminhoProtocolo as CaminhoProtocolo
 							    from tblCorridas CD
-								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
@@ -269,19 +268,43 @@ namespace BHJet_Repositorio.Admin
         /// Busca Ocorrencias
         /// </summary>
         /// <returns>OcorrenciaEntidade</returns>
-        public void AtualizaOcorrenciasCorrida(int ocorrencia, long idCorrida)
+        public void AtualizaOcorrenciasCorrida(int ocorrencia, long idLogCorrida, long idCorrida)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
-                string query = @"update tblCorridas set idStatusCorrida = @status where idCorrida = @id";
-
-                // Execução
-                sqlConnection.Execute(query, new
+                using (var trans = sqlConnection.BeginTransaction())
                 {
-                    id = idCorrida,
-                    status = ocorrencia
-                });
+                    try
+                    {
+                        // Query
+                        string query = @"update tblCorridas set idStatusCorrida = @status where idCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idCorrida,
+                            status = ocorrencia
+                        }, trans);
+
+                        // Query
+                        query = @"update tblLogCorrida set idStatusCorrida = @status where idCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idCorrida,
+                            status = ocorrencia
+                        }, trans);
+
+                        // Commit
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 

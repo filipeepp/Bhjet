@@ -288,11 +288,11 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [Route("ocorrencias/{idOcorrencia:int}/{idCorrida:long}")]
-        public IHttpActionResult PutTipoOcorrenciaCorrida(int idOcorrencia, long idCorrida)
+        [Route("ocorrencias/{idOcorrencia:int}/log/{logCorrida:long}/corrida/{idCorrida:long}")]
+        public IHttpActionResult PutTipoOcorrenciaCorrida(int idOcorrencia, long logCorrida, long idCorrida)
         {
             // Busca Dados detalhados da corrida/OS
-            new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, idCorrida);
+            new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, logCorrida, idCorrida);
 
             // Return
             return Ok();

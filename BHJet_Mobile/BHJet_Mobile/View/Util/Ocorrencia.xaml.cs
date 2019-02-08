@@ -14,10 +14,10 @@ namespace BHJet_Mobile.View.Util
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Ocorrencia : ContentPage
     {
-        public Ocorrencia(long idCorrida)
+        public Ocorrencia(long idCorrida, long idLog)
         {
             InitializeComponent();
-            ViewModel = new OcorrenciaViewModel(new CorridaServico(), idCorrida);
+            ViewModel = new OcorrenciaViewModel(new CorridaServico(), idCorrida, idLog);
             BindingContext = ViewModel;
         }
 

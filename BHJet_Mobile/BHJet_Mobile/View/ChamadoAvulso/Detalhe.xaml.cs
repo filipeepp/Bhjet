@@ -151,7 +151,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 var id = (long)idEnderecoCorridaParam;
 
                 // Registra Ocorrencia
-                await Navigation.PushModalAsync(new Ocorrencia(ViewModel.idCorrida));
+                await Navigation.PushModalAsync(new Ocorrencia(ViewModel.idCorrida, id));
             }
             catch (Exception ex)
             {

@@ -405,6 +405,7 @@ namespace BHJet_WebApi.Controllers
                 Email = perfil.vcEmail,
                 NomeCompleto = perfil.vcNomeCompleto,
                 idRegistroDiaria = perfil.idRegistroDiaria,
+                idCorrida = perfil.IDCorrida,
                 TipoProfissional = perfil.idTipoProfissional
             });
         }

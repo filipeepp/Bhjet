@@ -299,7 +299,7 @@ namespace BHJet_Admin.Controllers
         public JsonResult BuscaProfissionais(string trechoPesquisa, string tipoProfissional)
         {
             // Recupera dados
-            var entidade = profissionalServico.BuscaProfissionaisDisponiveis(trechoPesquisa, (TipoProfissional)Enum.Parse(typeof(TipoProfissional), tipoProfissional));
+            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa);
 
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()

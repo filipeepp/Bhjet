@@ -43,6 +43,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $("#TelefoneResidencial").mask("(00) 0000-0000");
     $("#TelefoneCelular").mask("(00) 0000-00009");
 
+    if ($("#EdicaoCadastro").val() === false) {
+        $("#Senha").val("");
+    }
+
     var cpfMascara = function (val) {
         return val.replace(/\D/g, '').length > 11 ? '00.000.000/0000-00' : '000.000.000-009';
     },

@@ -5,21 +5,19 @@ using BHJet_Mobile.Infra.Database.Tabelas;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Servico.Corrida.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel.Corrida
 {
     public class OcorrenciaViewModel : PropertyChangedClass
     {
-        public OcorrenciaViewModel(ICorridaServico _corridaServico, long idCorrida)
+        public OcorrenciaViewModel(ICorridaServico _corridaServico, long idCorrida, long idLog)
         {
             corridaServico = _corridaServico;
             IDCorrida = idCorrida;
+            IDLog = idLog;
         }
 
         private readonly ICorridaServico corridaServico;
@@ -34,6 +32,20 @@ namespace BHJet_Mobile.ViewModel.Corrida
             set
             {
                 _IDCorrida = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _IDLog;
+        public long IDLog
+        {
+            get
+            {
+                return _IDLog;
+            }
+            set
+            {
+                _IDLog = value;
                 OnPropertyChanged();
             }
         }
@@ -98,7 +110,7 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 var ocorrencia = ListaOcorrencias.Where(oc => oc.StatusCorrida == idOcorrencia).FirstOrDefault();
 
                 // Grava ocorrencia
-                await corridaServico.AtualizaOcorrenciaCorrida(idOcorrencia, IDCorrida);
+                await corridaServico.AtualizaOcorrenciaCorrida(idOcorrencia, IDLog, IDCorrida);
 
                 // Verificacoes
                 if (ocorrencia.Finaliza || ocorrencia.Cancela)
