@@ -42,8 +42,8 @@ namespace BHJet_Servico
 		/// <summary>
 		/// Base URL
 		/// </summary>
-		//protected readonly string BaseUrl = ServicoRotas.Base;
-		protected readonly string BaseUrl = "http://localhost:50435/";
+		protected readonly string BaseUrl = ServicoRotas.Base;
+		//protected readonly string BaseUrl = "http://localhost:50435/";
 
         protected string Get(Uri url)
         {
