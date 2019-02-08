@@ -37,7 +37,7 @@ namespace BHJet_Repositorio.Admin
 		/// </summary>
 		/// <param name="filtro">TipoProfissional</param>
 		/// <returns>TarifaDTO</returns>
-		public IEnumerable<TarifaEntidade> BuscaTarfaPadraoAtiva(int codigoTipoVeiculo)
+		public TarifaEntidade BuscaTarfaPadraoAtiva(int codigoTipoVeiculo)
 		{
 			using (var sqlConnection = this.InstanciaConexao())
 			{
@@ -58,7 +58,7 @@ namespace BHJet_Repositorio.Admin
 										bitAtivo = 1";
 
 				// Execução
-				return sqlConnection.Query<TarifaEntidade>(query, new { TipoVeiculo = codigoTipoVeiculo });
+				return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { TipoVeiculo = codigoTipoVeiculo });
 			}
 		}
 	}
