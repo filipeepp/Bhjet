@@ -65,19 +65,19 @@ namespace BHJet_WebApi.Controllers
 				return StatusCode(System.Net.HttpStatusCode.NoContent);
 
 			// Return
-			return Ok(entidade.Select(trf => new TarifaDTO()
+			return Ok(new TarifaDTO()
 			{
-				idTarifario = trf.idTarifario,
-				vcObservacao = trf.vcObservacao,
-				decValorDiaria = trf.decValorDiaria,
+				idTarifario = entidade.idTarifario,
+				vcObservacao = entidade.vcObservacao,
+				decValorDiaria = entidade.decValorDiaria,
 				//VigenciaInicio = trf.VigenciaInicio,
 				//VigenciaFim = trf.VigenciaFim,
-				decFranquiaKMDiaria = trf.decFranquiaKMDiaria,
-				decValorKMAdicionalDiaria = trf.decValorKMAdicionalDiaria,
-				decFranquiaKMMensalidade = trf.decFranquiaKMMensalidade,
-				decValorKMAdicionalMensalidade = trf.decValorKMAdicionalMensalidade
+				decFranquiaKMDiaria = entidade.decFranquiaKMDiaria,
+				decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria,
+				decFranquiaKMMensalidade = entidade.decFranquiaKMMensalidade,
+				decValorKMAdicionalMensalidade = entidade.decValorKMAdicionalMensalidade
 				//Ativo = trf.Ativo
-			}));
+			});
 		}
 	}
 }
