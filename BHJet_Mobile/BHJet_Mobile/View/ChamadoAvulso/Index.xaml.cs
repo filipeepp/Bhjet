@@ -206,7 +206,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             }
             finally
             {
-                await FinalizaAtendimento();
+                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
+                    await FinalizaAtendimento();
             }
         }
 
