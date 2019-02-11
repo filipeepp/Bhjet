@@ -57,7 +57,7 @@
                         <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="Red" TextColor="White" Margin="20, 5, 20, 0" Clicked="Sair_Clicked" 
                             Text="Sair/Logoff" ></Button>
                         
-                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="9" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="11" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
                         
                     </Grid>
                 </Frame>

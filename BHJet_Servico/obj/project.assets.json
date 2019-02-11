@@ -82,12 +82,10 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -284,23 +282,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Diogo Nominato\\.nuget\\packages\\": {},
+    "C:\\Users\\lhsilva\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "projectUniqueName": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
       "projectName": "BHJet_Servico",
-      "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
-      "packagesPath": "C:\\Users\\Diogo Nominato\\.nuget\\packages\\",
-      "outputPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Servico\\obj\\",
+      "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "packagesPath": "C:\\Users\\lhsilva\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Diogo Nominato\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lhsilva\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -308,22 +306,26 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "http://api.nuget.org/v3/index.json": {},
+        "http://nuget/nuget/dtp-debug/": {},
+        "http://nuget/nuget/dtp/": {},
+        "http://nuget/nuget/produtos-debug/": {},
+        "http://nuget/nuget/produtos/": {}
       },
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj": {
-              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj"
+            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj": {
+              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj"
             },
-            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
+            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             },
-            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
-              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
+            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
+              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
             },
-            "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
-              "projectPath": "E:\\Repositorio Visual Studio\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
+            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
+              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
             }
           }
         }

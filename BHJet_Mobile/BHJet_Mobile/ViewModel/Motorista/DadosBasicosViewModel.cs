@@ -122,7 +122,10 @@ namespace BHJet_Mobile.ViewModel.Motorista
 
 
         public async Task SairApp()
-        {     
+        {
+            // Load
+            Loading = true;
+
             // Localizacao
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 50;
@@ -136,6 +139,9 @@ namespace BHJet_Mobile.ViewModel.Motorista
                 latitude = position.Latitude,
                 longitude = position.Longitude
             });
+
+            // Load
+            Loading = false;
         }
 
     }
