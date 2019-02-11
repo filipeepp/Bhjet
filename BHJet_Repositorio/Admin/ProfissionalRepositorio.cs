@@ -664,7 +664,7 @@ namespace BHJet_Repositorio.Admin
 	                                       CE.vcNomeCompleto,
 	                                       CE.vcEmail,
 	                                       CE.idTipoProfissional,
-                                           (select idCorrida from tblCorridas where idUsuarioColaboradorEmpresa = 5 
+                                           (select idCorrida from tblCorridas where idUsuarioColaboradorEmpresa = CE.idColaboradorEmpresaSistema
 										    and idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitFinaliza = 0 and bitCancela = 0)) IDCorrida
 	                                from tblUsuarios US
 		                               join tblDOMTiposUsuario TS on (US.idTipoUsuario = TS.idTipoUsuario)

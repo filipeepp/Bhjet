@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.Servico.Autenticacao;
+﻿
+using BHJet_Mobile.Servico.Autenticacao;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View;
@@ -29,7 +30,7 @@ namespace BHJet_Mobile
                     {
                         await VM.ExecutarLogin();
                         if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
-                            MainPage = new Index();
+                            App.Current.MainPage = new Detalhe();
                         else
                             MainPage = new TipoVeiculo();
                     }

@@ -1,6 +1,7 @@
 ﻿using BHJet_Mobile.Servico.Autenticacao;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
+using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
 using System;
@@ -56,7 +57,7 @@ namespace BHJet_Mobile.View
                 this.TrataExceptionMobile(error);
             }
         }
-        
+
         private async System.Threading.Tasks.Task Logar()
         {
             ViewModel.Loading = true;
@@ -73,7 +74,10 @@ namespace BHJet_Mobile.View
             await ViewModel.ExecutarLogin();
 
             // Redirect Seleção de Tipo de veiculo
-            App.Current.MainPage = new TipoVeiculo();
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+                App.Current.MainPage = new Detalhe();
+            else
+                App.Current.MainPage = new TipoVeiculo();
         }
     }
 }
