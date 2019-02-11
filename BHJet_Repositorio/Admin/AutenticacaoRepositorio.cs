@@ -25,8 +25,9 @@ namespace BHJet_Repositorio.Admin
                 // Query
                 string query = @"select * from tblUsuarios where
                                     vcEmail = @usuemaillogin and 
-                                    vbPassword = @usupass and 
-                                    bitAtivo = 1";
+                                    vbPassword = @usupass";
+                                    // and 
+                                    //bitAtivo = 1";
 
                 if (filtro.usuarioTipo != null)
                     query += " and idTipoUsuario = @usutp";

@@ -326,7 +326,7 @@ namespace BHJet_Repositorio.Admin
                         // Atualiza senha
                         if (!string.IsNullOrWhiteSpace(profissional.Senha))
                         {
-                            string queryUpdateUsuario = @"update tblUsuarios set vbPassword = @pass where idUsuario = (select idUsuario from tblComissaoColaboradorEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                            string queryUpdateUsuario = @"update tblUsuarios set vbPassword = @pass where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
                             trans.Connection.Execute(queryUpdateUsuario, new
                             {
                                 pass = new UsuarioRepositorio().RetornaSenhaEncriptada(profissional.Senha),
@@ -334,7 +334,7 @@ namespace BHJet_Repositorio.Admin
                             }, trans);
                         }
                         // Atualiza status
-                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status where idUsuario = (select idUsuario from tblComissaoColaboradorEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
                         trans.Connection.Execute(queryUpdateStatus, new
                         {
                             status = profissional.StatusUsuario,
