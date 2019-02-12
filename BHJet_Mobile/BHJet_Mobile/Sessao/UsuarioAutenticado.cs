@@ -74,6 +74,7 @@ namespace BHJet_Mobile.Sessao
 
         public async void Sair()
         {
+            Instance.CancelaPesquisaChamado();
             using (var db = new Database())
             {
                 await db.LimpaTabela("BHJetMotorista");

@@ -94,7 +94,6 @@ namespace BHJet_Admin.Models.Dashboard
         }
 
         private string _TipoProfissional;
-        [Required(ErrorMessage = "Tipo de Veículo obrigatório.")]
         public string TipoProfissional
         {
             get

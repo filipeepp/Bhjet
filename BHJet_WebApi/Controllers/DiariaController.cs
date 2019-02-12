@@ -146,12 +146,16 @@ namespace BHJet_WebApi.Controllers
         {
             // Variaveis
             var id = long.Parse(UsuarioAutenticado.LoginID);
+            var diaria = new DiariaRepositorio();
 
             // Busca ID Profissional
             var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
 
+            // Cadastra turno
+            diaria.CadastraDadosTurno(filtro, id);
+
             // Busca verificação
-            var turno = new DiariaRepositorio().BuscaDadosTurno(idProfissional);
+            var turno = diaria.BuscaDadosTurno(idProfissional);
 
             // Retorna
             return Ok(turno);

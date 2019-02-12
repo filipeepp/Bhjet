@@ -51,7 +51,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         protected override void OnAppearing()
         {
-
             try
             {
                 // Carrega Inicio
@@ -81,7 +80,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
                 await System.Threading.Tasks.Task.Run(() =>
                 {
-                    Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+                    Device.StartTimer(TimeSpan.FromSeconds(10), () =>
                    {
                        // Verifica se pesquisa esta ativa
                        if (UsuarioAutenticado.Instance.StatusAplicatico)
@@ -90,12 +89,16 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
 
                            // Busca Corrida - Diaria
-                           if (ViewModel.BuscaCorrida())
+                           var resultado = ViewModel.BuscaCorrida();
+                           if (resultado.Key)
                            {
                                Device.BeginInvokeOnMainThread(async () =>
                                {
-                                   // Atualiza tela
-                                   await ChamadoEncontradoPainel();
+                                   if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                                       App.Current.MainPage = new DiariaDeBordo();
+                                   else
+                                       // Atualiza tela
+                                       await ChamadoEncontradoPainel();
                                });
 
                                // Encerra busca
@@ -119,19 +122,12 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             // Pesquisa Ativada
             UsuarioAutenticado.Instance.StatusAplicatico = true;
-
-            // Animação pesquisa ativa
-            //if (findIcon.AnimationIsRunning("RotateTo"))
-            //    ViewExtensions.CancelAnimations(findIcon);
-            //else
-            //{
             this.AbortAnimation("PesquisaIcon");
             new Animation {
                                  { 0, 0.5, new Animation (v => findIcon.Scale = v, 1, 2) },
                                  { 0, 1, new Animation (v => findIcon.Rotation = v, 0, 360) },
                                  { 0.5, 1, new Animation (v => findIcon.Scale = v, 2, 1) }
                               }.Commit(this, "PesquisaIcon", 16, 4000, null, (v, c) => findIcon.Rotation = 0, () => true);
-            //}
 
             // Altera Label
             lblStatus.Text = "ONLINE";
@@ -147,8 +143,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             UsuarioAutenticado.Instance.StatusAplicatico = false;
 
             // Cancela animação
-            //if (findIcon.AnimationIsRunning("RotateTo"))
-            //    ViewExtensions.CancelAnimations(findIcon);
             this.AbortAnimation("PesquisaIcon");
             // Altera Label
             lblStatus.Text = "OFFLINE";
@@ -194,11 +188,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             try
             {
-                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
-                {
-                    ViewModel.Loading = true;
-                    await ViewModel.LiberarCorrida();
-                }
+                ViewModel.Loading = true;
+                await ViewModel.LiberarCorrida();
             }
             catch (Exception e)
             {

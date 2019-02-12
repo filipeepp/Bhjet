@@ -11,6 +11,10 @@ namespace BHJet_Mobile.Droid.DependencyService
         {
             try
             {
+                // Variavel
+                latitude = latitude.Replace(",", ".");
+                longitude = longitude.Replace(",", ".");
+
                 // Abre Waze
                 string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
 

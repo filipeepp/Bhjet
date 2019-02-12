@@ -1,9 +1,11 @@
-﻿using BHJet_Mobile.Infra;
+﻿using BHJet_Enumeradores;
+using BHJet_Mobile.Infra;
 using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Servico.Corrida.Model;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Servico.Motorista.Model;
 using BHJet_Mobile.Sessao;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BHJet_Mobile.ViewModel
@@ -101,7 +103,7 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        public bool BuscaCorrida()
+        public KeyValuePair<bool, TipoContrato> BuscaCorrida()
         {
             try
             {
@@ -116,7 +118,7 @@ namespace BHJet_Mobile.ViewModel
                 if (perfil != null && perfil.idRegistroDiaria != null)
                 {
                     usuarioAutenticado.SetPerfil(perfil);
-                    return false;
+                    return new KeyValuePair<bool, TipoContrato>(true, TipoContrato.ContratoLocacao);
                 }
                 else // Se nao - busca Corrida
                 {
@@ -141,14 +143,14 @@ namespace BHJet_Mobile.ViewModel
                             Comissao = corrida.Comissao.ToString("C"),
                             DestinoInicial = corrida.EnderecoCompleto
                         };
-
-                        return true;
+                        // Return
+                        return new KeyValuePair<bool, TipoContrato>(true, TipoContrato.ChamadosAvulsos);
                     }
                     else
                     {
                         IDCorridaEncontrada = null;
                         usuarioAutenticado.IDCorridaAtendimento = null;
-                        return false;
+                        return new KeyValuePair<bool, TipoContrato>(false, TipoContrato.ChamadosAvulsos);
                     }
                 }
             }
@@ -189,13 +191,20 @@ namespace BHJet_Mobile.ViewModel
 
         public async Task RecusarCorrida()
         {
-            await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+            if (IDCorridaEncontrada != null)
+            {
+                await corridaServico.RecusarOrdemServico(IDCorridaEncontrada ?? 0);
+                IDCorridaEncontrada = null;
+            }
         }
 
         public async Task LiberarCorrida()
         {
-            if (usuarioAutenticado?.IDCorridaAtendimento != null)
-                await corridaServico.LiberarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
+            if (IDCorridaEncontrada != null)
+            {
+                await corridaServico.LiberarOrdemServico(IDCorridaEncontrada ?? 0);
+                IDCorridaEncontrada = null;
+            }
         }
     }
 }

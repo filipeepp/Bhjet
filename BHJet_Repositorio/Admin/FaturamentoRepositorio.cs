@@ -55,7 +55,7 @@ namespace BHJet_Repositorio.Admin
 	                                           P.decValorComissaoNegociado as decValorComissao
 	                                        from tblCorridas as P
 	                                        where P.dtDataHoraInicio BETWEEN  @dataInicio AND @dataFim
-                                        	  and P.dtDataHoraTermino is not null 
+                                        	  and P.idStatusCorrida IN (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 1 or bitFinaliza = 1) 
                                               and P.idCorrida not in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
                                               %clienteCondition%";
 

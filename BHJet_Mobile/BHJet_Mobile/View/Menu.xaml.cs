@@ -52,7 +52,8 @@ namespace BHJet_Mobile.View
 
         private void EstiloMenu()
         {
-            if(UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+            if(UsuarioAutenticado.Instance.IDCorridaAtendimento != null ||
+                UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
                 this.btnStatus.BackgroundColor = Color.Green;
             else if (!UsuarioAutenticado.Instance.StatusAplicatico)
                 this.btnStatus.BackgroundColor = Color.Red;

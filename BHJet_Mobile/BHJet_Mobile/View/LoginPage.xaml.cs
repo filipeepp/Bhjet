@@ -2,6 +2,7 @@
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.ChamadoAvulso;
+using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
 using System;
@@ -76,6 +77,8 @@ namespace BHJet_Mobile.View
             // Redirect Seleção de Tipo de veiculo
             if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
                 App.Current.MainPage = new Detalhe();
+            else if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                App.Current.MainPage = new DiariaDeBordo();
             else
                 App.Current.MainPage = new TipoVeiculo();
         }

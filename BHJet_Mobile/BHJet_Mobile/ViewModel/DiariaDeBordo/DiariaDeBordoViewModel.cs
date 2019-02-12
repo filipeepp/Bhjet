@@ -76,8 +76,15 @@ namespace BHJet_Mobile.ViewModel.DiariaDeBordo
                 // Load
                 Loading = true;
 
+                // Validacao
+                if (string.IsNullOrWhiteSpace(TurnoItem.InicioJornada) && string.IsNullOrWhiteSpace(TurnoItem.KMInicio) &&
+                    string.IsNullOrWhiteSpace(TurnoItem.InicioAlmoco) && string.IsNullOrWhiteSpace(TurnoItem.KMAlmoco) &&
+                    string.IsNullOrWhiteSpace(TurnoItem.FimAlmoco) && string.IsNullOrWhiteSpace(TurnoItem.KMFimAlmoco) &&
+                    string.IsNullOrWhiteSpace(TurnoItem.FimJornada) && string.IsNullOrWhiteSpace(TurnoItem.KMFim))
+                    throw new ErrorException("Favor preencher os dados de bordo antes de prosseguir.");
+
                 // Atualiza dados diaria de bordo
-               await diariaServico.AtualizaTurno(new Servico.Diaria.Model.TurnoModel()
+                await diariaServico.AtualizaTurno(new Servico.Diaria.Model.TurnoModel()
                 {
                     KMFim = TurnoItem.KMFim,
                     DataFim = TurnoItem.FimJornada,

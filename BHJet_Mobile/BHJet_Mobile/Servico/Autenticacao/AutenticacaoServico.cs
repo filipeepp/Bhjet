@@ -59,10 +59,9 @@ namespace BHJet_Mobile.Servico.Autenticacao
                         // Return model
                         return autenticado;
                     case System.Net.HttpStatusCode.Unauthorized:
-                        throw new UnauthorizedAccessException();
+                        throw new ErrorException("Usuário desativado ou sem permissão de acesso.");
                     default:
-                        var teste = DeserializaResponse(resposta, Mensagem.Erro.ErroPadrao);
-                        throw new UnauthorizedAccessException(teste);
+                        throw new ErrorException(DeserializaResponse(resposta, Mensagem.Erro.ErroPadrao));
                 }
             }
         }

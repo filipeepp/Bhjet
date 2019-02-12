@@ -142,14 +142,17 @@ namespace BHJet_Repositorio.Admin
                     }, trans);
 
                     // Trava corrida temporariamente
-                    string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 1, 
+                    if (corrida != null)
+                    {
+                        string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 1, 
                                                                       idUsuarioColaboradorEmpresa = @idCol
                                                                 where idCorrida = @corrida";
-                    trans.Connection.Execute(queryAceitaTemp, new
-                    {
-                        idCol = colaborador,
-                        corrida = corrida.ID
-                    }, trans);
+                        trans.Connection.Execute(queryAceitaTemp, new
+                        {
+                            idCol = colaborador,
+                            corrida = corrida.ID
+                        }, trans);
+                    }
 
                     // Commit
                     trans.Commit();

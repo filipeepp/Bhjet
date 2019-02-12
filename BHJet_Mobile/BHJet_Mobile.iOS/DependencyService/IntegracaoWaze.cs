@@ -11,6 +11,10 @@ namespace BHJet_Mobile.iOS.DependencyService
     {
         public void RedirecionaWaze(string latitude, string longitude)
         {
+            // Variavel
+            latitude = latitude.Replace(",", ".");
+            longitude = longitude.Replace(",", ".");
+
             // URL
             string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
 

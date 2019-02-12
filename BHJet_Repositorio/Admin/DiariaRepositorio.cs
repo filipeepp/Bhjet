@@ -92,7 +92,7 @@ namespace BHJet_Repositorio.Admin
 				                        dtDataHoraFimExpediente as DataFim,
 				                        intOdometroFimExpediente as KMFim
 	 		                        from tblRegistroDiarias
-				                        where idColaboradorEmpresaSistema = 13
+				                        where idColaboradorEmpresaSistema = @id
 		     		                and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
 
                 return sqlConnection.QueryFirstOrDefault<TurnoEntidade>(query, new
@@ -115,8 +115,8 @@ namespace BHJet_Repositorio.Admin
                 string query = @"update tblRegistroDiarias set
 		                            dtDataHoraInicioExpediente = @DataInicio,
 		                            intOdometroInicioExpediente = @KMInicio,
-		                            dtDataHoraInicioExpediente = @DataInicioIntervalo,
-		                            intOdometroInicioExpediente = @KMInicioIntervalo,
+		                            dtDataHoraInicioIntervalo = @DataInicioIntervalo,
+		                            intOdometroInicioIntervalo = @KMInicioIntervalo,
 		                            dtDataHoraFimIntervalo = @DataFimIntervalo,
 		                            intOdometroFimIntervalo = @KMFimInvervalo,    
 		                            dtDataHoraFimExpediente = @DataFim,
