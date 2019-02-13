@@ -352,7 +352,8 @@ namespace BHJet_Admin.Controllers
                 // Return
                 return Json(new
                 {
-                    decPercentualComissao = entidade.decPercentualComissao.ToString("C", new CultureInfo("pt-BR")).Replace("R$ ", "") + "%" ?? string.Empty,
+                    //.ToString("C", new CultureInfo("pt-BR")).Replace("R$ ", "") + "%" 
+                    decPercentualComissao = entidade.decPercentualComissao + "%"
                 }, JsonRequestBehavior.AllowGet);
             }
             catch
