@@ -1,57 +1,189 @@
 ﻿<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="~/Scripts/jquery.counterup.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<div class="main-sidebar">
 
-	<section id="menuLateral" class="sidebar" style="height: auto;">
-		<div class="cts-titulo-side-bar">
-			<span>BH Jet Express - Logísitica e serviços</span>
-		</div>
-		<div class="div-buttom-side-bar">
-			<div class="row">
-				<div class="col-xs-12 col-sm-7 col-md-12 text-center">
-					<button class="btn btn-default btn-lg cts-buttom-side-bar" onclick="location.href='@Url.Action("Index", "Entregas")'">Solicitar entrega avulsa</button>
-				</div>
-			</div>
-		</div>
-		<div class="div-buttom-side-bar">
-			<div class="row">
-				<div class="col-xs-12 col-sm-7 col-md-12 text-center">
-					<button class="btn btn-default btn-lg cts-buttom-side-bar">Agendar uma solicitação</button>
-				</div>
-			</div>
-		</div>
-		<div class="div-buttom-side-bar">
-			<div class="row">
-				<div class="col-xs-12 col-sm-7 col-md-12 text-center">
-					<button class="btn btn-default btn-lg cts-buttom-side-bar">Acompanhar uma solicitação</button>
-				</div>
-			</div>
-		</div>
-		<ul class="sidebar-menu tree" style="font-family:'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif" data-widget="tree">
-			<li class="treeview">
-				<a href="">
-					<i class="fa fa-info-circle" aria-hidden="true"></i>Saiba mais sobre nossos serviços
-				</a>
-			</li>
-			<li class="treeview">
-				<a href="#">
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i><span>Atualizar meu cadastro e dados para pagamento</span>
-				</a>
-			</li>
-			<li class="treeview">
-				<a href="#">
-					<i class="fa fa-refresh" aria-hidden="true"></i><span>Histórico de serviços / entregas</span>
-				</a>
-			</li>
-		</ul>
-	</section>
-
-	@{
-		Html.RenderPartial("~/Views/Shared/_Loading.cshtml");
-	}
-
+<div id="banner-wrapper">
+    <div id="banner" class="box container">
+        <div class="row">
+            <div class="col-7 col-12-medium">
+                <h2>Bem vindo.</h2>
+                <p>BH Jet Express - Logísitica e serviços</p>
+            </div>
+            <div class="col-5 col-12-medium">
+                <ul>
+                    <li><a href="#" onclick="location.href='@Url.Action("Index", "Entregas")'" class="button large icon fa-arrow-circle-right">Solicitar entrega avulsa</a></li>
+                    <li><a href="#" class="button alt large icon fa-question-circle">Agendar solicitação</a></li>
+                    <li><a href="#" class="button alt large icon fa-question-circle">Acompanhar solicitação</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="container-fluid cts-page-home" style="background-image: url('/./Images/bh-aerea.jpg');">
+
+<!-- Features -->
+<div id="features-wrapper">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-motorcycle" style="color:#10a0d5;" aria-hidden="true"></i> Agilidade</h2>
+                        </header>
+                        <p>Nossos motoboys utilizam equipamentos de segurança e GPS, proporcionando segurança nas entregas.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-map-marker" style="color:#10a0d5;" aria-hidden="true"></i> Monitoramento em tempo real</h2>
+                        </header>
+                        <p>Através de equipamentos de segurança e GPS, sua entrega é monitorada em tempo real.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-exclamation-triangle" style="color:#10a0d5;" aria-hidden="true"></i> Avisos</h2>
+                        </header>
+                        <p>Receba notificações sobre sua entrega, em pontos de check-in e checkout.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-folder-open" style="color:#10a0d5;" aria-hidden="true"></i> Relatórios</h2>
+                        </header>
+                        <p>Tenha sempre acesso ao histórico de suas entregas e coletas.</p>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<!-- Main -->
+<div id="main-wrapper">
+    <div class="container">
+        <div class="row gtr-200">
+            <div class="col-4 col-12-medium">
+
+                <!-- Sidebar -->
+                <div id="sidebar">
+                    <section class="widget thumbnails">
+                        <div class="grid">
+                            <div class="row gtr-50">
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/Motoboy.jpg" alt="" /></a></div>
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/motorista.jpg" alt="" /></a></div>
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/cargo.jpg" alt="" /></a></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+            <div class="col-8 col-12-medium imp-medium">
+
+                <!-- Content -->
+                <div id="content">
+                    <section class="last">
+                        <h2 style="color:#10a0d5;">A BH Jet</h2>
+                        <p>
+                            Há mais de 20 anos no segmento de entregas rápidas, a BH JET Express tem se tornado referência no mercado. Atualmente possuímos uma frota formada por 40 motoboys e ainda oferecemos fretes urbanos e transporte executivo. Nosso atendimento abrange Belo Horizonte, a região metropolitana e cidades do interior de Minas Gerais.
+                        </p>
+                       
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div id="draggable" class="ui-widget-content">
+        <i style="margin: 10px;" class="fa fa-arrows-alt" aria-hidden="true"></i>
+
+        <div class="cts-titulo-side-bar">
+            <span>BH Jet Express - Logísitica e serviços</span>
+        </div>
+        <div class="div-buttom-side-bar">
+            <div class="row">
+                <div class="col-xs-12 col-sm-7 col-md-12 text-center">
+                    <a href="#" onclick="location.href='@Url.Action("Index", "Entregas")'" class="btn">
+                        <span class="left icon icon-tablet"><i class="fa fa-truck" aria-hidden="true"></i></span>
+                        <span class="right title">Solicitar entrega avulsa</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="div-buttom-side-bar">
+            <div class="row">
+                <div class="col-xs-12 col-sm-7 col-md-12 text-center">
+                    <a href="#" onclick="location.href='@Url.Action("Index", "Entregas")'" class="btn">
+                        <span class="left icon icon-tablet"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        <span class="right title">Agendar uma solicitação</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="div-buttom-side-bar">
+            <div class="row">
+                <div class="col-xs-12 col-sm-7 col-md-12 text-center">
+                    <a href="#" onclick="location.href='@Url.Action("Index", "Entregas")'" class="btn">
+                        <span class="left icon icon-tablet"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                        <span class="right title">Acompanhar solicitação</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="sidebar-menu tree" style="font-family:'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif" data-widget="tree">
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>Saiba mais sobre nossos serviços
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i><span>Atualizar meu cadastro e dados para pagamento</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-refresh" aria-hidden="true"></i><span>Histórico de serviços / entregas</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    @{
+        Html.RenderPartial("~/Views/Shared/_Loading.cshtml");
+    }
+
+    <div id="map_canvas" style="overflow: unset !important;position:unset">
+    </div>*@
+
+
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-ui.min.js"></script>
+@*<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>*@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/ExibeLocalizacao.js"></script>
