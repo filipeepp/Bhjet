@@ -21,13 +21,6 @@ function carregaMapa() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 
-	//var request = {
-	//	origin: enderecoPartida,
-	//	destination: enderecoChegada,
-	//	waypoints: [{ location: 'Rodoviária, Campinas' }, { location: 'Taquaral, Campinas' }],
-	//	travelMode: google.maps.TravelMode.DRIVING
-	//};
-
 	if (navigator.geolocation) { // Se o navegador do usuário tem suporte ao Geolocation
 		navigator.geolocation.getCurrentPosition(function (position) {
 
