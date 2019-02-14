@@ -92,8 +92,8 @@ namespace BHJet_Admin.Models.Motorista
     {
         public long? ID { get; set; }
         public string ValorComissao { get; set; }
-        public DateTime? VigenciaInicio { get; set; }
-        public DateTime? VigenciaFim { get; set; }
+        public string VigenciaInicio { get; set; }
+        public string VigenciaFim { get; set; }
         public string Observacao { get; set; }
     }
 }

@@ -82,8 +82,8 @@ namespace BHJet_Admin.Controllers
                         {
                             ID = c.ID,
                             ValorComissao = c.decPercentualComissao.ToString(),
-                            VigenciaInicio = c.dtDataInicioVigencia,
-                            VigenciaFim = c.dtDataFimVigencia,
+                            VigenciaInicio = c.dtDataInicioVigencia.ToShortDateString(),
+                            VigenciaFim = c.dtDataFimVigencia.ToShortDateString(),
                             Observacao = c.Observacao
 
                         }).ToArray() : new NovoMotoristaComissaoModel[] { }
@@ -134,10 +134,9 @@ namespace BHJet_Admin.Controllers
                 {
                     model.Comissao.All(x =>
                     {
-                        //if (x.VigenciaInicio < DateTime.Now.Date)
-                        //    throw new Exception($"A comissão {x.ID} está com a data de vigência inicial menor que a data atual, favor atualizar.");
-                        //else
-                        if (x.VigenciaFim <= DateTime.Now.Date || x.VigenciaFim < x.VigenciaInicio)
+                        if(!DateTime.TryParse(x.VigenciaInicio, out DateTime ini) || !DateTime.TryParse(x.VigenciaFim, out DateTime fim))
+                            throw new Exception($"Preencha datá válida para vigência da comissão.");
+                        else if (DateTime.Parse(x.VigenciaFim) <= DateTime.Now.Date || DateTime.Parse(x.VigenciaFim) < DateTime.Parse(x.VigenciaInicio))
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
                         else if (x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
                             throw new Exception($"Preencha ao menos uma comissão para o profissional.");
@@ -181,8 +180,8 @@ namespace BHJet_Admin.Controllers
                     {
                         ID = x.ID,
                         decPercentualComissao = x.ValorComissao.ToDecimalCurrency(),
-                        dtDataFimVigencia = x.VigenciaFim ?? new DateTime(),
-                        dtDataInicioVigencia = x.VigenciaInicio ?? new DateTime()
+                        dtDataFimVigencia = DateTime.Parse(x.VigenciaFim),
+                        dtDataInicioVigencia = DateTime.Parse(x.VigenciaInicio)
                     }).ToArray() : new ProfissionalComissaoModel[] { }
                 };
 
@@ -320,8 +319,8 @@ namespace BHJet_Admin.Controllers
         {
             return new NovoMotoristaComissaoModel()
             {
-                VigenciaInicio = DateTime.Now,
-                VigenciaFim = DateTime.Now.AddYears(50)
+                VigenciaInicio = DateTime.Now.ToShortDateString(),
+                VigenciaFim = DateTime.Now.AddYears(50).ToShortDateString()
             };
         }
         #endregion
