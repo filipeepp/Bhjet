@@ -1,11 +1,15 @@
 ﻿@using System.Web.Http
 @using BHJet_Admin.Models.Clientes
-@using BHJet_Core.Enum
+@using BHJet_Enumeradores
 @model ClienteModel
 
+<!--VARIÁVEIS INICÍAIS-->
 @{
 	Session["QTDE_CONTATO"] = null;
 	Session["QTDE_VALOR"] = null;
+
+	var edicao = BHJet_Core.Customizavel.MetodoPagina.PaginaEdicao();
+
 }
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -64,7 +68,7 @@
 
 <ol class="breadcrumb">
 	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
-	<li><a href="#map_canvas">Cadastrar Cliente</a></li>
+	<li><a href="#map_canvas">@ViewBag.MetodoPagina Cliente</a></li>
 </ol>
 
 <div class="container-fluid">
@@ -77,7 +81,7 @@
 							<a onclick="history.go(-1);">
 								<i class="fa fa-arrow-left" aria-hidden="true"></i>
 							</a>
-							Cadastrar Cliente
+							@ViewBag.MetodoPagina Cliente
 						</h2>
 					</div>
 					<div class="container-fluid">
@@ -101,52 +105,31 @@
 												Dados Pessoais
 											</h2>
 										</div>
-										<!--<div class="form-row">
-											<div class="form-group col-xs-4 col-md-1">
-												<label for="txtCodigo">Código</label>
-												@Html.TextBoxFor(model => model.DadosCadastrais.Codigo, new { @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.Codigo, null, new { @class = "text-danger" })
-											</div>
-										</div>-->
 										<div class="form-row">
 											<div class="form-group col-xs-12 col-md-12">
-												<label for="txtNome">Nome / Razão Social</label>
+												<label for="txtNome"><small class="obrigatorio">*</small>Nome / Razão Social</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeRazaoSocial, null, new { @class = "text-danger" })
 											</div>
 										</div>
 										<div class="form-row">
 											<div class="form-group col-xs-12 col-md-12">
-												<label for="txtNomeFantasia">Nome Fantasia</label>
+												<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Nome Fantasia</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.NomeFantasia, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeFantasia, null, new { @class = "text-danger" })
 											</div>
 										</div>
 										<div class="form-row">
 											<div class="form-group col-xs-12 col-md-4">
-												<label for="txtCpfCnpj">CPF / CNPJ</label>
+												<label for="txtCpfCnpj"><small class="obrigatorio">*</small>CPF / CNPJ</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
 											</div>
 											<div class="form-group col-xs-12 col-md-6">
-												<label for="txtInscricaoEstadual">Insc. Estadual</label>
+												<label for="txtInscricaoEstadual"><small class="obrigatorio">*</small>Insc. Estadual</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @class = "text-danger" })
+												@Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new {@id= "DadosCadastrais_InscricaoEstadual_Error", @class = "text-danger" })
 											</div>
-											<!--<div class="form-group col-xs-2 col-md-2">
-												<div class="cst-ckb-Novo-Cliente">
-													<label for="ckbIss" class="label-cbx">
-														<span>ISS</span>
-														<input id="ckbIss" type="checkbox" name="ckbIss" class="invisible">
-														<div class="checkbox">
-															<svg width="20px" height="20px" viewBox="0 0 20 20">
-																<path d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"></path>
-																<polyline points="4 11 8 15 16 6"></polyline>
-															</svg>
-														</div>
-													</label>
-												</div>
-											</div>-->
 											<div class="form-group col-xs-12 col-md-2">
 												<div class="cst-ckb-Novo-Cliente">
 													<label class="label-cbx">
@@ -168,17 +151,17 @@
 										</div>
 										<div class="form-row">
 											<div class="form-group col-xs-12 col-md-2">
-												<label for="txtCep">CEP</label>
+												<label for="txtCep"><small class="obrigatorio">*</small>CEP</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.CEP, new { @onchange = "if(this.length == 9)alert('ok');", type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.CEP, null, new { @class = "text-danger" })
 											</div>
 											<div class="form-group col-xs-12 col-md-4">
-												<label for="txtEndereco">Endereço</label>
+												<label for="txtEndereco"><small class="obrigatorio">*</small>Endereço</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Endereco, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Endereco, null, new { @class = "text-danger" })
 											</div>
 											<div class="form-group col-xs-12 col-md-2">
-												<label for="txtNumeroEndereco">Nº</label>
+												<label for="txtNumeroEndereco"><small class="obrigatorio">*</small>Nº</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.NumeroEndereco, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.NumeroEndereco, null, new { @class = "text-danger" })
 											</div>
@@ -190,17 +173,17 @@
 										</div>
 										<div class="form-row">
 											<div class="form-group col-xs-12 col-md-4">
-												<label for="txtBairro">Bairro</label>
+												<label for="txtBairro"><small class="obrigatorio">*</small>Bairro</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Bairro, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Bairro, null, new { @class = "text-danger" })
 											</div>
 											<div class="form-group col-xs-12 col-md-4">
-												<label for="txtCidade">Cidade</label>
+												<label for="txtCidade"><small class="obrigatorio">*</small>Cidade</label>
 												@Html.TextBoxFor(model => model.DadosCadastrais.Cidade, new { type = "text", @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Cidade, null, new { @class = "text-danger" })
 											</div>
 											<div class="form-group col-xs-12 col-md-2">
-												<label for="txtEstado">Estado</label>
+												<label for="txtEstado"><small class="obrigatorio">*</small>Estado</label>
 												@Html.DropDownListFor(s => s.DadosCadastrais.Estado, new SelectList(Enum.GetValues(typeof(UF))), new { @class = "form-control" })
 												@Html.ValidationMessageFor(model => model.DadosCadastrais.Estado, null, new { @class = "text-danger" })
 											</div>
@@ -233,7 +216,7 @@
 
 									<div class="form-row">
 										<div class="form-group col-xs-12 col-md-12">
-											<a onclick="Validar(true,false,true)" style="color: white" class="pull-right next">Próximo »</a>
+											<a onclick="Validar(true,false,true)" id="btnProximoNovoCliente" style="color: white" class="pull-right next">Próximo »</a>
 										</div>
 									</div>
 
@@ -293,11 +276,14 @@
 </div>
 @if (TempData["mensagemGeral"] != null)
 {
+	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
 	<script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
 	</script>
 }

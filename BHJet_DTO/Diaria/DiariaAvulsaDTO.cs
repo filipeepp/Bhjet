@@ -5,7 +5,6 @@ namespace BHJet_DTO.Diaria
     public class DiariaAvulsaDTO
     {
         public int IDCliente { get; set; }
-        public int IDTarifario { get; set; }
         public int IDColaboradorEmpresa { get; set; }
         public DateTime DataHoraInicioExpediente { get; set; }
         public int? OdometroInicioExpediente { get; set; }

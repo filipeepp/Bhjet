@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Faturamento;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Faturamento;
 using System;
@@ -216,7 +217,7 @@ namespace BHJet_Admin.Controllers
                                      FinalAlmoco = new TimeSpan(13,0,0),
                                       FinalDiaria = new TimeSpan(17,0,0),
                                        KMRodado = 170,
-                                         Tipo = BHJet_Core.Enum.TipoProfissional.Motociclista,
+                                         Tipo = TipoProfissional.Motociclista,
                                           ValorTransporte = 80.00
                               }
                          },
@@ -258,6 +259,8 @@ namespace BHJet_Admin.Controllers
                 // Busca detalhe
                 var resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
 
+                ViewBag.Total = resultado.Sum(x => x.Valor);
+
                 // Return View
                 return View(new DetalheFaturamentoAvulso()
                 {
@@ -270,7 +273,8 @@ namespace BHJet_Admin.Controllers
                         NumeroOS = c.OS,
                         QuantidadeKM = c.KM,
                         Profissional = c.Profissional,
-                        Valor = c.Valor
+                        Valor = c.Valor,
+                        TipoContrato = c.Tipo
                     }).ToArray()
                 });
             }

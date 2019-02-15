@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -63,20 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\DashboardTipos.cs" />
-    <Compile Include="Enum\RegimeContratacao.cs" />
-    <Compile Include="Enum\StatusCorrida.cs" />
-    <Compile Include="Enum\TipoCarteira.cs" />
-    <Compile Include="Enum\TipoContrato.cs" />
-    <Compile Include="Enum\TipoProfissional.cs" />
-    <Compile Include="Enum\TipoTarifa.cs" />
-    <Compile Include="Enum\TipoUsuario.cs" />
-    <Compile Include="Enum\TipoVeiculo.cs" />
-    <Compile Include="Enum\UF.cs" />
+    <Compile Include="Customizavel\MetodoPagina.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilitario\CriptografiaUtil.cs" />
     <Compile Include="Utilitario\DataUtil.cs" />
     <Compile Include="Utilitario\ExcpetionBase.cs" />
     <Compile Include="Variaveis\Mensagem.cs" />

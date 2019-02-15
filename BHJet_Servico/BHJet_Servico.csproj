@@ -6,24 +6,28 @@
 
   <ItemGroup>
     <Compile Remove="Autorizacao\Model\**" />
+    <Compile Remove="ClienteAvulso\**" />
     <Compile Remove="Corrida\Model\**" />
     <Compile Remove="Dashboard\Model\**" />
     <EmbeddedResource Remove="Autorizacao\Model\**" />
+    <EmbeddedResource Remove="ClienteAvulso\**" />
     <EmbeddedResource Remove="Corrida\Model\**" />
     <EmbeddedResource Remove="Dashboard\Model\**" />
     <None Remove="Autorizacao\Model\**" />
+    <None Remove="ClienteAvulso\**" />
     <None Remove="Corrida\Model\**" />
     <None Remove="Dashboard\Model\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj" />
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj" />
     <ProjectReference Include="..\BHJet_DTO\BHJet_DTO.csproj" />
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj" />
   </ItemGroup>
 
   <ItemGroup>

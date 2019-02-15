@@ -12,6 +12,11 @@ namespace BHJet_Servico
 {
     public abstract class ServicoBase
     {
+        public ServicoBase()
+        {
+            ValidateResult = null;
+        }
+
         public ServicoBase(string Token)
         {
             ValidateResult = null;
@@ -112,6 +117,8 @@ namespace BHJet_Servico
             var value = JsonConvert.SerializeObject(data);
             return Post(url, value);
         }
+
+
 
         protected TResult Post<T, TResult>(Uri url, T data)
         {

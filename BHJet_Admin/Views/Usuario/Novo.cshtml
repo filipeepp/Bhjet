@@ -1,0 +1,129 @@
+﻿@using BHJet_Admin.Models.Usuario
+@using BHJet_Enumeradores
+@model UsuarioModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#Email">Manutenção Usuários</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a href="@Url.Action("Index", "Usuario")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Cadastro de usuário
+                        </h2>
+                    </div>
+                    <br />
+                    <div class="row">
+
+
+                        @using (Html.BeginForm("Novo", "Usuario", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            @Html.HiddenFor(model => model.EdicaoCadastro);
+                            @Html.HiddenFor(model => model.ID);
+                            @Html.HiddenFor(model => model.ClienteSelecionadoBKP);
+
+                            <div class="row form-group ">
+
+                                <div class="panel panel-default" style="margin:30px; margin-top:-25px">
+                                    <div class="panel-body">
+                                        <div class="titulo">
+                                            <h2>
+                                                <a onclick="history.go(-1);">
+                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                </a>
+                                                @ViewBag.TipoAlteracao usuário
+                                            </h2>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                                            <div class="row">
+                                                <div class=" col-md-4 col-lg-3">
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                </div>
+                                                <div class=" col-md-3 col-lg-2">
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
+                                                    @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @type = "password", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                </div>
+
+                                                <div class=" col-md-2 col-lg-2">
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Situação:</label>
+                                                    <br />
+                                                    <label class="label-cbx">
+                                                        @Html.CheckBoxFor(model => model.Situacao, new { @class = "checkbox" })
+                                                        @Html.ValidationMessageFor(model => model.Situacao, null, new { @class = "text-danger" })
+                                                    </label>
+                                                    <span>Ativo</span>
+                                                </div>
+
+                                            </div>
+                                            <br /><br />
+                                            <div class="row">
+                                                <div class=" col-md-3 col-lg-3">
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Tipo Usuário</label>
+                                                    @Html.DropDownListFor(model => model.TipoUser, new SelectList(Enum.GetValues(typeof(TipoUsuario))), new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.TipoUser, null, new { @class = "text-danger" })
+                                                </div>
+
+                                                <div id="cliRefer" style="display:none" class=" col-md-3 col-lg-3">
+                                                    <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Cliente</label>
+                                                    <input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
+                                                    @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
+                                                </div>
+
+                                                <div class="col-md-12 col-lg-12" style="text-align:center">
+                                                    <br />
+                                                    <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
+                                                        <i class="fa fa-share"></i> @ViewBag.TipoAlteracao usuário
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Usuario.js"></script>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}

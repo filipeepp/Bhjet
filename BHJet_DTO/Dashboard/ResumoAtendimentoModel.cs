@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 
 namespace BHJet_DTO.Dashboard
 {

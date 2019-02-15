@@ -5,11 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClienteAvulso\**" />
+    <Compile Remove="Enum\**" />
+    <EmbeddedResource Remove="ClienteAvulso\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <None Remove="ClienteAvulso\**" />
+    <None Remove="Enum\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Area\SerilizableAttribute.cs" />
     <Compile Remove="Class1.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj" />
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj" />
   </ItemGroup>
 
 </Project>

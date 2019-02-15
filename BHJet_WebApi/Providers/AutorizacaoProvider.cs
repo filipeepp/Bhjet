@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Variaveis;
+﻿using BHJet_Enumeradores;
+using BHJet_Core.Variaveis;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Entidade;
 using Microsoft.Owin.Security.OAuth;
@@ -19,10 +20,17 @@ namespace BHJet_WebApi.Providers
         {
             try
             {
+                // OwinContext
                 context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
+                // Parametros
+                var parameters = context.Request.ReadFormAsync();
+
+                // Aplicação
+                var aplicacao = parameters?.Result?.Get("area") ?? string.Empty;
+
                 // Busca e valida usuario
-                var user = ValidaUsuario(ref context);
+                var user = ValidaUsuario(ref context, int.Parse(aplicacao));
 
                 if (context.HasError)
                     return;
@@ -40,19 +48,35 @@ namespace BHJet_WebApi.Providers
             }
         }
 
-        private static UsuarioEntidade ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context)
+        private static UsuarioEntidade ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context, int tipo)
         {
+            // Tipo de usuario desejado
+            TipoUsuario? tipoUsuario = null;
+            switch ((TipoAplicacao)tipo)
+            {
+                case TipoAplicacao.Interna:
+                    tipoUsuario = TipoUsuario.Administrador;
+                    break;
+                case TipoAplicacao.Colaborador:
+                    tipoUsuario = TipoUsuario.Profissional;
+                    break;
+            }
+
             // Válidar usuario aqui
             var user = new AutenticacaoRepositorio().BuscaUsuario(new BHJet_Repositorio.Filtro.ValidaUsuarioFiltro()
             {
                 usuarioEmail = context.UserName,
                 usuarioSenha = context.Password,
-                usuarioTipo = BHJet_Core.Enum.TipoUsuario.Administrador
+                usuarioTipo = tipoUsuario
             });
 
-            // Validacao
+            // Validacao procura
             if (user == null)
                 throw new Exception(Mensagem.Validacao.UsuarioNaoEncontrato);
+
+            // Validacao Status
+            if(!user.bitAtivo)
+                throw new Exception(Mensagem.Validacao.UsuarioSemPermissao);
 
             // Usuario OK
             return user;

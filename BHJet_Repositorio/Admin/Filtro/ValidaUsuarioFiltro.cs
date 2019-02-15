@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 
 namespace BHJet_Repositorio.Filtro
 {
@@ -6,6 +6,6 @@ namespace BHJet_Repositorio.Filtro
     {
         public string usuarioEmail { get; set; }
         public string usuarioSenha { get; set; }
-        public TipoUsuario usuarioTipo { get; set; }
+        public TipoUsuario? usuarioTipo { get; set; }
     }
 }

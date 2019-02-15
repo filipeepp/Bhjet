@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              Title="Bem vindo, João"
+             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile" 
+             xmlns:converter="clr-namespace:BHJet_Mobile.Infra.Converter;assembly=BHJet_Mobile"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.ChamadoAvulso.Index">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolReverseConverter x:Key="boolReverseConvert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#ffd423" >
+
+            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="50" Margin="0,50,0,0" ></Image>
+
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
+
+                <Frame x:Name="ctnMotorista" HeightRequest="85" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                    <Grid VerticalOptions="StartAndExpand" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Bem vindo" TextColor="#193651"  />
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                        <Label Grid.Row="2" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Profissional:" TextColor="#193651"  />
+                        <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding NomeCompleto}" TextColor="#193651"  />
+
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Status: " TextColor="#193651"  />
+                        <Label Grid.Row="3" Grid.Column="1" x:Name="lblStatus"  HorizontalOptions="Start" FontAttributes="Bold" VerticalOptions="Start" Text="" TextColor="#009933" />
+                    </Grid>
+                </Frame>
+
+                <StackLayout IsVisible="{Binding PermitePesquisaCorrida}" VerticalOptions="CenterAndExpand">
+                    <Frame x:Name="ctnProcurando" BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                        <Grid RowSpacing="0" VerticalOptions="StartAndExpand" MinimumHeightRequest="80" >
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.3*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0"  FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Aguardando chamado .." TextColor="#193651"  />
+                            <BoxView Grid.Row="1" Grid.Column="0"  Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                            <Image Grid.Row="2" Grid.Column="0" Margin="0,-5,0,14"  x:Name="findIcon" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Source="search.png"  WidthRequest="90" HeightRequest="40" />
+
+                            <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"  
+                                           IsVisible="{Binding Loading}"/>
+                            
+                        </Grid>
+                    </Frame>
+
+                    <Frame  x:Name="ctnEncontrado" IsVisible="False"  BackgroundColor="White" Margin="15,-10,15,0"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                        <Grid RowSpacing="2" >
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                                <RowDefinition Height="0.5*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Chamado encontrado" TextColor="#193651"  />
+                            <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                            <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="Solicitante: " TextColor="#193651" FontAttributes="Bold" />
+                            <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.NomeCliente}" TextColor="#193651"  />
+
+                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="Comissão: " TextColor="#193651"  FontAttributes="Bold"/>
+                            <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.Comissao }" TextColor="#193651"  />
+
+                            <Label Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Destino inicial: " TextColor="#193651" FontAttributes="Bold"  />
+                            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.DestinoInicial }" TextColor="#193651"  />
+
+                            <Label IsVisible="{Binding DiarioBordo, Converter={StaticResource boolReverseConvert}}" Grid.Row="6" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="End" Text="Recusar" TextColor="#193651"  />
+                            <Image IsVisible="{Binding DiarioBordo, Converter={StaticResource boolReverseConvert}}" Grid.Row="7" Grid.Column="0"  HorizontalOptions="Center"  VerticalOptions="Start" Source="recusar.png" 
+                               WidthRequest="90" HeightRequest="50" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RecusarCorrida" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                            <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="End" Text="Aceitar" TextColor="#193651"  />
+                            <Image Grid.Row="7" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Source="aceitar.png" 
+                               WidthRequest="90" HeightRequest="50" >
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AceitarCorrida" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                            <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="7" Grid.Column="0" Grid.ColumnSpan="2" 
+                                           IsVisible="{Binding Loading}"/>
+
+                        </Grid>
+
+                    </Frame>
+                </StackLayout>
+
+             
+            </StackLayout>
+
+            <local:Menu></local:Menu>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>

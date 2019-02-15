@@ -2,47 +2,6 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
-      "Microsoft.AspNet.Mvc/5.2.4": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "[3.2.4, 3.3.0)",
-          "Microsoft.AspNet.WebPages": "[3.2.4, 3.3.0)"
-        },
-        "compile": {
-          "lib/net45/System.Web.Mvc.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Mvc.dll": {}
-        }
-      },
-      "Microsoft.AspNet.Razor/3.2.4": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.Web.Razor.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Razor.dll": {}
-        }
-      },
-      "Microsoft.AspNet.WebPages/3.2.4": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "[3.2.4, 3.3.0)",
-          "Microsoft.Web.Infrastructure": "1.0.0"
-        },
-        "compile": {
-          "lib/net45/System.Web.Helpers.dll": {},
-          "lib/net45/System.Web.WebPages.Deployment.dll": {},
-          "lib/net45/System.Web.WebPages.Razor.dll": {},
-          "lib/net45/System.Web.WebPages.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Helpers.dll": {},
-          "lib/net45/System.Web.WebPages.Deployment.dll": {},
-          "lib/net45/System.Web.WebPages.Razor.dll": {},
-          "lib/net45/System.Web.WebPages.dll": {}
-        }
-      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -50,15 +9,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        }
-      },
-      "Microsoft.Web.Infrastructure/1.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "NETStandard.Library/2.0.3": {
@@ -94,11 +44,22 @@
           "bin/placeholder/BHJet_Core.dll": {}
         }
       },
+      "BHJet_CoreGlobal/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/BHJet_CoreGlobal.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BHJet_CoreGlobal.dll": {}
+        }
+      },
       "BHJet_DTO/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "BHJet_Core": "1.0.0"
+          "BHJet_Core": "1.0.0",
+          "BHJet_Enumeradores": "1.0.0"
         },
         "compile": {
           "bin/placeholder/BHJet_DTO.dll": {}
@@ -106,56 +67,20 @@
         "runtime": {
           "bin/placeholder/BHJet_DTO.dll": {}
         }
+      },
+      "BHJet_Enumeradores/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/BHJet_Enumeradores.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BHJet_Enumeradores.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "Microsoft.AspNet.Mvc/5.2.4": {
-      "sha512": "aBSENa9s0KnB/Oh9D94l/g1BQKcjX3Ra6NFmWMWFmCW7diglEHoGOpSozX4lcYdTq/HDGLHfkEFbRLD/Pu6MMQ==",
-      "type": "package",
-      "path": "microsoft.aspnet.mvc/5.2.4",
-      "files": [
-        ".signature.p7s",
-        "Content/Web.config.install.xdt",
-        "Content/Web.config.uninstall.xdt",
-        "lib/net45/System.Web.Mvc.dll",
-        "lib/net45/System.Web.Mvc.xml",
-        "microsoft.aspnet.mvc.5.2.4.nupkg.sha512",
-        "microsoft.aspnet.mvc.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.Razor/3.2.4": {
-      "sha512": "XIqwE6RU3Wx5lzxjHakGjZ6AxePlEY8oxAt99YOjY49tzjChZGDWia807YQr1w/sTtQo1cvfcQqvMs3yKWgXrg==",
-      "type": "package",
-      "path": "microsoft.aspnet.razor/3.2.4",
-      "files": [
-        ".signature.p7s",
-        "lib/net45/System.Web.Razor.dll",
-        "lib/net45/System.Web.Razor.xml",
-        "microsoft.aspnet.razor.3.2.4.nupkg.sha512",
-        "microsoft.aspnet.razor.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.WebPages/3.2.4": {
-      "sha512": "JCFFKgRDcxyVEELCx/1D8AzF0j0N+hagGXXBmp+NFffF6O0pWA9aXugJqUm0SDvgOH9RCNU0YzyoHa4X+Lsw7w==",
-      "type": "package",
-      "path": "microsoft.aspnet.webpages/3.2.4",
-      "files": [
-        ".signature.p7s",
-        "Content/Web.config.install.xdt",
-        "Content/Web.config.uninstall.xdt",
-        "lib/net45/System.Web.Helpers.dll",
-        "lib/net45/System.Web.Helpers.xml",
-        "lib/net45/System.Web.WebPages.Deployment.dll",
-        "lib/net45/System.Web.WebPages.Deployment.xml",
-        "lib/net45/System.Web.WebPages.Razor.dll",
-        "lib/net45/System.Web.WebPages.Razor.xml",
-        "lib/net45/System.Web.WebPages.dll",
-        "lib/net45/System.Web.WebPages.xml",
-        "microsoft.aspnet.webpages.3.2.4.nupkg.sha512",
-        "microsoft.aspnet.webpages.nuspec"
-      ]
-    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
@@ -167,17 +92,6 @@
         "microsoft.netcore.platforms.1.1.0.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
         "runtime.json"
-      ]
-    },
-    "Microsoft.Web.Infrastructure/1.0.0": {
-      "sha512": "n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
-      "type": "package",
-      "path": "microsoft.web.infrastructure/1.0.0",
-      "files": [
-        ".signature.p7s",
-        "lib/net40/Microsoft.Web.Infrastructure.dll",
-        "microsoft.web.infrastructure.1.0.0.nupkg.sha512",
-        "microsoft.web.infrastructure.nuspec"
       ]
     },
     "NETStandard.Library/2.0.3": {
@@ -308,10 +222,11 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
+        ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -340,17 +255,28 @@
       "path": "../BHJet_Core/BHJet_Core.csproj",
       "msbuildProject": "../BHJet_Core/BHJet_Core.csproj"
     },
+    "BHJet_CoreGlobal/1.0.0": {
+      "type": "project",
+      "path": "../BHJet_CoreGlobal/BHJet_CoreGlobal.csproj",
+      "msbuildProject": "../BHJet_CoreGlobal/BHJet_CoreGlobal.csproj"
+    },
     "BHJet_DTO/1.0.0": {
       "type": "project",
       "path": "../BHJet_DTO/BHJet_DTO.csproj",
       "msbuildProject": "../BHJet_DTO/BHJet_DTO.csproj"
+    },
+    "BHJet_Enumeradores/1.0.0": {
+      "type": "project",
+      "path": "../BHJet_Enumeradores/BHJet_Enumeradores.csproj",
+      "msbuildProject": "../BHJet_Enumeradores/BHJet_Enumeradores.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
       "BHJet_Core >= 1.0.0",
+      "BHJet_CoreGlobal >= 1.0.0",
       "BHJet_DTO >= 1.0.0",
-      "Microsoft.AspNet.Mvc >= 5.2.4",
+      "BHJet_Enumeradores >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 11.0.2"
     ]
@@ -385,11 +311,17 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
+            "D:\\Projetos\\BHJet_Web\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj": {
+              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj"
+            },
             "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj": {
               "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Core\\BHJet_Core.csproj"
             },
             "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj": {
               "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_DTO\\BHJet_DTO.csproj"
+            },
+            "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
+              "projectPath": "D:\\Projetos\\BHJet_Web\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
             }
           }
         }
@@ -403,10 +335,6 @@
     "frameworks": {
       "netstandard2.0": {
         "dependencies": {
-          "Microsoft.AspNet.Mvc": {
-            "target": "Package",
-            "version": "[5.2.4, )"
-          },
           "NETStandard.Library": {
             "suppressParent": "All",
             "target": "Package",
@@ -425,47 +353,5 @@
         "warn": true
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.Mvc 5.2.4' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.Mvc",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.Razor 3.2.4' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.Razor",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebPages 3.2.4' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.WebPages",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.Web.Infrastructure",
-      "targetGraphs": [
-        ".NETStandard,Version=v2.0"
-      ]
-    }
-  ]
+  }
 }

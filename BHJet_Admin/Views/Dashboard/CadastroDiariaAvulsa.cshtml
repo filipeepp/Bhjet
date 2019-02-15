@@ -3,7 +3,7 @@
 }
 
 @using BHJet_Admin.Models.Dashboard
-@using BHJet_Core.Enum
+@using BHJet_Enumeradores
 @model DiariaModel
 
 
@@ -47,8 +47,6 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o cliente:</label>
                             <div class="col-sm-4">
-                                @*@Html.HiddenFor(model => model.IDClienteSelecionado)*@
-                                @*@Html.TextBoxFor(model => model.ClienteSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do cliente.", autocomplete = "off" })*@
                                 <input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
                                 @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
                                 @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
@@ -56,52 +54,56 @@
                             </div>
                         </div>
 
-                        <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione a tirafa:</label>
-                            <div class="col-sm-4">
-
-                                @Html.DropDownListFor(model => model.TarifaCliente, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
-                                @Html.ValidationMessageFor(model => model.TarifaCliente, null, new { @class = "text-danger" })
-
-                            </div>
-                        </div>
-
                         @*<div class="form-group ">
-                                <label class="control-label col-sm-5" for="email">Selecione o tipo de veículo:</label>
-                                <div class="col-sm-4" style="margin-top: -10px;">
-                                    @foreach (var tipoEnum in Enum.GetValues(typeof(TipoVeiculo)))
-                                    {
-                                        var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(TipoVeiculo), tipoEnum));
-                                        @Html.RadioButtonFor(s => s.TipoVeiculo, tipoEnum, new { id, @class = "option-input radio" })
-                                        @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
-                                    }
-                                    @Html.ValidationMessageFor(model => model.TipoVeiculo, null, new { @class = "text-danger" })
+                <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione a tirafa:</label>
+                <div class="col-sm-4">
 
-                                </div>
-                            </div>*@
+                    @Html.DropDownListFor(model => model.TarifaCliente, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
+                    @Html.ValidationMessageFor(model => model.TarifaCliente, null, new { @class = "text-danger" })
+
+                </div>
+            </div>*@
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Data hora inicio do expediente:</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-12 col-sm-5"><small class="obrigatorio">*</small>Período das Diarias:</label>
+                            <div class="col-xs-12 col-md-2 col-sm-1 col-lg-2">
                                 @Html.TextBoxFor(model => model.PeriodoInicial, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoInicial, null, new { @class = "text-danger" })
                             </div>
-                        </div>
-
-                        <div class="form-group ">
-                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Data hora fim do expediente</label>
-                            <div class="col-sm-4">
+                            <label class="control-label col-xs-12 col-sm-1" style="width: 30px; margin: 0px; padding: 0px;"><small class="obrigatorio">*</small>Até:</label>
+                            <div class="col-xs-12 col-md-2 col-sm-1 col-lg-2">
                                 @Html.TextBoxFor(model => model.PeriodoFinal, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PeriodoFinal, null, new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group ">
+                            <label class="control-label col-xs-12 col-sm-5"><small class="obrigatorio">*</small>Horário de trabalho:</label>
+                            <div class="col-xs-12 col-md-1 col-sm-2">
+                                @Html.TextBoxFor(model => model.HorarioInicial, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.HorarioInicial, null, new { @class = "text-danger" })
+                            </div>
+                            <label class="control-label col-xs-12 col-sm-1" style="width: 30px; margin: 0px; padding: 0px;"><small class="obrigatorio">*</small>Até:</label>
+                            <div class="col-xs-12 col-md-1 col-sm-2">
+                                @Html.TextBoxFor(model => model.HorarioFim, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.HorarioFim, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o TIPO de Veículo:</label>
+                            <div class="col-sm-4">
+                                @Html.RadioButtonFor(m => m.TipoProfissional, TipoProfissional.Motociclista, new { @checked = true }) @Html.Label("Moto")
+                                @Html.RadioButtonFor(m => m.TipoProfissional, TipoProfissional.Motorista) @Html.Label("Carro")
+                                @Html.ValidationMessageFor(model => model.TipoProfissional, null, new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                        <div class="form-group ">
                             <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione um profissional:</label>
                             <div class="col-sm-4">
                                 <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
                                 @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
-                                @*@Html.TextBoxFor(model => model.ProfissionalSelecionado, new { @class = "form-control", @placeholder = "Digite o código ou nome do profissional.", autocomplete = "off" })*@
                                 @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
                             </div>
                         </div>
@@ -117,8 +119,23 @@
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da comissão:</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "R$", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "%", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorComissao, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor KM Adicional:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.ValorKMAdicional, new { placeholder = "R$", @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Franquia KM diária:</label>
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.FranquiaKMDiaria, new { placeholder = "R$", @class = "form-control" })
                             </div>
                         </div>
 
@@ -150,12 +167,15 @@
 
 @if (TempData["mensagemGeral"] != null)
 {
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
     <script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
     </script>
 }
 <script src="~/Scripts/CadastroDiariaAvulsa.js"></script>

@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Core.Utilitario;
 using System;
 using System.Collections.Generic;

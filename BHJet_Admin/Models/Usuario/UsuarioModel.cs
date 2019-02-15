@@ -1,18 +1,32 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Core.Utilitario;
+using BHJet_CoreGlobal;
 using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Usuario
 {
-    public class UsuariosModel
-    {
-        public UsuarioDetalheModel[] usuarios { get; set; }
-        public UsuarioDetalheModel novo { get; set; }
-    }
+    //public class UsuariosModel
+    //{
+    //    public UsuarioDetalheModel[] usuarios { get; set; }
+    //    public UsuarioDetalheModel novo { get; set; }
+    //}
 
-    public class UsuarioDetalheModel
+    public class UsuarioModel //UsuarioDetalheModel
     {
+        public UsuarioModel()
+        {
+
+        }
+
+        public UsuarioModel(bool edicao)
+        {
+            this.EdicaoCadastro = edicao;
+        }
+
         public long ID { get; set; }
+
+        private bool _EdicaoCadastro;
+        public bool EdicaoCadastro { get => _EdicaoCadastro; set => _EdicaoCadastro = value; }
 
         [Required(ErrorMessage ="Email obrigatório.")]
         [DataType(DataType.EmailAddress)]
@@ -52,5 +66,19 @@ namespace BHJet_Admin.Models.Usuario
         }
 
         public bool Situacao { get; set; }
+
+        private int? _ClienteSelecionadoBKP;
+        public int? ClienteSelecionadoBKP
+        {
+            get
+            {
+                return _ClienteSelecionadoBKP;
+            }
+            set
+            {
+                _ClienteSelecionadoBKP = value;
+            }
+        }
+
     }
 }

@@ -1,10 +1,11 @@
-﻿using BHJet_Mobile.ViewModel.Login;
+﻿using BHJet_Mobile.Servico.Autenticacao;
+using BHJet_Mobile.Servico.Motorista;
+using BHJet_Mobile.Sessao;
+using BHJet_Mobile.View.ChamadoAvulso;
+using BHJet_Mobile.View.Diaria;
+using BHJet_Mobile.View.Util;
+using BHJet_Mobile.ViewModel.Login;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +17,7 @@ namespace BHJet_Mobile.View
         public LoginPage()
         {
             InitializeComponent();
-            ViewModel = new LoginViewModel();
+            ViewModel = new LoginViewModel(new AutenticacaoServico(), new MotoristaServico(), UsuarioAutenticado.Instance);
             BindingContext = ViewModel;
         }
 
@@ -34,6 +35,14 @@ namespace BHJet_Mobile.View
         }
 
         /// <summary>
+        /// Abrindo
+        /// </summary>
+        protected override void OnAppearing()
+        {
+
+        }
+
+        /// <summary>
         /// Evento do botão de Logar
         /// </summary>
         /// <param name="sender"></param>
@@ -42,15 +51,36 @@ namespace BHJet_Mobile.View
         {
             try
             {
-                // Executa o Login
-                await ViewModel.ExecutarLogin();
-                // Troca de página após Login
-                App.Current.MainPage = new MainPage();
+                await Logar();
             }
             catch (Exception error)
             {
-                //this.TrataExceptionMobile(error);
+                this.TrataExceptionMobile(error);
             }
+        }
+
+        private async System.Threading.Tasks.Task Logar()
+        {
+            ViewModel.Loading = true;
+
+//#if DEBUG
+//            ViewModel.Login = new LoginModel()
+//            {
+//                Username = "fulanociclano@teste.com",
+//                Password = "12345678"
+//            };
+//#endif
+
+            // Executa o Login
+            await ViewModel.ExecutarLogin();
+
+            // Redirect Seleção de Tipo de veiculo
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
+                App.Current.MainPage = new Detalhe();
+            else if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                App.Current.MainPage = new DiariaDeBordo();
+            else
+                App.Current.MainPage = new TipoVeiculo();
         }
     }
 }

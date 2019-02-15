@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
 using System.Collections.Generic;
@@ -19,11 +19,10 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"--- Quantidade de chamados abertos esperando profissional 
-		                               select CLB.idTipoProfissional AS TipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
+		                               select CD.idTipoProfissional AS TipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
 							                    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-							                    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
-								            where LGCD.idStatusCorrida = 4
-								                group by CLB.idTipoProfissional
+								            where CD.idStatusCorrida = 3
+								                group by CD.idTipoProfissional
 
 		                        --- Quantidade de motorista e motociclista disponiveis
 		                               select idTipoProfissional as TipoProfissional, count(*) as Quantidade from tblColaboradoresEmpresaDisponiveis

@@ -1,5 +1,5 @@
 ﻿@using BHJet_Admin.Models.Motorista
-@using BHJet_Core.Enum
+@using BHJet_Enumeradores
 @model NovoMotoristaModel
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -61,17 +61,22 @@
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-4">
                             <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Email</label>
                             @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label for="txtNomeFantasia"><small class="obrigatorio">*</small>CNH</label>
                             @Html.TextBoxFor(model => model.CNH, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CNH, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Documento RG</label>
+                            @Html.TextBoxFor(model => model.DocumentoRG, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DocumentoRG, null, new { @class = "text-danger" })
                         </div>
 
                         <div class=" col-md-4">
@@ -85,6 +90,26 @@
                             }
                             @Html.ValidationMessageFor(model => model.TipoCarteiraMotorista, null, new { @class = "text-danger" })
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
+                            @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @type = "password" })
+                            @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-4">
+                            <div style="margin-top:25px;">
+                                <label class="label-cbx">
+                                    @Html.CheckBoxFor(model => model.Situacao, new { @class = "checkbox" })
+                                    @Html.ValidationMessageFor(model => model.Situacao, null, new { @class = "text-danger" })
+                                    <span>Ativo</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        
+
                     </div>
                 </div>
 
@@ -107,7 +132,7 @@
                         <div class="col-md-3 col-lg-2">
                             <label class="label-cbx">
                                 @Html.CheckBoxFor(model => model.EnderecoPrincipal, new { @class = "checkbox" })
-                                <span><small class="obrigatorio">*</small>Endereço Principal</span>
+                                <span>Endereço Principal</span>
                             </label>
                         </div>
                     </div>
@@ -214,7 +239,7 @@
                     <div class="col-xs-12 col-sm-12 col-lg-12">
                         <div class="row rowList">
 
-                            <div class="col-md-1" style="margin-right: -80px;margin-top: 20px;">
+                            <div class="col-sm-1 col-md-2  col-lg-1" style="margin-top: 20px; text-align: center;">
                                 <a onclick="removeComissao(@i)">
                                     <i class="fa fa-trash-o" style="color:red" aria-hidden="true"></i>
                                 </a>
@@ -222,27 +247,27 @@
 
                             @if (Model.EdicaoCadastro == true)
                             {
-                            <div class="col-md-1">
-                                <label for="txtNomeFantasia">ID</label>
-                                <br />
-                                @Html.TextBoxFor(model => model.Comissao[i].ID, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
+                                <div class="col-sm-1 col-md-1  col-lg-1">
+                                    <label for="txtNomeFantasia">ID</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.Comissao[i].ID, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
                             }
                             @Html.HiddenFor(model => model.Comissao[i].ID)
-                            <div class="col-md-2">
-                                <label for="txtNomeFantasia">Percentual</label>
+                            <div class="col-sm-1 col-md-2  col-lg-2">
+                                <label for="txtNomeFantasia">Percentual (%)</label>
                                 <br />
                                 @Html.TextBoxFor(model => model.Comissao[i].ValorComissao, new { @class = "form-control" })
                             </div>
-                            <div class="col-xs-12 col-md-3">
-                                <label>Vigência</label>
+                            <div class="col-1 col-sm-1 col-xs-12 col-md-5 col-lg-4">
+                                <label>Data Vigência</label>
                                 <div class="input-group input-daterange">
                                     @Html.TextBoxFor(model => model.Comissao[i].VigenciaInicio, new { style = "width: 160px;", @class = "form-control" })
                                     <div style="margin-left:-2px" class="input-group-addon">a</div>
                                     @Html.TextBoxFor(model => model.Comissao[i].VigenciaFim, new { style = "width: 160px;", @class = "form-control" })
                                 </div>
                             </div>
-                            <div class=" col-md-5">
+                            <div class="col-sm-12 col-md-3  col-lg-4">
                                 <label for="txtNomeFantasia">Observações</label>
                                 @Html.TextAreaFor(model => model.Comissao[i].Observacao, new { @class = "form-control" })
                             </div>
@@ -262,15 +287,17 @@
         </div>
     </div>
 }
-
 @if (TempData["mensagemGeral"] != null)
 {
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
     <script type="text/javascript">
-            window.onload = function () {
-                $("#msgModal").text("@TempData["mensagemGeral"].ToString()")
-                $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
-                $('#myModal').modal('show')
-            };
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
     </script>
 }
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>

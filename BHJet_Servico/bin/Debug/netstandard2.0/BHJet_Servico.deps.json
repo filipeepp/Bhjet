@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "9afcab410af1b58d882f2a599176e03ed8c05819"
+    "signature": "4f44fd5d33545068139ecc24b89d6bbdb291a98f"
   },
   "compilationOptions": {},
   "targets": {
@@ -10,8 +10,9 @@
       "BHJet_Servico/1.0.0": {
         "dependencies": {
           "BHJet_Core": "1.0.0",
+          "BHJet_CoreGlobal": "1.0.0",
           "BHJet_DTO": "1.0.0",
-          "Microsoft.AspNet.Mvc": "5.2.4",
+          "BHJet_Enumeradores": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "11.0.2",
           "System.Configuration": "4.0.0.0"
@@ -20,59 +21,7 @@
           "BHJet_Servico.dll": {}
         }
       },
-      "Microsoft.AspNet.Mvc/5.2.4": {
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "3.2.4",
-          "Microsoft.AspNet.WebPages": "3.2.4"
-        },
-        "runtime": {
-          "lib/net45/System.Web.Mvc.dll": {
-            "assemblyVersion": "5.2.4.0",
-            "fileVersion": "5.2.60201.0"
-          }
-        }
-      },
-      "Microsoft.AspNet.Razor/3.2.4": {
-        "runtime": {
-          "lib/net45/System.Web.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          }
-        }
-      },
-      "Microsoft.AspNet.WebPages/3.2.4": {
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "3.2.4",
-          "Microsoft.Web.Infrastructure": "1.0.0"
-        },
-        "runtime": {
-          "lib/net45/System.Web.Helpers.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.Deployment.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          },
-          "lib/net45/System.Web.WebPages.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.60201.0"
-          }
-        }
-      },
       "Microsoft.NETCore.Platforms/1.1.0": {},
-      "Microsoft.Web.Infrastructure/1.0.0": {
-        "runtime": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.20105.407"
-          }
-        }
-      },
       "NETStandard.Library/2.0.3": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
@@ -87,16 +36,37 @@
         }
       },
       "BHJet_Core/1.0.0": {
+        "dependencies": {
+          "System.Web.Mvc": "5.2.4.0",
+          "System.ComponentModel.DataAnnotations": "4.0.0.0",
+          "System.Security": "4.0.0.0",
+          "System.Web.WebPages": "3.0.0.0",
+          "System.Web.WebPages.Razor": "3.0.0.0",
+          "System.Web.Razor": "3.0.0.0",
+          "Microsoft.Web.Infrastructure": "1.0.0.0",
+          "System.Web.WebPages.Deployment": "3.0.0.0"
+        },
         "runtime": {
           "BHJet_Core.dll": {}
         }
       },
+      "BHJet_CoreGlobal/1.0.0": {
+        "runtime": {
+          "BHJet_CoreGlobal.dll": {}
+        }
+      },
       "BHJet_DTO/1.0.0": {
         "dependencies": {
-          "BHJet_Core": "1.0.0"
+          "BHJet_Core": "1.0.0",
+          "BHJet_Enumeradores": "1.0.0"
         },
         "runtime": {
           "BHJet_DTO.dll": {}
+        }
+      },
+      "BHJet_Enumeradores/1.0.0": {
+        "runtime": {
+          "BHJet_Enumeradores.dll": {}
         }
       },
       "System.Configuration/4.0.0.0": {
@@ -107,11 +77,67 @@
           }
         }
       },
-      "System.Security/4.0.0.0": {
+      "System.Web.Mvc.Reference/5.2.4.0": {
+        "runtime": {
+          "System.Web.Mvc.dll": {
+            "assemblyVersion": "5.2.4.0",
+            "fileVersion": "5.2.60201.0"
+          }
+        }
+      },
+      "System.ComponentModel.DataAnnotations.Reference/4.0.0.0": {
+        "runtime": {
+          "System.ComponentModel.DataAnnotations.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.1055.0"
+          }
+        }
+      },
+      "System.Security.Reference/4.0.0.0": {
         "runtime": {
           "System.Security.dll": {
             "assemblyVersion": "4.0.0.0",
             "fileVersion": "4.6.1055.0"
+          }
+        }
+      },
+      "System.Web.WebPages.Reference/3.0.0.0": {
+        "runtime": {
+          "System.Web.WebPages.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60510.0"
+          }
+        }
+      },
+      "System.Web.WebPages.Razor.Reference/3.0.0.0": {
+        "runtime": {
+          "System.Web.WebPages.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60510.0"
+          }
+        }
+      },
+      "System.Web.Razor.Reference/3.0.0.0": {
+        "runtime": {
+          "System.Web.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60510.0"
+          }
+        }
+      },
+      "Microsoft.Web.Infrastructure.Reference/1.0.0.0": {
+        "runtime": {
+          "Microsoft.Web.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.20105.407"
+          }
+        }
+      },
+      "System.Web.WebPages.Deployment.Reference/3.0.0.0": {
+        "runtime": {
+          "System.Web.WebPages.Deployment.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.60510.0"
           }
         }
       }
@@ -123,40 +149,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNet.Mvc/5.2.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-aBSENa9s0KnB/Oh9D94l/g1BQKcjX3Ra6NFmWMWFmCW7diglEHoGOpSozX4lcYdTq/HDGLHfkEFbRLD/Pu6MMQ==",
-      "path": "microsoft.aspnet.mvc/5.2.4",
-      "hashPath": "microsoft.aspnet.mvc.5.2.4.nupkg.sha512"
-    },
-    "Microsoft.AspNet.Razor/3.2.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-XIqwE6RU3Wx5lzxjHakGjZ6AxePlEY8oxAt99YOjY49tzjChZGDWia807YQr1w/sTtQo1cvfcQqvMs3yKWgXrg==",
-      "path": "microsoft.aspnet.razor/3.2.4",
-      "hashPath": "microsoft.aspnet.razor.3.2.4.nupkg.sha512"
-    },
-    "Microsoft.AspNet.WebPages/3.2.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-JCFFKgRDcxyVEELCx/1D8AzF0j0N+hagGXXBmp+NFffF6O0pWA9aXugJqUm0SDvgOH9RCNU0YzyoHa4X+Lsw7w==",
-      "path": "microsoft.aspnet.webpages/3.2.4",
-      "hashPath": "microsoft.aspnet.webpages.3.2.4.nupkg.sha512"
-    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "path": "microsoft.netcore.platforms/1.1.0",
       "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
-    },
-    "Microsoft.Web.Infrastructure/1.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-n53z4bxLI6bly1tt4NzQx9vShfiEh3IB23vKVTFfKUOfUhbgoynhZMzn3aezHwTWUzxBmCe6j6hKHFYqDC9q9Q==",
-      "path": "microsoft.web.infrastructure/1.0.0",
-      "hashPath": "microsoft.web.infrastructure.1.0.0.nupkg.sha512"
     },
     "NETStandard.Library/2.0.3": {
       "type": "package",
@@ -168,11 +166,16 @@
     "Newtonsoft.Json/11.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "sha512-znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
     "BHJet_Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BHJet_CoreGlobal/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -182,12 +185,52 @@
       "serviceable": false,
       "sha512": ""
     },
+    "BHJet_Enumeradores/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Configuration/4.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "System.Security/4.0.0.0": {
+    "System.Web.Mvc.Reference/5.2.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.ComponentModel.DataAnnotations.Reference/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Security.Reference/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Web.WebPages.Reference/3.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Web.WebPages.Razor.Reference/3.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Web.Razor.Reference/3.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Web.Infrastructure.Reference/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Web.WebPages.Deployment.Reference/3.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

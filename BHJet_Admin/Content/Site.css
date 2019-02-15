@@ -15,6 +15,15 @@
     margin-top: 20px;
 }
 
+.cst-tbl-linhaHover:hover {
+	cursor: pointer;
+	background-color: #ccc;
+}
+
+.cst-msg-select-null {
+	color: #fd5757;
+}
+
 
 /*************************************END DIOGO***********************************/
 #footer {
@@ -257,6 +266,19 @@ input[type="radio"], input[type="checkbox"] {
 
 .breadcrumb {
     background-color: #eeeeef;
+}
+
+.box-total {
+    float: right;
+    background: #505a8c;
+    padding: 5px 20px;
+    color: white;
+    text-align: center;
+    margin: 15px;
+}
+
+.box-total-tit {
+    border-bottom: 1px solid;
 }
 
 .small-box {

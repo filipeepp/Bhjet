@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
 	//MASCARAS
+	$('.ctmErrorDataNascimento').on("keyup mouseup", function (event) {
+		var id = event.target.id;
+		$('input[id="' + id + '"]').prop("type", "date");
+	});
+
 	$(".mask-telefone").mask("(00) 0000-0000");
 	$(".mask-celular").mask("(00) 00009-0000");
 
@@ -26,9 +31,9 @@
 	//Habilita botão avançar
 	$(document).on("change keyup mouseup mousemove", function () {
 
-		if ($(document).find('span[id^="spanError_"]').length === 0) {
+		//if ($(document).find('span[id^="spanError_"]').length === 0) {
 			$("#lnkValidarContato").removeClass("isDisabled");
-		}
+		//}
 
 	});
 
@@ -91,19 +96,21 @@ window.ValidarContato = function () {
 
 	$("div[id^='Contato']").each(function () {
 		var aux = $(this).children('input');
-		if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
+        if (!aux[0].value && $(this).closest('.div-contato-removido').length <= 0) {
+
+            $("#spanError_" + aux[0].id).remove();
 			//Contato
-			aux.hasClass("ctmErrorContato") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Nome do Contato obrigatório.' + fechamentoSpan) : "";
+            aux.hasClass("ctmErrorContato") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + 'Nome do Contato obrigatório.' + fechamentoSpan) : "";
 			//Email
 			aux.hasClass("ctmErrorEmail") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "E-mail obrigatório." + fechamentoSpan) : "";
 			//Telefone Comercial
 			aux.hasClass("ctmErrorTelefoneComercial") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Telefone Comercial obrigatório." + fechamentoSpan) : "";
 			//Telefone Celular
-			aux.hasClass("ctmErrorTelefoneCelular") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Telefone Celular obrigatório." + fechamentoSpan) : "";
+			//aux.hasClass("ctmErrorTelefoneCelular") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Telefone Celular obrigatório." + fechamentoSpan) : "";
 			//Setor
 			aux.hasClass("ctmErrorSetor") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "Setor é obrigatório." + fechamentoSpan) : "";
 			//Data Nascimento
-			aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : ""
+			//aux.hasClass("ctmErrorDataNascimento") ? $(this).append('<span id="spanError_' + aux[0].id + '" >' + aberturaSpan + "A Data de Nascimento é obrigatória" + fechamentoSpan) : ""
 
 		}
 	});
@@ -122,7 +129,7 @@ window.ValidarContato = function () {
 window.RemoverBlocoContato = function (divBlocoContato) {
 	var id = divBlocoContato.id;
 
-	//Adicionta classe para identificar que o contato foi removido
+	//Adiciona classe para identificar que o contato foi removido
 	$("#" + id).addClass("div-contato-removido");
 
 	//Remove span de erro
@@ -137,5 +144,37 @@ window.RemoverBlocoContato = function (divBlocoContato) {
 	$("#" + id).hide();
 
 	return true;
+
+}
+
+window.ExcluirContato = function (divBlocoContato) {
+
+	var idBloco = divBlocoContato.id;
+	var idContato = $("#" + idBloco).find("input[id$='ID']").val();
+
+	var alertConfirmacao = window.confirm("Tem certeza que deseja excluir esse contato da base?");
+
+	if (alertConfirmacao) {
+		$.ajax({
+			url: '/Clientes/ExcluirContato?idContato=' + idContato,
+			type: "POST",
+			success: function () {
+
+				//var idCliente = $("input[id='ID']").val();
+				RemoverBlocoContato(divBlocoContato);
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+				//window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+			},
+			error: function () {
+				var idCliente = $("input[id='ID']").val();
+				window.location.href = "/Clientes/NovoCliente?edicao=true&clienteID=" + idCliente;
+				$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+
+			}
+		});
+
+	} else {
+		event.stopPropagation();
+	}
 
 }

@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Core.Extension;
 using BHJet_Core.Variaveis;
 using BHJet_DTO.Profissional;
@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using BHJet_Repositorio.Admin.Filtro;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -70,7 +71,7 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("{idProfissional:long}/localizacao")]
         [ResponseType(typeof(LocalizacaoProfissionalModel))]
-        public IHttpActionResult GetLocalizacaoMotoristaDisponiveil(long idProfissional)
+        public IHttpActionResult GetLocalizacaoMotoristaDisponivel(long idProfissional)
         {
             // Busca Dados resumidos
             var entidade = new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
@@ -90,6 +91,21 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Atualia localização de profissionais disponíveis
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("{idProfissional:long}/localizacao")]
+        public IHttpActionResult PutlocalizacaoMotoristaDisponivel(long idProfissional)
+        {
+            // Busca Dados resumidos
+            new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
         /// Busca lista de Profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
@@ -100,6 +116,32 @@ namespace BHJet_WebApi.Controllers
         {
             // Busca Dados resumidos
             var entidade = new ProfissionalRepositorio().BuscaProfissionais(trecho);
+
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(pro => new ProfissionalModel()
+            {
+                ID = pro.ID,
+                NomeCompleto = pro.NomeCompleto,
+                TipoRegime = pro.TipoRegime,
+                TipoProfissional = pro.TipoProfissional
+            }));
+        }
+
+        /// <summary>
+        /// Busca lista de Profissionais Disponiveis para corrida ou diaria
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("Disponivel")]
+        [ResponseType(typeof(IEnumerable<ProfissionalModel>))]
+        public IHttpActionResult GetListaProfissionaisDisponiveis([FromUri]int? tipoProfissional = null, [FromUri]string trecho = "")
+        {
+            // Busca Dados resumidos
+            var entidade = new ProfissionalRepositorio().BuscaProfissionaisDisponiveis(trecho, tipoProfissional);
 
             // Validacao
             if (entidade == null)
@@ -156,6 +198,7 @@ namespace BHJet_WebApi.Controllers
                 TipoCNH = entidade.TipoCNH,
                 TipoRegime = entidade.TipoRegime,
                 TipoProfissional = entidade.TipoProfissional,
+                DocumentoRG = entidade.DocumentoRG,
                 Comissoes = entidade.Comissoes.Select(c => new ProfissionalComissaoModel()
                 {
                     ID = c.idComissaoColaboradorEmpresaSistema,
@@ -165,6 +208,27 @@ namespace BHJet_WebApi.Controllers
                     Observacao = c.vcObservacoes
                 }).ToArray()
             });
+        }
+
+        /// <summary>
+        /// Atualiza dados simplificados do profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Authorize]
+        [Route("{idProfissional:long}/basico")]
+        public IHttpActionResult PutProfissionalMobile(long idProfissional, [FromBody]ProfissionalCompletoModel model)
+        {
+            // Busca Dados resumidos
+            new ProfissionalRepositorio().AtualizaProfissionalSimples(new ProfissionalCompletoEntidade()
+            {
+                ID = idProfissional,
+                TelefoneCelular = model.TelefoneCelular,
+                TelefoneResidencial = model.TelefoneResidencial,
+                CelularWpp = model.CelularWpp,
+            });
+
+            // Return
+            return Ok();
         }
 
         /// <summary>
@@ -200,13 +264,16 @@ namespace BHJet_WebApi.Controllers
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
                 PontoReferencia = model.PontoReferencia,
+                Senha = model.Senha,
+                StatusUsuario = model.Status,
+                DocumentoRG = model.DocumentoRG,
                 Comissoes = model.Comissoes != null ? model.Comissoes.Select(c => new ProfissionalComissaoEntidade()
                 {
                     idComissaoColaboradorEmpresaSistema = c.ID,
                     decPercentualComissao = c.decPercentualComissao,
                     dtDataInicioVigencia = c.dtDataInicioVigencia,
                     dtDataFimVigencia = c.dtDataFimVigencia,
-                    vcObservacoes = c.Observacao 
+                    vcObservacoes = c.Observacao
                 }).ToArray() : new ProfissionalComissaoEntidade[] { }
             });
 
@@ -270,6 +337,9 @@ namespace BHJet_WebApi.Controllers
                 Complemento = model.Complemento,
                 EnderecoPrincipal = model.EnderecoPrincipal,
                 PontoReferencia = model.PontoReferencia,
+                DocumentoRG = model.DocumentoRG,
+                Senha = model.Senha,
+                StatusUsuario = model.Status,
                 Comissoes = model.Comissoes.Any() ? model.Comissoes.Select(x => new ProfissionalComissaoEntidade()
                 {
                     decPercentualComissao = x.decPercentualComissao,
@@ -281,6 +351,91 @@ namespace BHJet_WebApi.Controllers
             // Return
             return Ok();
         }
+
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("{idProfissional:long}/comissao")]
+        [ResponseType(typeof(ComissaoModel))]
+        public IHttpActionResult GetComissaoProfissional(long idProfissional)
+        {
+            // Busca Dados resumidos
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(idProfissional);
+
+            // Validacao
+            if (comissao == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(new ComissaoModel()
+            {
+                idComissaoColaboradorEmpresaSistema = comissao.idComissaoColaboradorEmpresaSistema,
+                idColaboradorEmpresaSistema = comissao.idColaboradorEmpresaSistema,
+                bitAtivo = comissao.bitAtivo,
+                decPercentualComissao = comissao.decPercentualComissao,
+                dtDataInicioVigencia = comissao.dtDataInicioVigencia,
+                dtDataFimVigencia = comissao.dtDataFimVigencia,
+                vcObservacoes = comissao.vcObservacoes
+            });
+        }
+
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("Perfil")]
+        [ResponseType(typeof(PerfilModel))]
+        public IHttpActionResult GetPerfil()
+        {
+            // Busca Dados resumidos
+            var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Validacao
+            if (perfil == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(new PerfilModel()
+            {
+                idUsuario = perfil.idUsuario,
+                idColaboradorEmpresaSistema = perfil.idColaboradorEmpresaSistema,
+                Email = perfil.vcEmail,
+                NomeCompleto = perfil.vcNomeCompleto,
+                idRegistroDiaria = perfil.idRegistroDiaria,
+                idCorrida = perfil.IDCorrida,
+                TipoProfissional = perfil.idTipoProfissional
+            });
+        }
+
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("Disponivel")]
+        public IHttpActionResult PutDisponibilidade([FromBody]DisponibilidadeFiltro filtro)
+        {
+            // Variaveis
+            var rep = new ProfissionalRepositorio();
+
+            // Busca Dados resumidos
+            var perfil = rep.BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+            // Validacao
+            if (perfil == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Atualiza
+            rep.AtualizaDisponibilidadeProfissional(perfil.idColaboradorEmpresaSistema, filtro);
+
+            // Return
+            return Ok();
+        }
+
+
 
     }
 }

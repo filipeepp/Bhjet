@@ -1,5 +1,6 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,9 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"select  geoPosicao.STY  as vcLatitude, 
-       geoPosicao.STX  as vcLongitude,
-	   idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel from tblColaboradoresEmpresaDisponiveis CED
+                                    geoPosicao.STX  as vcLongitude,
+	                                idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel 
+                                        from tblColaboradoresEmpresaDisponiveis CED
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
@@ -65,8 +67,8 @@ namespace BHJet_Repositorio.Admin
         /// <summary>
         /// Busca Lista de Profissionais
         /// </summary>
-        /// <param name="filtro">TipoProfissional</param>
-        /// <returns>UsuarioEntidade</returns>
+        /// <param name="filtro">trecho</param>
+        /// <returns>IEnumerable<ProfissionalEntidade></returns>
         public IEnumerable<ProfissionalEntidade> BuscaProfissionais(string trecho)
         {
             using (var sqlConnection = this.InstanciaConexao())
@@ -83,12 +85,57 @@ namespace BHJet_Repositorio.Admin
 									       PRO.vcNomeCompleto like @valorPesquisa";
 
                 if (string.IsNullOrWhiteSpace(trecho))
-                    query.Replace("*", "top(50)");
+                    query.Replace("select", "select top(50)");
 
                 // Execução
                 return sqlConnection.Query<ProfissionalEntidade>(query, new
                 {
                     valorPesquisa = "%" + trecho + "%",
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Lista de Profissionais Disponiveis
+        /// </summary>
+        /// <param name="filtro">trecho</param>
+        /// <returns>IEnumerable<ProfissionalEntidade></returns>
+        public IEnumerable<ProfissionalEntidade> BuscaProfissionaisDisponiveis(string trecho, int? tipoProfissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select DISTINCT (CE.idColaboradorEmpresaSistema) as ID,
+				                        CE.vcNomeCompleto as NomeCompleto,
+				                        TP.idTipoProfissional as TipoProfissional,
+				  				        CE.bitRegimeContratacaoCLT TipoRegime
+							    from tblColaboradoresEmpresaSistema CE
+				 				   join tblColaboradoresEmpresaDisponiveis CEO ON (CE.idColaboradorEmpresaSistema = CEO.idColaboradorEmpresaSistema) 
+				 				   left join tblRegistroDiarias RD on (CE.idColaboradorEmpresaSistema = RD.idColaboradorEmpresaSistema)
+				 				   left join tblCorridas CR on (CR.idUsuarioColaboradorEmpresa = CE.idColaboradorEmpresaSistema)
+				                   join tblDOMTipoProfissional TP on (TP.idTipoProfissional = ce.idTipoProfissional)
+						       WHERE 
+										CEO.bitDisponivel = 1  
+							     AND 
+										(convert(varchar(10), RD.dtDataHoraInicioExpediente, 120) != convert(varchar(10), getdate(), 120) or RD.idRegistroDiaria IS NULL )
+							     AND 
+					    				(CR.idStatusCorrida not in (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 0 and bitFinaliza = 0) or CR.idStatusCorrida IS NULL)
+                                  %CONDICAO_TRECHO% 
+                                  %CONDICAO_TIPO% ";
+
+
+                // Validacao extra
+                query = string.IsNullOrWhiteSpace(trecho) ? query.Replace("%CONDICAO_TRECHO%", "")
+                                                          : query.Replace("%CONDICAO_TRECHO%", "AND convert(varchar(250), CE.idColaboradorEmpresaSistema) like @valorPesquisa or CE.vcNomeCompleto like @valorPesquisa");
+
+                query = tipoProfissional != null ? query.Replace("%CONDICAO_TIPO%", "AND (CEO.idTipoProfissional = @tipoProf)")
+                                            : query.Replace("%CONDICAO_TIPO%", "");
+
+                // Execução
+                return sqlConnection.Query<ProfissionalEntidade>(query, new
+                {
+                    valorPesquisa = "%" + trecho + "%",
+                    tipoProf = tipoProfissional
                 });
             }
         }
@@ -123,10 +170,11 @@ namespace BHJet_Repositorio.Admin
 				                            PRO.vcEmail as Email,
 				                            PRO.bitRegimeContratacaoCLT as ContratoCLT,
 				                            PRO.vcObservacoes as Observacao,
+                                            PRO.vcRG as DocumentoRG,
 				                            TP.idTipoProfissional as TipoProfissional,
-				                                CASE (PRO.bitRegimeContratacaoCLT)
-                                   WHEN  0 THEN 'CLT'
-                                   WHEN 1 THEN 'MEI' END as TipoContrato
+				                   CASE (PRO.bitRegimeContratacaoCLT)
+                                     WHEN  0 THEN 'CLT'
+                                     WHEN 1 THEN 'MEI' END as TipoContrato
 			                            from tblColaboradoresEmpresaSistema as PRO
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)
@@ -168,7 +216,7 @@ namespace BHJet_Repositorio.Admin
                     try
                     {
                         // Update tblColaboradoresEmpresaSistema
-                        string query = @" UPDATE dbo.tblColaboradoresEmpresaSistema
+                        string query = @"UPDATE dbo.tblColaboradoresEmpresaSistema
                                     SET vcNomeCompleto = @NomeCompleto,
 	                                    vcCPFCNPJ = @CPF,
 	                                    vcDocumentoHabilitacao = @CNH,
@@ -178,7 +226,8 @@ namespace BHJet_Repositorio.Admin
 	                                    bitTelefoneCelularWhatsApp = @CelularWpp,
 	                                    bitRegimeContratacaoCLT = @TipoContrato,
 	                                    vcObservacoes = @Observacao,
-	                                    vcEmail = @Email
+	                                    vcEmail = @Email,
+                                        vcRG = @DocumentoRG  
                                     where 
                                         idColaboradorEmpresaSistema = @ID";
                         // Execução 
@@ -194,7 +243,8 @@ namespace BHJet_Repositorio.Admin
                             TipoContrato = profissional.TipoRegime,
                             Observacao = profissional.Observacao,
                             Email = profissional.Email,
-                            ID = profissional.ID
+                            ID = profissional.ID,
+                            DocumentoRG = profissional.DocumentoRG
                         }, trans);
 
                         // Insert Novo Endereco
@@ -273,6 +323,24 @@ namespace BHJet_Repositorio.Admin
                                 }, trans);
                         }
 
+                        // Atualiza senha
+                        if (!string.IsNullOrWhiteSpace(profissional.Senha))
+                        {
+                            string queryUpdateUsuario = @"update tblUsuarios set vbPassword = @pass where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                            trans.Connection.Execute(queryUpdateUsuario, new
+                            {
+                                pass = new UsuarioRepositorio().RetornaSenhaEncriptada(profissional.Senha),
+                                idCol = profissional.ID
+                            }, trans);
+                        }
+                        // Atualiza status
+                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                        trans.Connection.Execute(queryUpdateStatus, new
+                        {
+                            status = profissional.StatusUsuario,
+                            idCol = profissional.ID
+                        }, trans);
+
                         // Commit
                         trans.Commit();
                     }
@@ -282,6 +350,32 @@ namespace BHJet_Repositorio.Admin
                         throw e;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Atualiza dados simples do profissional
+        /// Email, Telefone fixo/celular e CHN
+        /// </summary>
+        /// <param name="profissional"></param>
+        public void AtualizaProfissionalSimples(ProfissionalCompletoEntidade profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblColaboradoresEmpresaSistema 
+                                    set vcTelefoneCelular = @Celular, 
+                                        vcTelefoneResidencial = @Telefone, bitTelefoneCelularWhatsApp = @wpp
+                                 where idColaboradorEmpresaSistema = @id";
+
+                // Query Multiple
+                sqlConnection.Execute(query, new
+                {
+                    id = profissional.ID,
+                    Celular = profissional.TelefoneCelular,
+                    Telefone = profissional.TelefoneResidencial,
+                    wpp = profissional.CelularWpp
+                });
             }
         }
 
@@ -315,6 +409,7 @@ namespace BHJet_Repositorio.Admin
                 {
                     try
                     {
+                        #region Incluir Profissional
                         // Insert Novo Endereco
                         string query = @"INSERT INTO [dbo].[tblEnderecos]
                                            ([vcRua]
@@ -348,7 +443,7 @@ namespace BHJet_Repositorio.Admin
                             UF = profissional.UF,
                             Cep = profissional.Cep,
                             PontoReferencia = profissional.PontoReferencia,
-                            EnderecoPrincipal = profissional.EnderecoPrincipal
+                            EnderecoPrincipal = profissional.EnderecoPrincipal,
                         }, trans);
 
                         int tipoProfissional = profissional.TipoCNH == TipoCarteira.A ? 1 : 2;
@@ -367,7 +462,9 @@ namespace BHJet_Repositorio.Admin
                                                      ,[bitTelefoneCelularWhatsApp]
                                                      ,[bitRegimeContratacaoCLT]
                                                      ,[vcObservacoes]
-                                                     ,[vcEmail])
+                                                     ,[vcEmail]
+                                                     ,[dtDataHoraRegistro]
+                                                     ,[vcRG])
                                                VALUES
                                                      (@IDGestor
                                                      ,@idEndereco
@@ -381,7 +478,7 @@ namespace BHJet_Repositorio.Admin
                                                      ,@WPP
                                                      ,@CLT
                                                      ,@Observacao
-                                                     ,@Email) select @@identity;";
+                                                     ,@Email, getdate(), @RG) select @@identity;";
                         // Execução 
                         idColaborador = trans.Connection.ExecuteScalar<int?>(query, new
                         {
@@ -397,11 +494,27 @@ namespace BHJet_Repositorio.Admin
                             WPP = profissional.CelularWpp,
                             CLT = profissional.ContratoCLT,
                             Observacao = profissional.Observacao,
-                            Email = profissional.Email
+                            Email = profissional.Email,
+                            RG = profissional.DocumentoRG
                         }, trans);
 
-                        // Commit
+
+                        #endregion
+
+                        #region Incluir Usuario
+                        // Commit Profissional
                         trans.Commit();
+
+                        new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+                        {
+                            bitAtivo = profissional.StatusUsuario,
+                            ClienteSelecionado = null,
+                            idTipoUsuario = TipoUsuario.Profissional,
+                            vcEmail = profissional.Email,
+                            vbIncPassword = profissional.Senha,
+                            ColaboradorSelecionado = idColaborador
+                        });
+                        #endregion
 
                         // Insere comissões
                         using (var sqlConnectionCom = this.InstanciaConexao())
@@ -443,22 +556,19 @@ namespace BHJet_Repositorio.Admin
                                 }
                             }
                         }
-
-                        // Commit
-                        trans.Commit();
                     }
                     catch (Exception e)
                     {
                         if (trans.Connection != null)
                             trans.Rollback();
-                        RoolbackColaborador(idEndereco, idColaborador, Comissoes.ToArray());
+                        RoolbackColaborador(idEndereco, idColaborador, Comissoes.ToArray(), profissional.Email);
                         throw e;
                     }
                 }
             }
         }
 
-        private void RoolbackColaborador(int? idEndereco, int? idColaborador, int[] comissoes)
+        private void RoolbackColaborador(int? idEndereco, int? idColaborador, int[] comissoes, string email)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -468,6 +578,8 @@ namespace BHJet_Repositorio.Admin
                     sqlConnection.ExecuteScalar($"delete from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = {idColaborador}");
                 if (idEndereco != null)
                     sqlConnection.ExecuteScalar($"delete from tblEnderecos where idEndereco = {idEndereco}");
+                if (!string.IsNullOrWhiteSpace(email))
+                    sqlConnection.ExecuteScalar($"delete from tblUsuarios where vcEmail = {email}");
             }
         }
 
@@ -508,6 +620,144 @@ namespace BHJet_Repositorio.Admin
                 {
                     Email = email,
                     CPF = cpf
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Comissao do Profissional
+        /// </summary>
+        /// <param name="idProfissional">idProfissional</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public ComissaoProfissionalEntidade BuscaComissaoProfissional(long idProfissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select TOP(1) * from tblComissaoColaboradorEmpresaSistema CC
+				                    join tblColaboradoresEmpresaSistema CE on (CC.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
+					                where CC.idColaboradorEmpresaSistema = @id
+						              and CC.bitAtivo = 1
+					             order by CC.dtDataInicioVigencia desc";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<ComissaoProfissionalEntidade>(query, new
+                {
+                    id = idProfissional
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Perfil do Profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public ProfissionalPerfilEntidade BuscaPerfilProfissional(string idUsuario)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select US.idUsuario, 
+                                           CE.idColaboradorEmpresaSistema,
+                                    	   RD.idRegistroDiaria,
+	                                       CE.vcNomeCompleto,
+	                                       CE.vcEmail,
+	                                       CE.idTipoProfissional,
+                                           (select idCorrida from tblCorridas where idUsuarioColaboradorEmpresa = CE.idColaboradorEmpresaSistema
+										    and idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitFinaliza = 0 and bitCancela = 0)) IDCorrida
+	                                from tblUsuarios US
+		                               join tblDOMTiposUsuario TS on (US.idTipoUsuario = TS.idTipoUsuario)
+		                               join tblColaboradoresEmpresaSistema CE on (CE.idUsuario = US.idUsuario)
+		                               left join tblRegistroDiarias RD on (ce.idColaboradorEmpresaSistema = RD.idColaboradorEmpresaSistema AND
+		                                                                  convert(varchar(10), RD.dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120))
+                                    WHERE 
+		                                  US.idUsuario = @idUser";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<ProfissionalPerfilEntidade>(query, new
+                {
+                    idUser = idUsuario
+                });
+            }
+        }
+
+        /// <summary>                                                       
+        /// Atualiza Disponibilidade do profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public void AtualizaDisponibilidadeProfissional(long idColaboradorEmpresa, DisponibilidadeFiltro filtro)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Verifica se já existe o registro
+                string queryVer = @"select count(*) as bit from tblColaboradoresEmpresaDisponiveis where idColaboradorEmpresaSistema = @id";
+                var resultado = sqlConnection.QueryFirstOrDefault<bool>(queryVer, new { id = idColaboradorEmpresa });
+
+                // Update ou insert
+                if (resultado)
+                {
+                    // Query
+                    string query = @"update tblColaboradoresEmpresaDisponiveis 
+	                                set bitDisponivel = @disponivel, 
+	                                    geoPosicao = (select geometry::Point(@log, @lat, 4326)),
+		                                idTipoProfissional = @tipoProfissional1
+                                  where idColaboradorEmpresaSistema = @id";
+
+                    // Query Multiple
+                    sqlConnection.Execute(query, new
+                    {
+                        id = idColaboradorEmpresa,
+                        disponivel = filtro.bitDisponivel,
+                        lat = filtro.latitude,
+                        log = filtro.longitude,
+                        tipoProfissional1 = filtro.idTipoProfissional
+                    });
+                }
+                else
+                {
+                    // Query
+                    string query = @"INSERT INTO [dbo].[tblColaboradoresEmpresaDisponiveis]
+                                                       ([idColaboradorEmpresaSistema]
+                                                                  ,[idTipoProfissional]
+                                                                  ,[geoPosicao]
+                                                                  ,[bitDisponivel])
+                                                            VALUES
+                                                                  (@id
+                                                                  ,@tipoProfissional1
+                                                                  ,(select geometry::Point(@log, @lat, 4326))
+                                                                  ,@disponivel)";
+
+                    // Query Multiple
+                    sqlConnection.Execute(query, new
+                    {
+                        id = idColaboradorEmpresa,
+                        disponivel = filtro.bitDisponivel,
+                        lat = filtro.latitude,
+                        log = filtro.longitude,
+                        tipoProfissional1 = filtro.idTipoProfissional
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Busca ID do Profissional
+        /// </summary>
+        /// <param name="idUsuario">ID usuario logado</param>
+        /// <returns>long</returns>
+        public long BuscaIDProfissional(long idUsuario)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select idColaboradorEmpresaSistema as ID from tblColaboradoresEmpresaSistema where idUsuario = @idUser";
+
+                // Query Multiple
+                return sqlConnection.QueryFirstOrDefault<long>(query, new
+                {
+                    idUser = idUsuario
                 });
             }
         }

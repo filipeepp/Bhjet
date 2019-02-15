@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using System;
 
 namespace BHJet_Repositorio.Admin.Entidade
@@ -34,6 +34,10 @@ namespace BHJet_Repositorio.Admin.Entidade
         public string Email { get; set; }
         public bool ContratoCLT { get; set; }
         public string Observacao { get; set; }
+        public string DocumentoRG { get; set; }
+        public string Usuario { get; set; }
+        public string Senha { get; set; }
+        public bool StatusUsuario { get; set; }
         public TipoProfissional TipoProfissional { get; set; }
         public RegimeContratacao TipoRegime { get; set; }
         public ProfissionalComissaoEntidade[] Comissoes { get; set; }

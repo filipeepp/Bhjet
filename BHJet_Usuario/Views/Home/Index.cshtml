@@ -1,0 +1,157 @@
+﻿<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="~/Scripts/jquery.counterup.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<div id="banner-wrapper">
+    <div id="banner" class="box container">
+        <div class="row">
+            <div class="col-12 col-12-medium">
+                <div class="w3-content w3-display-container" style="width:100%">
+                    <img class="mySlides" src="~/Images/bgLogin.jpg" style="width:100%">
+                    <img class="mySlides" src="~/Images/bg01.png" style="width:100%">
+                    <img class="mySlides" src="~/Images/bgLogin.jpg" style="width:100%">
+                    <img class="mySlides" src="~/Images/bg01.png" style="width:100%">
+                    @*<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>*@
+                </div>
+
+                <ul class="listaBotaoInicio">
+                    <li><a href="#" onclick="location.href='@Url.Action("Index", "Entregas")'" class="button large icon fa-arrow-circle-right">Solicitar entrega avulsa</a></li>
+                    <li><a href="#" class="button alt large icon fa-question-circle">Agendar solicitação</a></li>
+                    <li><a href="#" class="button alt large icon fa-question-circle">Acompanhar solicitação</a></li>
+                </ul>
+
+            </div>
+  
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div id="features-wrapper">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-motorcycle" style="color:#10a0d5;" aria-hidden="true"></i> Agilidade</h2>
+                        </header>
+                        <p>Nossos motoboys utilizam equipamentos de segurança e GPS, proporcionando segurança nas entregas.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-map-marker" style="color:#10a0d5;" aria-hidden="true"></i> Monitoramento em tempo real</h2>
+                        </header>
+                        <p>Através de equipamentos de segurança e GPS, sua entrega é monitorada em tempo real.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-exclamation-triangle" style="color:#10a0d5;" aria-hidden="true"></i> Avisos</h2>
+                        </header>
+                        <p>Receba notificações sobre sua entrega, em pontos de check-in e checkout.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-3 col-12-medium">
+                <section class="box feature">
+                    <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+                    <div class="inner">
+                        <header>
+                            <h2><i class="fa fa-folder-open" style="color:#10a0d5;" aria-hidden="true"></i> Relatórios</h2>
+                        </header>
+                        <p>Tenha sempre acesso ao histórico de suas entregas e coletas.</p>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Main -->
+<div id="main-wrapper">
+    <div class="container">
+        <div class="row gtr-200">
+            <div class="col-4 col-12-medium">
+
+                <!-- Sidebar -->
+                <div id="sidebar">
+                    <section class="widget thumbnails">
+                        <div class="grid">
+                            <div class="row gtr-50">
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/Motoboy.jpg" alt="" /></a></div>
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/motorista.jpg" alt="" /></a></div>
+                                <div class="col-6"><a href="#" class="image fit"><img src="/Images/cargo.jpg" alt="" /></a></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+            <div class="col-8 col-12-medium imp-medium">
+
+                <!-- Content -->
+                <div id="content">
+                    <section class="last">
+                        <h2 style="color:#10a0d5;">A BH Jet</h2>
+                        <p>
+                            Há mais de 20 anos no segmento de entregas rápidas, a BH JET Express tem se tornado referência no mercado. Atualmente possuímos uma frota formada por 40 motoboys e ainda oferecemos fretes urbanos e transporte executivo. Nosso atendimento abrange Belo Horizonte, a região metropolitana e cidades do interior de Minas Gerais.
+                        </p>
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        setInterval(plusDivs(1), 1000)
+    })
+
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>
+
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-ui.min.js"></script>
+@*<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>*@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/ExibeLocalizacao.js"></script>

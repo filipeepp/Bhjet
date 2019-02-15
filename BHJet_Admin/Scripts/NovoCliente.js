@@ -13,7 +13,16 @@
                 field.mask(cpfMascara.apply({}, arguments), options);
             }
         };
-    $('#DadosCadastrais_CPFCNPJ').mask(cpfMascara, cpfOptions);
+	$('#DadosCadastrais_CPFCNPJ').mask(cpfMascara, cpfOptions);
+
+	//Adiciona ou remove regra required do campo Inscrição Estadual a partir do que foi digitado no campo CPF/CNPJ
+	$('#btnProximoNovoCliente').on('click', function () {
+		
+		if ($('#DadosCadastrais_CPFCNPJ').val().replace(/\D/g, '').length > 11) 
+			$('#DadosCadastrais_InscricaoEstadual').rules("add", "required")
+		else 
+			$('#DadosCadastrais_InscricaoEstadual').rules("remove", "required")
+	});
 
         //CEP
     var endereco = {
@@ -60,5 +69,3 @@ window.AnteriorTab = function (tab1, tab2, tab3) {
 	var active = $("#tabs").tabs("option", "active");
 	$("#tabs").tabs("option", "active", active - 1);
 }
-
-

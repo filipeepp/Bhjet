@@ -1,0 +1,52 @@
+﻿
+<div id="map_canvas">
+</div>
+
+<div id="draggable" class="ui-widget-content">
+    <i style="top: 0;float: right;" class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i>
+
+    <div class="cts-titulo-side-bar">
+        <span>Solicitar entrega / serviço</span>
+    </div>
+    <form method="post" action="">
+        <div>
+            <label for="txtEnderecoPartida">Endereço de partida:</label>
+            <input class="cst-endereco-maps" type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+        </div>
+
+        <div>
+            <label for="txtEnderecoChegada">Endereço de chegada:</label>
+            <input class="cst-endereco-maps" type="text" id="txtEnderecoChegada" name="txtEnderecoChegada" />
+        </div>
+        <div>
+            <label for="txtTerceiroEndereco">Terceiro endereço:</label>
+            <input class="cst-endereco-maps" type="text" id="txtTerceiroEndereco" name="txtTerceiroEndereco" />
+        </div>
+
+        <div>
+            <input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar" />
+        </div>
+
+        <input type="hidden" id="txtLatitude" name="txtLatitude" />
+        <input type="hidden" id="txtLongitude" name="txtLongitude" />
+    </form>
+
+    <div id="trajeto-texto" style="height: 300px; width: 200px"></div>
+</div>
+
+
+
+
+<script>
+    $(function () {
+        $("#draggable").draggable();
+    });
+</script>
+
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-ui.min.js"></script>
+@*<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>*@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/ExibeLocalizacao.js"></script>
+

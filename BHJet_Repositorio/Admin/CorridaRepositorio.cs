@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
 using Dapper;
 using System.Collections.Generic;
@@ -18,14 +18,13 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"select CD.idCorrida ,
-							EC.geoPosicao.STY  as vcLatitude, 
-							EC.geoPosicao.STX  as vcLongitude
-							 from tblCorridas CD
-								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-								join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
-								join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
-									where LGCD.idStatusCorrida = @StatusCorrida
-										AND CLB.idTipoProfissional = @TipoProfissional";
+							        EC.geoPosicao.STY  as vcLatitude, 
+							        EC.geoPosicao.STX  as vcLongitude
+							    from tblCorridas CD
+								    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+							  where cd.idStatusCorrida = @StatusCorrida
+										AND CD.idTipoProfissional = @TipoProfissional";
 
                 // Execução
                 return sqlConnection.Query<LocalizacaoCorridaEntidade>(query, new
@@ -61,7 +60,7 @@ namespace BHJet_Repositorio.Admin
                                     EC.vcObservacao AS Observacao,
                                     PT.vcCaminhoProtocolo as CaminhoProtocolo
 							    from tblCorridas CD
-								    join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
@@ -73,6 +72,338 @@ namespace BHJet_Repositorio.Admin
                 {
                     id = idCorrida,
                 });
+            }
+        }
+
+        /// <summary>
+        /// Busca Profissionais Disponiveis
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<OSCorridaEntidade> BuscaDetalheCorridaCliente(long clienteID)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT
+									Corrida.idCorrida AS NumeroOS,
+									Corrida.dtDataHoraInicio AS DataHoraInicio,
+									Corrida.decValorFinalizado AS ValorFinalizado,
+									Profissional.vcNomeCompleto AS NomeProfissional
+								FROM
+									tblCorridas Corrida
+								INNER JOIN
+									tblColaboradoresEmpresaSistema Profissional ON Profissional.idColaboradorEmpresaSistema = Corrida.idUsuarioColaboradorEmpresa
+								WHERE 
+									Corrida.idCliente = @ClienteID";
+
+                // Execução
+                return sqlConnection.Query<OSCorridaEntidade>(query, new
+                {
+                    ClienteID = clienteID,
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Corrida Aberta
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public CorridaEncontradaEntidade BuscaCorridaAberta(long colaborador, int tipo)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    // Query
+                    string query = @"select top(1) CD.idCorrida as ID,
+							        CD.decValorComissaoNegociado as Comissao,
+							        E.vcRua + ' - ' + E.vcNumero + ', ' + E.vcBairro + ' / ' + E.vcCidade as EnderecoCompleto,
+                                    C.vcNomeFantasia as NomeCliente
+							     from tblCorridas CD
+								     join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
+                                    join tblClientes as C on (CD.idCliente = C.idCliente)
+                                    left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
+								 where CD.idStatusCorrida = 3
+										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
+                                        AND (CD.idUsuarioColaboradorEmpresa IS NULL or CD.idUsuarioColaboradorEmpresa = @profissional)
+                                        AND (CR.idCorrida IS NULL OR  CR.idCorrida != CD.idCorrida)
+										order by CD.dtDataHoraRegistroCorrida DESC";
+
+                    // Execução
+                    var corrida = trans.Connection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
+                    {
+                        tp = tipo,
+                        profissional = colaborador
+                    }, trans);
+
+                    // Trava corrida temporariamente
+                    if (corrida != null)
+                    {
+                        string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 1, 
+                                                                      idUsuarioColaboradorEmpresa = @idCol
+                                                                where idCorrida = @corrida";
+                        trans.Connection.Execute(queryAceitaTemp, new
+                        {
+                            idCol = colaborador,
+                            corrida = corrida.ID
+                        }, trans);
+                    }
+
+                    // Commit
+                    trans.Commit();
+
+                    // Return
+                    return corrida;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Busca LOG Corrida
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>UsuarioEntidade</returns>
+        public IEnumerable<LogCorridaEntidade> BuscaLogCorrida(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select
+                                        LC.idCorrida,
+                                        LC.idStatusCorrida as Status,
+                                        EC.idEnderecoCorrida,
+                                        EC.dtHoraChegada,
+                                        ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
+                                        EC.vcPessoaContato,
+                                        EC.vcObservacao,
+                                        EC.bitEntregarDocumento,
+                                        EC.bitColetarAssinatura,
+                                        EC.bitRetirarDocumento,
+                                        EC.bitRetirarObjeto,
+                                        EC.bitEntregarObjeto,
+                                        EC.bitOutros,
+                                        LC.geoPosicao.STY  as vcLatitude, 
+	                                    LC.geoPosicao.STX  as vcLongitude,
+                                       PEC.vcCaminhoProtocolo as Foto
+				                        -- TELEFONE NAO TEM
+                                  from tblLogCorrida LC
+                                  join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
+                                  join tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
+                                  left join tblProtocoloEnderecoCorrida PEC on (PEC.idEnderecoCorrida = EC.idEnderecoCorrida)
+                                 where LC.idCorrida = @id";
+
+                // Execução
+                return sqlConnection.Query<LogCorridaEntidade>(query, new
+                {
+                    id = idCorrida
+                });
+            }
+        }
+
+        /// <summary>
+        /// Insere registro de protocolo
+        /// </summary>
+        /// <param name="protocolo"></param>
+        /// <param name="idEnderecoCorrida"></param>
+        public void InsereRegistroProtocolo(byte[] protocolo, long idEnderecoCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"INSERT INTO [dbo].[tblProtocoloEnderecoCorrida]
+                                                   ([idEnderecoCorrida]
+                                                   ,[vcCaminhoProtocolo])
+                                      VALUES
+                                                   (@idEndCorrida
+                                                   ,@fotoProtocolo)";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    idEndCorrida = idEnderecoCorrida,
+                    fotoProtocolo = protocolo
+                });
+            }
+        }
+
+        /// <summary>
+        /// Altera status corrida
+        /// </summary>
+        /// <param name="idStatus"></param>
+        /// <param name="idCorrida"></param>
+        public void RegistraChegadaEndereco(long idEnderecoCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"update tblEnderecosCorrida set dtHoraChegada = GETDATE() where idEnderecoCorrida = @id";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    id = idEnderecoCorrida
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca Ocorrencias
+        /// </summary>
+        /// <returns>OcorrenciaEntidade</returns>
+        public IEnumerable<OcorrenciaEntidade> BuscaOcorrenciasCorrida()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select * from tblDOMStatusCorrida";
+
+                // Execução
+                return sqlConnection.Query<OcorrenciaEntidade>(query);
+            }
+        }
+
+        /// <summary>
+        /// Busca Ocorrencias
+        /// </summary>
+        /// <returns>OcorrenciaEntidade</returns>
+        public void AtualizaOcorrenciasCorrida(int ocorrencia, long idLogCorrida, long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Query
+                        string query = @"update tblCorridas set idStatusCorrida = @status where idCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idCorrida,
+                            status = ocorrencia
+                        }, trans);
+
+                        // Query
+                        query = @"update tblLogCorrida set idStatusCorrida = @status where idCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idCorrida,
+                            status = ocorrencia
+                        }, trans);
+
+                        // Commit
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Encerrar Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, double kmPercorrido)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query tarifas
+                string queryTarifa = @"	select C.decValorNegociado +  (T.decValorKMAdicionalCorrida * @kmRodado)
+			                              from tblCorridas C
+				                          join tblTarifario T on (C.idTarifario = t.idTarifario)
+						                 where idCorrida = @id";
+
+                // Execução
+                var valorFinalizado = sqlConnection.QueryFirstOrDefault<decimal>(queryTarifa, new
+                {
+                    kmRodado = kmPercorrido,
+                    id = idCorrida
+                });
+
+                // Query
+                string query = @"update tblCorridas set idStatusCorrida    = @status, 
+			            	                            dtDataHoraTermino  = getdate(),
+							                            decValorFinalizado = @valor
+							                      where idCorrida = @id";
+
+                // Execução
+                sqlConnection.Execute(query, new
+                {
+                    id = idCorrida,
+                    status = (idOcorrencia != null) ? idOcorrencia : 11,
+                    valor = valorFinalizado
+                });
+            }
+        }
+
+        /// <summary>
+        /// RECUSAR Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void RecusarOrdemServico(long idCorrida, long profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Query recusar
+                        string query = @"INSERT INTO [tblCorridasRecusadas] VALUES (@corrida, @profissional)";
+                        trans.Connection.Execute(query, new
+                        {
+                            corrida = idCorrida,
+                            profissional = profissional
+                        }, trans);
+
+                        // Query STATUS
+                        string queryCorrida = @"update tblCorridas set idStatusCorrida  = 3, idUsuarioColaboradorEmpresa = null
+                                                                 where idCorrida = @id";
+                        trans.Connection.Execute(queryCorrida, new
+                        {
+                            id = idCorrida
+                        }, trans);
+
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  Liberar Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void LiberarOrdemServico(long idCorrida, long profissional)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query STATUS
+                string queryCorrida = @"update tblCorridas set idUsuarioColaboradorEmpresa = @prof, idStatusCorrida  = 3 where idCorrida = @id";
+                // Executa
+                sqlConnection.Execute(queryCorrida, new
+                {
+                    prof = profissional,
+                    id = idCorrida
+                });
+
             }
         }
     }

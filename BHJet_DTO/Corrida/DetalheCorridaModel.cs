@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
+using BHJet_Enumeradores;
 using System;
 
 namespace BHJet_DTO.Corrida
@@ -8,6 +9,9 @@ namespace BHJet_DTO.Corrida
         public long NumeroOS { get; set; }
         public long IDCliente { get; set; }
         public long IDProfissional { get; set; }
+		public string NomeProfissional { get; set; }
+		public DateTime? DataInicio { get; set; }
+		public decimal? ValorFinalizado { get; set; }
         public DetalheOSEnderecoModel Origem { get; set; }
         public DetalheOSEnderecoModel[] Destinos { get; set; }
     }

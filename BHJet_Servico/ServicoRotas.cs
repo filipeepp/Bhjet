@@ -5,7 +5,8 @@ namespace BHJet_Servico
     public class ServicoRotas
     {
         //public static readonly string Base = @"http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
-        public static readonly string Base = ConfigurationManager.AppSettings["urlapibhjet"];
+		//public static readonly string Base = @"http://localhost:50435/api";
+		public static readonly string Base = ConfigurationManager.AppSettings["urlapibhjet"];
 
 		public class Autenticacao
         {
@@ -23,6 +24,12 @@ namespace BHJet_Servico
         {
             public const string GetDetalheCorridas = "/Corrida/{0}";
             public const string GetLocalizacaoCorridas = "/Corrida/status/{0}/profissional/{1}/localizacao";
+			public const string GetCorridaCliente = "/Corrida/cliente/{0}";
+		}
+
+        public class AreaAtuacao
+        {
+            public const string GetAreaAtuacao = "/AreaAtuacao";
         }
 
         public class Diaria
@@ -32,24 +39,39 @@ namespace BHJet_Servico
 
         public class Cliente
         {
-            public const string GetClientes = "/Cliente";
+			#region Cliente Normal
+			public const string GetClientes = "/Cliente";
 			public const string PostCliente = "/Cliente";
+			public const string PostClienteContato = "/Cliente/{0}/contato";
+			public const string PostClienteValor = "/Cliente/{0}/contrato";
 			public const string GetClienteContrato = "/Cliente/contrato";
 			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
+			public const string GetClienteCompleto = "/Cliente/{0}";
+			public const string PutCliente = "/Cliente/{0}";
+			public const string DeleteContato = "/Cliente/contato/{0}";
+			public const string DeleteValor = "/Cliente/contrato/{0}";
+			#endregion
+
+			#region Cliente Avulso
+			public const string GetClientesAvulsosValorAtivo = "/Cliente/avulso/contrato/ativo";
+			#endregion
 		}
 
-        public class Usuario
+		public class Usuario
         {
             public const string GetUsuarios = "/Usuarios";
             public const string PostUsuario = "/Usuarios";
+            public const string PutUsuario = "/Usuarios";
             public const string DeleteUsuario = "/Usuarios/{0}";
+            public const string GetUsuario = "/Usuarios/{0}";
             public const string PutSituacao = "/Usuarios/situacao/{0}/usuario/{1}";
         }
 
         public class Tarifa
         {
-            public const string GetTarifaCliente = "/Tarifa/cliente/{0}";
-        }
+            public const string GetTarifaCliente = "/Tarifa/cliente";
+			public const string GetTarifaPadrao = "/Tarifa/tipoVeiculo/{0}";
+		}
 
         public class Faturamento
         {
@@ -64,8 +86,10 @@ namespace BHJet_Servico
             public const string PostProfissional = "/Profissional";
             public const string GetProfissional = "/Profissional/{0}";
             public const string GetProfissionais = "/Profissional";
+            public const string GetProfissionaisDisponiveis = "/Profissional/Disponivel";
             public const string GetLocalizacoesProfissionais = "/Profissional/tipo/{0}/localizacao";
             public const string GetLocalizacaoProfissional = "/Profissional/{0}/localizacao";
+            public const string GetComissaoProfissional = "/Profissional/{0}/comissao";
         }
     }
 }

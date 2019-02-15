@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.Util.TipoVeiculo">
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#ffd423" >
+
+            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="50" Margin="0,50,0,0" ></Image>
+
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
+                <Frame HeightRequest="245" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="CenterAndExpand">
+                    <Grid VerticalOptions="StartAndExpand" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5*" />
+                            <RowDefinition Height="5*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Bem vindo" TextColor="#193651"  />
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Text="Selecione o tipo de veiculo para trabalho" TextColor="#193651"  />
+
+                        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray"
+                                BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5" Clicked="MotoSelecionada_Clicked"
+                                Image="moto" TextColor="#193651" Text="Moto"></Button>
+
+                        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" 
+                                BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5" Clicked="CarroSelecionado_Clicked"
+                                Image="carro" TextColor="#193651" Text="Carro"></Button>
+
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+
+                    </Grid>
+                </Frame>
+            </StackLayout>
+
+        </StackLayout>
+
+
+    </ContentPage.Content>
+    
+</ContentPage>

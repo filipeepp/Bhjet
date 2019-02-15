@@ -40,6 +40,7 @@ namespace BHJet_WebApi.Controllers
                 return Ok(entidade.Select(x => new ItemFaturamentoDTO()
                 {
                     ID = x.ID,
+                    IDCliente = x.IDCliente,
                     NomeCliente = x.NomeCliente,
                     Periodo = x.Periodo,
                     TipoContrato = x.TipoDescContrato,

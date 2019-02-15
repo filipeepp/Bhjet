@@ -5,7 +5,7 @@ namespace BHJet_Servico.Diaria
 {
     public interface IDiariaServico
     {
-        void IncluirDiaria(DiariaAvulsaDTO model);
+        void IncluirDiaria(DiariaAvulsaFiltroDTO model);
     }
 
     public class DiariaServico : ServicoBase, IDiariaServico
@@ -19,7 +19,7 @@ namespace BHJet_Servico.Diaria
         /// Incluir um Diaria
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public void IncluirDiaria(DiariaAvulsaDTO model)
+        public void IncluirDiaria(DiariaAvulsaFiltroDTO model)
         {
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Diaria.PostDiaria}"), model);
         }

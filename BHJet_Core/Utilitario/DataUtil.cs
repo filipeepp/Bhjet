@@ -27,13 +27,13 @@ namespace BHJet_Core.Utilitario
         }
 
         /// <summary>
-        /// Busca lista dos X proximos anos
+        /// Busca lista dos X proximos anos, incluindo ano anterior
         /// </summary>
         /// <param name="qtdAnos">Quantidade de anos seguintes</param>
         /// <returns></returns>
         public static IEnumerable<int> BuscaProximosAnos(int qtdAnos)
         {
-            return Enumerable.Range(DateTime.Now.Year, qtdAnos);
+            return Enumerable.Range(DateTime.Now.Year - 1, qtdAnos);
         }
 
     }

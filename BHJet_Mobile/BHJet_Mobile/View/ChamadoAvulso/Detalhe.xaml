@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.ChamadoAvulso.Detalhe">
+
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#ffd423" >
+            <StackLayout Margin="20,20,20,0">
+                <Label FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="End" Text="{Binding idCorrida, StringFormat='Número da OS: {0}'}" TextColor="#193651"  />
+                <BoxView Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+            </StackLayout>
+
+            <ScrollView BackgroundColor="Transparent" VerticalOptions="FillAndExpand" >
+                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListView  Grid.Row="0" CachingStrategy="RecycleElement" VerticalOptions="FillAndExpand"
+                          ItemsSource="{Binding ListaLogs}" HasUnevenRows="True" SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Margin="10, 0,10,0" RowSpacing="0" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Frame Margin="0,0,0,0" Grid.Row="2" BackgroundColor="White" CornerRadius="5" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                                            <Grid VerticalOptions="StartAndExpand"  RowSpacing="0" >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="0*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                    <RowDefinition Height="0.1*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                    <RowDefinition Height="0.2*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.7*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Grid.Row="1" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Origem:" TextColor="#193651"  />
+                                                <Label Grid.Row="1" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding EnderecoCompleto}" TextColor="#193651"  />
+
+                                                <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Procurar: " TextColor="#193651"  />
+                                                <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding PessoaContato}" TextColor="#193651" />
+
+                                                <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Obs: " TextColor="#193651"  />
+                                                <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding Observacao}" TextColor="#193651" />
+
+                                                <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="AbrirWaze" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                                                    Image="waze" TextColor="#193651" Text="Navegar com Waze" ></Button>
+
+                                                <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="RegistrarChegada" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5"
+                                                    Image="relogio" TextColor="#193651" Text="Registrar chegada"></Button>
+
+                                                <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="TiraFoto"  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                                                    Image="camera" TextColor="#193651" Text="Protocolo de Coleta/Entrega"></Button>
+
+                                                <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="RegistrarOcorrencia"  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
+                                                    Image="alerta" TextColor="#193651" Text="Registrar ocorrência"></Button>
+
+                                            </Grid>
+                                        </Frame>
+
+                                        <StackLayout Margin="0,0,0,-5"  Grid.Row="3" >
+                                            <Image Source="rua" WidthRequest="23" HeightRequest="23" ></Image>
+                                        </StackLayout>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <control:ActivityIndicator Grid.Row="0" IsVisible="{Binding Loading}"/>
+                    
+                </Grid>
+            </ScrollView>
+
+            <BoxView Margin="20,0,20,0" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+            <local:Menu></local:Menu>
+
+
+        </StackLayout>
+
+        
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             x:Class="BHJet_Mobile.View.Util.Ocorrencia">
+
+    <ContentPage.Content>
+
+        <StackLayout BackgroundColor="#ffd423" >
+
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
+
+                <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="FillAndExpand">
+                    <Grid VerticalOptions="StartAndExpand" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Registrar ocorrência" TextColor="#193651"  />
+                        <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
+
+                        <ListView CachingStrategy="RecycleElement" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
+                          ItemsSource="{Binding ListaOcorrencias}" HasUnevenRows="True" SeparatorVisibility="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+
+                                        <Button Clicked="SelecionaOcorrencia" BackgroundColor="#193651" Margin="0,0,0,15"
+                                                Image="opcao" TextColor="White" CommandParameter="{Binding StatusCorrida}" 
+                                                Text="{Binding DescricaoStatus}"></Button>
+
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <Button  Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
+
+                        <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" VerticalOptions="End" TextColor="White" Text="Encerrar OS"></Button>
+
+                        <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
+
+                    </Grid>
+
+                </Frame>
+
+            </StackLayout>
+
+        </StackLayout>
+
+
+    </ContentPage.Content>
+
+</ContentPage>

@@ -8,7 +8,9 @@ namespace BHJet_Servico.Usuario
         UsuarioDTO[] BuscaListaUsuarios(string trechoPesquisa);
         void CadastrarUsuario(UsuarioDTO model);
         void AtualizaSituacao(int situacao, long id);
+        void AtualizaUsuario(UsuarioDTO model);
         void DeletaUsuario(long id);
+        UsuarioDTO BuscaUsuario(long id);
     }
 
     public class UsuarioServico : ServicoBase, IUsuarioServico
@@ -28,6 +30,11 @@ namespace BHJet_Servico.Usuario
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PostUsuario}"), model);
         }
 
+        public void AtualizaUsuario(UsuarioDTO model)
+        {
+            this.Put(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PutUsuario}"), model);
+        }
+
         public void AtualizaSituacao(int situacao, long id)
         {
             this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.PutSituacao, situacao, id)}"), "");
@@ -36,6 +43,11 @@ namespace BHJet_Servico.Usuario
         public void DeletaUsuario(long id)
         {
             this.Delete(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.DeleteUsuario, id)}"));
+        }
+
+        public UsuarioDTO BuscaUsuario(long id)
+        {
+            return this.Get<UsuarioDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.GetUsuario, id)}"));
         }
     }
 }

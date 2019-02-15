@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using System;
 using System.Collections.Generic;
 
@@ -57,6 +57,7 @@ namespace BHJet_Admin.Models.Faturamento
     public class DetalheFaturamentoAvulsoRegistros
     {
         public DateTime DataCorrida { get; set; }
+        public string TipoContrato { get; set; }
         public long NumeroOS { get; set; }
         public string Profissional { get; set; }
         public int QuantidadeKM { get; set; }

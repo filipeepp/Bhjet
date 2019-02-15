@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Utilitario;
+﻿using BHJet_CoreGlobal;
 using BHJet_Repositorio.Entidade;
 using BHJet_Repositorio.Filtro;
 using Dapper;
@@ -25,16 +25,19 @@ namespace BHJet_Repositorio.Admin
                 // Query
                 string query = @"select * from tblUsuarios where
                                     vcEmail = @usuemaillogin and 
-                                    vbPassword = @usupass and 
-                                    bitAtivo = 0 and
-                                    idTipoUsuario = @usutp";
+                                    vbPassword = @usupass";
+                                    // and 
+                                    //bitAtivo = 1";
+
+                if (filtro.usuarioTipo != null)
+                    query += " and idTipoUsuario = @usutp";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
                 {
                     usuemaillogin = filtro.usuarioEmail,
                     usupass = senhaEncrypByte,
-                    usutp = ((int)filtro.usuarioTipo)
+                    usutp = filtro.usuarioTipo != null ? ((int)filtro.usuarioTipo) : 1
                 });
             }
         }

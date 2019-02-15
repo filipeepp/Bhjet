@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using System;
 
 namespace BHJet_Repositorio.Admin.Entidade

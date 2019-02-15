@@ -1,6 +1,8 @@
 ﻿using BHJet_Core.Utilitario;
 using BHJet_Core.Variaveis;
+using BHJet_CoreGlobal;
 using BHJet_DTO.Autenticacao;
+using BHJet_Servico.Autorizacao.Filtro;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,17 +12,22 @@ namespace BHJet_Servico.Autorizacao
 {
     public interface IAutorizacaoServico
     {
-        TokenModel Autenticar(string usuario, string senha);
+        TokenModel Autenticar(AutenticacaoFiltro filtro);
     }
 
     public class AutorizacaoServico : ServicoBase, IAutorizacaoServico
     {
+        public AutorizacaoServico() : base()
+        {
+
+        }
+
         public AutorizacaoServico(string token) : base(token)
         {
 
         }
 
-        public TokenModel Autenticar(string usuario, string senha)
+        public TokenModel Autenticar(AutenticacaoFiltro filtro)
         {
             // HttpClient
             using (var httpClient = new HttpClient()
@@ -31,11 +38,11 @@ namespace BHJet_Servico.Autorizacao
                 // Parametros
                 var parametros = new KeyValuePair<string, string>[]
                 {
-                    new KeyValuePair<string, string>("username", usuario),
-                    new KeyValuePair<string, string>("password",  CriptografiaUtil.Criptografa(senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r")),
+                    new KeyValuePair<string, string>("username", filtro.usuario),
+                    new KeyValuePair<string, string>("password",  CriptografiaUtil.Criptografa(filtro.senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r")),
                     new KeyValuePair<string, string>("grant_type", "password"),
                     new KeyValuePair<string, string>("Modulo", "Web"),
-                    //new KeyValuePair<string, string>("Perfil", ((int)perfil).ToString()),
+                    new KeyValuePair<string, string>("area", ((int)filtro.area).ToString()),
                 };
 
                 // Requisiçao
@@ -62,11 +69,6 @@ namespace BHJet_Servico.Autorizacao
                         throw new UnauthorizedAccessException(teste);
                 }
             }
-            //return this.Post<TokenFiltro, TokenModel>(new Uri(ServicoRotas.Base + ServicoRotas.Autenticacao.PostAutenticar), new TokenFiltro()
-            //{
-            //    username = usuario,
-            //    password = CriptografiaUtil.Criptografa(senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r")
-            //});
         }
 
 

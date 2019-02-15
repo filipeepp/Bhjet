@@ -1,4 +1,4 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_Enumeradores;
 using BHJet_Core.Utilitario;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace BHJet_Admin.Models.Dashboard
     {
         private string _PeriodoInicial;
         [Required(ErrorMessage = "Período inicial obrigatório.")]
-        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
         public string PeriodoInicial
         {
             get
@@ -26,7 +25,6 @@ namespace BHJet_Admin.Models.Dashboard
 
         private string _PeriodoFinal;
         [Required(ErrorMessage = "Período final obrigatório.")]
-        [StringLength(maximumLength: 16, ErrorMessage = "Preecha o campo com Data e Hora (dd/MM/yyyy 00:00)", MinimumLength = 16)]
         public string PeriodoFinal
         {
             get
@@ -38,32 +36,6 @@ namespace BHJet_Admin.Models.Dashboard
                 _PeriodoFinal = value;
             }
         }
-
-        //private IEnumerable<SelectListItem> _ListaClientes;
-        //public IEnumerable<SelectListItem> ListaClientes
-        //{
-        //    get
-        //    {
-        //        return _ListaClientes;
-        //    }
-        //    set
-        //    {
-        //        _ListaClientes = value;
-        //    }
-        //}
-
-        //private int? _IDClienteSelecionado;
-        //public int? IDClienteSelecionado
-        //{
-        //    get
-        //    {
-        //        return _IDClienteSelecionado;
-        //    }
-        //    set
-        //    {
-        //        _IDClienteSelecionado = value;
-        //    }
-        //}
 
         private int? _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
@@ -79,46 +51,33 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private int _TarifaCliente;
-        [Required(ErrorMessage = "Tarifa obrigatória.")]
-        public int TarifaCliente
+        private TimeSpan? _HorarioInicial;
+        [Required(ErrorMessage = "Horário inicial de trabalho obrigatória.")]
+        public TimeSpan? HorarioInicial
         {
             get
             {
-                return _TarifaCliente;
+                return _HorarioInicial;
             }
             set
             {
-                _TarifaCliente = value;
+                _HorarioInicial = value;
             }
         }
 
-        //private IEnumerable<SelectListItem> _ListaProfissionais;
-        //public IEnumerable<SelectListItem> ListaProfissionais
-        //{
-        //    get
-        //    {
-        //        return _ListaProfissionais;
-        //    }
-        //    set
-        //    {
-        //        _ListaProfissionais = value;
-        //    }
-        //}
-
-        //private int? _IDProfissionalSelecionado;
-        //[Required(ErrorMessage = "Profissional obrigatório.")]
-        //public int? IDProfissionalSelecionado
-        //{
-        //    get
-        //    {
-        //        return _IDProfissionalSelecionado;
-        //    }
-        //    set
-        //    {
-        //        _IDProfissionalSelecionado = value;
-        //    }
-        //}
+        private TimeSpan? _HorarioFim;
+        [Required(ErrorMessage = "Horário final de trabalho obrigatória.")]
+        public TimeSpan? HorarioFim
+        {
+            get
+            {
+                return _HorarioFim;
+            }
+            set
+            {
+                _HorarioFim = value;
+            }
+        }
 
         private int? _ProfissionalSelecionado;
         [Required(ErrorMessage = "Profissional obrigatório.")]
@@ -131,6 +90,19 @@ namespace BHJet_Admin.Models.Dashboard
             set
             {
                 _ProfissionalSelecionado = value;
+            }
+        }
+
+        private string _TipoProfissional;
+        public string TipoProfissional
+        {
+            get
+            {
+                return _TipoProfissional;
+            }
+            set
+            {
+                _TipoProfissional = value;
             }
         }
 
@@ -150,8 +122,7 @@ namespace BHJet_Admin.Models.Dashboard
         }
 
         private string _ValorComissao;
-        [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "Valor(R$) Comissão obrigatório.")]
+        [Required(ErrorMessage = "Percentual(%) de Comissão obrigatório.")]
         public string ValorComissao
         {
             get
@@ -177,17 +148,31 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private TipoVeiculo _TipoVeiculo;
-        [Required(ErrorMessage = "Tipo de veículo obrigatório.")]
-        public TipoVeiculo TipoVeiculo
+        private string _ValorKMAdicional;
+        [DataType(DataType.Currency)]
+        public string ValorKMAdicional
         {
             get
             {
-                return _TipoVeiculo;
+                return _ValorKMAdicional;
             }
             set
             {
-                _TipoVeiculo = value;
+                _ValorKMAdicional = value;
+            }
+        }
+
+        private string _FranquiaKMDiaria;
+        [DataType(DataType.Currency)]
+        public string FranquiaKMDiaria
+        {
+            get
+            {
+                return _FranquiaKMDiaria;
+            }
+            set
+            {
+                _FranquiaKMDiaria = value;
             }
         }
     }

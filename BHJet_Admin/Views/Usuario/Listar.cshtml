@@ -1,0 +1,124 @@
+﻿@using BHJet_Admin.Models.Usuario
+@using BHJet_Enumeradores
+@model IEnumerable<UsuarioModel>
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#map_canvas"> Usuários</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a href="@Url.Action("Index", "Usuario")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Usuários
+                        </h2>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="row form-group ">
+
+                            <div class="" style="margin:30px; margin-top:-25px">
+
+
+                                <div class="col-md-12">
+                                    <label for="txtPesquisarCliente">Pesquisar Usuário</label>
+
+                                    @using (Html.BeginForm("Listar", "Usuario", FormMethod.Get))
+                                    {
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                <input style="max-width: 400px;" class="form-control" type="text" id="trechoPqs" placeholder="Digite o email do usuário." name="trechoPqs">
+                                                <button type="submit" class="btn btn-default"><i class="fa fa-share"></i></button>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <br />
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr class="bg-light-gray">
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Tipo Usuário</th>
+                                                    <th scope="col">Situação</th>
+                                                    <th scope="col">Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var linha in Model)
+                                                {
+                                                    <tr>
+                                                        <td> @linha.ID</td>
+                                                        <td> @linha.Email </td>
+                                                        <td> @linha.TipoUser.ToString()</td>
+                                                        <td> @linha.SituacaoDesc.ToString()</td>
+                                                        <td>
+
+                                                            <a onclick="EditarUsuario(@linha.ID)">
+                                                                <i class="fa fa-pencil-square-o" style="color:sandybrown" aria-hidden="true"> Editar</i>
+                                                            </a>
+
+                                                            <a onclick="ExcluirUsuario(@linha.ID)">
+                                                                <i class="fa fa-trash-o" style="color:indianred" aria-hidden="true"> Excluir</i>
+                                                            </a>
+                                                            @if (@linha.Situacao)
+                                                            {
+                                                                <a onclick="AlterarSituacao(@linha.ID, 0)">
+                                                                    <i class="fa fa-ban" style="color:darkred" aria-hidden="true"> Desativar</i>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a onclick="AlterarSituacao(@linha.ID, 1)">
+                                                                    <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Ativar</i>
+                                                                </a>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/UsuarioListar.js"></script>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}

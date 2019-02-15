@@ -45,27 +45,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AreaAtuacaoRepositorio.cs" />
     <Compile Include="Admin\AutenticacaoRepositorio.cs" />
     <Compile Include="Admin\ClienteRepositorio.cs" />
     <Compile Include="Admin\CorridaRepositorio.cs" />
     <Compile Include="Admin\DashboardRepositorio.cs" />
     <Compile Include="Admin\DiariaRepositorio.cs" />
+    <Compile Include="Admin\Entidade\AreaAtuacaoEntidade.cs" />
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
+    <Compile Include="Admin\Entidade\ComissaoProfissionalEntidade.cs" />
+    <Compile Include="Admin\Entidade\CorridaEncontradaEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />
+    <Compile Include="Admin\Entidade\DisponibilidadeEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoDetalheEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoEntidade.cs" />
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
+    <Compile Include="Admin\Entidade\LogCorridaEntidade.cs" />
+    <Compile Include="Admin\Entidade\OcorrenciaEntidade.cs" />
     <Compile Include="Admin\Entidade\OSCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalDisponivelEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalEntidade.cs" />
+    <Compile Include="Admin\Entidade\ProfissionalPerfilEntidade.cs" />
     <Compile Include="Admin\Entidade\ResumoAtendimentoEntidade.cs" />
     <Compile Include="Admin\Entidade\ResumoChamados.cs" />
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\TarifaEntidade.cs" />
+    <Compile Include="Admin\Entidade\TurnoEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
     <Compile Include="Admin\Entidade\ValidaClienteExistente.cs" />
     <Compile Include="Admin\Entidade\ValidaProfissionalExistente.cs" />
     <Compile Include="Admin\FaturamentoRepositorio.cs" />
+    <Compile Include="Admin\Filtro\DisponibilidadeFiltro.cs" />
+    <Compile Include="Admin\Filtro\NovaDiariaAvulsaFiltro.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />
     <Compile Include="Admin\ProfissionalRepositorio.cs" />
     <Compile Include="Admin\TarifaRepositorio.cs" />
@@ -77,9 +88,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">
+      <Project>{1BF10E83-99FA-4055-990D-DF6FE2B7678F}</Project>
+      <Name>BHJet_CoreGlobal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHJet_Core\BHJet_Core.csproj">
       <Project>{1D890AFC-7AE5-45E4-A1E2-4161D00D46F3}</Project>
       <Name>BHJet_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHJet_Enumeradores\BHJet_Enumeradores.csproj">
+      <Project>{8fdb8d5d-9b4e-48d2-9877-70accf907e48}</Project>
+      <Name>BHJet_Enumeradores</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Enum;
+﻿using BHJet_CoreGlobal;
+using BHJet_Enumeradores;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,6 +15,9 @@ namespace BHJet_Admin.Models.Motorista
 
         [Required(ErrorMessage = "Nome Completo obrigatório.")]
         public string NomeCompleto { get; set; }
+
+        [Required(ErrorMessage = "Documento RG obrigatório.")]
+        public string DocumentoRG { get; set; }
 
         [Required(ErrorMessage = "CPF/CNPJ Completo obrigatório.")]
         [StringLength(18, ErrorMessage = "Formato de CPF/CNPJ inválido.", MinimumLength = 14)]
@@ -73,6 +77,14 @@ namespace BHJet_Admin.Models.Motorista
 
         public string Observacao { get; set; }
 
+        [Required(ErrorMessage = "Senha obrigatória.")]
+        public string Senha
+        {
+            get; set;
+        }
+
+        public bool Situacao { get; set; }
+
         public NovoMotoristaComissaoModel[] Comissao { get; set; }
     }
 
@@ -80,8 +92,8 @@ namespace BHJet_Admin.Models.Motorista
     {
         public long? ID { get; set; }
         public string ValorComissao { get; set; }
-        public DateTime? VigenciaInicio { get; set; }
-        public DateTime? VigenciaFim { get; set; }
+        public string VigenciaInicio { get; set; }
+        public string VigenciaFim { get; set; }
         public string Observacao { get; set; }
     }
 }

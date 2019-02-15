@@ -9,25 +9,12 @@ namespace BHJet_Admin.Models.Clientes
 	public class ContatoModel
 	{
 		public bool ContatoRemovido { get; set; }
-		public int? ID { get; set;}
-
-        //[Required(ErrorMessage = "Nome do Contato obrigatório.")]
+		public int ID { get; set;}
         public string Contato { get; set; }
-
-        //[Required(ErrorMessage = "E-mail obrigatório.")]
-        //[DataType(DataType.EmailAddress)]
-        //[EmailAddress(ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
-
         public string TelefoneComercial { get; set; }
-
-        //[Required(ErrorMessage = "Telefone Celular obrigatório.")]
-		//[RegularExpression(@"\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}", ErrorMessage = "Formato de Celular inválido")]
 		public string TelefoneCelular { get; set; }
-
 		public string Setor { get; set; }
-
-        //[Required(ErrorMessage = "Data de aniversário obrigatória.")]
-		public DateTime DataNascimento { get; set; }
+		public string DataNascimento { get; set; }
 	}
 }
