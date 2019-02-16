@@ -2661,14 +2661,15 @@ ul.menu {
     position: absolute;
     left: 354px;
     top: 250px;
-    max-width: 460px;
+    max-width: 900px;
     padding: 50px;
-    min-width: 500px;
-    height: 600px;
+    width: auto;
+    /* min-width: 800px; */
+    height: auto;
     font-weight: bold !important;
     color: #0090c5;
-    background: rgba(51, 113, 116, 0.3);
-    border: 1px solid rgb(199, 192, 192);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(113, 110, 110);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 16px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px !important;
 }
 
@@ -2692,3 +2693,43 @@ ul.menu {
 .listaBotaoInicio li a {
     margin:20px;
 }
+
+.ctnEntregaInterno {
+    display: block;
+    font-weight: 800;
+    margin: 0 0 1em 0;
+    font-size: 0.8em;
+    color: #444;
+    background: white;
+    padding: 3px 20px;
+    /*border-radius: 50px;*/
+}
+
+    .ctnEntregaInterno .titulo {
+        margin: 0;
+        /* padding: 0; */
+        border-bottom: 1px solid;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        color: #0090c5;
+        margin-bottom:10px;
+    }
+
+
+    .btnSolicitacao{
+        float:right;
+    }
+
+
+.ui-menu {
+    width: 501px;
+    height: auto;
+    background: white;
+    padding: 15px;
+    cursor: pointer;
+}
+
+    .ui-menu:hover {
+        background-color: #e4de3f;
+    }

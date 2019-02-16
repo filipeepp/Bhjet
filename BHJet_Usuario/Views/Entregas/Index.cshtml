@@ -3,35 +3,171 @@
 </div>
 
 <div id="draggable" class="ui-widget-content">
-    <i style="top: 0;float: right;" class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i>
+    @*<i style="top: 0;float: right;display:block;" class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i>*@
 
-    <div class="cts-titulo-side-bar">
-        <span>Solicitar entrega / serviço</span>
+    <div id="ctnInicio">
+        <div class="cts-titulo-side-bar">
+            <span>Solicitar entrega / serviço</span>
+        </div>
+        <form method="post" action="">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ctnEntregaInterno">
+                            <div class="container">
+                                <div class="row">
+                                    <label class="titulo" for="txtEnderecoPartida">Origem:</label>
+                                </div>
+                                <input class="cst-endereco-maps" placeholder="Digite o endereço." type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ctnEntregaInterno">
+                            <div class="container">
+                                <div class="row">
+                                    <label class="titulo" for="txtEnderecoPartida">Pessoa a ser procurada:</label>
+                                </div>
+                                <input class="cst-endereco-maps" placeholder="Digite o nome do destinatário." type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="ctnEntregaInterno">
+                            <div class="container">
+                                <div class="row">
+                                    <label class="titulo" for="txtEnderecoPartida">O que deve ser feito:</label>
+                                </div>
+                                <div class="row">
+                                    <input type="checkbox" name="vehicle3" value="Boat" checked> <label>Retirar documento(s) ou objeto(s) de pequeno porte.</label><br>
+                                </div>
+                                <div class="row">
+                                    <input type="checkbox" name="vehicle3" value="Boat" checked> <label>Retirar documento(s) ou objeto(s) de pequeno porte.</label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" value="Adicionar destino" />
+                </div>
+
+            </div>
+
+            @*<div>
+                    <label for="txtEnderecoPartida">Endereço de partida:</label>
+                    <input class="cst-endereco-maps" type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+                </div>
+
+                <div>
+                    <label for="txtEnderecoChegada">Endereço de chegada:</label>
+                    <input class="cst-endereco-maps" type="text" id="txtEnderecoChegada" name="txtEnderecoChegada" />
+                </div>
+                <div>
+                    <label for="txtTerceiroEndereco">Terceiro endereço:</label>
+                    <input class="cst-endereco-maps" type="text" id="txtTerceiroEndereco" name="txtTerceiroEndereco" />
+                </div>*@
+
+
+
+            <input type="hidden" id="txtLatitude" name="txtLatitude" />
+            <input type="hidden" id="txtLongitude" name="txtLongitude" />
+        </form>
+
+        <div id="trajeto-texto" style="height: 300px; width: 200px"></div>
     </div>
-    <form method="post" action="">
-        <div>
-            <label for="txtEnderecoPartida">Endereço de partida:</label>
-            <input class="cst-endereco-maps" type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
-        </div>
 
-        <div>
-            <label for="txtEnderecoChegada">Endereço de chegada:</label>
-            <input class="cst-endereco-maps" type="text" id="txtEnderecoChegada" name="txtEnderecoChegada" />
-        </div>
-        <div>
-            <label for="txtTerceiroEndereco">Terceiro endereço:</label>
-            <input class="cst-endereco-maps" type="text" id="txtTerceiroEndereco" name="txtTerceiroEndereco" />
-        </div>
 
-        <div>
-            <input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar" />
+    <div id="ctnSecundario" style="display:none">
+
+        <div class="container">
+            <div class="row">
+              
+                <div class="col-md-6">
+                    <div class="ctnEntregaInterno">
+                        <div class="row">
+                            <label class="titulo">Origem:</label>
+                            <label>Av. do contorno teste, 45 - Nova Gameleira:</label>
+                        </div>
+                        <div class="row">
+                            <label class="titulo">Procurar:</label>
+                            <label>Tiago Pereira</label>
+                        </div>
+                        <div class="row">
+                            <label class="titulo">Observação:</label>
+                            <label>Busca documento com a pessoa acima.</label>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="ctnEntregaInterno">
+                        <div class="container">
+                            <div class="row">
+                                <label class="titulo" for="txtEnderecoPartida">O que deve ser feito:</label>
+                            </div>
+                            <div class="row">
+                                <input type="checkbox" name="op1" value="Boat" checked> <label>Entregar documento(s), objeto(s) ou pacote(s).</label><br>
+                            </div>
+                            <div class="row">
+                                <input type="checkbox" name="op2" value="Boat" checked> <label>Coletar assinaturas ou autenticar documento(s).</label><br>
+                            </div>
+                            <div class="row">
+                                <input type="checkbox" name="op3" value="Boat" checked> <label>Retirar documento(s) ou objeto(s) de pequeno porte.</label><br>
+                            </div>
+                            <div class="row">
+                                <input type="checkbox" name="op4" value="Boat" checked> <label>Retirar objeto(s) de maior porte ou pacote(s)</label><br>
+                            </div>
+                            <div class="row">
+                                <input type="checkbox" name="op5" value="Boat" checked> <label>Outros.</label><br>
+                            </div>
+                            <div class="row">
+                                <input type="text" value="Boat" checked> <label>Outros.</label><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ctnEntregaInterno">
+                        <div class="container">
+                            <div class="row">
+                                <label class="titulo" for="txtEnderecoPartida">Destino 1:</label>
+                            </div>
+                            <input class="cst-endereco-maps" placeholder="Digite o endereço." type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+                        </div>
+                        <div class="container">
+                            <div class="container">
+                                <div class="row">
+                                    <label class="titulo" for="txtEnderecoPartida">Pessoa a ser procurada:</label>
+                                </div>
+                                <input class="cst-endereco-maps" placeholder="Digite o nome do destinatário." type="text" id="txtEnderecoPartida" name="txtEnderecoPartida" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" value="Adicionar destino" />
+                <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" value="Finalizar solicitação" />
+            </div>
+
         </div>
+    </div>
 
-        <input type="hidden" id="txtLatitude" name="txtLatitude" />
-        <input type="hidden" id="txtLongitude" name="txtLongitude" />
-    </form>
-
-    <div id="trajeto-texto" style="height: 300px; width: 200px"></div>
 </div>
 
 
@@ -41,6 +177,14 @@
     $(function () {
         $("#draggable").draggable();
     });
+
+    $(document).ready(function () {
+        $(".btnSolicitacao").click(function () {
+            $("#ctnInicio").fadeOut("slow");
+            $("#ctnSecundario").fadeIn("slow");
+        });
+    });
+
 </script>
 
 @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>*@
