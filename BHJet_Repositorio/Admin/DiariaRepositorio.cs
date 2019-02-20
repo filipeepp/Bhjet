@@ -18,7 +18,6 @@ namespace BHJet_Repositorio.Admin
                 // Query
                 string query = @"INSERT INTO [dbo].[tblRegistroDiarias]
                                                ([idCliente]
-                                               ,[idTarifario]
                                                ,[idColaboradorEmpresaSistema]
                                                ,[idUsuarioSolicitacao]
                                                ,dtDataHoraInicioExpediente
@@ -32,7 +31,6 @@ namespace BHJet_Repositorio.Admin
 											  ,timHoraFimSolicitacao, bitFaturarComoDiaria)
                                          VALUES
 										  (@IDCliente
-                                               ,@IDTarifario
                                                ,@IDColaboradorEmpresa
                                                ,@IDUsuarioSolicitacao
                                                ,@DataHoraInicioExpediente

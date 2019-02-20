@@ -73,15 +73,16 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteValorModel
 	{
-		public int ID { get; set; }
-		public int ValorAtivado { get; set; }
-		public decimal ValorUnitario { get; set; }
-		public string TipoTarifa { get; set; }
-		public DateTime VigenciaInicio { get; set; }
-		public DateTime VigenciaFim { get; set; }
-		public decimal Franquia { get; set; }
-		public decimal FranquiaAdicional { get; set; }
-		public string Observacao { get; set; }
-	}
+        public long ID { get; set; }
+        public long IDCliente { get; set; }
+        public string DescricaoTarifa { get; set; }
+        public DateTime VigenciaInicio { get; set; }
+        public DateTime VigenciaFim { get; set; }
+        public decimal ValorContrato { get; set; }
+        public int? QuantidadeKMContratado { get; set; }
+        public decimal ValorKMAdicional { get; set; }
+        public bool status { get; set; }
+        public string Observacao { get; set; }
+    }
 
 }

@@ -30,11 +30,10 @@ namespace BHJet_Repositorio.Admin
                 {
                     try
                     {
-
                         // Query
                         string query = @"--- Busca Diarias ---
 		                               select  P.idRegistroDiaria,
-		                               P.idTarifario, 
+		                               --P.idTarifario, 
 		                               P.idColaboradorEmpresaSistema,
 		                               P.idUsuarioSolicitacao as idUsuarioFaturado,
                                		   P.decValorDiariaNegociado as decValor,
@@ -80,7 +79,7 @@ namespace BHJet_Repositorio.Admin
                             var corridas = multi.Read<ItemFaturamentoEntidade>().AsList();
 
                             // Cria Periodo Faturamento
-                            //var servicosUnificados = new List<ItemFaturamentoEntidade>();
+                            // var servicosUnificados = new List<ItemFaturamentoEntidade>();
 
                             // Faturamento unificado
                             var servicosUnificados = diarias.Union(corridas).ToList();
@@ -95,7 +94,6 @@ namespace BHJet_Repositorio.Admin
                             string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
                                                          ([idCorrida]
                                                          ,[idRegistroDiaria]
-                                                         ,[idTarifario]
                                                          ,[idColaboradorEmpresaSistema]
                                                          ,[idUsuarioFaturado]
                                                          ,[idPeriodoFaturamento]
@@ -119,7 +117,6 @@ namespace BHJet_Repositorio.Admin
                                 {
                                     PidCorrida = nvItemFat.idCorrida,
                                     PidRegistroDiaria = nvItemFat.idRegistroDiaria,
-                                    PidTarifario = nvItemFat.idTarifario,
                                     PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
                                     PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
                                     PidPeriodoFaturamento = idPeriodo,

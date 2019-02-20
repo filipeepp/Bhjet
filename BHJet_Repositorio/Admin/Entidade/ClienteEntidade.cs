@@ -76,25 +76,15 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteValorEntidade
 	{
-		public int ID { get; set; }
-		public int ValorAtivado { get; set; }
-		public int PagamentoAVista { get; set; }
-		public decimal ValorUnitario { get; set; }
-		public string TipoTarifa { get; set; }
-		public DateTime VigenciaInicio { get; set; }
-		public DateTime VigenciaFim { get; set; }
-		public decimal ValorBandeirada { get; set; }
-		public decimal ValorKMBandeiradada { get; set; }
-		public decimal ValorKMAdicionalCorrida { get; set; }
-		public int MinutosParado { get; set; }
-		public decimal ValorMinutosParado { get; set; }
-		public DateTime HorarioInicial { get; set; }
-		public DateTime HorarioFinal { get; set; }
-		public decimal ValorDiaria { get; set; }
-		public decimal ValorKMDiaria { get; set; }
-		public decimal ValorKMAdicionalDiaria { get; set; }
-		public decimal Franquia { get; set; }
-		public decimal FranquiaAdicional { get; set; }
-		public string Observacao { get; set; }
-	}
+        public long ID { get; set; }
+        public long IDCliente { get; set; }
+        public string DescricaoTarifa { get; set; }
+        public DateTime VigenciaInicio { get; set; }
+        public DateTime VigenciaFim { get; set; }
+        public decimal ValorContrato { get; set; }
+        public int? QuantidadeKMContratado { get; set; }
+        public decimal ValorKMAdicional { get; set; }
+        public bool status { get; set; }
+        public string Observacao { get; set; }
+    }
 }

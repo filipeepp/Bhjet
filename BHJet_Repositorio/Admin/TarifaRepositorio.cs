@@ -23,9 +23,24 @@ namespace BHJet_Repositorio.Admin
                                     set @IDCliente = @id;
                                     set @ExisteCliente = (select CAST(COUNT(1) AS BIT) from tblClienteTarifario where idCliente = @IDCliente )
                                 IF @ExisteCliente = 1  
-                                    select  top(1) * from tblClienteTarifario where idCliente = @IDCliente order by dtDataInicioVigencia desc
+                                    select  top(1)  idClienteTarifario as ID,
+												   vcDescricaoTarifario as Descricao,
+												   dtDataInicioVigencia as DataInicioVigencia,
+												   decValorContrato as ValorContrato,
+												   decFranquiaKM as FranquiaKM,
+												   decValorKMAdicional as ValorKMAdicional,
+												   bitAtivo as Ativo,
+												  vcObservacao as Observacao from tblClienteTarifario where idCliente = @IDCliente  and bitAtivo = 1 order by dtDataInicioVigencia desc
                                 ELSE   
-                                    select top(1) * from tblTarifario where bitAtivo = 1 order by dtDataInicioVigencia desc";
+                                    select top(1) idTarifario as ID,
+												   vcDescricaoTarifario as Descricao,
+												   dtDataInicioVigencia as DataInicioVigencia,
+												   decValorContrato as ValorContrato,
+												   intFranquiaMinutosParados as MinutosParados,
+												   decValorMinutoParado as ValorMinutosParados,
+												   decFranquiaKM as FranquiaKM,
+												   decValorKMAdicional as ValorKMAdicional,
+												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1 order by dtDataInicioVigencia desc";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { id = clienteID });
@@ -43,13 +58,12 @@ namespace BHJet_Repositorio.Admin
 			{
 				// Query
 				string query = @"SELECT
-										idTarifario,
-										vcObservacao,
-										decValorDiaria,
-										decFranquiaKMDiaria,
-										decValorKMAdicionalDiaria,
-										decFranquiaKMMensalidade,
-										decValorKMAdicionalMensalidade
+										idTarifario as ID,
+										vcObservacao as Observacao,
+										decValorContrato as  ValorContrato,
+										decFranquiaKM as FranquiaKM,
+										decValorKMAdicional as ValorKMAdicional,
+                                        bitAtivo as Ativo
 									FROM
 										tblTarifario
 									WHERE

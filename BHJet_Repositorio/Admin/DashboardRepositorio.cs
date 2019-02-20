@@ -20,7 +20,7 @@ namespace BHJet_Repositorio.Admin
                 // Query
                 string query = @"--- Quantidade de chamados abertos esperando profissional 
 		                               select CD.idTipoProfissional AS TipoProfissional, COUNT(*) as Quantidade from tblCorridas CD
-							                    join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+							                    --join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								            where CD.idStatusCorrida = 3
 								                group by CD.idTipoProfissional
 
@@ -60,14 +60,12 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select LGCD.idStatusCorrida as Status, 
+                string query = @"select  idStatusCorrida as Status, 
 					count(CD.idCorrida) as Quantidade,
-					CD.dtDataHoraRegistroCorrida as DataRegistro
+					dtDataHoraRegistroCorrida as DataRegistro
 							 from tblCorridas CD
-								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-									where LGCD.idStatusCorrida in (11, 7, 8, 9, 10)
-										group by CD.dtDataHoraRegistroCorrida,
-												 LGCD.idStatusCorrida";
+										group by 
+												 idStatusCorrida, dtDataHoraRegistroCorrida";
 
                 return sqlConnection.Query<ResumoChamados>(query);
             }
@@ -83,14 +81,12 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select ES.idTipoProfissional as TipoProfissional,
-                					   count(CD.idUsuarioColaboradorEmpresa) as Quantidade,
-					                   CD.dtDataHoraRegistroCorrida as DataRegistro
-							    from tblCorridas CD
-								join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-								join tblColaboradoresEmpresaSistema ES on (cd.idUsuarioColaboradorEmpresa = ES.idColaboradorEmpresaSistema)
-									where LGCD.idStatusCorrida = 10
-										group by ES.idTipoProfissional,  CD.dtDataHoraRegistroCorrida";
+                string query = @"select idTipoProfissional as TipoProfissional,
+                					  count(idUsuarioColaboradorEmpresa) as Quantidade,
+					                  dtDataHoraRegistroCorrida as DataRegistro
+							    from tblCorridas
+									where idStatusCorrida IN (select idStatusCorrida from tblDOMStatusCorrida WHERE bitFinaliza = 1 OR bitCancela = 1)
+										group by idTipoProfissional, dtDataHoraRegistroCorrida	";
 
                 return sqlConnection.Query<ResumoAtendimentoEntidade>(query);
             }

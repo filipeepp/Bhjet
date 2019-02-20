@@ -5,7 +5,6 @@ namespace BHJet_Repositorio.Admin.Filtro
     public class NovaDiariaAvulsaFiltro
     {
         public long IDCliente { get; set; }
-        public long IDTarifario { get; set; }
         public long IDColaboradorEmpresa { get; set; }
         public long IDUsuarioSolicitacao { get; set; }
         public DateTime DataHoraInicioExpediente { get; set; }

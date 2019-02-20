@@ -100,7 +100,7 @@
                         </div>*@
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione um profissional:</label>
+                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Selecione um profissional:</label>
                             <div class="col-sm-4">
                                 <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
                                 @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
@@ -109,7 +109,7 @@
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da diária:</label>
+                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor da diária:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorDiaria, new { placeholder = "R$", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorDiaria, null, new { @class = "text-danger", title = "Mask: 99/99/9999" })
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor da comissão:</label>
+                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor da comissão:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "%", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorComissao, null, new { @class = "text-danger" })
@@ -126,21 +126,21 @@
 
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Valor KM Adicional:</label>
+                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor KM Adicional:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorKMAdicional, new { placeholder = "R$", @class = "form-control" })
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Franquia KM diária:</label>
+                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Franquia KM diária:</label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(model => model.FranquiaKMDiaria, new { placeholder = "R$", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.FranquiaKMDiaria, new { placeholder = "0", @class = "form-control" })
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" for="email">Observações:</label>
+                            <label class="control-label col-sm-5" >Observações:</label>
                             <div class="col-sm-4">
                                 @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
                             </div>

@@ -108,13 +108,13 @@ namespace BHJet_Admin.Controllers
 						Valor = entidade.Valor != null ? entidade.Valor.Select(v => new ValorModel()
 						{
 							ID = v.ID,
-							ValorAtivado = v.ValorAtivado == 1 ? true : false,
-							ValorUnitario = Convert.ToString(v.ValorUnitario),
-							TipoTarifa = v.TipoTarifa.Contains("Avulso Mensal") ? TipoTarifa.AvulsoMensal : TipoTarifa.AlocacaoMensal,
+							ValorAtivado = v.status,
+							ValorUnitario = Convert.ToString(v.ValorContrato),
+							TipoTarifa = v.DescricaoTarifa.Contains("Avulso Mensal") ? TipoTarifa.AvulsoMensal : TipoTarifa.AlocacaoMensal,
 							VigenciaInicio = v.VigenciaInicio.ToShortDateString(),
 							VigenciaFim = v.VigenciaFim.ToShortDateString(),
-							Franquia = Convert.ToString(v.Franquia),
-							FranquiaAdicional = Convert.ToString(v.FranquiaAdicional),
+							Franquia = Convert.ToString(v.QuantidadeKMContratado),
+							FranquiaAdicional = Convert.ToString(v.ValorKMAdicional),
 							Observacao = v.Observacao
 
 						}).ToList() : new List<ValorModel>() { }
@@ -226,14 +226,14 @@ namespace BHJet_Admin.Controllers
 					}).ToArray(),
 					Valor = listValorTratada.Select(v => new ClienteValorModel()
 					{
-						ID = v.ID,
-						ValorUnitario = v.ValorUnitario.ToDecimalCurrency(),
-						TipoTarifa = v.TipoTarifa.RetornaDisplayNameEnum(),
+						IDCliente = v.ID,
+						ValorContrato = v.ValorUnitario.ToDecimalCurrency(),
+						DescricaoTarifa = v.TipoTarifa.RetornaDisplayNameEnum(),
 						VigenciaInicio = Convert.ToDateTime(v.VigenciaInicio),
 						VigenciaFim = Convert.ToDateTime(v.VigenciaFim),
-						Franquia = v.Franquia.ToDecimalCurrency(),
-						FranquiaAdicional = v.FranquiaAdicional.ToDecimalCurrency(),
-						ValorAtivado = v.ValorAtivado == true ? 1 : 0,
+						QuantidadeKMContratado = v.Franquia != null ? int.Parse(v.Franquia) : 0,
+                        ValorKMAdicional = v.FranquiaAdicional.ToDecimalCurrency(),
+						status = v.ValorAtivado,
 						Observacao = v.Observacao
 
 					}).ToArray()

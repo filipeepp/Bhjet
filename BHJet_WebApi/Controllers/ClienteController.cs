@@ -13,168 +13,169 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Cliente")]
     public class ClienteController : ApiController
     {
-		private UsuarioLogado _usuarioAutenticado;
+        private UsuarioLogado _usuarioAutenticado;
 
-		/// <summary>
-		/// Informações do usuário autenticado
-		/// </summary>
-		public UsuarioLogado UsuarioAutenticado
-		{
-			get
-			{
-				if (_usuarioAutenticado == null)
-					_usuarioAutenticado = new UsuarioLogado();
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
+        public UsuarioLogado UsuarioAutenticado
+        {
+            get
+            {
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
 
-				return _usuarioAutenticado;
-			}
-		}
+                return _usuarioAutenticado;
+            }
+        }
 
-		#region Cliente Normal
+        #region Cliente Normal
 
-		/// <summary>
-		/// Busca dados de cliente e seus contratos
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
-		[Route("contrato")]
-		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
-		public IHttpActionResult GetClienteContrato([FromUri]string trecho = "")
-		{
-			// Busca Dados resumidos
-			var entidade = new ClienteRepositorio().BuscaClienteContrato(trecho);
+        /// <summary>
+        /// Busca dados de cliente e seus contratos
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("contrato")]
+        [ResponseType(typeof(IEnumerable<ClienteDTO>))]
+        public IHttpActionResult GetClienteContrato([FromUri]string trecho = "")
+        {
+            // Busca Dados resumidos
+            var entidade = new ClienteRepositorio().BuscaClienteContrato(trecho);
 
-			// Validacao
-			if (entidade == null)
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-			// Return
-			return Ok(entidade.Select(cli => new ClienteDTO()
-			{
-				ID = cli.idCliente,
-				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
-				vcDescricaoTarifario = cli.vcDescricaoTarifario,
-				bitAtivo = cli.bitAtivo
+            // Return
+            return Ok(entidade.Select(cli => new ClienteDTO()
+            {
+                ID = cli.idCliente,
+                vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+                vcDescricaoTarifario = cli.vcDescricaoTarifario,
+                bitAtivo = cli.bitAtivo
 
-			}));
-		}
+            }));
+        }
 
 
-		/// <summary>
-		/// Busca dados de cliente
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
-		[Route("contrato/ativo")]
-		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
-		public IHttpActionResult GetClientesValorAtivo()
-		{
-			// Busca Dados
-			var entidade = new ClienteRepositorio().BuscaListaClientes();
+        /// <summary>
+        /// Busca dados de cliente
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("contrato/ativo")]
+        [ResponseType(typeof(IEnumerable<ClienteDTO>))]
+        public IHttpActionResult GetClientesValorAtivo()
+        {
+            // Busca Dados
+            var entidade = new ClienteRepositorio().BuscaListaClientes();
 
-			// Validacao
-			if (entidade == null)
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-			// Return
-			return Ok(entidade.Select(cli => new ClienteDTO()
-			{
-				ID = cli.idCliente,
-				vcNomeFantasia = cli.vcNomeFantasia,
-				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
-				vcCPFCNPJ = cli.vcCPFCNPJ,
-				vcInscricaoEstadual = cli.vcInscricaoEstadual,
-				bitRetemISS = cli.bitRetemISS,
-				vcObservacoes = cli.vcObservacoes,
-				vcSite = cli.vcSite,
-				vcRua = cli.vcRua,
-				vcNumero = cli.vcNumero,
-				vcComplemento = cli.vcComplemento,
-				vcBairro = cli.vcBairro,
-				vcCidade = cli.vcCidade,
-				vcUF = cli.vcUF,
-				vcCEP = cli.vcCEP,
-				bitAtivo = cli.bitAtivo,
-				vcDescricaoTarifario = cli.vcDescricaoTarifario
+            // Return
+            return Ok(entidade.Select(cli => new ClienteDTO()
+            {
+                ID = cli.idCliente,
+                vcNomeFantasia = cli.vcNomeFantasia,
+                vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+                vcCPFCNPJ = cli.vcCPFCNPJ,
+                vcInscricaoEstadual = cli.vcInscricaoEstadual,
+                bitRetemISS = cli.bitRetemISS,
+                vcObservacoes = cli.vcObservacoes,
+                vcSite = cli.vcSite,
+                vcRua = cli.vcRua,
+                vcNumero = cli.vcNumero,
+                vcComplemento = cli.vcComplemento,
+                vcBairro = cli.vcBairro,
+                vcCidade = cli.vcCidade,
+                vcUF = cli.vcUF,
+                vcCEP = cli.vcCEP,
+                bitAtivo = cli.bitAtivo,
+                vcDescricaoTarifario = cli.vcDescricaoTarifario
 
-			}));
-		}
+            }));
+        }
 
-		/// <summary>
-		/// Busca cliente completo por ID
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
-		[Route("{idCliente:long}")]
-		[ResponseType(typeof(ClienteCompletoModel))]
-		public IHttpActionResult GetClienteCompleto(long idCliente)
-		{
-			// Busca dados cadastrais
-			var entidadeDadosCadastrais = new ClienteRepositorio().BuscaClienteDadosCadastrais(idCliente);
-			// Busca contato(s)
-			var entidadeContato = new ClienteRepositorio().BuscaClienteContatos(idCliente);
-			// Busca valor(es)
-			var entidadeValor = new ClienteRepositorio().BuscaClienteValores(idCliente);
+        /// <summary>
+        /// Busca cliente completo por ID
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCliente:long}")]
+        [ResponseType(typeof(ClienteCompletoModel))]
+        public IHttpActionResult GetClienteCompleto(long idCliente)
+        {
+            // Busca dados cadastrais
+            var entidadeDadosCadastrais = new ClienteRepositorio().BuscaClienteDadosCadastrais(idCliente);
+            // Busca contato(s)
+            var entidadeContato = new ClienteRepositorio().BuscaClienteContatos(idCliente);
+            // Busca valor(es)
+            var entidadeValor = new ClienteRepositorio().BuscaClienteValores(idCliente);
 
-			//Monta Cliente Completo
-			if(entidadeDadosCadastrais == null && entidadeContato == null && entidadeValor == null)
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            //Monta Cliente Completo
+            if (entidadeDadosCadastrais == null && entidadeContato == null && entidadeValor == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-			var entidade = new ClienteCompletoModel()
-			{
-				ID = idCliente,
-				DadosCadastrais = entidadeDadosCadastrais.Select(cli => new ClienteDadosCadastraisModel()
-				{
-					NomeRazaoSocial = cli.NomeRazaoSocial,
-					NomeFantasia = cli.NomeFantasia,
-					CPFCNPJ = cli.CPFCNPJ,
-					InscricaoEstadual = cli.InscricaoEstadual,
-					ISS = cli.ISS,
-					Endereco = cli.Endereco,
-					NumeroEndereco = cli.NumeroEndereco,
-					Complemento = cli.Complemento,
-					Bairro = cli.Bairro,
-					Cidade = cli.Cidade,
-					Estado = cli.Estado,
-					CEP = cli.CEP,
-					Observacoes = cli.Observacoes,
-					HomePage = cli.HomePage
+            var entidade = new ClienteCompletoModel()
+            {
+                ID = idCliente,
+                DadosCadastrais = entidadeDadosCadastrais.Select(cli => new ClienteDadosCadastraisModel()
+                {
+                    NomeRazaoSocial = cli.NomeRazaoSocial,
+                    NomeFantasia = cli.NomeFantasia,
+                    CPFCNPJ = cli.CPFCNPJ,
+                    InscricaoEstadual = cli.InscricaoEstadual,
+                    ISS = cli.ISS,
+                    Endereco = cli.Endereco,
+                    NumeroEndereco = cli.NumeroEndereco,
+                    Complemento = cli.Complemento,
+                    Bairro = cli.Bairro,
+                    Cidade = cli.Cidade,
+                    Estado = cli.Estado,
+                    CEP = cli.CEP,
+                    Observacoes = cli.Observacoes,
+                    HomePage = cli.HomePage
 
-				}).FirstOrDefault(),
-				Contato = entidadeContato.Select(cot => new ClienteContatoModel()
-				{
-					ID = cot.ID,
-					Contato = cot.Contato,
-					Email = cot.Email,
-					TelefoneComercial = cot.TelefoneComercial,
-					TelefoneCelular = cot.TelefoneCelular,
-					TelefoneWhatsapp = cot.Whatsapp,
-					Setor = cot.Setor,
-					DataNascimento = cot.DataNascimento
+                }).FirstOrDefault(),
+                Contato = entidadeContato.Select(cot => new ClienteContatoModel()
+                {
+                    ID = cot.ID,
+                    Contato = cot.Contato,
+                    Email = cot.Email,
+                    TelefoneComercial = cot.TelefoneComercial,
+                    TelefoneCelular = cot.TelefoneCelular,
+                    TelefoneWhatsapp = cot.Whatsapp,
+                    Setor = cot.Setor,
+                    DataNascimento = cot.DataNascimento
 
-				}).ToArray(),
-				Valor = entidadeValor.Select(val => new ClienteValorModel()
-				{
-					ID = val.ID,
-					ValorAtivado = val.ValorAtivado,
-					ValorUnitario = val.ValorUnitario,
-					TipoTarifa = val.TipoTarifa,
-					VigenciaInicio = val.VigenciaInicio,
-					VigenciaFim = val.VigenciaFim,
-					Franquia = val.Franquia,
-					FranquiaAdicional = val.FranquiaAdicional,
-					Observacao = val.Observacao
-				}).ToArray()
-			};
+                }).ToArray(),
+                Valor = entidadeValor.Select(val => new ClienteValorModel()
+                {
+                    ID = val.ID,
+                    ValorContrato = val.ValorContrato,
+                    DescricaoTarifa = val.DescricaoTarifa,
+                    IDCliente = val.IDCliente,
+                    Observacao = val.Observacao,
+                    QuantidadeKMContratado = val.QuantidadeKMContratado,
+                    status = val.status,
+                    ValorKMAdicional = val.ValorKMAdicional,
+                    VigenciaFim = val.VigenciaFim,
+                    VigenciaInicio = val.VigenciaInicio
+                }).ToArray()
+            };
 
-			//Return
-			return Ok(entidade);
-		}
+            //Return
+            return Ok(entidade);
+        }
 
-		/// <summary>
-		/// Busca Lista de Clientes
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
+        /// <summary>
+        /// Busca Lista de Clientes
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ClienteDTO>))]
         public IHttpActionResult GetListaClientes([FromUri]string trecho = "")
@@ -202,292 +203,296 @@ namespace BHJet_WebApi.Controllers
                 vcSite = cli.vcSite,
             }));
         }
-		/// <summary>
-		/// Post Cliente
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("")]
-		public IHttpActionResult PostCliente([FromBody]ClienteCompletoModel model)
-		{
-			// Busca Dados resumidos
-			var clienteRepositorio = new ClienteRepositorio();
+        /// <summary>
+        /// Post Cliente
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("")]
+        public IHttpActionResult PostCliente([FromBody]ClienteCompletoModel model)
+        {
+            // Busca Dados resumidos
+            var clienteRepositorio = new ClienteRepositorio();
 
-			// Verifica existencia
-			var entidade = clienteRepositorio.VerificaExistenciaProfissional(model.DadosCadastrais.CPFCNPJ);
+            // Verifica existencia
+            var entidade = clienteRepositorio.VerificaExistenciaProfissional(model.DadosCadastrais.CPFCNPJ);
 
-			// VALIDACAO
-			if (entidade.Any())
-			{
-				bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.DadosCadastrais.CPFCNPJ).Any();
+            // VALIDACAO
+            if (entidade.Any())
+            {
+                bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.DadosCadastrais.CPFCNPJ).Any();
 
-				string msg = "";
-				if (existeCPF)
-					msg = "mesmo CPF.";
+                string msg = "";
+                if (existeCPF)
+                    msg = "mesmo CPF.";
 
-				return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
-			}
+                return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
+            }
 
-			// Inclui profissional
-			clienteRepositorio.IncluirCliente(new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
-			{
-				DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
-				{
-					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
-					NomeFantasia = model.DadosCadastrais.NomeFantasia,
-					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
-					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-					ISS = model.DadosCadastrais.ISS,
-					Endereco = model.DadosCadastrais.Endereco,
-					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
-					Complemento = model.DadosCadastrais.Complemento,
-					Bairro = model.DadosCadastrais.Bairro,
-					Cidade = model.DadosCadastrais.Cidade,
-					Estado = model.DadosCadastrais.Estado,
-					CEP = model.DadosCadastrais.CEP,
-					Observacoes = model.DadosCadastrais.Observacoes,
-					HomePage = model.DadosCadastrais.HomePage
-				},
-				Contato = model.Contato.Any() ? model.Contato.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
-				{
-					Contato = x.Contato,
-					Email = x.Email,
-					TelefoneComercial = x.TelefoneComercial,
-					TelefoneCelular = x.TelefoneCelular,
-					Setor = x.Setor,
-					DataNascimento = x.DataNascimento
+            // Inclui profissional
+            clienteRepositorio.IncluirCliente(new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
+            {
+                DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+                {
+                    NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+                    NomeFantasia = model.DadosCadastrais.NomeFantasia,
+                    CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+                    InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+                    ISS = model.DadosCadastrais.ISS,
+                    Endereco = model.DadosCadastrais.Endereco,
+                    NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+                    Complemento = model.DadosCadastrais.Complemento,
+                    Bairro = model.DadosCadastrais.Bairro,
+                    Cidade = model.DadosCadastrais.Cidade,
+                    Estado = model.DadosCadastrais.Estado,
+                    CEP = model.DadosCadastrais.CEP,
+                    Observacoes = model.DadosCadastrais.Observacoes,
+                    HomePage = model.DadosCadastrais.HomePage
+                },
+                Contato = model.Contato.Any() ? model.Contato.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+                {
+                    Contato = x.Contato,
+                    Email = x.Email,
+                    TelefoneComercial = x.TelefoneComercial,
+                    TelefoneCelular = x.TelefoneCelular,
+                    Setor = x.Setor,
+                    DataNascimento = x.DataNascimento
 
-				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
-				Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
-				{
-					ValorUnitario = x.ValorUnitario,
-					TipoTarifa = x.TipoTarifa,
-					VigenciaInicio = x.VigenciaInicio,
-					VigenciaFim = x.VigenciaFim,
-					Franquia = x.Franquia,
-					FranquiaAdicional = x.FranquiaAdicional,
-					Observacao = x.Observacao,
-					ValorAtivado = x.ValorAtivado
+                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
+                Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                {
+                    ID = x.ID,
+                    ValorContrato = x.ValorContrato,
+                    DescricaoTarifa = x.DescricaoTarifa,
+                    IDCliente = x.IDCliente,
+                    Observacao = x.Observacao,
+                    QuantidadeKMContratado = x.QuantidadeKMContratado,
+                    status = x.status,
+                    ValorKMAdicional = x.ValorKMAdicional,
+                    VigenciaFim = x.VigenciaFim,
+                    VigenciaInicio = x.VigenciaInicio
+                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
+            });
 
-				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
-			});
+            // Return
+            return Ok();
+        }
 
-			// Return
-			return Ok();
-		}
+        /// <summary>
+        /// Post Cliente Contato
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCliente:long}/contato")]
+        public IHttpActionResult PostClienteContato(long idCliente, [FromBody]ClienteContatoModel model)
+        {
+            // Busca Dados resumidos
+            var clienteRepositorio = new ClienteRepositorio();
 
-		/// <summary>
-		/// Post Cliente Contato
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("{idCliente:long}/contato")]
-		public IHttpActionResult PostClienteContato(long idCliente, [FromBody]ClienteContatoModel model)
-		{
-			// Busca Dados resumidos
-			var clienteRepositorio = new ClienteRepositorio();
+            // Inclui profissional
+            clienteRepositorio.IncluirContato(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+            {
+                Contato = model.Contato,
+                Email = model.Email,
+                TelefoneComercial = model.TelefoneComercial,
+                TelefoneCelular = model.TelefoneCelular,
+                Setor = model.Setor,
+                DataNascimento = model.DataNascimento
+            });
 
-			// Inclui profissional
-			clienteRepositorio.IncluirContato(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
-			{
-				Contato = model.Contato,
-				Email = model.Email,
-				TelefoneComercial = model.TelefoneComercial,
-				TelefoneCelular = model.TelefoneCelular,
-				Setor = model.Setor,
-				DataNascimento = model.DataNascimento
-			});
+            //Return
+            return Ok();
+        }
 
-			//Return
-			return Ok();
-		}
+        /// <summary>
+        /// Post Cliente Contato
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCliente:long}/contrato")]
+        public IHttpActionResult PostClienteValor(long idCliente, [FromBody]ClienteValorModel model)
+        {
+            // Busca Dados resumidos
+            var clienteRepositorio = new ClienteRepositorio();
 
-		/// <summary>
-		/// Post Cliente Contato
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("{idCliente:long}/contrato")]
-		public IHttpActionResult PostClienteValor(long idCliente, [FromBody]ClienteValorModel model)
-		{
-			// Busca Dados resumidos
-			var clienteRepositorio = new ClienteRepositorio();
+            // Inclui profissional
+            clienteRepositorio.IncluirValor(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+            {
+                IDCliente = idCliente,
+                DescricaoTarifa = model.DescricaoTarifa,
+                Observacao = model.Observacao,
+                QuantidadeKMContratado = model.QuantidadeKMContratado,
+                status = model.status,
+                ValorContrato = model.ValorContrato,
+                ValorKMAdicional = model.ValorKMAdicional,
+                VigenciaFim = model.VigenciaFim,
+                VigenciaInicio = model.VigenciaInicio
+            });
 
-			// Inclui profissional
-			clienteRepositorio.IncluirValor(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
-			{
-				ValorUnitario = model.ValorUnitario,
-				TipoTarifa = model.TipoTarifa,
-				VigenciaInicio = model.VigenciaInicio,
-				VigenciaFim = model.VigenciaFim,
-				Franquia = model.Franquia,
-				FranquiaAdicional = model.FranquiaAdicional,
-				Observacao = model.Observacao,
-				ValorAtivado = model.ValorAtivado
-			});
-
-			//Return
-			return Ok();
-		}
-
-
-		/// <summary>
-		/// Put Cliente
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("{idCliente:long}")]
-		public IHttpActionResult PutCliente(long idCliente, [FromBody]ClienteCompletoModel model)
-		{ 
-			// Busca Dados resumidos
-			var clienteRepositorio = new ClienteRepositorio();
-
-			//Busca ID do Endereço
-			var idEndereco = clienteRepositorio.BuscaClienteEndereco(idCliente).FirstOrDefault().idEndereco;
-
-			// Inclui profissional
-			clienteRepositorio.AtualizaCliente(idEndereco, new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
-			{
-				ID = model.ID,
-				DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
-				{
-					NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
-					NomeFantasia = model.DadosCadastrais.NomeFantasia,
-					CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
-					InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
-					ISS = model.DadosCadastrais.ISS,
-					Endereco = model.DadosCadastrais.Endereco,
-					NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
-					Complemento = model.DadosCadastrais.Complemento,
-					Bairro = model.DadosCadastrais.Bairro,
-					Cidade = model.DadosCadastrais.Cidade,
-					Estado = model.DadosCadastrais.Estado,
-					CEP = model.DadosCadastrais.CEP,
-					Observacoes = model.DadosCadastrais.Observacoes,
-					HomePage = model.DadosCadastrais.HomePage
-				},
-				Contato = model.Contato.Any() ? model.Contato.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
-				{
-					ID = x.ID,
-					Contato = x.Contato,
-					Email = x.Email,
-					TelefoneComercial = x.TelefoneComercial,
-					TelefoneCelular = x.TelefoneCelular,
-					Setor = x.Setor,
-					DataNascimento = x.DataNascimento
-
-				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
-				Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
-				{
-					ID = x.ID,
-					ValorUnitario = x.ValorUnitario,
-					TipoTarifa = x.TipoTarifa,
-					VigenciaInicio = x.VigenciaInicio,
-					VigenciaFim = x.VigenciaFim,
-					Franquia = x.Franquia,
-					FranquiaAdicional = x.FranquiaAdicional,
-					Observacao = x.Observacao,
-					ValorAtivado = x.ValorAtivado
-
-				}).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
-			});
-
-			// Return
-			return Ok();
-		}
+            //Return
+            return Ok();
+        }
 
 
-		/// <summary>
-		/// Deleta contato específico
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("contato/{idContato:int}")]
-		public IHttpActionResult DeleteContato(int idContato)
-		{
-			// Instancia
-			var clienteRepositorio = new ClienteRepositorio();
+        /// <summary>
+        /// Put Cliente
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCliente:long}")]
+        public IHttpActionResult PutCliente(long idCliente, [FromBody]ClienteCompletoModel model)
+        {
+            // Busca Dados resumidos
+            var clienteRepositorio = new ClienteRepositorio();
 
-			// Deleta contrato
-			clienteRepositorio.ExcluiContato(idContato);
+            //Busca ID do Endereço
+            var idEndereco = clienteRepositorio.BuscaClienteEndereco(idCliente).FirstOrDefault().idEndereco;
 
-			// Return
-			return Ok();
-		}
+            // Inclui profissional
+            clienteRepositorio.AtualizaCliente(idEndereco, new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
+            {
+                ID = model.ID,
+                DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+                {
+                    NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
+                    NomeFantasia = model.DadosCadastrais.NomeFantasia,
+                    CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
+                    InscricaoEstadual = model.DadosCadastrais.InscricaoEstadual,
+                    ISS = model.DadosCadastrais.ISS,
+                    Endereco = model.DadosCadastrais.Endereco,
+                    NumeroEndereco = model.DadosCadastrais.NumeroEndereco,
+                    Complemento = model.DadosCadastrais.Complemento,
+                    Bairro = model.DadosCadastrais.Bairro,
+                    Cidade = model.DadosCadastrais.Cidade,
+                    Estado = model.DadosCadastrais.Estado,
+                    CEP = model.DadosCadastrais.CEP,
+                    Observacoes = model.DadosCadastrais.Observacoes,
+                    HomePage = model.DadosCadastrais.HomePage
+                },
+                Contato = model.Contato.Any() ? model.Contato.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+                {
+                    ID = x.ID,
+                    Contato = x.Contato,
+                    Email = x.Email,
+                    TelefoneComercial = x.TelefoneComercial,
+                    TelefoneCelular = x.TelefoneCelular,
+                    Setor = x.Setor,
+                    DataNascimento = x.DataNascimento
 
-		/// <summary>
-		/// Deleta contrato específico
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		[Authorize]
-		[Route("contrato/{idValor:int}")]
-		public IHttpActionResult DeleteValor(int idValor)
-		{
-			// Instancia
-			var clienteRepositorio = new ClienteRepositorio();
+                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
+                Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                {
+                    ID = x.ID,
+                    ValorContrato = x.ValorContrato,
+                    DescricaoTarifa = x.DescricaoTarifa,
+                    IDCliente = x.IDCliente,
+                    Observacao = x.Observacao,
+                    QuantidadeKMContratado = x.QuantidadeKMContratado,
+                    status = x.status,
+                    ValorKMAdicional = x.ValorKMAdicional,
+                    VigenciaFim = x.VigenciaFim,
+                    VigenciaInicio = x.VigenciaInicio
 
-			//Verifica se o contrato a ser excluido é o ativo
-			var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
-			if(contratoAtivo.FirstOrDefault().ValorAtivado == 1)
-				return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
+                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
+            });
 
-			// Deleta contrato
-			clienteRepositorio.ExcluiContrato(idValor);
+            // Return
+            return Ok();
+        }
 
-			// Return
-			return Ok();
-		}
-		#endregion
 
-		#region Cliente Avulso
+        /// <summary>
+        /// Deleta contato específico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("contato/{idContato:int}")]
+        public IHttpActionResult DeleteContato(int idContato)
+        {
+            // Instancia
+            var clienteRepositorio = new ClienteRepositorio();
 
-		/// <summary>
-		/// Busca dados de cliente avulso
-		/// </summary>
-		/// <returns></returns>
-		[Authorize]
-		[Route("avulso/contrato/ativo")]
-		[ResponseType(typeof(IEnumerable<ClienteDTO>))]
-		public IHttpActionResult GetClientesAvulsosValorAtivo()
-		{
-			// Busca Dados
-			var entidade = new ClienteRepositorio().BuscaListaClientes(true);
+            // Deleta contrato
+            clienteRepositorio.ExcluiContato(idContato);
 
-			// Validacao
-			if (entidade == null)
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Return
+            return Ok();
+        }
 
-			// Return
-			return Ok(entidade.Select(cli => new ClienteDTO()
-			{
-				ID = cli.idCliente,
-				vcNomeFantasia = cli.vcNomeFantasia,
-				vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
-				vcCPFCNPJ = cli.vcCPFCNPJ,
-				vcInscricaoEstadual = cli.vcInscricaoEstadual,
-				bitRetemISS = cli.bitRetemISS,
-				vcObservacoes = cli.vcObservacoes,
-				vcSite = cli.vcSite,
-				vcRua = cli.vcRua,
-				vcNumero = cli.vcNumero,
-				vcComplemento = cli.vcComplemento,
-				vcBairro = cli.vcBairro,
-				vcCidade = cli.vcCidade,
-				vcUF = cli.vcUF,
-				vcCEP = cli.vcCEP,
-				bitAtivo = cli.bitAtivo,
-				vcDescricaoTarifario = cli.vcDescricaoTarifario
+        /// <summary>
+        /// Deleta contrato específico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("contrato/{idValor:int}")]
+        public IHttpActionResult DeleteValor(int idValor)
+        {
+            // Instancia
+            var clienteRepositorio = new ClienteRepositorio();
 
-			}));
-		}
+            //Verifica se o contrato a ser excluido é o ativo
+            var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
 
-		#endregion
+            if (contratoAtivo.FirstOrDefault().status)
+                return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
 
-	}
+            // Deleta contrato
+            clienteRepositorio.ExcluiContrato(idValor);
+
+            // Return
+            return Ok();
+        }
+        #endregion
+
+        #region Cliente Avulso
+
+        /// <summary>
+        /// Busca dados de cliente avulso
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("avulso/contrato/ativo")]
+        [ResponseType(typeof(IEnumerable<ClienteDTO>))]
+        public IHttpActionResult GetClientesAvulsosValorAtivo()
+        {
+            // Busca Dados
+            var entidade = new ClienteRepositorio().BuscaListaClientes(true);
+
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(cli => new ClienteDTO()
+            {
+                ID = cli.idCliente,
+                vcNomeFantasia = cli.vcNomeFantasia,
+                vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
+                vcCPFCNPJ = cli.vcCPFCNPJ,
+                vcInscricaoEstadual = cli.vcInscricaoEstadual,
+                bitRetemISS = cli.bitRetemISS,
+                vcObservacoes = cli.vcObservacoes,
+                vcSite = cli.vcSite,
+                vcRua = cli.vcRua,
+                vcNumero = cli.vcNumero,
+                vcComplemento = cli.vcComplemento,
+                vcBairro = cli.vcBairro,
+                vcCidade = cli.vcCidade,
+                vcUF = cli.vcUF,
+                vcCEP = cli.vcCEP,
+                bitAtivo = cli.bitAtivo,
+                vcDescricaoTarifario = cli.vcDescricaoTarifario
+
+            }));
+        }
+
+        #endregion
+
+    }
 }

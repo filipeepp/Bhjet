@@ -4,7 +4,6 @@
     {
         public int? idCorrida { get; set; }
         public int? idRegistroDiaria { get; set; }
-        public int? idTarifario { get; set; }
         public int idColaboradorEmpresaSistema { get; set; }
         public int idUsuarioFaturado { get; set; }
         public int? idPeriodoFaturamento { get; set; }

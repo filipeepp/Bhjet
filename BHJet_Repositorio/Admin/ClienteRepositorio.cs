@@ -118,25 +118,14 @@ namespace BHJet_Repositorio.Admin
 				// Query
 				string query = @"SELECT
 									Valor.idClienteTarifario AS ID,
-									Valor.vcDescricaoTarifario AS TipoTarifa,
+									Valor.vcDescricaoTarifario AS DescricaoTarifa,
 									Valor.dtDataInicioVigencia AS VigenciaInicio,
 									Valor.dtDataFimVigencia AS VigenciaFim,
-									Valor.decValorBandeirada AS ValorBandeira,
-									Valor.decFranquiaKMBandeirada AS ValorKMBandeiradada,
-									Valor.decValorKMAdicionalCorrida AS ValorKMAdicionalCorrida,
-									Valor.intFranquiaMinutosParados AS MinutosParado,
-									Valor.decValorMinutoParado AS ValorMinutosParado,
-									Valor.timFaixaHorarioInicial AS HorarioInicial,
-									Valor.timFaixaHorarioFinal AS HorarioFinal,
-									Valor.decValorDiaria AS ValorDiaria,
-									Valor.decFranquiaKMDiaria AS ValorKMDiaria,
-									Valor.decValorKMAdicionalDiaria AS ValorKMAdicionalDiaria,
-									Valor.decValorMensalidade AS ValorUnitario,
-									Valor.decFranquiaKMMensalidade AS Franquia,
-									Valor.decValorKMAdicionalMensalidade AS FranquiaAdicional,
-									Valor.bitAtivo AS ValorAtivado,
-									Valor.bitPagamentoAvista AS PagamentoAVista,
-									Valor.vcObservacao AS Observacao
+									Valor.decValorContrato AS ValorContrato, --
+									Valor.decFranquiaKM AS QuantidadeKMContratado, --
+									Valor.decValorKMAdicional AS ValorKMAdicional, --
+									Valor.bitAtivo AS status, --
+									Valor.vcObservacao AS Observacao --
 								FROM
 									tblClienteTarifario Valor
 								WHERE
@@ -446,27 +435,25 @@ namespace BHJet_Repositorio.Admin
 						using (var sqlConnectionCom = this.InstanciaConexao())
 						{
 							string queryTarifario = @"INSERT INTO [dbo].[tblClienteTarifario]
-                                           ([idCliente]
-										   ,[vcDescricaoTarifario]
-                                           ,[dtDataInicioVigencia]
-                                           ,[dtDataFimVigencia]
-                                           ,[decFranquiaKMMensalidade]
-                                           ,[decValorKMAdicionalMensalidade]
-                                           ,[decValorMensalidade]
-                                           ,[bitAtivo]
-                                           ,[bitPagamentoAVista]
-                                           ,[vcObservacao])
+                                           (idCliente
+										   ,vcDescricaoTarifario
+                                           ,dtDataInicioVigencia
+                                           ,dtDataFimVigencia
+                                           ,decValorContrato
+                                           ,decFranquiaKM
+                                           ,decValorKMAdicional
+                                           ,bitAtivo
+                                           ,vcObservacao)
                                      VALUES
                                            (@ClienteID
 											,@TipoTarifa
-                                           ,@VigenciaInicio
-                                           ,@VigenciaFim
-                                           ,@Franquia
-                                           ,@FranquiaAdicional
-										   ,@ValorUnitario
-										   ,@TarifaAtivada
-										   ,@PagamentoAVista
-                                           ,@Observacao)
+                                            ,@VigenciaInicio
+                                            ,@VigenciaFim
+                                            ,@ValorContrato
+                                            ,@QuantidadeKM
+										    ,@ValorKM
+										    ,@TarifaAtivada
+                                            ,@Observacao)	
                                            select @@identity;";
 
 							// Execute
@@ -475,15 +462,14 @@ namespace BHJet_Repositorio.Admin
 								idValor = trans.Connection.ExecuteScalar<int?>(queryTarifario, new
 								{
 									ClienteID = idCliente,
-									TipoTarifa = tarifa.TipoTarifa,
-									VigenciaInicio = tarifa.VigenciaInicio,
+									TipoTarifa = tarifa.DescricaoTarifa,
+                                    VigenciaInicio = tarifa.VigenciaInicio,
 									VigenciaFim = tarifa.VigenciaFim,
-									Franquia = tarifa.Franquia,
-									FranquiaAdicional = tarifa.FranquiaAdicional,
-									ValorUnitario = tarifa.ValorUnitario,
-									TarifaAtivada = tarifa.ValorAtivado,
-									PagamentoAVista = 0,
-									Observacao = tarifa.Observacao
+                                    ValorContrato = tarifa.ValorContrato,
+                                    QuantidadeKM = tarifa.QuantidadeKMContratado,
+                                    ValorKM = tarifa.ValorKMAdicional,
+                                    TarifaAtivada = tarifa.status,
+                                    Observacao = tarifa.Observacao
 								}, trans);
 
 								Valores.Add(idValor);
@@ -577,36 +563,33 @@ namespace BHJet_Repositorio.Admin
 										   ,[vcDescricaoTarifario]
                                            ,[dtDataInicioVigencia]
                                            ,[dtDataFimVigencia]
-                                           ,[decFranquiaKMMensalidade]
-                                           ,[decValorKMAdicionalMensalidade]
-                                           ,[decValorMensalidade]
+                                           ,decValorContrato
+                                           ,decFranquiaKM
+                                           ,decValorKMAdicional
                                            ,[bitAtivo]
-                                           ,[bitPagamentoAVista]
                                            ,[vcObservacao])
                                      VALUES
                                            (@ClienteID
 										   ,@TipoTarifa
                                            ,@VigenciaInicio
                                            ,@VigenciaFim
-                                           ,@Franquia
-                                           ,@FranquiaAdicional
-										   ,@ValorUnitario
+                                           ,@ValorContrato
+                                           ,@QuantidadeKM
+										   ,@ValorKMAdicional
 										   ,@TarifaAtivada
-										   ,@PagamentoAVista
                                            ,@Observacao)
                                            select @@identity;";
 						// Execute
 						var idValor = trans.Connection.ExecuteScalar<int?>(queryTarifario, new
 						{
 							ClienteID = clienteID,
-							TipoTarifa = tarifa.TipoTarifa,
+							TipoTarifa = tarifa.DescricaoTarifa,
 							VigenciaInicio = tarifa.VigenciaInicio,
 							VigenciaFim = tarifa.VigenciaFim,
-							Franquia = tarifa.Franquia,
-							FranquiaAdicional = tarifa.FranquiaAdicional,
-							ValorUnitario = tarifa.ValorUnitario,
-							TarifaAtivada = tarifa.ValorAtivado,
-							PagamentoAVista = 0,
+                            ValorContrato = tarifa.ValorContrato,
+                            QuantidadeKM = tarifa.QuantidadeKMContratado,
+                            ValorKMAdicional = tarifa.ValorKMAdicional,
+							TarifaAtivada = tarifa.status,
 							Observacao = tarifa.Observacao
 						}, trans);
 
@@ -734,9 +717,9 @@ namespace BHJet_Repositorio.Admin
 													    [vcDescricaoTarifario] = @TipoTarifa
 													   ,[dtDataInicioVigencia] = @VigenciaInicio
 													   ,[dtDataFimVigencia] = @VigenciaFim
-													   ,[decFranquiaKMMensalidade] = @Franquia
-													   ,[decValorKMAdicionalMensalidade] = @FranquiaAdicional
-													   ,[decValorMensalidade] = @ValorUnitario
+													   ,[decValorContrato] = @ValorContrato
+													   ,[decFranquiaKM] = @QuantidadeKM
+													   ,[decValorKMAdicional] = @ValorKMAdicional
 													   ,[bitAtivo] = @TarifaAtivada
 													   ,[vcObservacao] = @Observacao
 													 WHERE
@@ -747,16 +730,16 @@ namespace BHJet_Repositorio.Admin
 							{
 								trans.Connection.Execute(queryTarifario, new
 								{
-									TipoTarifa = tarifa.TipoTarifa,
-									VigenciaInicio = tarifa.VigenciaInicio,
-									VigenciaFim = tarifa.VigenciaFim,
-									Franquia = tarifa.Franquia,
-									FranquiaAdicional = tarifa.FranquiaAdicional,
-									ValorUnitario = tarifa.ValorUnitario,
-									TarifaAtivada = tarifa.ValorAtivado,
-									Observacao = tarifa.Observacao,
-									ValorID = tarifa.ID
-								}, trans);
+                                    ValorID = tarifa.ID,
+                                    TipoTarifa = tarifa.DescricaoTarifa,
+                                    VigenciaInicio = tarifa.VigenciaInicio,
+                                    VigenciaFim = tarifa.VigenciaFim,
+                                    ValorContrato = tarifa.ValorContrato,
+                                    QuantidadeKM = tarifa.QuantidadeKMContratado,
+                                    ValorKMAdicional = tarifa.ValorKMAdicional,
+                                    TarifaAtivada = tarifa.status,
+                                    Observacao = tarifa.Observacao
+                                }, trans);
 							}
 						}
 

@@ -61,7 +61,6 @@ namespace BHJet_WebApi.Controllers
                     new DiariaRepositorio().IncluirDiariaAvulsa(new BHJet_Repositorio.Admin.Filtro.NovaDiariaAvulsaFiltro()
                     {
                         IDCliente = model.IDCliente,
-                        IDTarifario = tarifa.idTarifario,
                         IDColaboradorEmpresa = model.IDColaboradorEmpresa,
                         IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
                         DataHoraFimExpediente = dataInicio,
@@ -83,7 +82,6 @@ namespace BHJet_WebApi.Controllers
                 new DiariaRepositorio().IncluirDiariaAvulsa(new BHJet_Repositorio.Admin.Filtro.NovaDiariaAvulsaFiltro()
                 {
                     IDCliente = model.IDCliente,
-                    IDTarifario = tarifa.idTarifario,
                     IDColaboradorEmpresa = model.IDColaboradorEmpresa,
                     IDUsuarioSolicitacao = UsuarioAutenticado.LoginID.ToLong(),
                     DataHoraFimExpediente = model.DataFimExpediente,

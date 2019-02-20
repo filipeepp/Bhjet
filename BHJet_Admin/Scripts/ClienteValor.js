@@ -20,7 +20,7 @@
 
 	$('.ctmErrorFranquia').on("keyup mousemove change", function (event) {
 		var id = event.target.id;
-		$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
+		//$('input[id="' + id + '"]').maskMoney({ decimal: ',', thousands: "." });
 	});
 
 	$('.ctmErrorFranquiaAdicional').on("keyup mousemove change", function (event) {
@@ -246,11 +246,11 @@ window.PesquisaTarifarioPadrao = function (divBlocoValor, codigoTipoVeiculo) {
 				}
 
 				$("#" + idBloco).find("input[id$='Observacao']").val(tarifarioPadrao.vcObservacao);
-				$("#" + idBloco).find("input[id$='ValorUnitario']").val(tarifarioPadrao.decValorDiaria).maskMoney({ prefix: "R$:", decimal: ',', thousands: "." }).trigger('mask.maskMoney');
+                $("#" + idBloco).find("input[id$='ValorUnitario']").val(tarifarioPadrao.ValorContrato).maskMoney({ prefix: "R$:", decimal: ',', thousands: "." }).trigger('mask.maskMoney');
 				$("#" + idBloco).find("input[id$='VigenciaInicio']").val($.datepicker.formatDate('yy-mm-dd', dataCalendario));
 				$("#" + idBloco).find("input[id$='VigenciaFim']").val($.datepicker.formatDate('yy-mm-dd', dataCalendario.adicionaDias(30000)));
-				$("#" + idBloco).find("input[id$='Franquia']").val(tarifarioPadrao.decValorKMAdicionalDiaria).maskMoney({ decimal: ',', thousands: "." }).trigger('mask.maskMoney');
-				$("#" + idBloco).find("input[id$='FranquiaAdicional']").val(tarifarioPadrao.decValorKMAdicionalMensalidade).maskMoney({ decimal: ',', thousands: "." }).trigger('mask.maskMoney');
+				$("#" + idBloco).find("input[id$='Franquia']").val(tarifarioPadrao.FranquiaKM).maskMoney({ decimal: ',', thousands: "." }).trigger('mask.maskMoney');
+                $("#" + idBloco).find("input[id$='FranquiaAdicional']").val(tarifarioPadrao.ValorKMAdicional).maskMoney({ decimal: ',', thousands: "." }).trigger('mask.maskMoney');
 				
 			},
 			error: function () { alert("Ops! Não foi possível buscar essa informação. Tente novamente mais tarde.") }

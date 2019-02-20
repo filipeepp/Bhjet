@@ -30,55 +30,51 @@ namespace BHJet_WebApi.Controllers
             // Return
             return Ok(new TarifaDTO()
             {
-                idTarifario = entidade.idTarifario,
-                bitPagamentoAVista = entidade.bitPagamentoAVista,
-                decFranquiaKMBandeirada = entidade.decFranquiaKMBandeirada,
-                decFranquiaKMDiaria = entidade.decFranquiaKMDiaria,
-                decFranquiaKMMensalidade = entidade.decFranquiaKMMensalidade,
-                decValorBandeirada = entidade.decValorBandeirada,
-                decValorDiaria = entidade.decValorDiaria,
-                decValorKMAdicionalCorrida = entidade.decValorKMAdicionalCorrida,
-                decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria,
-                decValorKMAdicionalMensalidade = entidade.decValorKMAdicionalMensalidade,
-                decValorMensalidade = entidade.decValorMensalidade,
-                decValorMinutoParado = entidade.decValorMinutoParado,
-                intFranquiaMinutosParados = entidade.intFranquiaMinutosParados,
-                timFaixaHorarioFinal = entidade.timFaixaHorarioFinal,
-                timFaixaHorarioInicial = entidade.timFaixaHorarioInicial,
+                ID = entidade.ID,
+                Ativo = entidade.Ativo,
+                DataFimVigencia = entidade.DataFimVigencia,
+                DataInicioVigencia = entidade.DataInicioVigencia,
+                Descricao = entidade.Descricao,
+                FranquiaKM = entidade.FranquiaKM,
+                MinutosParados = entidade.MinutosParados,
+                Observacao = entidade.Observacao,
+                ValorContrato = entidade.ValorContrato,
+                ValorKMAdicional = entidade.ValorKMAdicional,
+                ValorMinutosParados = entidade.ValorMinutosParados
             });
         }
 
-		/// <summary>
-		/// Busca tarifário padrão ativo
-		/// </summary>
-		/// <returns>IEnumerable<TarifaDTO></returns>
-		[Authorize]
-		[Route("tipoVeiculo/{codigoTipoVeiculo:int}")]
-		[ResponseType(typeof(TarifaDTO))]
-		public IHttpActionResult GetTarifaPadrao(int codigoTipoVeiculo)
-		{
-			// Busca tarifa
-			var entidade = new TarifaRepositorio().BuscaTarfaPadraoAtiva(codigoTipoVeiculo);
+        /// <summary>
+        /// Busca tarifário padrão ativo
+        /// </summary>
+        /// <returns>IEnumerable<TarifaDTO></returns>
+        [Authorize]
+        [Route("tipoVeiculo/{codigoTipoVeiculo:int}")]
+        [ResponseType(typeof(TarifaDTO))]
+        public IHttpActionResult GetTarifaPadrao(int codigoTipoVeiculo)
+        {
+            // Busca tarifa
+            var entidade = new TarifaRepositorio().BuscaTarfaPadraoAtiva(codigoTipoVeiculo);
 
-			// Validacao
-			if (entidade == null)
-				return StatusCode(System.Net.HttpStatusCode.NoContent);
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-			// Return
-			return Ok(new TarifaDTO()
-			{
-				idTarifario = entidade.idTarifario,
-				vcObservacao = entidade.vcObservacao,
-				decValorDiaria = entidade.decValorDiaria,
-				//VigenciaInicio = trf.VigenciaInicio,
-				//VigenciaFim = trf.VigenciaFim,
-				decFranquiaKMDiaria = entidade.decFranquiaKMDiaria,
-				decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria,
-				decFranquiaKMMensalidade = entidade.decFranquiaKMMensalidade,
-				decValorKMAdicionalMensalidade = entidade.decValorKMAdicionalMensalidade
-				//Ativo = trf.Ativo
-			});
-		}
-	}
+            // Return
+            return Ok(new TarifaDTO()
+            {
+                ID = entidade.ID,
+                Ativo = entidade.Ativo,
+                DataFimVigencia = entidade.DataFimVigencia,
+                DataInicioVigencia = entidade.DataInicioVigencia,
+                Descricao = entidade.Descricao,
+                FranquiaKM = entidade.FranquiaKM,
+                MinutosParados = entidade.MinutosParados,
+                Observacao = entidade.Observacao,
+                ValorContrato = entidade.ValorContrato,
+                ValorKMAdicional = entidade.ValorKMAdicional,
+                ValorMinutosParados = entidade.ValorMinutosParados
+            });
+        }
+    }
 }
- 

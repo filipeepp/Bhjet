@@ -334,9 +334,9 @@ namespace BHJet_Admin.Controllers
             // Return
             return Json(new
             {
-                DecValorDiaria = entidade.decValorDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
-                decValorKMAdicionalDiaria = entidade.decValorKMAdicionalDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
-                decFranquiaKMDiaria = entidade.decFranquiaKMDiaria?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty
+                DecValorDiaria = entidade.ValorContrato?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
+                decValorKMAdicionalDiaria = entidade.ValorKMAdicional?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
+                decFranquiaKMDiaria = entidade.FranquiaKM?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty
             }, JsonRequestBehavior.AllowGet);
         }
 

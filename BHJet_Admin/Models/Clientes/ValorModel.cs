@@ -9,7 +9,7 @@ namespace BHJet_Admin.Models.Clientes
 {
 	public class ValorModel
 	{
-		public int ID { get; set; }
+		public long ID { get; set; }
 		public bool ValorRemovido { get; set; }
 		public bool ValorAtivado { get; set; }
         public string ValorUnitario { get; set; }
