@@ -77,7 +77,6 @@ namespace BHJet_Admin.Models.Motorista
 
         public string Observacao { get; set; }
 
-        [Required(ErrorMessage = "Senha obrigatória.")]
         public string Senha
         {
             get; set;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System;
 
 namespace BHJet_WebApi.Controllers
 {
@@ -45,6 +46,11 @@ namespace BHJet_WebApi.Controllers
             // Busca Dados resumidos
             var entidade = new DashboardRepositorio().BuscaResumoChamados();
 
+            // Busca status corrida
+            var statusCorrida = new CorridaRepositorio().BuscaOcorrenciasCorrida();
+            var finaliza = statusCorrida.Where(s => s.bitFinaliza = true || s.bitCancela == true).Select(st => st.idStatusCorrida).ToArray();
+            var naoFinaliza = statusCorrida.Where(s => s.bitFinaliza = false && s.bitCancela == false).Select(st => st.idStatusCorrida).ToArray();
+
             // valida retorno
             if (entidade != null && !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
@@ -53,16 +59,15 @@ namespace BHJet_WebApi.Controllers
             List<ResumoChamadoModel> ResumoMensal = new List<ResumoChamadoModel>();
 
             // Percorre os meses
-            for (int i = 1; i <= 12; i++)
+            var periodos = this.UltimosMesesAno(13);
+
+            foreach (var periodo in periodos)
             {
                 ResumoMensal.Add(new ResumoChamadoModel()
                 {
-                    Mes = i,
-                    ChamadosAdvertentes = entidade.Where(x => x.DataRegistro?.Month == i &&
-                                                             (x.Status == StatusCorrida.ClienteCancelou ||
-                                                              x.Status == StatusCorrida.ProblemasNoVeiculo ||
-                                                              x.Status == StatusCorrida.PessoaAusente))?.Count() ?? 0,
-                    ChamadosConcluidos = entidade.Where(x => x.Status == StatusCorrida.Concluida && x.DataRegistro?.Month == i)?.Count() ?? 0
+                    Mes = periodo,
+                    ChamadosAdvertentes = entidade.Where(x => x.DataRegistro?.ToString("MM/yyyy") == periodo && Array.Exists(naoFinaliza, z => z == (int)x.Status))?.Count() ?? 0,
+                    ChamadosConcluidos = entidade.Where(x => x.DataRegistro?.ToString("MM/yyyy") == periodo &&  Array.Exists(finaliza, z => z == (int)x.Status))?.Count() ?? 0
                 });
             }
 
@@ -90,21 +95,27 @@ namespace BHJet_WebApi.Controllers
             List<ResumoAtendimentoModel> ResumoMensal = new List<ResumoAtendimentoModel>();
 
             // Percorre os meses
-            for (int i = 1; i <= 12; i++)
+            var periodos = this.UltimosMesesAno(13);
+            foreach (var periodo in periodos)
             {
                 ResumoMensal.Add(new ResumoAtendimentoModel()
                 {
-                    Mes = i,
-                    QtdAtendimentoMotociclista  = entidade.Where(x => x.DataRegistro?.Month == i && x.TipoProfissional == TipoProfissional.Motociclista)?.Count() ?? 0,
-                    QtdAtendimentoMotorista  = entidade.Where(x => x.DataRegistro?.Month == i && x.TipoProfissional == TipoProfissional.Motorista)?.Count() ?? 0,
+                    Mes = periodo,
+                    QtdAtendimentoMotociclista = entidade.Where(x => x.DataRegistro?.ToString("MM/yyyy") == periodo && x.TipoProfissional == TipoProfissional.Motociclista)?.Count() ?? 0,
+                    QtdAtendimentoMotorista = entidade.Where(x => x.DataRegistro?.ToString("MM/yyyy") == periodo && x.TipoProfissional == TipoProfissional.Motorista)?.Count() ?? 0,
                 });
-            }
 
+            }
+           
             // Return
             return Ok(ResumoMensal);
         }
 
 
+        private IEnumerable<string> UltimosMesesAno(int qtdMeses)
+        {
+            return Enumerable.Range(0, qtdMeses).Select(i => DateTime.Now.AddMonths(1).AddMonths(i - qtdMeses)).Select(date => date.ToString("MM/yyyy")).Reverse();
+        }
 
     }
 }

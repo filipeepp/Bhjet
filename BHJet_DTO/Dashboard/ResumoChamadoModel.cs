@@ -2,7 +2,7 @@
 {
     public class ResumoChamadoModel
     {
-        public int Mes { get; set; }
+        public string Mes { get; set; }
         public long ChamadosConcluidos { get; set; }
         public long ChamadosAdvertentes { get; set; }
     }

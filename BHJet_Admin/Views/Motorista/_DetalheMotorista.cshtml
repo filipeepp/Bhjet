@@ -93,7 +93,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Senha</label>
+                            <label for="txtNomeFantasia">Senha</label>
                             @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @type = "password" })
                             @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger" })
                         </div>
