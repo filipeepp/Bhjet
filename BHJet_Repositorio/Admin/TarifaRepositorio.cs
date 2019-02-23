@@ -45,19 +45,19 @@ namespace BHJet_Repositorio.Admin
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { id = clienteID });
             }
-		}
+        }
 
-		/// <summary>
-		/// Busca tarifa ativa na tabela de preço
-		/// </summary>
-		/// <param name="filtro">TipoProfissional</param>
-		/// <returns>TarifaDTO</returns>
-		public TarifaEntidade BuscaTarfaPadraoAtiva(int codigoTipoVeiculo)
-		{
-			using (var sqlConnection = this.InstanciaConexao())
-			{
-				// Query
-				string query = @"SELECT
+        /// <summary>
+        /// Busca tarifa ativa na tabela de preço
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>TarifaDTO</returns>
+        public TarifaEntidade BuscaTarfaPadraoAtiva(int codigoTipoVeiculo)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT
 										idTarifario as ID,
 										vcObservacao as Observacao,
 										decValorContrato as  ValorContrato,
@@ -71,9 +71,79 @@ namespace BHJet_Repositorio.Admin
 									AND
 										bitAtivo = 1";
 
-				// Execução
-				return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { TipoVeiculo = codigoTipoVeiculo });
-			}
-		}
-	}
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { TipoVeiculo = codigoTipoVeiculo });
+            }
+        }
+
+        /// <summary>
+        /// Busca tarifa ativa na tabela de preço
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>TarifaDTO</returns>
+        public IEnumerable<TarifarioEntidade> BuscaTarifaPadrao()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select * from tblTarifario";
+
+                // Execução
+                return sqlConnection.Query<TarifarioEntidade>(query);
+            }
+        }
+
+        /// <summary>
+        /// Busca tarifa ativa na tabela de preço
+        /// </summary>
+        /// <param name="filtro">TipoProfissional</param>
+        /// <returns>TarifaDTO</returns>
+        public void AtualizaTarifaPadrao(TarifarioEntidade[] filtro)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Atualiza tarifas
+                        foreach(var tarifa in filtro)
+                        {
+                            string queryAtualiza = @"update tblTarifario set  
+                                                        intFranquiaMinutosParados = @minParado,
+                                                        decValorMinutoParado = @valMinuto,
+                                                        decValorContrato = @valorContrato,
+                                                        intFranquiaKM = @franquiaKM,
+                                                        decValorKMAdicional = @valorKM,
+                                                        intFranquiaHoras = @franquiaHoras,
+                                                        decValorHoraAdicional = @valorHora,
+                                                        decValorPontoExcedente = @ValoPonto,
+                                                        vcObservacao = @obs";
+
+                            trans.Connection.Execute(queryAtualiza, new
+                            {
+                                minParado = tarifa.intFranquiaMinutosParados,
+                                valMinuto = tarifa.decValorMinutoParado,
+                                valorContrato = tarifa.decValorContrato,
+                                franquiaKM = tarifa.intFranquiaKM,
+                                valorKM = tarifa.decValorKMAdicional,
+                                franquiaHoras = tarifa.intFranquiaHoras,
+                                valorHora = tarifa.decValorHoraAdicional,
+                                ValoPonto = tarifa.decValorPontoExcedente,
+                                obs = tarifa.vcObservacao
+                            }, trans);
+                        }
+
+                        // Comit
+                        trans.Commit();
+                    }
+                    catch(System.Exception e)
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+    }
 }

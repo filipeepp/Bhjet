@@ -1,0 +1,57 @@
+﻿@using BHJet_Admin.Models.Tarifario
+@model TarifarioModel
+
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#Email">Manutenção Tarifário</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="titulo">
+                        <h2>
+                            <a href="@Url.Action("Index", "Usuario")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Manutenção Tarifário
+                        </h2>
+                    </div>
+                    <br />
+                   
+        
+
+                        <div class="row">
+                            @{
+                              Html.RenderPartial("_Detalhe", Model);
+                            }
+                        </div>
+
+                   
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}
+
+    <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+    <script src="~/Scripts/Tarifario.js"></script>

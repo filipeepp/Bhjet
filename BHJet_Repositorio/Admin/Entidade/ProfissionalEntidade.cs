@@ -10,7 +10,7 @@ namespace BHJet_Repositorio.Admin.Entidade
         public TipoProfissional TipoProfissional { get; set; }
         public RegimeContratacao TipoRegime { get; set; }
     }
-
+    
     public class ProfissionalCompletoEntidade
     {
         public long ID { get; set; }

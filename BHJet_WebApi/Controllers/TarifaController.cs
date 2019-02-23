@@ -1,5 +1,6 @@
 ﻿using BHJet_DTO.Tarifa;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Admin.Entidade;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,6 +11,76 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Tarifa")]
     public class TarifaController : ApiController
     {
+        /// <summary>
+        /// Busca todo o tarifario
+        /// </summary>
+        /// <returns>IEnumerable<TarifaDTO></returns>
+        [Authorize]
+        [Route("")]
+        [ResponseType(typeof(TarifarioDTO[]))]
+        public IHttpActionResult GetTarifas()
+        {
+            // Busca tarifa
+            var tarifas = new TarifaRepositorio().BuscaTarifaPadrao();
+
+            // Validacao
+            if (tarifas == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(tarifas.Select(tf => new TarifarioDTO()
+            {
+                idTarifario = tf.idTarifario,
+                Ativo = tf.bitAtivo,
+                idTipoServico = tf.idTipoServico,
+                idTipoVeiculo = tf.idTipoVeiculo,
+                DataFimVigencia = tf.dtDataFimVigencia,
+                DataInicioVigencia = tf.dtDataInicioVigencia,
+                DescricaoTarifario = tf.vcDescricaoTarifario,
+                FranquiaHoras = tf.intFranquiaHoras,
+                FranquiaKM = tf.intFranquiaKM,
+                FranquiaMinutosParados = tf.intFranquiaMinutosParados,
+                Observacao = tf.vcObservacao,
+                ValorContrato = tf.decValorContrato,
+                ValorHoraAdicional = tf.decValorHoraAdicional,
+                ValorKMAdicional = tf.decValorKMAdicional,
+                ValorMinutoParado = tf.decValorMinutoParado,
+                ValorPontoExcedente = tf.decValorPontoExcedente
+            }));
+        }
+
+        /// <summary>
+        /// Busca todo o tarifario
+        /// </summary>
+        /// <returns>IEnumerable<TarifaDTO></returns>
+        [Authorize]
+        [Route("")]
+        public IHttpActionResult PutTarifas([FromBody]TarifarioDTO[] filtro)
+        {
+            // Busca tarifa
+            new TarifaRepositorio().AtualizaTarifaPadrao(filtro.Select(tf => new TarifarioEntidade()
+            {
+                idTarifario = tf.idTarifario,
+                bitAtivo = tf.Ativo,
+                idTipoServico = tf.idTipoServico,
+                idTipoVeiculo = tf.idTipoVeiculo,
+                dtDataFimVigencia = tf.DataFimVigencia,
+                dtDataInicioVigencia = tf.DataInicioVigencia,
+                vcDescricaoTarifario = tf.DescricaoTarifario,
+                intFranquiaHoras = tf.FranquiaHoras,
+                intFranquiaKM = tf.FranquiaKM,
+                intFranquiaMinutosParados = tf.FranquiaMinutosParados,
+                vcObservacao = tf.Observacao,
+                decValorContrato = tf.ValorContrato,
+                decValorHoraAdicional = tf.ValorHoraAdicional,
+                decValorKMAdicional = tf.ValorKMAdicional,
+                decValorMinutoParado = tf.ValorMinutoParado,
+                decValorPontoExcedente = tf.ValorPontoExcedente
+            }).ToArray());
+
+            // Return
+            return Ok();
+        }
 
         /// <summary>
         /// Busca lista de Tarifias de um cliente especifico

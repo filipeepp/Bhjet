@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataAnnotationsExtensions, Version=5.0.1.27, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAnnotationsExtensions.5.0.1.27\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -213,6 +216,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Motorista\EditarMotoristaModel.cs" />
     <Compile Include="Models\Motorista\NovoMotoristaModel.cs" />
+    <Compile Include="Models\Tarifario\TarifaModel.cs" />
     <Compile Include="Models\Usuario\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -289,6 +293,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NovoCliente.js" />
     <Content Include="Scripts\OSCliente.js" />
+    <Content Include="Scripts\Tarifario.js" />
     <Content Include="Scripts\Usuario.js" />
     <Content Include="Scripts\UsuarioListar.js" />
     <Content Include="Scripts\Utilitario.js" />
@@ -340,10 +345,11 @@
     <Content Include="Views\Usuario\Listar.cshtml" />
     <Content Include="Views\Usuario\Novo.cshtml" />
     <Content Include="Views\Atuacao\Area.cshtml" />
+    <Content Include="Views\Tarifario\Index.cshtml" />
+    <Content Include="Views\Tarifario\_Detalhe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Tarifario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -198,7 +198,18 @@ namespace BHJet_Admin.Controllers
                 this.MensagemSucesso("Profissional atualizado com sucesso.");
 
                 // Return
-                return View(model);
+                return View(new NovoMotoristaModel()
+                {
+                    EdicaoCadastro = false,
+                    ID = 0,
+                    Bairro = "",
+                    Senha = "",
+                    Email = "",
+                    Comissao = new NovoMotoristaComissaoModel[]
+                          {
+                               MontaComissaoPadrao()
+                          }
+                });
             }
             catch (Exception e)
             {

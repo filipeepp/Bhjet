@@ -172,12 +172,14 @@ namespace BHJet_Repositorio.Admin
 				                            PRO.vcObservacoes as Observacao,
                                             PRO.vcRG as DocumentoRG,
 				                            TP.idTipoProfissional as TipoProfissional,
+                                            USU.bitAtivo as StatusUsuario,
 				                   CASE (PRO.bitRegimeContratacaoCLT)
                                      WHEN  0 THEN 'CLT'
                                      WHEN 1 THEN 'MEI' END as TipoContrato
 			                            from tblColaboradoresEmpresaSistema as PRO
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)
+                                        left join tblUsuarios USU on (USU.idUsuario = PRO.idUsuario)
 	                               where
 		                                PRO.idColaboradorEmpresaSistema = @id
 
