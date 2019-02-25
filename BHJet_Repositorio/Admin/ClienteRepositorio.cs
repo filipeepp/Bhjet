@@ -161,16 +161,14 @@ namespace BHJet_Repositorio.Admin
 									Endereco.vcCidade,
 									Endereco.vcUF,
 									Endereco.vcCEP,
-									Valor.bitAtivo,
-									Valor.vcDescricaoTarifario
+									1 AS bitAtivo
 								FROM
 									tblClientes Cliente
 								INNER JOIN
 									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
-								LEFT JOIN
-									tblClienteTarifario Valor ON Valor.idCliente = Cliente.idCliente
-								WHERE
-									(Valor.bitAtivo = 1 OR Valor.bitAtivo IS NULL) {parametroAvulso}";
+								--LEFT JOIN
+									--tblClienteTarifario Valor ON Valor.idCliente = Cliente.idCliente
+								--WHERE (1 = 1) {parametroAvulso}";
 
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query);
