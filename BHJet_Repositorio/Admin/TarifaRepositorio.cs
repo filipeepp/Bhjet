@@ -23,12 +23,14 @@ namespace BHJet_Repositorio.Admin
                                     set @IDCliente = @id;
                                     set @ExisteCliente = (select CAST(COUNT(1) AS BIT) from tblClienteTarifario where idCliente = @IDCliente )
                                 IF @ExisteCliente = 1  
-                                    select  top(1)  idClienteTarifario as ID,
+                                    select  top(1)  idCliente as ID,
 												   vcDescricaoTarifario as Descricao,
 												   dtDataInicioVigencia as DataInicioVigencia,
 												   decValorContrato as ValorContrato,
-												   decFranquiaKM as FranquiaKM,
+												   intFranquiaKM as FranquiaKM,
 												   decValorKMAdicional as ValorKMAdicional,
+                                                   intFranquiaHoras,
+                                                   decValorHoraAdicional,
 												   bitAtivo as Ativo,
 												  vcObservacao as Observacao from tblClienteTarifario where idCliente = @IDCliente  and bitAtivo = 1 order by dtDataInicioVigencia desc
                                 ELSE   
@@ -38,7 +40,9 @@ namespace BHJet_Repositorio.Admin
 												   decValorContrato as ValorContrato,
 												   intFranquiaMinutosParados as MinutosParados,
 												   decValorMinutoParado as ValorMinutosParados,
-												   decFranquiaKM as FranquiaKM,
+												   intFranquiaKM as FranquiaKM,  
+                                                        intFranquiaHoras,
+                                                   decValorHoraAdicional,
 												   decValorKMAdicional as ValorKMAdicional,
 												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1 order by dtDataInicioVigencia desc";
 
@@ -118,10 +122,11 @@ namespace BHJet_Repositorio.Admin
                                                         intFranquiaHoras = @franquiaHoras,
                                                         decValorHoraAdicional = @valorHora,
                                                         decValorPontoExcedente = @ValoPonto,
-                                                        vcObservacao = @obs";
+                                                        vcObservacao = @obs where idTarifario = @id";
 
                             trans.Connection.Execute(queryAtualiza, new
                             {
+                                id = tarifa.idTarifario,
                                 minParado = tarifa.intFranquiaMinutosParados,
                                 valMinuto = tarifa.decValorMinutoParado,
                                 valorContrato = tarifa.decValorContrato,
@@ -137,7 +142,7 @@ namespace BHJet_Repositorio.Admin
                         // Comit
                         trans.Commit();
                     }
-                    catch(System.Exception e)
+                    catch
                     {
                         trans.Rollback();
                         throw;

@@ -3,5 +3,6 @@
     public class EncerrarCorridaFiltro
     {
         public double? KilometragemRodada { get; set; }
+        public int? MinutosParados { get; set; }
     }
 }

@@ -310,7 +310,8 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idOcorrencia = null)
         {
             // Instancia
-            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia, filtro.KilometragemRodada ?? 0);
+            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia, 
+                (filtro.KilometragemRodada != null ? int.Parse(filtro.KilometragemRodada?.ToString()) : 0), filtro.MinutosParados ?? 0);
 
             // Return
             return Ok();

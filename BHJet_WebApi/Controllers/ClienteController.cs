@@ -152,19 +152,30 @@ namespace BHJet_WebApi.Controllers
                     DataNascimento = cot.DataNascimento
 
                 }).ToArray(),
-                Valor = entidadeValor.Select(val => new ClienteValorModel()
+                ContratoCarro = entidadeValor.Where(c => c.idTipoVeiculo == 1).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 1).Select(v => new ClienteValorModel()
                 {
-                    ID = val.ID,
-                    ValorContrato = val.ValorContrato,
-                    DescricaoTarifa = val.DescricaoTarifa,
-                    IDCliente = val.IDCliente,
-                    Observacao = val.Observacao,
-                    QuantidadeKMContratado = val.QuantidadeKMContratado,
-                    status = val.status,
-                    ValorKMAdicional = val.ValorKMAdicional,
-                    VigenciaFim = val.VigenciaFim,
-                    VigenciaInicio = val.VigenciaInicio
-                }).ToArray()
+                    idTarifario = v.idTarifario,
+                    FranquiaHoras = v.idTarifario,
+                    FranquiaKM = v.idTarifario,
+                    FranquiaMinutosParados = v.idTarifario,
+                    Observacao = v.Observacao,
+                    ValorContrato = v.decValorContrato,
+                    ValorHoraAdicional = v.decValorHoraAdicional,
+                    ValorKMAdicional = v.decValorKMAdicional,
+                    ValorMinutoParado = v.decValorMinutoParado
+                }).FirstOrDefault() : null,
+                ContratoMoto = entidadeValor.Where(c => c.idTipoVeiculo == 2).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 2).Select(v => new ClienteValorModel()
+                {
+                    idTarifario = v.idTarifario,
+                    FranquiaHoras = v.idTarifario,
+                    FranquiaKM = v.idTarifario,
+                    FranquiaMinutosParados = v.idTarifario,
+                    Observacao = v.Observacao,
+                    ValorContrato = v.decValorContrato,
+                    ValorHoraAdicional = v.decValorHoraAdicional,
+                    ValorKMAdicional = v.decValorKMAdicional,
+                    ValorMinutoParado = v.decValorMinutoParado
+                }).FirstOrDefault() : null
             };
 
             //Return
@@ -203,6 +214,7 @@ namespace BHJet_WebApi.Controllers
                 vcSite = cli.vcSite,
             }));
         }
+
         /// <summary>
         /// Post Cliente
         /// </summary>
@@ -260,19 +272,30 @@ namespace BHJet_WebApi.Controllers
                     DataNascimento = x.DataNascimento
 
                 }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
-                Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                ContratoMoto = model.ContratoMoto != null ? new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
                 {
-                    ID = x.ID,
-                    ValorContrato = x.ValorContrato,
-                    DescricaoTarifa = x.DescricaoTarifa,
-                    IDCliente = x.IDCliente,
-                    Observacao = x.Observacao,
-                    QuantidadeKMContratado = x.QuantidadeKMContratado,
-                    status = x.status,
-                    ValorKMAdicional = x.ValorKMAdicional,
-                    VigenciaFim = x.VigenciaFim,
-                    VigenciaInicio = x.VigenciaInicio
-                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
+                    idTarifario = model.ContratoMoto.idTarifario,
+                    decValorMinutoParado = model.ContratoMoto.ValorMinutoParado,
+                    decValorKMAdicional = model.ContratoMoto.ValorKMAdicional,
+                    decValorContrato = model.ContratoMoto.ValorContrato ?? 0,
+                    decValorHoraAdicional = model.ContratoMoto.ValorHoraAdicional,
+                    intFranquiaHoras = model.ContratoMoto.FranquiaHoras,
+                    intFranquiaKM = model.ContratoMoto.FranquiaKM,
+                    intFranquiaMinutosParados = model.ContratoMoto.FranquiaMinutosParados,
+                    Observacao = model.ContratoMoto.Observacao
+                } : null,
+                ContratoCarro = model.ContratoMoto != null ? new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                {
+                    idTarifario = model.ContratoCarro.idTarifario,
+                    decValorMinutoParado = model.ContratoCarro.ValorMinutoParado,
+                    decValorKMAdicional = model.ContratoCarro.ValorKMAdicional,
+                    decValorContrato = model.ContratoCarro.ValorContrato ?? 0,
+                    decValorHoraAdicional = model.ContratoCarro.ValorHoraAdicional,
+                    intFranquiaHoras = model.ContratoCarro.FranquiaHoras,
+                    intFranquiaKM = model.ContratoCarro.FranquiaKM,
+                    intFranquiaMinutosParados = model.ContratoCarro.FranquiaMinutosParados,
+                    Observacao = model.ContratoCarro.Observacao
+                } : null
             });
 
             // Return
@@ -300,36 +323,6 @@ namespace BHJet_WebApi.Controllers
                 TelefoneCelular = model.TelefoneCelular,
                 Setor = model.Setor,
                 DataNascimento = model.DataNascimento
-            });
-
-            //Return
-            return Ok();
-        }
-
-        /// <summary>
-        /// Post Cliente Contato
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [Authorize]
-        [Route("{idCliente:long}/contrato")]
-        public IHttpActionResult PostClienteValor(long idCliente, [FromBody]ClienteValorModel model)
-        {
-            // Busca Dados resumidos
-            var clienteRepositorio = new ClienteRepositorio();
-
-            // Inclui profissional
-            clienteRepositorio.IncluirValor(idCliente, new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
-            {
-                IDCliente = idCliente,
-                DescricaoTarifa = model.DescricaoTarifa,
-                Observacao = model.Observacao,
-                QuantidadeKMContratado = model.QuantidadeKMContratado,
-                status = model.status,
-                ValorContrato = model.ValorContrato,
-                ValorKMAdicional = model.ValorKMAdicional,
-                VigenciaFim = model.VigenciaFim,
-                VigenciaInicio = model.VigenciaInicio
             });
 
             //Return
@@ -384,20 +377,30 @@ namespace BHJet_WebApi.Controllers
                     DataNascimento = x.DataNascimento
 
                 }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[] { },
-                Valor = model.Valor.Any() ? model.Valor.Select(x => new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                ContratoMoto = model.ContratoMoto != null ? new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
                 {
-                    ID = x.ID,
-                    ValorContrato = x.ValorContrato,
-                    DescricaoTarifa = x.DescricaoTarifa,
-                    IDCliente = x.IDCliente,
-                    Observacao = x.Observacao,
-                    QuantidadeKMContratado = x.QuantidadeKMContratado,
-                    status = x.status,
-                    ValorKMAdicional = x.ValorKMAdicional,
-                    VigenciaFim = x.VigenciaFim,
-                    VigenciaInicio = x.VigenciaInicio
-
-                }).ToArray() : new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade[] { }
+                    idTarifario = model.ContratoMoto.idTarifario,
+                    decValorMinutoParado = model.ContratoMoto.ValorMinutoParado,
+                    decValorKMAdicional = model.ContratoMoto.ValorKMAdicional,
+                    decValorContrato = model.ContratoMoto.ValorContrato ?? 0,
+                    decValorHoraAdicional = model.ContratoMoto.ValorHoraAdicional,
+                    intFranquiaHoras = model.ContratoMoto.FranquiaHoras,
+                    intFranquiaKM = model.ContratoMoto.FranquiaKM,
+                    intFranquiaMinutosParados = model.ContratoMoto.FranquiaMinutosParados,
+                    Observacao = model.ContratoMoto.Observacao
+                } : null,
+                ContratoCarro = model.ContratoMoto != null ? new BHJet_Repositorio.Admin.Entidade.ClienteValorEntidade()
+                {
+                    idTarifario = model.ContratoCarro.idTarifario,
+                    decValorMinutoParado = model.ContratoCarro.ValorMinutoParado,
+                    decValorKMAdicional = model.ContratoCarro.ValorKMAdicional,
+                    decValorContrato = model.ContratoCarro.ValorContrato ?? 0,
+                    decValorHoraAdicional = model.ContratoCarro.ValorHoraAdicional,
+                    intFranquiaHoras = model.ContratoCarro.FranquiaHoras,
+                    intFranquiaKM = model.ContratoCarro.FranquiaKM,
+                    intFranquiaMinutosParados = model.ContratoCarro.FranquiaMinutosParados,
+                    Observacao = model.ContratoCarro.Observacao
+                }: null
             });
 
             // Return
@@ -424,30 +427,30 @@ namespace BHJet_WebApi.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// Deleta contrato específico
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize]
-        [Route("contrato/{idValor:int}")]
-        public IHttpActionResult DeleteValor(int idValor)
-        {
-            // Instancia
-            var clienteRepositorio = new ClienteRepositorio();
+        ///// <summary>
+        ///// Deleta contrato específico
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[Authorize]
+        //[Route("contrato/{idValor:int}")]
+        //public IHttpActionResult DeleteValor(int idValor)
+        //{
+        //    // Instancia
+        //    var clienteRepositorio = new ClienteRepositorio();
 
-            //Verifica se o contrato a ser excluido é o ativo
-            var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
+        //    //Verifica se o contrato a ser excluido é o ativo
+        //    var contratoAtivo = clienteRepositorio.BuscaClienteContratoAtivo(idValor);
 
-            if (contratoAtivo.FirstOrDefault().status)
-                return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
+        //    if (contratoAtivo.FirstOrDefault().)
+        //        return BadRequest("O valor a ser excluído é o que está ativo para este cliente. Verifique ou edite o contrato ativo antes de excluí-lo");
 
-            // Deleta contrato
-            clienteRepositorio.ExcluiContrato(idValor);
+        //    // Deleta contrato
+        //    clienteRepositorio.ExcluiContrato(idValor);
 
-            // Return
-            return Ok();
-        }
+        //    // Return
+        //    return Ok();
+        //}
         #endregion
 
         #region Cliente Avulso

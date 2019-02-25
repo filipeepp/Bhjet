@@ -26,8 +26,11 @@ namespace BHJet_WebApi.Controllers
                 var fatRepositosio = new FaturamentoRepositorio();
                 var listaClientes = model.IdCliente != null ? model.IdCliente.ToArray() : new long[] { };
 
-                // Gera faturamento
-                fatRepositosio.GeraFaturamento(listaClientes, model.DataInicioFaturamento, model.DataFimFaturamento);
+                // Gera faturamento corridas
+                fatRepositosio.GeraFaturamentoCorridas(listaClientes, model.DataInicioFaturamento, model.DataFimFaturamento);
+
+                // Gera taturamento diarias
+                fatRepositosio.GeraFaturamentoDiarias(listaClientes, model.DataInicioFaturamento, model.DataFimFaturamento);
 
                 // Busca Itens Faturamentos incluidos
                 var entidade = fatRepositosio.BuscaItemFaturamento(listaClientes, null, model.DataInicioFaturamento, model.DataFimFaturamento);

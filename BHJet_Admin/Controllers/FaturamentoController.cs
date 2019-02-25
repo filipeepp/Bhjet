@@ -63,6 +63,7 @@ namespace BHJet_Admin.Controllers
                     ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
                     {
                         ID = x.ID,
+                        IDCliente = x.IDCliente,
                         Cliente = x.NomeCliente,
                         Apuracao = x.Periodo,
                         DescContrato = x.TipoContrato,

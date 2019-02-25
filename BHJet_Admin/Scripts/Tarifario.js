@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+    $(".inputDesc").prop("disabled", true); //Disable
 
     $("input[id*='FranquiaKM'], input[id*='FranquiaMinutosParados'], input[id*='FranquiaHoras']").each(function () {
         $(this).mask("#######0");

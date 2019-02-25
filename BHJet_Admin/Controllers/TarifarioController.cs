@@ -22,38 +22,29 @@ namespace BHJet_Admin.Controllers
         // GET: Tarifario
         public ActionResult Index()
         {
-            // Busca tarifas
-            var tarifas = tarifaServico.BuscaTarifaPadrao();
+            var TarifaModel = new TarifarioModel();
 
-            // Model
-            return View(new TarifarioModel
+            try
             {
-                Tarifas = tarifas.Select(tf => new TarifaModel()
-                {
-                    idTarifario = tf.idTarifario,
-                    Ativo = tf.Ativo,
-                    idTipoServico = tf.idTipoServico,
-                    idTipoVeiculo = tf.idTipoVeiculo,
-                    DataFimVigencia = tf.DataFimVigencia,
-                    DataInicioVigencia = tf.DataInicioVigencia,
-                    DescricaoTarifario = tf.DescricaoTarifario,
-                    FranquiaHoras = tf.FranquiaHoras,
-                    FranquiaKM = tf.FranquiaKM,
-                    FranquiaMinutosParados = tf.FranquiaMinutosParados,
-                    Observacao = tf.Observacao,
-                    ValorContrato = tf.ValorContrato?.ToString("C", new CultureInfo("pt-BR")),
-                    ValorHoraAdicional = tf.ValorHoraAdicional?.ToString("C", new CultureInfo("pt-BR")),
-                    ValorKMAdicional = tf.ValorKMAdicional?.ToString("C", new CultureInfo("pt-BR")),
-                    ValorMinutoParado = tf.ValorMinutoParado?.ToString("C", new CultureInfo("pt-BR"))
+                // Busca tarifas
+                TarifaModel = BuscaTarifaPadrao();
 
-                }).ToArray()
-            });
+                // Model
+                return View(TarifaModel);
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return View(TarifaModel);
+            }
         }
 
         [HttpPost]
         [ValidacaoUsuarioAttribute()]
         public ActionResult Index(TarifarioModel model)
         {
+            var TarifaModel = new TarifarioModel();
+
             try
             {
                 // Atualiza tarifas
@@ -76,17 +67,53 @@ namespace BHJet_Admin.Controllers
                     ValorMinutoParado = tf.ValorMinutoParado?.ToDecimalCurrency()
                 }).ToArray());
 
+                // Busca tarifas
+                TarifaModel = BuscaTarifaPadrao();
+
+                // Sucesso.
                 this.MensagemSucesso("Tarifas atualizadas com sucesso.");
 
                 // Return
-                return View(model);
+                return View(TarifaModel);
             }
             catch (Exception e)
             {
                 this.TrataErro(e);
-                return View(model);
+                return View(TarifaModel);
             }
         }
+
+
+        private TarifarioModel BuscaTarifaPadrao()
+        {
+            // Busca tarifas
+            var tarifas = tarifaServico.BuscaTarifaPadrao();
+
+            // Model
+            return new TarifarioModel
+            {
+                Tarifas = tarifas.Select(tf => new TarifaModel()
+                {
+                    idTarifario = tf.idTarifario,
+                    Ativo = tf.Ativo,
+                    idTipoServico = tf.idTipoServico,
+                    idTipoVeiculo = tf.idTipoVeiculo,
+                    DataFimVigencia = tf.DataFimVigencia,
+                    DataInicioVigencia = tf.DataInicioVigencia,
+                    DescricaoTarifario = tf.DescricaoTarifario,
+                    FranquiaHoras = tf.FranquiaHoras,
+                    FranquiaKM = tf.FranquiaKM,
+                    FranquiaMinutosParados = tf.FranquiaMinutosParados,
+                    Observacao = tf.Observacao,
+                    ValorContrato = tf.ValorContrato?.ToString("C", new CultureInfo("pt-BR")),
+                    ValorHoraAdicional = tf.ValorHoraAdicional?.ToString("C", new CultureInfo("pt-BR")),
+                    ValorKMAdicional = tf.ValorKMAdicional?.ToString("C", new CultureInfo("pt-BR")),
+                    ValorMinutoParado = tf.ValorMinutoParado?.ToString("C", new CultureInfo("pt-BR")),
+                    ValorPontoExcedente = tf.ValorPontoExcedente?.ToString("C", new CultureInfo("pt-BR"))
+                }).ToArray()
+            };
+        }
+
 
         [HttpGet]
         [ValidacaoUsuarioAttribute()]

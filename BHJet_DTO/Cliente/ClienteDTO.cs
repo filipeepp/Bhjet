@@ -28,17 +28,16 @@ namespace BHJet_DTO.Cliente
 		public int bitAtivo { get; set; }
 		public string vcDescricaoTarifario { get; set; }
 		public IEnumerable<ClienteContatoModel> Contato { get; set; }
-		public IEnumerable<ClienteValorModel> Valor { get; set; }
-	}
+    }
 
 	public class ClienteCompletoModel
 	{
 		public long ID { get; set; }
 		public ClienteDadosCadastraisModel DadosCadastrais { get; set; }
 		public IEnumerable<ClienteContatoModel> Contato { get; set; }
-		public IEnumerable<ClienteValorModel> Valor { get; set; }
-
-	}
+        public ClienteValorModel ContratoCarro { get; set; }
+        public ClienteValorModel ContratoMoto { get; set; }
+    }
 
 	public class ClienteDadosCadastraisModel
 	{
@@ -73,15 +72,14 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteValorModel
 	{
-        public long ID { get; set; }
-        public long IDCliente { get; set; }
-        public string DescricaoTarifa { get; set; }
-        public DateTime VigenciaInicio { get; set; }
-        public DateTime VigenciaFim { get; set; }
-        public decimal ValorContrato { get; set; }
-        public int? QuantidadeKMContratado { get; set; }
-        public decimal ValorKMAdicional { get; set; }
-        public bool status { get; set; }
+        public int? idTarifario { get; set; }
+        public decimal? ValorContrato { get; set; }
+        public int? FranquiaKM { get; set; }
+        public decimal? ValorKMAdicional { get; set; }
+        public int? FranquiaHoras { get; set; }
+        public decimal? ValorHoraAdicional { get; set; }
+        public int? FranquiaMinutosParados { get; set; }
+        public decimal? ValorMinutoParado { get; set; }
         public string Observacao { get; set; }
     }
 

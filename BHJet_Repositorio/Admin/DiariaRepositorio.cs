@@ -84,7 +84,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select dtDataHoraInicioExpediente as DataInicio,
 		                                intOdometroInicioExpediente as KMInicio,
 				                        dtDataHoraInicioExpediente as DataInicioIntervalo,
-				                        intOdometroInicioExpediente as KMInicioIntervalo,
+				                        intOdometroInicioIntervalo as KMInicioIntervalo,
 				                        dtDataHoraFimIntervalo as DataFimIntervalo,
                                         intOdometroFimIntervalo as KMFimInvervalo,
 				                        dtDataHoraFimExpediente as DataFim,

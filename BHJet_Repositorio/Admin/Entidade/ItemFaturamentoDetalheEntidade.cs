@@ -5,6 +5,7 @@ namespace BHJet_Repositorio.Admin.Entidade
     public class ItemFaturamentoDetalheEntidade
     {
         public string NomeCliente { get; set; }
+        public long IDCliente { get; set; }
         public string Tipo { get; set; }
         public DateTime Data { get; set; }
         public long OS { get; set; }

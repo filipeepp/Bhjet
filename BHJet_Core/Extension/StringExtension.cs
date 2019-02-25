@@ -69,6 +69,13 @@ namespace BHJet_Core.Extension
             return string.Join("", System.Text.Encoding.ASCII.GetChars(System.Text.Encoding.ASCII.GetBytes(valor.ToCharArray())));
         }
 
+        public static int ToInt(this string valor)
+        {
+            var result = default(int);
+            if (int.TryParse(valor, NumberStyles.None, new CultureInfo("pt-BR"), out result))
+                return result;
+            return 0;
+        }
 
     }
 }

@@ -36,9 +36,9 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public long ID { get; set; }
 		public ClienteDadosCadastraisEntidade DadosCadastrais { get; set; }
 		public IEnumerable<ClienteContatoEntidade> Contato { get; set; }
-		public IEnumerable<ClienteValorEntidade> Valor { get; set; }
-
-	}
+        public ClienteValorEntidade ContratoCarro { get; set; }
+        public ClienteValorEntidade ContratoMoto { get; set; }
+    }
 
 	public class ClienteDadosCadastraisEntidade
 	{
@@ -76,15 +76,15 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteValorEntidade
 	{
-        public long ID { get; set; }
-        public long IDCliente { get; set; }
-        public string DescricaoTarifa { get; set; }
-        public DateTime VigenciaInicio { get; set; }
-        public DateTime VigenciaFim { get; set; }
-        public decimal ValorContrato { get; set; }
-        public int? QuantidadeKMContratado { get; set; }
-        public decimal ValorKMAdicional { get; set; }
-        public bool status { get; set; }
+        public int? idTarifario { get; set; }
+        public int? idTipoVeiculo { get; set; }
+        public decimal decValorContrato { get; set; }
+        public int? intFranquiaKM { get; set; }
+        public decimal? decValorKMAdicional { get; set; }
+        public int? intFranquiaHoras { get; set; }
+        public decimal? decValorHoraAdicional { get; set; }
+        public int? intFranquiaMinutosParados { get; set; }
+        public decimal? decValorMinutoParado { get; set; }
         public string Observacao { get; set; }
     }
 }

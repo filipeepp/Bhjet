@@ -315,27 +315,41 @@ namespace BHJet_Repositorio.Admin
         /// Encerrar Ordem Servico
         /// </summary>
         /// <param name="idCorrida"></param>
-        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, double kmPercorrido)
+        public void EncerrarOrdemServico(long idCorrida, int? idOcorrencia, int kmPercorrido, int MinutosParados)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query tarifas
-                string queryTarifa = @"	select C.decValorNegociado +  (T.decValorKMAdicionalCorrida * @kmRodado)
-			                              from tblCorridas C
-				                          join tblTarifario T on (C.idTarifario = t.idTarifario)
-						                 where idCorrida = @id";
 
-                // Execução
-                var valorFinalizado = sqlConnection.QueryFirstOrDefault<decimal>(queryTarifa, new
+                //--busca tipo profissional
+                string queryTipo = @"select idTipoProfissional as Tipo, (SELECT count(*) as QuantidadePontos FROM tblLogCorrida where idCorrida = @id) from tblCorridas C
+			                        where C.idCorrida = @id";
+
+                var tipoPro = sqlConnection.QueryFirstOrDefault<LogCorrida>(queryTipo, new
                 {
-                    kmRodado = kmPercorrido,
                     id = idCorrida
                 });
+
+                //-- busca tarifa padrao
+                string queryTarifario = @"select * from tblTarifario where idTipoServico = 2 and idTipoVeiculo = @tipo";
+
+                var tarifario = sqlConnection.QueryFirstOrDefault<TarifarioEntidade>(queryTarifario, new
+                {
+                    tipo = tipoPro.Tipo == TipoProfissional.Motociclista ? 1 : 2
+                });
+
+                var VB1 = tarifario.decValorContrato;
+                var VB2 = kmPercorrido > tarifario.intFranquiaKM ? (kmPercorrido - tarifario.intFranquiaKM ?? 0) * tarifario.decValorKMAdicional : 0;
+                var VB3 = tipoPro.QuantidadePontos > 1 ? tipoPro.QuantidadePontos-- * (tarifario.decValorPontoExcedente ?? 0) : 0;
+                var VB4 = MinutosParados > tarifario.intFranquiaMinutosParados ? (MinutosParados - tarifario.intFranquiaMinutosParados ?? 0) * tarifario.decValorMinutoParado : 0;
+
+                // Valor finalizado
+                var valorFinal = VB1 + VB2 + VB3 + VB4;
 
                 // Query
                 string query = @"update tblCorridas set idStatusCorrida    = @status, 
 			            	                            dtDataHoraTermino  = getdate(),
-							                            decValorFinalizado = @valor
+							                            decValorFinalizado = @valor,
+                                                        intKMPercorrido = @km
 							                      where idCorrida = @id";
 
                 // Execução
@@ -343,7 +357,8 @@ namespace BHJet_Repositorio.Admin
                 {
                     id = idCorrida,
                     status = (idOcorrencia != null) ? idOcorrencia : 11,
-                    valor = valorFinalizado
+                    valor = valorFinal,
+                    km = kmPercorrido
                 });
             }
         }
@@ -406,5 +421,11 @@ namespace BHJet_Repositorio.Admin
 
             }
         }
+    }
+
+    public struct LogCorrida
+    {
+        public TipoProfissional Tipo { get; set; }
+        public int QuantidadePontos { get; set; }
     }
 }

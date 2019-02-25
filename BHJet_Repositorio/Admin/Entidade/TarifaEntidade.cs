@@ -13,6 +13,8 @@ namespace BHJet_Repositorio.Admin.Entidade
         public decimal? ValorKMAdicional { get; set; }
         public int? MinutosParados { get; set; }
         public decimal? ValorMinutosParados { get; set; }
+        public int? intFranquiaHoras { get; set; }
+        public decimal? decValorHoraAdicional { get; set; }
         public bool Ativo { get; set; }
         public string Observacao { get; set; }
     }

@@ -1194,3 +1194,12 @@ input[type="radio"] {
         margin: 25px 0px;
         font-size: 20px;
     }
+
+
+.inputDesc {
+    width: auto;
+    display: inline;
+    border: 0px;
+    margin: 1px;
+    padding-right: 0px;
+}

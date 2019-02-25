@@ -1,23 +1,32 @@
-﻿using BHJet_Enumeradores;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace BHJet_Admin.Models.Clientes
+﻿namespace BHJet_Admin.Models.Clientes
 {
-	public class ValorModel
+    public class ValorModel
 	{
-		public long ID { get; set; }
-		public bool ValorRemovido { get; set; }
-		public bool ValorAtivado { get; set; }
-        public string ValorUnitario { get; set; }
-        public TipoTarifa TipoTarifa { get; set; }
-		public string VigenciaInicio { get; set; }
-        public string VigenciaFim { get; set; }
-        public string Franquia { get; set; }
-        public string FranquiaAdicional { get; set; }
-		public string Observacao { get; set; }
-	}
+        public int? idTarifario { get; set; }
+
+        //[Required(ErrorMessage = "Valor Contrato obrigatório.")]
+        public string ValorContrato { get; set; }
+
+        //[Required(ErrorMessage = "Franquia KM obrigatório.")]
+        [DataAnnotationsExtensions.Integer(ErrorMessage = "Informar uma valor númerico.")]
+        public int? FranquiaKM { get; set; }
+
+        //[Required(ErrorMessage = "Valor KM Adicional obrigatório.")]
+        public string ValorKMAdicional { get; set; }
+
+        //[Required(ErrorMessage = "Franquia Horas obrigatório.")]
+        [DataAnnotationsExtensions.Integer(ErrorMessage = "Informar uma valor númerico.")]
+        public int? FranquiaHoras { get; set; }
+
+        //[Required(ErrorMessage = "Valor Hora Adicional obrigatório.")]
+        public string ValorHoraAdicional { get; set; }
+
+        //[Required(ErrorMessage = "Franquia Minutos Parados obrigatório.")]
+        public int? FranquiaMinutosParados { get; set; }
+
+        //[Required(ErrorMessage = "Valor Minuto Parado obrigatório.")]
+        public string ValorMinutoParado { get; set; }
+
+        public string Observacao { get; set; }
+    }
 }

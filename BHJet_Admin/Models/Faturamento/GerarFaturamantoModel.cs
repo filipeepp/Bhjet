@@ -12,7 +12,7 @@ namespace BHJet_Admin.Models.Faturamento
         {
         }
 
-        private int _MesSelecionado = 1;
+        private int _MesSelecionado = DateTime.Now.Month;
         public int MesSelecionado
         {
             get
