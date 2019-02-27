@@ -168,7 +168,7 @@ namespace BHJet_Repositorio.Admin
 									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
 								--LEFT JOIN
 									--tblClienteTarifario Valor ON Valor.idCliente = Cliente.idCliente
-								--WHERE (1 = 1) {parametroAvulso}";
+								 WHERE (1 = 1) {parametroAvulso}";
 
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query);
