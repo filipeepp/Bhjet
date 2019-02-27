@@ -182,7 +182,7 @@ namespace BHJet_Admin.Controllers
         [ValidacaoUsuarioAttribute()]
         public ActionResult NovoCliente(ClienteModel model)
         {
-            var edicao = (bool)TempData["MetodoPaginaEdicao"];
+            var edicao = TempData["MetodoPaginaEdicao"] != null ? (bool)TempData["MetodoPaginaEdicao"] : false;
             TempData["MetodoPaginaEdicao"] = edicao;
 
             try
