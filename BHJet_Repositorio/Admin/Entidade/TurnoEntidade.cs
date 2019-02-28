@@ -1,4 +1,6 @@
-﻿namespace BHJet_Repositorio.Admin.Entidade
+﻿using System;
+
+namespace BHJet_Repositorio.Admin.Entidade
 {
     public class TurnoEntidade
     {

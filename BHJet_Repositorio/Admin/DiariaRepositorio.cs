@@ -81,13 +81,13 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select dtDataHoraInicioExpediente as DataInicio,
+                string query = @" select CONVERT(VARCHAR(5),dtDataHoraInicioExpediente,108) as DataInicio,
 		                                intOdometroInicioExpediente as KMInicio,
-				                        dtDataHoraInicioExpediente as DataInicioIntervalo,
+				                        CONVERT(VARCHAR(5),dtDataHoraInicioExpediente,108) as DataInicioIntervalo,
 				                        intOdometroInicioIntervalo as KMInicioIntervalo,
-				                        dtDataHoraFimIntervalo as DataFimIntervalo,
+				                        CONVERT(VARCHAR(5),dtDataHoraFimIntervalo,108)  as DataFimIntervalo,
                                         intOdometroFimIntervalo as KMFimInvervalo,
-				                        dtDataHoraFimExpediente as DataFim,
+				                        CONVERT(VARCHAR(5),dtDataHoraFimExpediente,108)  as DataFim,
 				                        intOdometroFimExpediente as KMFim
 	 		                        from tblRegistroDiarias
 				                        where idColaboradorEmpresaSistema = @id
