@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\BHJet_Admin",
-    "\\BHJet_Admin\\Views",
-    "\\BHJet_Admin\\Views\\Clientes"
+    "\\BHJet_Admin\\Views"
   ],
-  "SelectedNode": "\\BHJet_Admin\\Views\\Clientes\\NovoCliente.cshtml",
+  "SelectedNode": "\\BHJet_Admin\\Views\\Clientes",
   "PreviewInSolutionExplorer": false
 }
