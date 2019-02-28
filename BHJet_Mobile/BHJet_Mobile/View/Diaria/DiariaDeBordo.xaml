@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BHJet_Mobile.View;assembly=BHJet_Mobile"
              xmlns:control="clr-namespace:BHJet_Mobile.Controls;assembly=BHJet_Mobile"
+             xmlns:behavior="clr-namespace:BHJet_Mobile.Infra.Behavior"
              x:Class="BHJet_Mobile.View.Diaria.DiariaDeBordo">
 
     <ContentPage.Content>
 
         <StackLayout BackgroundColor="#ffd423" >
 
-            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="50" Margin="0,50,0,0" ></Image>
+            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="45" Margin="0,30,0,0" ></Image>
 
             <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
 
@@ -51,19 +52,39 @@
                         </Grid.ColumnDefinitions> 
 
                         <Label Grid.Row="0" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Início jornada" TextColor="#193651"  />
-                        <Entry Grid.Row="0" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioJornada}" />
+                        <Entry Keyboard="Numeric" Grid.Row="0" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioJornada}" >
+                            <Entry.Behaviors>
+                                <behavior:MaskedBehavior Mask="XX:XX" />
+                            </Entry.Behaviors>
+                        </Entry>
+                        
                         <Entry Grid.Row="0" Grid.Column="2" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="150" Keyboard="Numeric" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMInicio}" />
 
                         <Label Grid.Row="1" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Início almoço" TextColor="#193651"  />
-                        <Entry Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioAlmoco}" />
+                        <Entry  Keyboard="Numeric" Grid.Row="1" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.InicioAlmoco}" >
+                            <Entry.Behaviors>
+                                <behavior:MaskedBehavior Mask="XX:XX" />
+                            </Entry.Behaviors>
+                        </Entry>
+                        
                         <Entry Grid.Row="1" Grid.Column="2" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="150" Keyboard="Numeric" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMAlmoco}" />
 
                         <Label Grid.Row="2" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Fim almoço" TextColor="#193651"  />
-                        <Entry Grid.Row="2" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimAlmoco}" />
+                        <Entry Keyboard="Numeric" Grid.Row="2" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimAlmoco}" >
+                            <Entry.Behaviors>
+                                <behavior:MaskedBehavior Mask="XX:XX" />
+                            </Entry.Behaviors>
+                        </Entry>
+
                         <Entry Grid.Row="2" Grid.Column="2" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="150" Keyboard="Numeric" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMFimAlmoco}" />
 
                         <Label Grid.Row="3" Grid.Column="0" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Final jornada" TextColor="#193651"  />
-                        <Entry Grid.Row="3" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimJornada}" />
+                        <Entry Keyboard="Numeric" Grid.Row="3" Grid.Column="1" FontSize="15" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="hh:mm" Text="{Binding TurnoItem.FimJornada}" >
+                            <Entry.Behaviors>
+                                <behavior:MaskedBehavior Mask="XX:XX" />
+                            </Entry.Behaviors>
+                        </Entry>
+                        
                         <Entry Grid.Row="3" Grid.Column="2" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="150"  Keyboard="Numeric" FontAttributes="Bold" VerticalOptions="Start" TextColor="#193651" Placeholder="0 KM" Text="{Binding TurnoItem.KMFim}" />
 
                         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Clicked="IniciarDiaria_Clicked" Image="opcao" BackgroundColor="#193651" TextColor="White" Text="Iniciar"></Button>

@@ -1,4 +1,5 @@
 ﻿using BHJet_Mobile.Infra;
+using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Servico.Diaria;
 using BHJet_Mobile.Sessao;
 using System.Threading.Tasks;
@@ -82,6 +83,15 @@ namespace BHJet_Mobile.ViewModel.DiariaDeBordo
                     string.IsNullOrWhiteSpace(TurnoItem.FimAlmoco) && string.IsNullOrWhiteSpace(TurnoItem.KMFimAlmoco) &&
                     string.IsNullOrWhiteSpace(TurnoItem.FimJornada) && string.IsNullOrWhiteSpace(TurnoItem.KMFim))
                     throw new ErrorException("Favor preencher os dados de bordo antes de prosseguir.");
+
+
+                if((!string.IsNullOrWhiteSpace(TurnoItem.InicioJornada) && !TurnoItem.InicioJornada.IsValidTimeFormat()) ||
+                    (!string.IsNullOrWhiteSpace(TurnoItem.InicioAlmoco) && !TurnoItem.InicioAlmoco.IsValidTimeFormat()) ||
+                    (!string.IsNullOrWhiteSpace(TurnoItem.FimAlmoco) && !TurnoItem.FimAlmoco.IsValidTimeFormat()) ||
+                    (!string.IsNullOrWhiteSpace(TurnoItem.FimJornada) && !TurnoItem.FimJornada.IsValidTimeFormat()))
+                {
+                    throw new ErrorException("Favor preencher os horários de intervalo com o formato HH:mm.");
+                }
 
                 // Atualiza dados diaria de bordo
                 await diariaServico.AtualizaTurno(new Servico.Diaria.Model.TurnoModel()

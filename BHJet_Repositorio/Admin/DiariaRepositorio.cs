@@ -1,6 +1,7 @@
 ﻿using BHJet_Repositorio.Admin.Entidade;
 using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
+using System;
 
 namespace BHJet_Repositorio.Admin
 {
@@ -81,15 +82,15 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @" select CONVERT(VARCHAR(5),dtDataHoraInicioExpediente,108) as DataInicio,
+                string query = @"select CONVERT(VARCHAR(5),dtDataHoraInicioExpediente,108) as DataInicio,
 		                                intOdometroInicioExpediente as KMInicio,
-				                        CONVERT(VARCHAR(5),dtDataHoraInicioExpediente,108) as DataInicioIntervalo,
+				                        CONVERT(VARCHAR(5),dtDataHoraInicioIntervalo,108) as DataInicioIntervalo,
 				                        intOdometroInicioIntervalo as KMInicioIntervalo,
 				                        CONVERT(VARCHAR(5),dtDataHoraFimIntervalo,108)  as DataFimIntervalo,
                                         intOdometroFimIntervalo as KMFimInvervalo,
 				                        CONVERT(VARCHAR(5),dtDataHoraFimExpediente,108)  as DataFim,
 				                        intOdometroFimExpediente as KMFim
-	 		                        from tblRegistroDiarias
+	 		                        from tblRegistroDiarias 
 				                        where idColaboradorEmpresaSistema = @id
 		     		                and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
 
@@ -122,8 +123,35 @@ namespace BHJet_Repositorio.Admin
 	                        where idColaboradorEmpresaSistema = @IDProfissional
 		                          and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
 
-                sqlConnection.Execute(query, filtro);
+                sqlConnection.Execute(query, new
+                {
+                    DataInicio = BuscaDataTurno(filtro.DataInicio),
+                    KMInicio = filtro.KMInicio,
+                    DataInicioIntervalo = BuscaDataTurno(filtro.DataInicioIntervalo),
+                    KMInicioIntervalo = filtro.KMInicioIntervalo,
+                    DataFimIntervalo = BuscaDataTurno(filtro.DataFimIntervalo),
+                    KMFimInvervalo = filtro.KMFimInvervalo,
+                    DataFim = BuscaDataTurno(filtro.DataFim),
+                    KMFim = filtro.KMFim,
+                    IDProfissional = idProfissional
+                });
             }
         }
+
+
+        private DateTime? BuscaDataTurno(string horaTurno)
+        {
+            if (string.IsNullOrWhiteSpace(horaTurno))
+                return null;
+            else
+            {
+                // Hora e minuto
+                var hora = int.Parse(horaTurno.Split(':')[0]);
+                var minuto = int.Parse(horaTurno.Split(':')[1]);
+                // Data
+                return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hora, minuto, 00);
+            }
+        }
+
     }
 }
