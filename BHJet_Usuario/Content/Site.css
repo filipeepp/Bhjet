@@ -118,6 +118,10 @@ input, select, textarea {
     line-height: 2.25em;
 }
 
+.radio, .checkbox {
+    margin-top: 0px;
+}
+
 a {
     color: #0090c5;
     text-decoration: underline;
@@ -226,6 +230,12 @@ p, ul, ol, dl, table {
     .cts-titulo-side-bar .titulo {
         margin-right: unset;
     }
+    .cts-subtitulo-side-bar .iconeLeft {
+        float: none;
+    }
+    .cts-subtitulo-side-bar .titulo {
+        margin-right: unset;
+    }
     .container {
         width: 100%;
     }
@@ -252,7 +262,7 @@ footer {
 /* Forms */
 
 form label {
-    display: block;
+    display: inline;
     font-weight: 800;
     margin: 0 0 1em 0;
     font-size: 0.8em;
@@ -292,7 +302,7 @@ form select {
 }
 
 form textarea {
-    min-height: 9em;
+    min-height: 4em;
     padding: 1em;
 }
 
@@ -431,7 +441,7 @@ ul.menu {
 
 #header-wrapper {
     padding: 8px 10px;
-    background: -webkit-linear-gradient(top, #e4de3f, #e0d228);
+    background: -webkit-linear-gradient(top, #000000, #373730);
     margin-bottom: 15px;
 }
 
@@ -510,7 +520,7 @@ ul.menu {
                 transition: background-color .25s ease-in-out;
                 font-weight: 800;
                 letter-spacing: 0.025em;
-                color: #117196;
+                color: #cacc13;
                 text-decoration: none;
                 border-radius: 6px;
                 padding: 0.5em 1em 0.5em 1em;
@@ -531,8 +541,8 @@ ul.menu {
             }
 
             #nav ul li.current a {
-                background: #117196;
-                color: #fff;
+                background: #cacc13;
+                color: #000;
             }
 
 .dropotron {
@@ -1206,11 +1216,12 @@ ul.menu {
 
 .cts-titulo-side-bar {
     margin: -50px -50px -50px -50px;
-    background: rgba(0, 0, 0, 0.3);
+    background: #373730;
     padding: 7px;
     margin-bottom: 40px;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 
     .cts-titulo-side-bar .titulo {
@@ -1223,3 +1234,102 @@ ul.menu {
         display: block;
         position: relative;
     }
+
+
+.cts-subtitulo-side-bar {
+    margin: 0px;
+    margin-right: 0px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgba(51, 49, 49, 0.3);
+    background: #373730;
+    padding: 7px;
+    cursor: pointer;
+}
+
+    .cts-subtitulo-side-bar .titulo {
+        color: white;
+    }
+
+    .cts-subtitulo-side-bar .subtitulo {
+        font-size: 12px;
+        display: block;
+        margin-top: -15px;
+    }
+
+    .cts-subtitulo-side-bar .iconeLeft {
+        top: 0;
+        float: right;
+        display: block;
+        position: relative;
+    }
+
+
+.option-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 13.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 40px;
+    transition: all 0.15s ease-out 0s;
+    background: #cbd1d8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    position: relative;
+    z-index: 1000;
+}
+
+    .option-input:hover {
+        background: #9faab7;
+    }
+
+    .option-input:checked {
+        background: #20C2E0;
+    }
+
+        .option-input:checked::before {
+            height: 20px;
+            width: 25px;
+            position: absolute;
+            content: '✔';
+            display: inline-block;
+            font-size: 20.66667px;
+            text-align: center;
+            line-height: 27px;
+        }
+
+        .option-input:checked::after {
+            -webkit-animation: click-wave 0.65s;
+            -moz-animation: click-wave 0.65s;
+            animation: click-wave 0.65s;
+            background: #40e0d0;
+            content: '';
+            display: block;
+            position: relative;
+            z-index: 100;
+        }
+
+    .option-input.radio {
+        border-radius: 50%;
+        padding-top: unset;
+        margin: 0px 15px 0;
+        height: 10px;
+        width: 25px;
+        min-height: 25px;
+    }
+
+        .option-input.radio::after {
+            border-radius: 50%;
+        }
