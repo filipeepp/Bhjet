@@ -14,24 +14,28 @@ namespace BHJet_Usuario.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View(new EntregaModel
+            var origem = new EntregaModel
             {
-
                 Enderecos = new List<EnderecoModel>()
                  {
                      new EnderecoModel()
                      {
-
                      }
                  }
+            };
 
-            });
+            if (TempData["origemSolicitacao"] != null)
+                origem = (EntregaModel)TempData["origemSolicitacao"];
+
+            return View(origem);
         }
 
         [HttpPost]
         public ActionResult Index(EntregaModel model)
         {
-            return RedirectToAction("Index", "Entregas", model);
+            this.TempData["origemSolicitacao"] = model;
+
+            return RedirectToAction("Index", "Entregas");
         }
     }
 }

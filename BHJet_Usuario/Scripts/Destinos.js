@@ -22,6 +22,7 @@
             }
         }
     })
+
 })
 
 
@@ -30,13 +31,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
     $("#ctnOrigemTitulo").click(function () {
         var ctn = $("#ctnOrigem");
         if (ctn.is(":hidden")) {
-            $("#iconeExpandeOrigem").attr('class','fa fa-minus');
+            $("#iconeExpandeOrigem").attr('class', 'fa fa-minus');
             ctn.show("slow");
         }
         else {
-            $("#iconeExpandeOrigem").attr('class','fa fa-plus');
+            $("#iconeExpandeOrigem").attr('class', 'fa fa-plus');
             ctn.hide("slow");
         }
+
     });
 
     $("#trajeto-texto").change(function () {
@@ -67,35 +69,77 @@ document.addEventListener("DOMContentLoaded", function (event) {
             marker.setPosition(location);
             map.setCenter(location);
             map.setZoom(16);
+
+
+            CalculaRota();
         }
     });
 
-    //$("form").submit(function (event) {
-    //	event.preventDefault();
-
-    //	var enderecoPartida = $("#txtEnderecoPartida").val();
-    //	var enderecoChegada = $("#txtEnderecoChegada").val();
-
-    //	var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
-    //		origin: enderecoPartida, // origem
-    //		destination: enderecoChegada, // destino
-    //		waypoints: [{ location: $("#txtTerceiroEndereco").val() }],
-    //		travelMode: google.maps.TravelMode.DRIVING // meio de transporte, nesse caso, de carro
-    //	};
-
-    //	//var request = {
-    //	//	origin: enderecoPartida,
-    //	//	destination: enderecoChegada,
-    //	//	waypoints: [{ location: 'Rodoviária, Campinas' }, { location: 'Taquaral, Campinas' }],
-    //	//	travelMode: google.maps.TravelMode.DRIVING
-    //	//};
-
-    //	directionsService.route(request, function (result, status) {
-    //		if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
-    //			directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
-    //		}
-    //	});
-    //});
-
     carregaMapa();
 });
+
+
+
+function CalculaRota() {
+    var log = [];
+    var lat = [];
+    $("input[id*='_Longitude']").each(function () {
+        log.push($(this).val());
+    });
+    $("input[id*='_Latitude']").each(function () {
+        //lat[$(this).attr("name")] = $(this).val();
+        lat.push($(this).val());
+    });
+
+    var localizacoes = [];
+    function myFunction(value, index, array) {
+        var latitude = lat[index];
+        localizacao = {
+            _lat: latitude,
+            _log: value
+        }
+        localizacoes.push(localizacao);
+    }
+    log.forEach(myFunction);
+
+    //function CalculaWayPoints() {
+    //    var demaisLocalizacoes = [];
+    //    var loc = localizacoes.slice(1, (localizacoes.length - 1));
+    //    for (i = 0; i < loc.length; i++) {
+    //        demaisLocalizacoes.push(loc[i]._lat + "," + loc[i]._log);
+    //    }
+    //    return demaisLocalizacoes;
+    //}
+
+    function Drive(value, index, array) {
+
+        var waypts = [];
+        var loc = localizacoes.slice(1, (localizacoes.length - 1));
+        for (i = 0; i < loc.length; i++) {
+            waypts.push({
+                location: loc[i]._lat + "," + loc[i]._log,
+                stopover: true
+            });
+        }
+
+        if (index <= 0) {
+            var destino = localizacoes[localizacoes.length - 1];
+            if (destino !== null && destino !== undefined) {
+                var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
+                    origin: value._lat + "," + value._log, // origem
+                    destination: destino._lat + "," + destino._log, // destino
+                    waypoints: waypts,
+                    optimizeWaypoints: true,
+                    travelMode: google.maps.TravelMode.DRIVING // meio de transporte, nesse caso, de carro
+                };
+
+                directionsService.route(request, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+                        directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+                    }
+                });
+            }
+        }
+    }
+    localizacoes.forEach(Drive);
+}

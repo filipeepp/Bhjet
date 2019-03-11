@@ -27,36 +27,11 @@
 			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
 			marker.setPosition(location);
 			map.setCenter(location);
-			map.setZoom(16);
+            map.setZoom(16);
 		}
 	});
 
-	//$("form").submit(function (event) {
-	//	event.preventDefault();
 
-	//	var enderecoPartida = $("#txtEnderecoPartida").val();
-	//	var enderecoChegada = $("#txtEnderecoChegada").val();
-
-	//	var request = { // Novo objeto google.maps.DirectionsRequest, contendo:
-	//		origin: enderecoPartida, // origem
-	//		destination: enderecoChegada, // destino
-	//		waypoints: [{ location: $("#txtTerceiroEndereco").val() }],
-	//		travelMode: google.maps.TravelMode.DRIVING // meio de transporte, nesse caso, de carro
-	//	};
-
-	//	//var request = {
-	//	//	origin: enderecoPartida,
-	//	//	destination: enderecoChegada,
-	//	//	waypoints: [{ location: 'Rodoviária, Campinas' }, { location: 'Taquaral, Campinas' }],
-	//	//	travelMode: google.maps.TravelMode.DRIVING
-	//	//};
-
-	//	directionsService.route(request, function (result, status) {
-	//		if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
-	//			directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
-	//		}
-	//	});
-	//});
 
 	carregaMapa();
 });
