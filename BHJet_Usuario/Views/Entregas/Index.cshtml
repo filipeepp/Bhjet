@@ -10,26 +10,22 @@
 <![endif]-->
 <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
 <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
-
-<script src="~/Scripts/owl.carousel.js"></script>
-
-@*<script src="C:\Users\LEOZI\Downloads\OwlCarousel2-2.3.4\docs\assets\vendors\jquery.min.js"></script>*@
 <script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/owl.carousel.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
 <script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
 <script type="text/javascript" src="~/Scripts/Destinos.js"></script>
 
 
-@using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div>
-        <div id="map_canvas">
-        </div>
+<div>
+    <div id="map_canvas">
+    </div>
+    <div id="draggable" class="ui-widget-content">
 
-        <div id="draggable" class="ui-widget-content">
-
-            <div id="ctnInicio">
+        <div id="ctnInicio">
+            @using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
                 <div class="cts-titulo-side-bar">
                     <span class="titulo">Solicitar entrega / serviço</span>
                     <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
@@ -51,13 +47,13 @@
                                             <label class="titulo" for="txtEnderecoPartida">Origem:</label>
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.LabelFor(model => model.Enderecos[0].Descricao, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
+                                            @Model.Enderecos[0].Descricao
                                         </div>
                                         <div class="col-md-2">
                                             <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
                                         </div>
                                         <div class="col-md-2">
-                                            @Html.LabelFor(model => model.Enderecos[0].ProcurarPessoa, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
+                                            @Model.Enderecos[0].ProcurarPessoa
                                         </div>
                                     </div>
 
@@ -66,8 +62,8 @@
                                             <label class="titulo" for="txtEnderecoPartida">Obs:</label>
                                         </div>
                                         <div class="col-md-10">
-                                            @Html.LabelFor(model => model.Enderecos[0].TipoOcorrencia, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
-                                            @Html.LabelFor(model => model.Enderecos[0].Observacao, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
+                                            @Model.Enderecos[0].TipoOcorrencia
+                                            @Model.Enderecos[0].Observacao
                                         </div>
                                     </div>
 
@@ -81,11 +77,8 @@
                         </div>
                     </div>
 
-
                     <div>
-                       
                     </div>
-
                 </div>
 
                 <div class="owl-carousel owl-theme">
@@ -97,7 +90,7 @@
                                     <div class="col-12">
                                         <div class="cts-subtitulo-side-bar">
                                             <span class="titulo">Destino @i</span>
-                                            <span class="titulo subtitulo">Quantidade de destinos: @i</span>
+                                            <span class="titulo subtitulo">Quantidade de destinos: @{ (Model.Enderecos.Count() - 1).ToString(); }</span>
                                             <span class="iconeLeft"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
                                         </div>
 
@@ -107,7 +100,7 @@
                                                     <label class="titulo" for="txtEnderecoPartida">Endereço:</label>
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Enderecos[i].Descricao, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
-                                                @Html.ValidationMessageFor(model => model.Enderecos[0].Descricao, null, new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.Enderecos[i].Descricao, null, new { @class = "text-danger" })
 
                                                 @Html.HiddenFor(model => model.Enderecos[i].Longitude)
                                                 @Html.HiddenFor(model => model.Enderecos[i].Latitude)
@@ -160,7 +153,7 @@
                                                     <label class="titulo" for="">Observação:</label>
                                                 </div>
                                                 <div class="row">
-                                                    @Html.TextAreaFor(model => model.Enderecos[i].Observacao, new { @class = "cst-endereco-maps", @style = "height: 70px;"})
+                                                    @Html.TextAreaFor(model => model.Enderecos[i].Observacao, new { @class = "cst-endereco-maps", @style = "height: 70px;" })
                                                 </div>
                                             </div>
                                         </div>
@@ -179,10 +172,29 @@
                     <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino" />
                 </div>
 
-            </div>
-
+            }
+            @using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <input type="submit" class="btnConfirmacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Finalizar solicitação" />
+            }
         </div>
 
     </div>
-}
+</div>
 
+
+
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}

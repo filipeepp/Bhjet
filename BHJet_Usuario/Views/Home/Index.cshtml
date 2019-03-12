@@ -92,19 +92,32 @@
         $("#draggable").draggable();
     });
 
-        //$(document).ready(function () {
-        //    //$(".btnSolicitacao").click(function () {
-        //    //    $("#ctnInicio").fadeOut("slow");
-        //    //    $("#ctnSecundario").fadeIn("slow");
-        //    //});
-        //});
+    //$(document).ready(function () {
+    //    //$(".btnSolicitacao").click(function () {
+    //    //    $("#ctnInicio").fadeOut("slow");
+    //    //    $("#ctnSecundario").fadeIn("slow");
+    //    //});
+    //});
 
 </script>
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="~/Scripts/jquery-ui.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
-    <script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
-    <script type="text/javascript" src="~/Scripts/Origem.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/Origem.js"></script>
 

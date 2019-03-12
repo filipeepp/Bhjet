@@ -32,5 +32,24 @@ namespace BHJet_Usuario.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Finaliza()
+        {
+            var model = (EntregaModel)TempData["origemSolicitacao"];
+
+            this.TempData["origemSolicitacao"] = model;
+
+            return RedirectToAction("Resumo", "Entregas");
+        }
+
+        // GET: Resumo
+        public ActionResult Resumo()
+        {
+            var origem = (EntregaModel)TempData["origemSolicitacao"];
+            this.TempData["origemSolicitacao"] = origem;
+
+            return View(origem);
+        }
     }
 }

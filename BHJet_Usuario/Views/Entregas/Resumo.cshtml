@@ -1,0 +1,153 @@
+﻿
+@using BHJet_Usuario.Models.Entregas
+@using BHJet_Enumeradores
+@model EntregaModel
+
+@Scripts.Render("~/bundles/jqueryval")
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+<link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/owl.carousel.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
+<script type="text/javascript" src="~/Scripts/Destinos.js"></script>
+
+<div>
+    <div id="map_canvas">
+    </div>
+    <div id="draggable" class="ui-widget-content">
+
+        <div id="ctnInicio">
+            @using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                    <div class="cts-titulo-side-bar">
+                        <span class="titulo">Solicitar entrega / serviço</span>
+                        <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
+                                    <span class="titulo">Origem</span>
+                                    <span class="iconeLeft"><i id="iconeExpandeOrigem" class="fa fa-plus" aria-hidden="true"></i></span>
+                                </div>
+
+                                <div id="ctnOrigem" class="ctnEntregaInterno">
+                                    <div class="container">
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Origem:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Model.Enderecos[0].Descricao
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                @Model.Enderecos[0].ProcurarPessoa
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Obs:</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Model.Enderecos[0].TipoOcorrencia
+                                                @Model.Enderecos[0].Observacao
+                                            </div>
+                                        </div>
+
+                                        @Html.HiddenFor(model => model.Enderecos[0].Longitude)
+                                        @Html.HiddenFor(model => model.Enderecos[0].Latitude)
+
+                                        <hr />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    for (int i = 1; i <= Model.Enderecos.Count() - 1; i++)
+                    {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
+                                    <span class="titulo">Destino @i</span>
+                                    <span class="iconeLeft"><i id="iconeExpandeOrigem" class="fa fa-location-arrow" aria-hidden="true"></i></span>
+                                </div>
+
+                                <div id="ctnOrigem" class="ctnEntregaInterno">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Origem:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Model.Enderecos[i].Descricao
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                @Model.Enderecos[i].ProcurarPessoa
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="titulo" for="txtEnderecoPartida">Obs:</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                @Model.Enderecos[i].TipoOcorrencia
+                                                @Model.Enderecos[i].Observacao
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(model => model.Enderecos[i].Longitude)
+                                        @Html.HiddenFor(model => model.Enderecos[i].Latitude)
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    }
+
+                <div class="row">
+                    <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Revisar Informações" />
+                </div>
+            }
+
+            @using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="row">
+                    <div class="col-mg-12">
+                        <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
+                            <span class="titulo">Valor estimado: </span> <h3 class="total">R$ 26,75</h3>
+                            <input type="submit" class="btnConfirmacao" id="btnEnviar" name="btnEnviar" style="padding: 1px 10px !important;" value="Chamar BHJet" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+
+    </div>
+</div>

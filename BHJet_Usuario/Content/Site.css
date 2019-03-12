@@ -1154,7 +1154,7 @@ ul.menu {
 
 
 #ctnInicio {
-    height: 0px;
+    /*height: 0px;*/
 }
 
 .w3-content img {
@@ -1200,14 +1200,22 @@ ul.menu {
         float:right;
     }
 
-
-.ui-menu {
-    width: 501px;
-    height: auto;
-    background: white;
-    padding: 15px;
-    cursor: pointer;
+.btnConfirmacao {
+    float: right;
+    background-color: #cacc13 !important;
 }
+
+    .btnConfirmacao:hover {
+        background-color: #ebec5e !important;
+    }
+
+    .ui-menu {
+        width: 501px;
+        height: auto;
+        background: white;
+        padding: 15px;
+        cursor: pointer;
+    }
 
     .ui-menu:hover {
         background-color: #e4de3f;
@@ -1216,6 +1224,7 @@ ul.menu {
 
 .cts-titulo-side-bar {
     margin: -50px -50px -50px -50px;
+    /*margin: -50px  -35px -35px -35px;*/
     background: #373730;
     padding: 7px;
     margin-bottom: 40px;
@@ -1333,3 +1342,8 @@ ul.menu {
         .option-input.radio::after {
             border-radius: 50%;
         }
+
+.total {
+    display: inline;
+    color: #cacc13;
+}

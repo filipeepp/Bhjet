@@ -33,9 +33,34 @@ namespace BHJet_Usuario.Controllers
         [HttpPost]
         public ActionResult Index(EntregaModel model)
         {
-            this.TempData["origemSolicitacao"] = model;
+            try
+            {
+                // Validacoes
+                if (model.Enderecos == null || !model.Enderecos.Any())
+                    throw new Exception("Favor preencher todos os campos da solicitação.");
+                else
+                {
+                    if(model.Enderecos.Any() && (string.IsNullOrWhiteSpace(model.Enderecos.First().Latitude) || string.IsNullOrWhiteSpace(model.Enderecos.First().Latitude)))
+                        throw new Exception("Favor pesquisar o endereço e clicar na localização desejada na lista.");
+                }
 
-            return RedirectToAction("Index", "Entregas");
+                // Adiciona destino
+                model.Enderecos.Add(new EnderecoModel()
+                {
+
+                });
+
+                // Model
+                this.TempData["origemSolicitacao"] = model;
+
+                // Redirect
+                return RedirectToAction("Index", "Entregas");
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return View(model);
+            }
         }
     }
 }
