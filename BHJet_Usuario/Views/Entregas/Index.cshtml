@@ -169,13 +169,13 @@
                 </div>
 
                 <div>
-                    <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino" />
+                    <input type="submit" class="btnConfirmacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Finalizar solicitação" />
                 </div>
 
             }
             @using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
             {
-                <input type="submit" class="btnConfirmacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Finalizar solicitação" />
+                <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino" />
             }
         </div>
 

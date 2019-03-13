@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#draggable").draggable();
     $("#ctnOrigem").hide();
+
     $('.owl-carousel').owlCarousel({
         loop: true,
         margin: 10,
@@ -23,6 +24,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 margin: 20
             }
         }
+    })
+
+    $("#loading").hide();
+
+    $('input[type="submit"]').click(function () {
+        $("#loading").show()
     })
 
     $("#ctnOrigemTitulo").click(function () {
@@ -88,11 +95,13 @@ function CalculaRota() {
     var localizacoes = [];
     function locAgp(value, index, array) {
         var latitude = lat[index];
-        localizacao = {
-            _lat: latitude,
-            _log: value
+        if (latitude != "" && value != "") {
+            localizacao = {
+                _lat: latitude,
+                _log: value
+            }
+            localizacoes.push(localizacao);
         }
-        localizacoes.push(localizacao);
     }
     log.forEach(locAgp);
 
@@ -110,6 +119,9 @@ function CalculaRota() {
         var origem = localizacoes[0];
         var destino = localizacoes[localizacoes.length - 1];
         if (destino !== null && destino !== undefined) {
+
+            clearAllMarker();
+
             var request = {
                 origin: origem._lat + "," + origem._log, // origem
                 destination: destino._lat + "," + destino._log, // destino
@@ -125,6 +137,6 @@ function CalculaRota() {
             });
         }
     } else {
-        FazMarcacao(localizacoes[0]._lat, localizacoes[0]._log, true, "");
+        FazMarcacao(localizacoes[0]._lat, localizacoes[0]._log, true, "Endereço de origem");
     }
 }

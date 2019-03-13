@@ -23,6 +23,16 @@ namespace BHJet_Usuario.Controllers
         [HttpPost]
         public ActionResult Index(EntregaModel model)
         {
+            this.TempData["origemSolicitacao"] = model;
+
+            return RedirectToAction("Resumo", "Entregas");
+        }
+
+        [HttpPost]
+        public ActionResult Finaliza()
+        {
+            var model = (EntregaModel)TempData["origemSolicitacao"];
+
             model.Enderecos.Add(new EnderecoModel()
             {
 
@@ -33,16 +43,6 @@ namespace BHJet_Usuario.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult Finaliza()
-        {
-            var model = (EntregaModel)TempData["origemSolicitacao"];
-
-            this.TempData["origemSolicitacao"] = model;
-
-            return RedirectToAction("Resumo", "Entregas");
-        }
-
         // GET: Resumo
         public ActionResult Resumo()
         {
@@ -50,6 +50,19 @@ namespace BHJet_Usuario.Controllers
             this.TempData["origemSolicitacao"] = origem;
 
             return View(origem);
+        }
+
+        // POST: Resumo
+        [HttpPost]
+        public ActionResult Resumo(EntregaModel model)
+        {
+            var origem = (EntregaModel)TempData["origemSolicitacao"];
+            this.TempData["origemSolicitacao"] = origem;
+
+            // Se Logado redireciona para pagamento
+            return RedirectToAction("Pagamento", "Pagamento");
+
+            //return View(origem);
         }
     }
 }

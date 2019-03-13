@@ -4,14 +4,13 @@ var geocoder;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var marker;
-
+var markers = [];
 
 function carregaVariavel() {
     var latlng = new google.maps.LatLng(-19.8157, -43.9542);
     var myOptions = {
-        zoom: 15,//utilizaremos o zoom 15
-        center: latlng,//aqui a nossa variavel constando latitude e
-        //longitude ja declarada acima
+        zoom: 13,
+        center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -59,12 +58,22 @@ function carregaMapa() {
 	marker = new google.maps.Marker({
 		map: map,
 		draggable: true,
-	});
+    });
+
+    markers.push(marker);
 
     //DEFINE AS COORDENADAS do ponto exato - CENTRALIZAÇÃO DO MAPA
 	map.setCenter(new google.maps.LatLng(-19.878946, -43.933877));
 
 	//initialize();
+}
+
+function clearAllMarker() {
+    if (markers != undefined) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
 }
 
 function FazMarcacao(lat, long, bcarro, bdesc) {
@@ -76,7 +85,7 @@ function FazMarcacao(lat, long, bcarro, bdesc) {
 
     //aproximando o mapa, aumentando o zoom
     map = carregaVariavel();
-    map.setZoom(15);
+    map.setZoom(12);
 
     //fazendo  a marcacao, usando o latitude e longitude da variavel criada acima
     marker = new google.maps.Marker({
@@ -91,6 +100,8 @@ function FazMarcacao(lat, long, bcarro, bdesc) {
         infowindow.setContent("-----------------------</br><b>BH Jet Express</b></br>-----------------------</br>" + bdesc);
         infowindow.open(map, marker);
     });
+
+    markers.push(marker);
 
     //aqui a variavel e o comando que faz a marcação
     map.setCenter(myLatLgn);//leva o mapa para a posicao da marcacao

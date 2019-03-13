@@ -23,67 +23,67 @@
     <div id="draggable" class="ui-widget-content">
 
         <div id="ctnInicio">
-            @using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("Resumo", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
             {
-                    <div class="cts-titulo-side-bar">
-                        <span class="titulo">Solicitar entrega / serviço</span>
-                        <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
-                    </div>
+                <div class="cts-titulo-side-bar">
+                    <span class="titulo">Solicitar entrega / serviço</span>
+                    <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
+                </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
-                                    <span class="titulo">Origem</span>
-                                    <span class="iconeLeft"><i id="iconeExpandeOrigem" class="fa fa-plus" aria-hidden="true"></i></span>
-                                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
+                                <span class="titulo">Origem</span>
+                                <span class="iconeLeft"><i id="iconeExpandeOrigem" class="fa fa-plus" aria-hidden="true"></i></span>
+                            </div>
 
-                                <div id="ctnOrigem" class="ctnEntregaInterno">
-                                    <div class="container">
+                            <div id="ctnOrigem" class="ctnEntregaInterno">
+                                <div class="container">
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label class="titulo" for="txtEnderecoPartida">Origem:</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                @Model.Enderecos[0].Descricao
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                @Model.Enderecos[0].ProcurarPessoa
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="titulo" for="txtEnderecoPartida">Origem:</label>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label class="titulo" for="txtEnderecoPartida">Obs:</label>
-                                            </div>
-                                            <div class="col-md-10">
-                                                @Model.Enderecos[0].TipoOcorrencia
-                                                @Model.Enderecos[0].Observacao
-                                            </div>
+                                        <div class="col-md-6">
+                                            @Model.Enderecos[0].Descricao
                                         </div>
-
-                                        @Html.HiddenFor(model => model.Enderecos[0].Longitude)
-                                        @Html.HiddenFor(model => model.Enderecos[0].Latitude)
-
-                                        <hr />
-
+                                        <div class="col-md-2">
+                                            <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Model.Enderecos[0].ProcurarPessoa
+                                        </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="titulo" for="txtEnderecoPartida">Obs:</label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Model.Enderecos[0].TipoOcorrencia
+                                            @Model.Enderecos[0].Observacao
+                                        </div>
+                                    </div>
+
+                                    @Html.HiddenFor(model => model.Enderecos[0].Longitude)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Latitude)
+
+                                    <hr />
+
                                 </div>
                             </div>
                         </div>
-
-                        <div>
-                        </div>
                     </div>
 
-                    <hr />
+                    <div>
+                    </div>
+                </div>
 
-                    for (int i = 1; i <= Model.Enderecos.Count() - 1; i++)
-                    {
+                <hr />
+
+                for (int i = 1; i <= Model.Enderecos.Count() - 1; i++)
+                {
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -127,15 +127,14 @@
                         <div>
                         </div>
                     </div>
-                    }
+                }
 
                 <div class="row">
-                    <input type="submit" class="btnSolicitacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Revisar Informações" />
+                    <a href="@Url.Action("Index", "Entregas")" class="btnSolicitacao" style="margin:10px">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Revisar Informações
+                    </a>
                 </div>
-            }
 
-            @using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
-            {
                 <div class="row">
                     <div class="col-mg-12">
                         <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
