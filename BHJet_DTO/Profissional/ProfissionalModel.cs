@@ -17,7 +17,11 @@ namespace BHJet_DTO.Profissional
         public string NomeCompleto { get; set; }
         public string CPF { get; set; }
         public string CNH { get; set; }
+
+        public string Veiculos { get => "1,2"; }
+
         public TipoCarteira TipoCNH { get; set; }
+        public int[] TipoVeiculos { get; set; }
         public string Cep { get; set; }
         public string Rua { get; set; }
         public string RuaNumero { get; set; }

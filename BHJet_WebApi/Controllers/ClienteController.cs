@@ -124,6 +124,7 @@ namespace BHJet_WebApi.Controllers
                 ID = idCliente,
                 DadosCadastrais = entidadeDadosCadastrais.Select(cli => new ClienteDadosCadastraisModel()
                 {
+                    Avulso = cli.ClienteAvulso,
                     NomeRazaoSocial = cli.NomeRazaoSocial,
                     NomeFantasia = cli.NomeFantasia,
                     CPFCNPJ = cli.CPFCNPJ,
@@ -247,6 +248,7 @@ namespace BHJet_WebApi.Controllers
             {
                 DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
                 {
+                    ClienteAvulso = model.DadosCadastrais.Avulso,
                     NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
                     NomeFantasia = model.DadosCadastrais.NomeFantasia,
                     CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
@@ -351,6 +353,7 @@ namespace BHJet_WebApi.Controllers
                 ID = model.ID,
                 DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
                 {
+                    ClienteAvulso = model.DadosCadastrais.Avulso,
                     NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
                     NomeFantasia = model.DadosCadastrais.NomeFantasia,
                     CPFCNPJ = model.DadosCadastrais.CPFCNPJ,
@@ -400,7 +403,7 @@ namespace BHJet_WebApi.Controllers
                     intFranquiaKM = model.ContratoCarro.FranquiaKM,
                     intFranquiaMinutosParados = model.ContratoCarro.FranquiaMinutosParados,
                     Observacao = model.ContratoCarro.Observacao
-                }: null
+                } : null
             });
 
             // Return

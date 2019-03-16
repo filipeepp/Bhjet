@@ -1,4 +1,5 @@
 ﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using BHJet_Admin.Models.Motorista;
 using BHJet_Core.Extension;
 using BHJet_CoreGlobal;
@@ -55,6 +56,8 @@ namespace BHJet_Admin.Controllers
                     return View(new NovoMotoristaModel()
                     {
                         ID = profissional.ID,
+                        TipoVeiculos = profissional.Veiculos,
+                        VeiculoSelecionado = profissional.Veiculos.Split(',').Select(k => int.Parse(k)),
                         NomeCompleto = profissional.NomeCompleto,
                         TipoRegimeContratacao = profissional.TipoRegime,
                         CelularWhatsapp = profissional.CelularWpp,
@@ -134,7 +137,7 @@ namespace BHJet_Admin.Controllers
                 {
                     model.Comissao.All(x =>
                     {
-                        if(!DateTime.TryParse(x.VigenciaInicio, out DateTime ini) || !DateTime.TryParse(x.VigenciaFim, out DateTime fim))
+                        if (!DateTime.TryParse(x.VigenciaInicio, out DateTime ini) || !DateTime.TryParse(x.VigenciaFim, out DateTime fim))
                             throw new Exception($"Preencha datá válida para vigência da comissão.");
                         else if (DateTime.Parse(x.VigenciaFim) <= DateTime.Now.Date || DateTime.Parse(x.VigenciaFim) < DateTime.Parse(x.VigenciaInicio))
                             throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
@@ -148,6 +151,8 @@ namespace BHJet_Admin.Controllers
                     model.Comissao = new NovoMotoristaComissaoModel[] { };
                     throw new Exception($"Preencha ao menos uma comissão para o profissional.");
                 }
+                if (model.VeiculoSelecionado == null || !model.VeiculoSelecionado.Any() || (model.VeiculoSelecionado.Count() == 1 && model.VeiculoSelecionado.FirstOrDefault() == 0))
+                    throw new Exception($"Preencha ao menos um tipo de veiculo que o motorista possui ou irá utilizar.");
 
                 // Modelo entidade
                 var entidade = new ProfissionalCompletoModel()
@@ -158,6 +163,7 @@ namespace BHJet_Admin.Controllers
                     CelularWpp = model.CelularWhatsapp,
                     CPF = model.CpfCnpj,
                     TelefoneResidencial = model.TelefoneResidencial,
+                    TipoVeiculos = model.TipoVeiculos.Split(',').Select(v => int.Parse(v)).ToArray(),
                     TelefoneCelular = model.TelefoneCelular,
                     CNH = model.CNH,
                     ContratoCLT = model.TipoRegimeContratacao == RegimeContratacao.CLT ? true : false,
@@ -303,7 +309,7 @@ namespace BHJet_Admin.Controllers
             try
             {
                 // Busca Motoristas
-                var entidade = profissionalServico.BuscaProfissionais(palavraChave);
+                var entidade = profissionalServico.BuscaProfissionais(palavraChave, null);
 
                 // Return
                 return View(new EditarMotoristaModel()
@@ -335,5 +341,20 @@ namespace BHJet_Admin.Controllers
             };
         }
         #endregion
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BcTpVec()
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaTipoVeiculos();
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.Descricao,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
+        }
     }
 }

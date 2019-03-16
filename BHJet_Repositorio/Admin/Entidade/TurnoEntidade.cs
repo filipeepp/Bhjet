@@ -109,5 +109,31 @@ namespace BHJet_Repositorio.Admin.Entidade
                 _KMFim = value;
             }
         }
+
+        private string _NomeCliente;
+        public string NomeCliente
+        {
+            get
+            {
+                return _NomeCliente;
+            }
+            set
+            {
+                _NomeCliente = value;
+            }
+        }
+
+        private string _EnderecoCliente;
+        public string EnderecoCliente
+        {
+            get
+            {
+                return _EnderecoCliente;
+            }
+            set
+            {
+                _EnderecoCliente = value;
+            }
+        }
     }
 }

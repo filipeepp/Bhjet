@@ -4,8 +4,6 @@ namespace BHJet_Servico
 {
     public class ServicoRotas
     {
-        //public static readonly string Base = @"http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
-        //public static readonly string Base = @"http://localhost:50434/api";
         public static readonly string Base = ConfigurationManager.AppSettings["urlapibhjet"];
 
         public class Autenticacao
@@ -15,83 +13,84 @@ namespace BHJet_Servico
 
         public class Dashboard
         {
-            public const string GetResumo = "/Dashboard/resumo";
-            public const string GetResumoChamadosSit = "/Dashboard/resumo/chamado";
-            public const string GetResumoAtendimentosCategoria = "/Dashboard/resumo/atendimento";
+            public const string GetResumo = "api/Dashboard/resumo";
+            public const string GetResumoChamadosSit = "api/Dashboard/resumo/chamado";
+            public const string GetResumoAtendimentosCategoria = "api/Dashboard/resumo/atendimento";
         }
 
         public class Corrida
         {
-            public const string GetDetalheCorridas = "/Corrida/{0}";
-            public const string GetLocalizacaoCorridas = "/Corrida/status/{0}/profissional/{1}/localizacao";
-			public const string GetCorridaCliente = "/Corrida/cliente/{0}";
+            public const string GetDetalheCorridas = "api/Corrida/{0}";
+            public const string GetLocalizacaoCorridas = "api/Corrida/status/{0}/profissional/{1}/localizacao";
+			public const string GetCorridaCliente = "api/Corrida/cliente/{0}";
 		}
 
         public class AreaAtuacao
         {
-            public const string GetAreaAtuacao = "/AreaAtuacao";
+            public const string GetAreaAtuacao = "api/AreaAtuacao";
         }
 
         public class Diaria
         {
-            public const string PostDiaria = "/Diaria";
+            public const string PostDiaria = "api/Diaria";
         }
 
         public class Cliente
         {
 			#region Cliente Normal
-			public const string GetClientes = "/Cliente";
-			public const string PostCliente = "/Cliente";
-			public const string PostClienteContato = "/Cliente/{0}/contato";
-			public const string PostClienteValor = "/Cliente/{0}/contrato";
-			public const string GetClienteContrato = "/Cliente/contrato";
-			public const string GetClientesValorAtivo = "/Cliente/contrato/ativo";
-			public const string GetClienteCompleto = "/Cliente/{0}";
-			public const string PutCliente = "/Cliente/{0}";
-			public const string DeleteContato = "/Cliente/contato/{0}";
-			public const string DeleteValor = "/Cliente/contrato/{0}";
+			public const string GetClientes = "api/Cliente";
+			public const string PostCliente = "api/Cliente";
+			public const string PostClienteContato = "api/Cliente/{0}/contato";
+			public const string PostClienteValor = "api/Cliente/{0}/contrato";
+			public const string GetClienteContrato = "api/Cliente/contrato";
+			public const string GetClientesValorAtivo = "api/Cliente/contrato/ativo";
+			public const string GetClienteCompleto = "api/Cliente/{0}";
+			public const string PutCliente = "api/Cliente/{0}";
+			public const string DeleteContato = "api/Cliente/contato/{0}";
+			public const string DeleteValor = "api/Cliente/contrato/{0}";
 			#endregion
 
 			#region Cliente Avulso
-			public const string GetClientesAvulsosValorAtivo = "/Cliente/avulso/contrato/ativo";
+			public const string GetClientesAvulsosValorAtivo = "api/Cliente/avulso/contrato/ativo";
 			#endregion
 		}
 
 		public class Usuario
         {
-            public const string GetUsuarios = "/Usuarios";
-            public const string PostUsuario = "/Usuarios";
-            public const string PutUsuario = "/Usuarios";
-            public const string DeleteUsuario = "/Usuarios/{0}";
-            public const string GetUsuario = "/Usuarios/{0}";
-            public const string PutSituacao = "/Usuarios/situacao/{0}/usuario/{1}";
+            public const string GetUsuarios = "api/Usuarios";
+            public const string PostUsuario = "api/Usuarios";
+            public const string PutUsuario = "api/Usuarios";
+            public const string DeleteUsuario = "api/Usuarios/{0}";
+            public const string GetUsuario = "api/Usuarios/{0}";
+            public const string PutSituacao = "api/Usuarios/situacao/{0}/usuario/{1}";
         }
 
         public class Tarifa
         {
-            public const string GetTarifarioPadrao = "/Tarifa";
-            public const string PutTarifarioPadrao = "/Tarifa";
-            public const string GetTarifaCliente = "/Tarifa/cliente";
-			public const string GetTarifaPadrao = "/Tarifa/tipoVeiculo/{0}";
+            public const string GetTarifarioPadrao = "api/Tarifa";
+            public const string PutTarifarioPadrao = "api/Tarifa";
+            public const string GetTarifaCliente = "api/Tarifa/cliente";
+			public const string GetTarifaPadrao = "api/Tarifa/tipoVeiculo/{0}";
 		}
 
         public class Faturamento
         {
-            public const string PostFaturamento = "/Faturamento";
-            public const string PostFaturamentoComum = "/Faturamento/comum";
-            public const string GetFaturamentoDetalhe = "/Faturamento/detalhe";
+            public const string PostFaturamento = "api/Faturamento";
+            public const string PostFaturamentoComum = "api/Faturamento/comum";
+            public const string GetFaturamentoDetalhe = "api/Faturamento/detalhe";
         }
 
         public class Profissional
         {
-            public const string PutProfissional = "/Profissional/{0}";
-            public const string PostProfissional = "/Profissional";
-            public const string GetProfissional = "/Profissional/{0}";
-            public const string GetProfissionais = "/Profissional";
-            public const string GetProfissionaisDisponiveis = "/Profissional/Disponivel";
-            public const string GetLocalizacoesProfissionais = "/Profissional/tipo/{0}/localizacao";
-            public const string GetLocalizacaoProfissional = "/Profissional/{0}/localizacao";
-            public const string GetComissaoProfissional = "/Profissional/{0}/comissao";
+            public const string PutProfissional = "api/Profissional/{0}";
+            public const string PostProfissional = "api/Profissional";
+            public const string GetProfissional = "api/Profissional/{0}";
+            public const string GetProfissionais = "api/Profissional";
+            public const string GetProfissionaisDisponiveis = "api/Profissional/Disponivel";
+            public const string GetLocalizacoesProfissionais = "api/Profissional/tipo/{0}/localizacao";
+            public const string GetLocalizacaoProfissional = "api/Profissional/{0}/localizacao";
+            public const string GetComissaoProfissional = "api/Profissional/{0}/comissao";
+            public const string GetTipoVeiculos = "api/Profissional/veiculo/tipos";
         }
     }
 }

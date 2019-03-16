@@ -91,13 +91,13 @@
                             @Html.ValidationMessageFor(model => model.TipoCarteiraMotorista, null, new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <label for="txtNomeFantasia">Senha</label>
                             @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @type = "password" })
                             @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger" })
                         </div>
-
                         <div class="col-md-4">
                             <div style="margin-top:25px;">
                                 <label class="label-cbx">
@@ -107,10 +107,24 @@
                                 </label>
                             </div>
                         </div>
-
-                        
-
                     </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label col-sm-5" style="text-align: left;" for="email"><small class="obrigatorio">*</small>Selecione o(s) veiculos que o motorista possui:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(model => model.TipoVeiculos)
+                            @Html.ListBoxFor(m => m.VeiculoSelecionado,
+                                 new List<SelectListItem>(), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.VeiculoSelecionado, null, new { @class = "text-danger" })
+                            <b><small>(Ctrl + Click) Para selecionar vários.</small></b>
+                        </div>
+                    </div>
+
+
                 </div>
 
             </div>

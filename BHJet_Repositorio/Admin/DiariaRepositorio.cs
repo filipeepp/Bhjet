@@ -89,8 +89,12 @@ namespace BHJet_Repositorio.Admin
 				                        CONVERT(VARCHAR(5),dtDataHoraFimIntervalo,108)  as DataFimIntervalo,
                                         intOdometroFimIntervalo as KMFimInvervalo,
 				                        CONVERT(VARCHAR(5),dtDataHoraFimExpediente,108)  as DataFim,
-				                        intOdometroFimExpediente as KMFim
-	 		                        from tblRegistroDiarias 
+				                        intOdometroFimExpediente as KMFim,
+										CLI.vcNomeFantasia AS NomeCliente,
+										EN.vcRua + ', ' + EN.vcNumero + ', ' + EN.vcBairro  + ' - ' + EN.vcCidade + '/' + en.vcUF AS EnderecoCliente
+	 		                        from tblRegistroDiarias RD 
+							   left join tblClientes CLI on (RD.idCliente = cli.idCliente)
+							   left join tblEnderecos EN on (CLI.idEndereco = EN.idEndereco)
 				                        where idColaboradorEmpresaSistema = @id
 		     		                and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
 

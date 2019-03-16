@@ -43,5 +43,15 @@ namespace BHJet_Mobile.Servico.Diaria.Model
         {
             get; set;
         }
+
+        public string NomeCliente
+        {
+            get; set;
+        }
+
+        public string EnderecoCliente
+        {
+            get; set;
+        }
     }
 }

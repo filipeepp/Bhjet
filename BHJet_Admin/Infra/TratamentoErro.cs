@@ -13,12 +13,12 @@ namespace BHJet_Admin.Controllers
             if (e.GetType() == typeof(SucessException))
             {
                 controle.TempData["mensagemGeral"] = Encoding.UTF8.GetBytes(e.Message);
-                controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\sucesso.png".ToAscii();
+                controle.TempData["imgMensagemGeral"] = @"..\\Images\\sucesso.png".ToAscii();
             }
             else
             {
                 controle.TempData["mensagemGeral"] = e.Message;
-                controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\warming.png".ToAscii();
+                controle.TempData["imgMensagemGeral"] = @"..\\Images\\warming.png".ToAscii();
             }
 
             return;
@@ -27,7 +27,7 @@ namespace BHJet_Admin.Controllers
         public static void MensagemSucesso(this Controller controle, string mensagemSucesso)
         {
 			controle.TempData["mensagemGeral"] = mensagemSucesso;
-			controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\sucesso.png".ToAscii();
+			controle.TempData["imgMensagemGeral"] = @"..\\Images\\sucesso.png".ToAscii();
 			return;
 
 		}
@@ -35,7 +35,7 @@ namespace BHJet_Admin.Controllers
 		public static void MensagemAlerta(this Controller controle, string mensagemAlerta)
         {
             controle.TempData["mensagemGeral"] = mensagemAlerta;
-            controle.TempData["imgMensagemGeral"] = @"\\.\\Images\\warming.png".ToAscii();
+            controle.TempData["imgMensagemGeral"] = @"..\\Images\\warming.png".ToAscii();
             return;
         }
     }

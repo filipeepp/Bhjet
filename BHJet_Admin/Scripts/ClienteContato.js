@@ -156,7 +156,7 @@ window.ExcluirContato = function (divBlocoContato) {
 
 	if (alertConfirmacao) {
 		$.ajax({
-			url: '/Clientes/ExcluirContato?idContato=' + idContato,
+			url: '../Clientes/ExcluirContato?idContato=' + idContato,
 			type: "POST",
 			success: function () {
 

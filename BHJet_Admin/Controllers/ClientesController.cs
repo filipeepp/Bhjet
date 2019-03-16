@@ -108,6 +108,7 @@ namespace BHJet_Admin.Controllers
                         Contrato = entidade.ContratoMoto == null ? TipoContrato.ChamadosAvulsos : TipoContrato.ContratoLocacao,
                         DadosCadastrais = new DadosCadastraisModel()
                         {
+                            ClienteAvulso = entidade.DadosCadastrais.Avulso,
                             NomeRazaoSocial = entidade.DadosCadastrais.NomeRazaoSocial,
                             NomeFantasia = entidade.DadosCadastrais.NomeFantasia,
                             CPFCNPJ = entidade.DadosCadastrais.CPFCNPJ,
@@ -200,6 +201,7 @@ namespace BHJet_Admin.Controllers
                     ID = model.ID,
                     DadosCadastrais = new ClienteDadosCadastraisModel()
                     {
+                        Avulso = model.DadosCadastrais.ClienteAvulso,
                         NomeRazaoSocial = model.DadosCadastrais.NomeRazaoSocial,
                         NomeFantasia = model.DadosCadastrais.NomeFantasia,
                         CPFCNPJ = model.DadosCadastrais.CPFCNPJ,

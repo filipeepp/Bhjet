@@ -56,7 +56,8 @@ namespace BHJet_Repositorio.Admin
 									Endereco.vcBairro AS Bairro,
 									Endereco.vcCidade AS Cidade,
 									Endereco.vcUF AS Estado,
-									Endereco.vcCEP AS CEP
+									Endereco.vcCEP AS CEP,
+                                    Cliente.bitAvulso as ClienteAvulso
 								FROM
 									tblClientes Cliente
 								INNER JOIN

@@ -296,10 +296,10 @@ namespace BHJet_Admin.Controllers
 
         [HttpGet]
         [ValidacaoUsuarioAttribute()]
-        public JsonResult BuscaProfissionais(string trechoPesquisa, string tipoProfissional)
+        public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
         {
             // Recupera dados
-            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa);
+            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa, tipoProfissional);
 
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()
@@ -363,6 +363,21 @@ namespace BHJet_Admin.Controllers
                     string.Empty,
                 }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute()]
+        public JsonResult BcTpVec()
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaTipoVeiculos();
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.Descricao,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
         }
 
         private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)

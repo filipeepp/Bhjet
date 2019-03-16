@@ -61,7 +61,9 @@ namespace BHJet_Mobile.ViewModel.DiariaDeBordo
                     FimAlmoco = model.DataFimIntervalo,
                     KMFimAlmoco = model.KMFimInvervalo,
                     FimJornada = model.DataFim,
-                    KMFim = model.KMFim
+                    KMFim = model.KMFim,
+                    NomeCliente = model.NomeCliente,
+                    EnderecoCliente = model.EnderecoCliente
                 };
             }
             finally
@@ -85,7 +87,7 @@ namespace BHJet_Mobile.ViewModel.DiariaDeBordo
                     throw new ErrorException("Favor preencher os dados de bordo antes de prosseguir.");
 
 
-                if((!string.IsNullOrWhiteSpace(TurnoItem.InicioJornada) && !TurnoItem.InicioJornada.IsValidTimeFormat()) ||
+                if ((!string.IsNullOrWhiteSpace(TurnoItem.InicioJornada) && !TurnoItem.InicioJornada.IsValidTimeFormat()) ||
                     (!string.IsNullOrWhiteSpace(TurnoItem.InicioAlmoco) && !TurnoItem.InicioAlmoco.IsValidTimeFormat()) ||
                     (!string.IsNullOrWhiteSpace(TurnoItem.FimAlmoco) && !TurnoItem.FimAlmoco.IsValidTimeFormat()) ||
                     (!string.IsNullOrWhiteSpace(TurnoItem.FimJornada) && !TurnoItem.FimJornada.IsValidTimeFormat()))

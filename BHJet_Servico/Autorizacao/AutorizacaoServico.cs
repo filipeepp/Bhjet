@@ -46,7 +46,7 @@ namespace BHJet_Servico.Autorizacao
                 };
 
                 // Requisiçao
-                var requisicao = new HttpRequestMessage(HttpMethod.Post, ServicoRotas.Autenticacao.PostAutenticar)
+                var requisicao = new HttpRequestMessage(HttpMethod.Post, ServicoRotas.Base + ServicoRotas.Autenticacao.PostAutenticar)
                 {
                     Content = new FormUrlEncodedContent(parametros)
                 };

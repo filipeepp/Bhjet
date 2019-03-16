@@ -37,7 +37,7 @@ function FazMarcacao(lat, long, bcarro, bdesc) {
     var marker = new google.maps.Marker({
         position: myLatLgn,
         map: map,
-        icon: bcarro == true ? '/./Images/mapCorrida.png' : '/./Images/mapCar.png',
+        icon: bcarro == true ? '../Images/mapCorrida.png' : '../Images/mapCar.png',
         animation: google.maps.Animation.DROP
     });
 

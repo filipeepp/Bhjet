@@ -10,13 +10,15 @@
 
         <StackLayout BackgroundColor="#ffd423" >
 
-            <Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="45" Margin="0,30,0,0" ></Image>
+            <!--<Image x:Name="imgLogo" Source="bhjet" WidthRequest="40" HeightRequest="45" Margin="0,30,0,0" ></Image>-->
 
             <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
 
                 <Frame x:Name="ctnMotorista" HeightRequest="85" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="CenterAndExpand">
                     <Grid VerticalOptions="StartAndExpand" >
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -32,7 +34,13 @@
                         <Label Grid.Row="2" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Profissional:" TextColor="#193651"  />
                         <Label Grid.Row="2" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding NomeCompleto}" TextColor="#193651"  />
 
-                        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Text="{Binding DataAtual, StringFormat='Diário de bordo: {0:dd/MM/yyyy}'}" TextColor="#193651"  />
+                        <Label Grid.Row="3" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Nome Cliente:" TextColor="#193651"  />
+                        <Label Grid.Row="3" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding TurnoItem.NomeCliente}" TextColor="#193651"  />
+
+                        <Label Grid.Row="4" Grid.Column="0"  HorizontalOptions="End" VerticalOptions="Start" FontAttributes="Bold" Text="Nome Cliente:" TextColor="#193651"  />
+                        <Label Grid.Row="4" Grid.Column="1"  HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding TurnoItem.EnderecoCliente}" TextColor="#193651"  />
+                        
+                        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalOptions="Center" VerticalOptions="Start" FontAttributes="Bold" Text="{Binding DataAtual, StringFormat='Diário de bordo: {0:dd/MM/yyyy}'}" TextColor="#193651"  />
                     </Grid>
                 </Frame>
  

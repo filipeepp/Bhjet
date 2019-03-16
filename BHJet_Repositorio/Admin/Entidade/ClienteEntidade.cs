@@ -42,7 +42,8 @@ namespace BHJet_Repositorio.Admin.Entidade
 
 	public class ClienteDadosCadastraisEntidade
 	{
-		public string NomeRazaoSocial { get; set; }
+        public bool ClienteAvulso { get; set; }
+        public string NomeRazaoSocial { get; set; }
 		public string NomeFantasia { get; set; }
 		public string CPFCNPJ { get; set; }
 		public string InscricaoMunicipal { get; set; }
@@ -57,7 +58,6 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public string CEP { get; set; }
 		public string Observacoes { get; set; }
 		public string HomePage { get; set; }
-		public int Avulso { get; set; }
 	}
 
 

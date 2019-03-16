@@ -3,7 +3,7 @@
         $.ajax({
             dataType: "json",
             type: "GET",
-            url: "/Dashboard/BuscaLocalizacao",
+            url: "../Dashboard/BuscaLocalizacao",
             success: function (dados) {
                 $(dados).each(function (i) {
                     var lat = dados[i].geoPosicao.split(';')[0]

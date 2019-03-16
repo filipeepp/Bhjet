@@ -18,6 +18,7 @@ namespace BHJet_Repositorio.Admin.Entidade
         public string NomeCompleto { get; set; }
         public string CPF { get; set; }
         public string CNH { get; set; }
+        public string TipoVeiculo { get; set; }
         public TipoCarteira TipoCNH { get; set; }
         public string Cep { get; set; }
         public string Rua { get; set; }

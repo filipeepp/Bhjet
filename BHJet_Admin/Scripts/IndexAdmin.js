@@ -4,7 +4,7 @@ function buscaGraficoResumoSituacaoChamados() {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaResumoSituacaoChamados",
+        url: "../Dashboard/BuscaResumoSituacaoChamados",
         success: function (dados) {
 
             var lbls = [];
@@ -69,7 +69,7 @@ function buscaGraficoResumoSituacaoAtendimentos() {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaResumoAtendimentos",
+        url: "../Dashboard/BuscaResumoAtendimentos",
         success: function (dados) {
 
             var lbls = [];

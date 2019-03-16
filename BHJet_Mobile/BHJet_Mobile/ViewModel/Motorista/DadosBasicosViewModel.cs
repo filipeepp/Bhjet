@@ -127,18 +127,7 @@ namespace BHJet_Mobile.ViewModel.Motorista
             Loading = true;
 
             // Localizacao
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
-            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
-
-            // Atualiza
-            await motoristaServico.AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
-            {
-                bitDisponivel = false,
-                idTipoProfissional = usuarioAutenticado.Tipo,
-                latitude = position.Latitude,
-                longitude = position.Longitude
-            });
+            await UsuarioAutenticado.Instance.CancelarDisponibilidade();
 
             // Load
             Loading = false;

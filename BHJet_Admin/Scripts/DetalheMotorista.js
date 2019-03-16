@@ -37,11 +37,47 @@ function mascaraComissoes() {
     })
 }
 
+function BuscaVeiculos() {
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "../Motorista/BcTpVec",
+        success: function (data) {
+            if (data !== "" && data !== undefined && data.length > 0) {
+                $("#VeiculoSelecionado").find('option').remove().end();
+                var div_data = "<option value=></option>";
+                $(div_data).appendTo('#VeiculoSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                    $(div_data).appendTo('#VeiculoSelecionado');
+                });
+                $("#VeiculoSelecionado").mouseup();
+
+                var vei = $("#TipoVeiculos").val();
+                if (vei !== "") {
+                    var res = vei.split(",");
+                    $.each(res, function (i, obj) {
+                        var options = document.getElementById("VeiculoSelecionado").getElementsByTagName("option");
+
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].value == obj) {
+                                options[i].selected = true;
+                            }
+                        }
+                    });
+                }
+            }
+        },
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function (event) {
     $("#loading").hide()
     mascaraComissoes();
     $("#TelefoneResidencial").mask("(00) 0000-0000");
     $("#TelefoneCelular").mask("(00) 0000-00009");
+
+    BuscaVeiculos();
 
     if ($("#EdicaoCadastro").val() === false) {
         $("#Senha").val("");
@@ -143,12 +179,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#btnNovoContatos").click(function () {
         $.ajax({
-            url: '/Motorista/AddComissao',
+            url: 'AddComissao',
             type: "POST",
             dataType: "html",
             data: $("#DetalheMotorista").serialize(),
             success: function (data) {
-                window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
+                window.location.href = "Novo?alteraComissao=TRUE";
                 $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                 mascaraComissoes();
             },
@@ -159,12 +195,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 function removeComissao(idCom) {
     $.ajax({
-        url: '/Motorista/ExcluirComissao?numeroComissao=' + idCom,
+        url: 'ExcluirComissao?numeroComissao=' + idCom,
         type: "POST",
         dataType: "html",
         data: $("#DetalheMotorista").serialize(),
         success: function (data) {
-            window.location.href = "/Motorista/Novo?alteraComissao=TRUE";
+            window.location.href = "Novo?alteraComissao=TRUE";
             mascaraComissoes();
             $("html, body").animate({ scrollTop: $(document).height() }, 1000);
         },

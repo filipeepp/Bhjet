@@ -96,50 +96,58 @@
 								</ul>
 
 								<div id="tabs-1">
-									<div class="panel-body">
-										<div class="titulo">
-											<h2>
-												<a onclick="history.go(-1);">
-													<i class="fa fa-id-card-o" aria-hidden="true"></i>
-												</a>
-												Dados Pessoais
-											</h2>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-xs-12 col-md-12">
-												<label for="txtNome"><small class="obrigatorio">*</small>Nome / Razão Social</label>
-												@Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { type = "text", @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeRazaoSocial, null, new { @class = "text-danger" })
-											</div>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-xs-12 col-md-12">
-												<label for="txtNomeFantasia"><small class="obrigatorio">*</small>Nome Fantasia</label>
-												@Html.TextBoxFor(model => model.DadosCadastrais.NomeFantasia, new { type = "text", @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.NomeFantasia, null, new { @class = "text-danger" })
-											</div>
-										</div>
-										<div class="form-row">
-											<div class="form-group col-xs-12 col-md-4">
-												<label for="txtCpfCnpj"><small class="obrigatorio">*</small>CPF / CNPJ</label>
-												@Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
-											</div>
-											<div class="form-group col-xs-12 col-md-6">
-												<label for="txtInscricaoEstadual"><small class="obrigatorio">*</small>Insc. Estadual</label>
-												@Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
-												@Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new {@id= "DadosCadastrais_InscricaoEstadual_Error", @class = "text-danger" })
-											</div>
-											<div class="form-group col-xs-12 col-md-2">
-												<div class="cst-ckb-Novo-Cliente">
-													<label class="label-cbx">
-														@Html.CheckBoxFor(model => model.DadosCadastrais.ISS, new { @class = "checkbox" })
-														<span>ISS</span>
-													</label>
-												</div>
-											</div>
-										</div>
-									</div>
+                                    <div class="panel-body">
+                                        <div class="titulo">
+                                            <h2>
+                                                <a onclick="history.go(-1);">
+                                                    <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                                </a>
+                                                Dados Pessoais
+                                            </h2>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-xs-12 col-md-12">
+                                                <label class="label-cbx">
+                                                    @Html.CheckBoxFor(model => model.DadosCadastrais.ClienteAvulso, new { @class = "checkbox" })
+                                                    <span>Cliente Avulso</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-xs-12 col-md-12">
+                                                <label for="txtNome"><small class="obrigatorio">*</small>Nome / Razão Social</label>
+                                                @Html.TextBoxFor(model => model.DadosCadastrais.NomeRazaoSocial, new { type = "text", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DadosCadastrais.NomeRazaoSocial, null, new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-xs-12 col-md-12">
+                                                <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Nome Fantasia</label>
+                                                @Html.TextBoxFor(model => model.DadosCadastrais.NomeFantasia, new { type = "text", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DadosCadastrais.NomeFantasia, null, new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-xs-12 col-md-4">
+                                                <label for="txtCpfCnpj"><small class="obrigatorio">*</small>CPF / CNPJ</label>
+                                                @Html.TextBoxFor(model => model.DadosCadastrais.CPFCNPJ, new { type = "text", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-xs-12 col-md-6">
+                                                <label for="txtInscricaoEstadual"><small class="obrigatorio">*</small>Insc. Estadual</label>
+                                                @Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @id = "DadosCadastrais_InscricaoEstadual_Error", @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group col-xs-12 col-md-2">
+                                                <div class="cst-ckb-Novo-Cliente">
+                                                    <label class="label-cbx">
+                                                        @Html.CheckBoxFor(model => model.DadosCadastrais.ISS, new { @class = "checkbox" })
+                                                        <span>ISS</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 									<div class="panel-body">
 										<div class="titulo">
 											<h2>
