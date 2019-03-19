@@ -326,10 +326,10 @@ namespace BHJet_Admin.Controllers
 
         [HttpGet]
         [ValidacaoUsuarioAttribute()]
-        public JsonResult BuscaTarifas(long idCliente)
+        public JsonResult BuscaTarifas(long idCliente, int tipoVeiculo)
         {
             // Recupera dados
-            var entidade = tarifaServico.BuscaTaritaCliente(idCliente);
+            var entidade = tarifaServico.BuscaTaritaCliente(idCliente, tipoVeiculo);
 
             // Return
             return Json(new

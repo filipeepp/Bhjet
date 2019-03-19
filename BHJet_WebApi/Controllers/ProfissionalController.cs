@@ -323,7 +323,7 @@ namespace BHJet_WebApi.Controllers
                 Email = model.Email,
                 Observacao = model.Observacao,
                 TipoCNH = model.TipoCNH,
-                TipoVeiculo = string.Join(",", model.TipoVeiculos),
+                TipoVeiculo = string.Join(",", model.Veiculos),
                 CNH = model.CNH,
                 TipoProfissional = model.TipoProfissional,
                 TipoRegime = model.TipoRegime,

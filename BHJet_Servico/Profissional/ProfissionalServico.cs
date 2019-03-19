@@ -29,7 +29,21 @@ namespace BHJet_Servico.Profissional
         /// <returns>ResumoModel</returns>
         public IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa, int? tipoVeiculo)
         {
-            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionais}?trecho={trechoPesquisa}&tipoVeiculo={tipoVeiculo}"));
+            string parms1 = string.IsNullOrWhiteSpace(trechoPesquisa) ? "" : "trecho=" + trechoPesquisa;
+            string parms2 = tipoVeiculo == null ? "" : "tipoVeiculo=" + tipoVeiculo;
+            string parametroCompleto = "";
+
+            if (parms1 != "")
+            {
+                parametroCompleto = parms1;
+                if (parms2 != "")
+                    parametroCompleto += parms2;
+            }
+            else if (parms2 != "")
+                parametroCompleto = parms2;
+
+            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}" +
+                $"{ServicoRotas.Profissional.GetProfissionais}?{parametroCompleto}"));
         }
 
         /// <summary>
@@ -80,15 +94,15 @@ namespace BHJet_Servico.Profissional
 
         public TipoVeiculoDTO[] BuscaTipoVeiculos()
         {
-            //return this.Get<TipoVeiculoDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetTipoVeiculos}"));
-            return new TipoVeiculoDTO[]
-            {
-                new TipoVeiculoDTO()
-                {
-                     ID = 1,
-                     Descricao = "Carro"
-                }
-            };
+            return this.Get<TipoVeiculoDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetTipoVeiculos}"));
+            //return new TipoVeiculoDTO[]
+            //{
+            //    new TipoVeiculoDTO()
+            //    {
+            //         ID = 1,
+            //         Descricao = "Carro"
+            //    }
+            //};
         }
     }
 }

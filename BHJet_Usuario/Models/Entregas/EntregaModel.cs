@@ -21,7 +21,8 @@ namespace BHJet_Usuario.Models.Entregas
         public string ProcurarPessoa { get; set; }
 
         [Required(ErrorMessage = "Informar o tipo de chamado a ser realizado.")]
-        public TipoOcorrenciaCorrida TipoOcorrencia { get; set; }
+        public int? TipoOcorrencia { get; set; }
+
         public string Observacao { get; set; }
     }
 }

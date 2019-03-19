@@ -376,7 +376,7 @@ namespace BHJet_Repositorio.Admin
                             ISS = cliente.DadosCadastrais.ISS,
                             Observacoes = cliente.DadosCadastrais.Observacoes,
                             HomePage = cliente.DadosCadastrais.HomePage,
-                            ClienteAvulso = 0
+                            ClienteAvulso = cliente.DadosCadastrais.ClienteAvulso
                         }, trans);
 
 
@@ -665,6 +665,7 @@ namespace BHJet_Repositorio.Admin
 														,[bitRetemISS] = @ISS
 														,[vcObservacoes] = @Observacoes
 														,[vcSite] = @HomePage
+                                                        ,[bitAvulso] = @avulso
 													WHERE
 														idCliente = @ClienteID";
 
@@ -678,7 +679,8 @@ namespace BHJet_Repositorio.Admin
                                 ISS = cliente.DadosCadastrais.ISS,
                                 Observacoes = cliente.DadosCadastrais.Observacoes,
                                 HomePage = cliente.DadosCadastrais.HomePage,
-                                ClienteID = cliente.ID
+                                ClienteID = cliente.ID,
+                                avulso = cliente.DadosCadastrais.ClienteAvulso
                             }, trans);
 
                         }

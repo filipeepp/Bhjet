@@ -13,33 +13,23 @@
     })
 
     //Auto completa os campos de endereço de partida e de chegada
-    $("input[id*='txtEnderecoPartida']").autocomplete({
-        source: function (request, response) {
-            geocoder.geocode({
-                'address': request.term + ', Brasil',
-                'region': 'BR'
-            }, function (results, status) {
-                response($.map(results, function (item) {
-                    return {
-                        label: item.formatted_address,
-                        value: item.formatted_address,
-                        latitude: item.geometry.location.lat(),
-                        longitude: item.geometry.location.lng()
-                    }
-                }));
-            })
-        },
-        select: function (event, ui) {
-            $(this).parent().find("input[id*='Latitude']").val(ui.item.latitude);
-            $(this).parent().find("input[id*='Longitude']").val(ui.item.longitude);
-            var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-            marker.setPosition(location);
-            map.setCenter(location);
-            map.setZoom(16);
-        }
+    var input = document.getElementById('txtEnderecoPartida');
+    var options = {
+        'address': ', Brasil',
+        'region': 'BR'
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
+        var location = place.geometry.location;
+
+        $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Latitude']").val(location.lat());
+        $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Longitude']").val(location.lng());
+        var locationGM = new google.maps.LatLng(location.lat(), location.lng());
+        marker.setPosition(locationGM);
+        map.setCenter(locationGM);
+        map.setZoom(16);
     });
-
-
 
     carregaMapa();
 });

@@ -41,7 +41,7 @@ namespace BHJet_DTO.Cliente
 
 	public class ClienteDadosCadastraisModel
 	{
-        public bool Avulso { get; set; }
+        public bool ClienteAvulso { get; set; }
         public string NomeRazaoSocial { get; set; }
 		public string NomeFantasia { get; set; }
 		public string CPFCNPJ { get; set; }

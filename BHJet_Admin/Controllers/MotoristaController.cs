@@ -56,8 +56,8 @@ namespace BHJet_Admin.Controllers
                     return View(new NovoMotoristaModel()
                     {
                         ID = profissional.ID,
-                        TipoVeiculos = profissional.Veiculos,
-                        VeiculoSelecionado = profissional.Veiculos.Split(',').Select(k => int.Parse(k)),
+                        TipoVeiculos = string.Join(",",profissional.TipoVeiculos),
+                        VeiculoSelecionado = profissional.TipoVeiculos,
                         NomeCompleto = profissional.NomeCompleto,
                         TipoRegimeContratacao = profissional.TipoRegime,
                         CelularWhatsapp = profissional.CelularWpp,
@@ -163,7 +163,7 @@ namespace BHJet_Admin.Controllers
                     CelularWpp = model.CelularWhatsapp,
                     CPF = model.CpfCnpj,
                     TelefoneResidencial = model.TelefoneResidencial,
-                    TipoVeiculos = model.TipoVeiculos.Split(',').Select(v => int.Parse(v)).ToArray(),
+                    TipoVeiculos = model.VeiculoSelecionado.ToArray(),
                     TelefoneCelular = model.TelefoneCelular,
                     CNH = model.CNH,
                     ContratoCLT = model.TipoRegimeContratacao == RegimeContratacao.CLT ? true : false,
@@ -180,11 +180,12 @@ namespace BHJet_Admin.Controllers
                     RuaNumero = model.RuaNumero,
                     UF = model.UF,
                     DocumentoRG = model.DocumentoRG,
-                    Senha = CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r"),
+                    Senha = model.Senha != null ? CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r") : null,
                     Status = model.Situacao,
                     Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
                     {
                         ID = x.ID,
+                        Observacao = x.Observacao,
                         decPercentualComissao = x.ValorComissao.ToDecimalCurrency(),
                         dtDataFimVigencia = DateTime.Parse(x.VigenciaFim),
                         dtDataInicioVigencia = DateTime.Parse(x.VigenciaInicio)

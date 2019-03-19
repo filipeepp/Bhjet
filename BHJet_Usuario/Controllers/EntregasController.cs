@@ -1,4 +1,6 @@
-﻿using BHJet_Usuario.Models.Entregas;
+﻿using BHJet_Servico.Corrida;
+using BHJet_Usuario.Models;
+using BHJet_Usuario.Models.Entregas;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,8 +9,11 @@ namespace BHJet_Usuario.Controllers
 {
     public class EntregasController : Controller
     {
-        public EntregasController()
+        private readonly ICorridaServico corridaServico;
+
+        public EntregasController(ICorridaServico _corridaServico)
         {
+            corridaServico = _corridaServico;
         }
 
         // GET: Entregas
@@ -59,10 +64,28 @@ namespace BHJet_Usuario.Controllers
             var origem = (EntregaModel)TempData["origemSolicitacao"];
             this.TempData["origemSolicitacao"] = origem;
 
+
             // Se Logado redireciona para pagamento
             return RedirectToAction("Pagamento", "Pagamento");
 
             //return View(origem);
         }
+
+
+        [HttpGet]
+        public JsonResult BcTpOc()
+        {
+            // Recupera dados
+            var entidade = corridaServico.BuscaOcorrencias();
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.IDSolicitacao + " - " + x.DescricaoSolicitacao,
+                value = x.IDSolicitacao
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

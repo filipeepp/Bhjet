@@ -197,6 +197,8 @@
     <Content Include="Scripts\Layout.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\Registrar.js" />
+    <Content Include="Scripts\Resumo.js" />
     <Content Include="Scripts\waypoints.min.js" />
     <Content Include="Views\Entregas\Index.cshtml" />
     <Content Include="Web.config" />
@@ -220,9 +222,11 @@
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\TratamentoErro.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
+    <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\Entregas\EntregaModel.cs" />
     <Compile Include="Models\Entregas\ExibeLocalizacaoModel.cs" />
     <Compile Include="Models\Entregas\PagamentoModel.cs" />
+    <Compile Include="Models\MasterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +236,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Entregas\Resumo.cshtml" />
     <Content Include="Views\Pagamento\Pagamento.cshtml" />
+    <Content Include="Views\Shared\_Registrar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -241,7 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Resumo\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHJet_CoreGlobal\BHJet_CoreGlobal.csproj">

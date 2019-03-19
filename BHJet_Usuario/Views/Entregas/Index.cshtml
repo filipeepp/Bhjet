@@ -13,7 +13,7 @@
 <script src="~/Scripts/jquery-ui.min.js"></script>
 <script src="~/Scripts/owl.carousel.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&libraries=places&callback=initAutocomplete"></script>
 <script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
 <script type="text/javascript" src="~/Scripts/Destinos.js"></script>
 
@@ -57,7 +57,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    @*<div class="row">
                                         <div class="col-md-2">
                                             <label class="titulo" for="txtEnderecoPartida">Obs:</label>
                                         </div>
@@ -65,7 +65,7 @@
                                             @Model.Enderecos[0].TipoOcorrencia
                                             @Model.Enderecos[0].Observacao
                                         </div>
-                                    </div>
+                                    </div>*@
 
                                     @Html.HiddenFor(model => model.Enderecos[0].Longitude)
                                     @Html.HiddenFor(model => model.Enderecos[0].Latitude)
@@ -99,7 +99,7 @@
                                                 <div class="row">
                                                     <label class="titulo" for="txtEnderecoPartida">Endereço:</label>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Enderecos[i].Descricao, new { @id = "txtEnderecoPartida", @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
+                                                @Html.TextBoxFor(model => model.Enderecos[i].Descricao, new { @class = "cst-endereco-maps", placeholder = "Digite o endereço." })
                                                 @Html.ValidationMessageFor(model => model.Enderecos[i].Descricao, null, new { @class = "text-danger" })
 
                                                 @Html.HiddenFor(model => model.Enderecos[i].Longitude)
@@ -131,14 +131,10 @@
                                                     <label class="titulo" for="">O que deve ser feito:</label>
                                                 </div>
                                                 <div class="row">
-                                                    @foreach (var tipoEnum in Enum.GetValues(typeof(TipoOcorrenciaCorrida)))
-                                                    {
-                                                        var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(RegimeContratacao), tipoEnum));
-                                                        @Html.RadioButtonFor(s => s.Enderecos[i].TipoOcorrencia, tipoEnum, new { id, @class = "option-input radio" })
-                                                        @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
-                                                    }
-                                                    @Html.ValidationMessageFor(model => model.Enderecos[i].TipoOcorrencia, null, new { @class = "text-danger" })
 
+                                                    @Html.DropDownListFor(model => model.Enderecos[i].TipoOcorrencia, new List<SelectListItem>(), new { @class = "cst-endereco-maps", placeholder = "Selecione o tipo de serviço desejado." })
+                                                    @Html.ValidationMessageFor(model => model.Enderecos[i].TipoOcorrencia, null, new { @class = "text-danger" })
+           
                                                 </div>
                                             </div>
                                         </div>

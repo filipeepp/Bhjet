@@ -11,12 +11,10 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public TarifaEntidade BuscaTarificaPorCliente(long? clienteID)
+        public TarifaEntidade BuscaTarificaPorCliente(long? clienteID, int? tipoVeiculo)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Adicionar busca de tarifia exclusia do cliente na NOVA TABELA
-
                 // Query
                 string query = @"DECLARE @ExisteCliente int;  
                                  DECLARE @IDCliente int;  
@@ -32,7 +30,7 @@ namespace BHJet_Repositorio.Admin
                                                    intFranquiaHoras,
                                                    decValorHoraAdicional,
 												   bitAtivo as Ativo,
-												  vcObservacao as Observacao from tblClienteTarifario where idCliente = @IDCliente  and bitAtivo = 1 order by dtDataInicioVigencia desc
+												  vcObservacao as Observacao from tblClienteTarifario where idCliente = @IDCliente  and bitAtivo = 1 &tpVei& order by dtDataInicioVigencia desc
                                 ELSE   
                                     select top(1) idTarifario as ID,
 												   vcDescricaoTarifario as Descricao,
@@ -44,10 +42,16 @@ namespace BHJet_Repositorio.Admin
                                                         intFranquiaHoras,
                                                    decValorHoraAdicional,
 												   decValorKMAdicional as ValorKMAdicional,
-												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1 order by dtDataInicioVigencia desc";
+												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1  &tpVei& order by dtDataInicioVigencia desc";
+
+                query = tipoVeiculo != null ? query.Replace("&tpVei&", "and idTipoVeiculo = @tp") : query.Replace("&tpVei&", "");
 
                 // Execução
-                return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new { id = clienteID });
+                return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new
+                {
+                    id = clienteID,
+                    tp = tipoVeiculo
+                });
             }
         }
 
@@ -111,7 +115,7 @@ namespace BHJet_Repositorio.Admin
                     try
                     {
                         // Atualiza tarifas
-                        foreach(var tarifa in filtro)
+                        foreach (var tarifa in filtro)
                         {
                             string queryAtualiza = @"update tblTarifario set  
                                                         intFranquiaMinutosParados = @minParado,

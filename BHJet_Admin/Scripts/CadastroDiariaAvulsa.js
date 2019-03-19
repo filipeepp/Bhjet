@@ -31,12 +31,13 @@ function BuscaVeiculos() {
         success: function (data) {
             if (data !== "" && data !== undefined && data.length > 0) {
                 $("#TipoVeiculoSelecionado").find('option').remove().end();
-                var div_data = "<option value=></option>";
+                var div_data = "";
                 $(div_data).appendTo('#TipoVeiculoSelecionado');
                 $.each(data, function (i, obj) {
                     var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
                     $(div_data).appendTo('#TipoVeiculoSelecionado');
                 });
+                BuscaProfissionais($('#TipoVeiculoSelecionado').val());
                 $("#TipoVeiculoSelecionado").mouseup();
             }
         },
@@ -44,10 +45,11 @@ function BuscaVeiculos() {
 }
 
 function BuscaTarifas(idCliente) {
+    var veiTp = $('#TipoVeiculoSelecionado').val();
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "../Dashboard/BuscaTarifas?idCliente=" + idCliente,
+        url: "../Dashboard/BuscaTarifas?idCliente=" + idCliente + "&tipoVeiculo=" + veiTp,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ValorDiaria").val(data.DecValorDiaria);

@@ -17,5 +17,14 @@ namespace BHJet_Usuario.Controllers
 
             return View(origem);
         }
+
+        [HttpGet]
+        public ActionResult CallCB()
+        {
+
+            throw new Exception("gfgd");
+
+        }
+
     }
 }

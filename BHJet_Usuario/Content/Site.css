@@ -227,15 +227,19 @@ p, ul, ol, dl, table {
     .cts-titulo-side-bar .iconeLeft {
         float: none;
     }
+
     .cts-titulo-side-bar .titulo {
         margin-right: unset;
     }
+
     .cts-subtitulo-side-bar .iconeLeft {
         float: none;
     }
+
     .cts-subtitulo-side-bar .titulo {
         margin-right: unset;
     }
+
     .container {
         width: 100%;
     }
@@ -441,7 +445,7 @@ ul.menu {
 
 #header-wrapper {
     padding: 8px 10px;
-    background: -webkit-linear-gradient(top, #000000, #373730);
+    background: -webkit-linear-gradient(top, #ebdb1d, #e8e807);
     margin-bottom: 15px;
 }
 
@@ -520,7 +524,7 @@ ul.menu {
                 transition: background-color .25s ease-in-out;
                 font-weight: 800;
                 letter-spacing: 0.025em;
-                color: #cacc13;
+                color: #262623;
                 text-decoration: none;
                 border-radius: 6px;
                 padding: 0.5em 1em 0.5em 1em;
@@ -541,8 +545,8 @@ ul.menu {
             }
 
             #nav ul li.current a {
-                background: #cacc13;
-                color: #000;
+                background: #373730;
+                color: #ffffff;
             }
 
 .dropotron {
@@ -1246,7 +1250,6 @@ ul.menu {
     #copyright {
         text-align: left;
     }
-
 }
 
 .ui-widget-content {
@@ -1277,7 +1280,8 @@ ul.menu {
 
 
 #ctnInicio {
-    /*height: 0px;*/
+    height: 0px;
+    font-size: 15px;
 }
 
 .w3-content img {
@@ -1292,9 +1296,9 @@ ul.menu {
         margin: 0px 20px;
     }
 
-.listaBotaoInicio li a {
-    margin:20px;
-}
+        .listaBotaoInicio li a {
+            margin: 20px;
+        }
 
 .ctnEntregaInterno {
     display: block;
@@ -1315,13 +1319,13 @@ ul.menu {
         font: inherit;
         vertical-align: baseline;
         color: #0090c5;
-        margin-bottom:10px;
+        margin-bottom: 10px;
     }
 
 
-    .btnSolicitacao{
-        float:right;
-    }
+.btnSolicitacao {
+    float: right;
+}
 
 .btnConfirmacao {
     float: right;
@@ -1332,13 +1336,13 @@ ul.menu {
         background-color: #ebec5e !important;
     }
 
-    .ui-menu {
-        width: 501px;
-        height: auto;
-        background: white;
-        padding: 15px;
-        cursor: pointer;
-    }
+.ui-menu {
+    width: 501px;
+    height: auto;
+    background: white;
+    padding: 15px;
+    cursor: pointer;
+}
 
     .ui-menu:hover {
         background-color: #e4de3f;
@@ -1470,3 +1474,4 @@ ul.menu {
     display: inline;
     color: #cacc13;
 }
+

@@ -82,7 +82,7 @@ namespace BHJet_Repositorio.Admin
     							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
                                      where (convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
 									       or
-									       PRO.vcNomeCompleto like @valorPesquisa) and %tpQuery%";
+									       PRO.vcNomeCompleto like @valorPesquisa) %tpQuery%";
 
                 if (string.IsNullOrWhiteSpace(trecho))
                     query.Replace("select", "select top(50)");

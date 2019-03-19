@@ -1,5 +1,6 @@
 ﻿using BHJet_Servico.Autorizacao;
 using BHJet_Servico.Dashboard;
+using BHJet_Usuario.Models;
 using BHJet_Usuario.Models.Entregas;
 using System;
 using System.Collections.Generic;

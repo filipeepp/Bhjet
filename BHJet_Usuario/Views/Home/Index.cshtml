@@ -5,7 +5,7 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id="fmOrgPed", @class = "form-horizontal" }))
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "fmOrgPed", @class = "form-horizontal" }))
 {
     <div>
         <div id="map_canvas">
@@ -58,16 +58,24 @@
                                     <div class="row">
                                         <label class="titulo" for="txtEnderecoPartida">O que deve ser feito:</label>
                                     </div>
-                                    <div class="row">
-                                        @foreach (var tipoEnum in Enum.GetValues(typeof(TipoOcorrenciaCorrida)))
-                                        {
-                                            var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(RegimeContratacao), tipoEnum));
-                                            @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, tipoEnum, new { id, @class = "option-input radio" })
-                                            @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
-                                        }
-                                        @Html.ValidationMessageFor(model => model.Enderecos[0].TipoOcorrencia, null, new { @class = "text-danger" })
 
-                                    </div>
+
+                                    @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, 0, new { @class = "option-input radio" })
+                                    @Html.Label("Retirar documento(s) ou objeto(s) de pequeno porte", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
+                                    <br/>
+                                    @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, 1, new { @class = "option-input radio" })
+                                    @Html.Label("Retirar documento(s) ou objeto(s) de maior porte ou pacote(s)", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
+
+                                    @Html.ValidationMessageFor(model => model.Enderecos[0].TipoOcorrencia, null, new { @class = "text-danger" })
+
+
+                                    @*@foreach (var tipoEnum in Enum.GetValues(typeof(TipoOcorrenciaCorrida)))
+        {
+            var id = TagBuilder.CreateSanitizedId(string.Format("{0}_{1}_{2}", "rdbtn", typeof(RegimeContratacao), tipoEnum));
+            @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, tipoEnum, new { id, @class = "option-input radio" })
+            @Html.Label(tipoEnum.ToString(), new { @for = id, @style = "vertical-align: sub;" })
+        }
+        @Html.ValidationMessageFor(model => model.Enderecos[0].TipoOcorrencia, null, new { @class = "text-danger" })*@
                                 </div>
                             </div>
                         </div>
@@ -117,7 +125,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="~/Scripts/jquery-ui.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&libraries=places&callback=initAutocomplete"></script>
 <script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
 <script type="text/javascript" src="~/Scripts/Origem.js"></script>
 
