@@ -1323,6 +1323,22 @@ ul.menu {
     }
 
 
+.btnPadrao {
+    float: right;
+    background-color: #cacc13 !important;
+    transition: background-color .25s ease-in-out;
+    position: relative;
+    display: inline-block;
+    background: #117196;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 800;
+    outline: 0;
+    border: 0;
+    padding: 5px 15px;
+}
+
 .btnSolicitacao {
     float: right;
 }

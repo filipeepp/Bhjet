@@ -9,7 +9,6 @@ namespace BHJet_Usuario.Controllers
 {
     public class PagamentoController : Controller
     {
-        // GET: Pagamento
         public ActionResult Pagamento()
         {
             var origem = (EntregaModel)TempData["origemSolicitacao"];

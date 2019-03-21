@@ -71,7 +71,6 @@ namespace BHJet_Usuario.Controllers
             //return View(origem);
         }
 
-
         [HttpGet]
         public JsonResult BcTpOc()
         {
@@ -85,7 +84,6 @@ namespace BHJet_Usuario.Controllers
                 value = x.IDSolicitacao
             }), JsonRequestBehavior.AllowGet);
         }
-
 
     }
 }
