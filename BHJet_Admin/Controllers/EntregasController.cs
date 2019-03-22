@@ -47,8 +47,13 @@ namespace BHJet_Admin.Controllers
         // GET: Resumo
         public ActionResult Resumo()
         {
+            // Busca Solicitação
             var origem = (EntregaModel)TempData["origemSolicitacao"];
             this.TempData["origemSolicitacao"] = origem;
+
+            // Busca Precificação
+            var resumo = corridaServico.CalculoPrecoCorrida();
+            origem.ValorCorrida = resumo;
 
             return View(origem);
         }
@@ -75,8 +80,8 @@ namespace BHJet_Admin.Controllers
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()
             {
-                label = x.IDSolicitacao + " - " + x.DescricaoSolicitacao,
-                value = x.IDSolicitacao
+                label = x.ID + " - " + x.Descricao,
+                value = x.ID
             }), JsonRequestBehavior.AllowGet);
         }
     }

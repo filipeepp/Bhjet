@@ -98,7 +98,6 @@ function BuscaClientes() {
             }
         },
     });
-
 }
 
 function validaDatePickerManual(id, valor) {

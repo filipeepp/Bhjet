@@ -129,7 +129,12 @@
             <div class="row">
                 <div class="col-mg-12">
                     <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
-                        <span class="titulo">Valor estimado: </span> <h3 class="total">R$ 26,75</h3>
+                        <span class="titulo">Valor estimado: </span> <h3 class="total">
+                            @if (Model.ValorCorrida != null)
+                            {
+                                @Model.ValorCorrida.Value.ToString("C", new System.Globalization.CultureInfo("pt-BR"));
+                            }
+                        </h3>
                         <input type="submit" class="btnPadrao btnConfirmacao" id="btnEnviar" name="btnEnviar" style="font-size: unset;" value="Chamar BHJet" />
                     </div>
                 </div>
@@ -138,8 +143,8 @@
         </div>
 
         @*@{
-            Html.RenderPartial("~/Views/Shared/_Registrar.cshtml");
-        }*@
+                Html.RenderPartial("~/Views/Shared/_Registrar.cshtml");
+            }*@
 
     </div>
 </div>

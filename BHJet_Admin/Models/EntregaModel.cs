@@ -5,6 +5,8 @@ namespace BHJet_Admin.Models
 {
     public class EntregaModel
     {
+        public long? IDCliente { get; set; }
+        public decimal? ValorCorrida { get; set; }
         public List<EnderecoModel> Enderecos { get; set; }
     }
 

@@ -140,6 +140,30 @@ function buscaGraficoResumoSituacaoAtendimentos() {
     });
 }
 
+function bsccli() {
+    var jqVariavel = $("#pesquisaCliente");
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "../Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
+        success: function (data) {
+            if (data !== "" && data !== undefined && data.length > 0) {
+                $("#ClienteSelecionado").find('option').remove().end();
+                var div_data = "<option value=></option>";
+                $(div_data).appendTo('#ClienteSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                    $(div_data).appendTo('#ClienteSelecionado');
+                });
+                $("#ClienteSelecionado").mouseup();
+            }
+            else {
+                AdicionarErroCampo('ClienteSelecionado', 'Não foi possível encotrar o cliente desejado.', 4000);
+            }
+        },
+    });
+}
+
 $(document).ready(function ($) {
     $('.counter').counterUp({
         delay: 10,
@@ -149,6 +173,25 @@ $(document).ready(function ($) {
     $('#PesquisaMotociclista').mask('0#');
     buscaGraficoResumoSituacaoChamados();
     buscaGraficoResumoSituacaoAtendimentos();
+
+    $("#btnOSAV").click(function () {
+        $("#mdCliente").modal("show");
+        setTimeout(function () {
+            $('.modal-backdrop').remove();
+        }, 1000);
+    })
+
+    $("#pesquisaCliente").keyup(delay(function (e) {
+        bsccli();
+    }, 500));
+
+    $("#ClienteSelecionado").change(function () {
+        var $option = $(this).find('option:selected');
+        //location.href = '@Url.Action("Index", "HomeExterno")?idCliente=' + $option.val();
+        location.href = '/HomeExterno/Index?idCliente=' + $option.val();
+    });
+
+    bsccli();
 
 });
 

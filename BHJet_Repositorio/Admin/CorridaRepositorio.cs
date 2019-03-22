@@ -255,7 +255,7 @@ namespace BHJet_Repositorio.Admin
         /// Busca Ocorrencias
         /// </summary>
         /// <returns>OcorrenciaEntidade</returns>
-        public IEnumerable<OcorrenciaEntidade> BuscaOcorrenciasCorrida()
+        public IEnumerable<StatusEntidade> BuscaStatusCorrida()
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -263,7 +263,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select * from tblDOMStatusCorrida";
 
                 // Execução
-                return sqlConnection.Query<OcorrenciaEntidade>(query);
+                return sqlConnection.Query<StatusEntidade>(query);
             }
         }
 
@@ -271,7 +271,7 @@ namespace BHJet_Repositorio.Admin
         /// Busca Ocorrencias
         /// </summary>
         /// <returns>OcorrenciaEntidade</returns>
-        public void AtualizaOcorrenciasCorrida(int ocorrencia, long idLogCorrida, long idCorrida)
+        public void AtualizaStatusCorrida(int ocorrencia, long idLogCorrida, long idCorrida)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -419,6 +419,22 @@ namespace BHJet_Repositorio.Admin
                     id = idCorrida
                 });
 
+            }
+        }
+
+        /// <summary>
+        /// Busca Ocorrencias
+        /// </summary>
+        /// <returns>OcorrenciaEntidade</returns>
+        public IEnumerable<OcorrenciaEntidade> BuscaOcorrenciaCorrida()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select * from tblDOMTipoOcorrenciaCorrida";
+
+                // Execução
+                return sqlConnection.Query<OcorrenciaEntidade>(query);
             }
         }
     }

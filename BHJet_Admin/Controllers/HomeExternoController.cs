@@ -9,10 +9,11 @@ namespace BHJet_Admin.Controllers
     public class HomeExternoController : Controller
     {
         #region Entregas Origem
-        public ActionResult Index()
+        public ActionResult Index(long? idCliente = null)
         {
             var origem = new EntregaModel
             {
+                IDCliente = idCliente,
                 Enderecos = new List<EnderecoModel>()
                  {
                      new EnderecoModel()

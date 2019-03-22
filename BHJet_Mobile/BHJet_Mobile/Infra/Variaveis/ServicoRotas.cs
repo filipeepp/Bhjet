@@ -30,9 +30,9 @@
             public const string GetLog = "api/Corrida/log/{0}";
             public const string PostProtocolo = "api/Corrida/protocolo/endereco/{0}";
             public const string PutChegada = "api/Corrida/chegada/{0}/";
-            public const string GetOcorrencias = "api/Corrida/ocorrencias";
-            public const string PutEncerrarCorrida = "api/Corrida/encerrar/{0}/ocorrencia/{1}";
-            public const string PutOcorrenciaCorrida = "api/Corrida/ocorrencias/{0}/log/{1}/corrida/{2}";
+            public const string GetOcorrencias = "api/Corrida/status";
+            public const string PutEncerrarCorrida = "api/Corrida/encerrar/{0}/status/{1}";
+            public const string PutOcorrenciaCorrida = "api/Corrida/status/{0}/log/{1}/corrida/{2}";
             public const string PostRecusarCorrida = "api/Corrida/recusar/{0}";
             public const string PostLiberarCorrida = "api/Corrida/liberar/{0}";
         }

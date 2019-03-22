@@ -47,7 +47,7 @@ namespace BHJet_WebApi.Controllers
             var entidade = new DashboardRepositorio().BuscaResumoChamados();
 
             // Busca status corrida
-            var statusCorrida = new CorridaRepositorio().BuscaOcorrenciasCorrida();
+            var statusCorrida = new CorridaRepositorio().BuscaStatusCorrida();
             var finaliza = statusCorrida.Where(s => s.bitFinaliza = true || s.bitCancela == true).Select(st => st.idStatusCorrida).ToArray();
             var naoFinaliza = statusCorrida.Where(s => s.bitFinaliza = false && s.bitCancela == false).Select(st => st.idStatusCorrida).ToArray();
 

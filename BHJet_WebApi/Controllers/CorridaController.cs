@@ -261,19 +261,19 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>List<DetalheCorridaModel></returns>
         [Authorize]
-        [Route("ocorrencias")]
-        [ResponseType(typeof(IEnumerable<OcorrenciaModel>))]
-        public IHttpActionResult GetTipoOcorrenciaCorrida()
+        [Route("status")]
+        [ResponseType(typeof(IEnumerable<StatusModel>))]
+        public IHttpActionResult GetStatusCorrida()
         {
             // Busca Dados detalhados da corrida/OS
-            var entidade = new CorridaRepositorio().BuscaOcorrenciasCorrida();
+            var entidade = new CorridaRepositorio().BuscaStatusCorrida();
 
             // Validacao
             if (entidade == null || !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Return
-            return Ok(entidade.Select(oc => new OcorrenciaModel()
+            return Ok(entidade.Select(oc => new StatusModel()
             {
                 StatusCorrida = oc.idStatusCorrida,
                 DescricaoStatus = oc.vcDescricaoStatus,
@@ -288,11 +288,11 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [Route("ocorrencias/{idOcorrencia:int}/log/{logCorrida:long}/corrida/{idCorrida:long}")]
-        public IHttpActionResult PutTipoOcorrenciaCorrida(int idOcorrencia, long logCorrida, long idCorrida)
+        [Route("status/{idStatus:int}/log/{logCorrida:long}/corrida/{idCorrida:long}")]
+        public IHttpActionResult PutTipoStatusCorrida(int idStatus, long logCorrida, long idCorrida)
         {
             // Busca Dados detalhados da corrida/OS
-            new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, logCorrida, idCorrida);
+            new CorridaRepositorio().AtualizaStatusCorrida(idStatus, logCorrida, idCorrida);
 
             // Return
             return Ok();
@@ -302,19 +302,43 @@ namespace BHJet_WebApi.Controllers
         /// Encerrar OS
         /// </summary>
         /// /// <param name="idCorrida">long</param>
-        /// /// /// <param name="idOcorrencia">int?</param>
+        /// /// /// <param name="idStatus">int?</param>
         /// /// /// /// <param name="filtro">EncerrarCorridaFiltro</param>
         /// <returns></returns>
         [Authorize]
-        [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int?}")]
-        public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idOcorrencia = null)
+        [Route("encerrar/{idCorrida:long}/status/{idStatus:int?}")]
+        public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idStatus = null)
         {
             // Instancia
-            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia, 
+            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idStatus,
                 (filtro.KilometragemRodada != null ? int.Parse(filtro.KilometragemRodada?.ToString()) : 0), filtro.MinutosParados ?? 0);
 
             // Return
             return Ok();
+        }
+
+        /// <summary>
+        /// Busca ocorrencia corrida
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Authorize]
+        [Route("ocorrencias")]
+        [ResponseType(typeof(IEnumerable<OcorrenciaDTO>))]
+        public IHttpActionResult GetOcorrenciaCorrida()
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaOcorrenciaCorrida();
+
+            // Validacao
+            if (entidade == null || !entidade.Any())
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(oc => new OcorrenciaDTO()
+            {
+                ID = oc.idTipoOcorrenciaCorrida,
+                Descricao = oc.vcTipoOcorrenciaCorrida
+            }));
         }
 
         /// <summary>

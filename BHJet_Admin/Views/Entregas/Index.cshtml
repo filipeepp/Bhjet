@@ -47,18 +47,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Model.Enderecos[0].Descricao
+                                            @Html.HiddenFor(model => model.Enderecos[0].Descricao)
                                         </div>
                                         <div class="col-md-2">
                                             <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
                                         </div>
                                         <div class="col-md-2">
                                             @Model.Enderecos[0].ProcurarPessoa
+                                            @Html.HiddenFor(model => model.Enderecos[0].ProcurarPessoa)
                                         </div>
                                     </div>
-
+                                    @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
                                     @Html.HiddenFor(model => model.Enderecos[0].Longitude)
                                     @Html.HiddenFor(model => model.Enderecos[0].Latitude)
-
                                     <hr />
 
                                 </div>

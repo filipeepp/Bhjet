@@ -6,7 +6,8 @@ namespace BHJet_Servico.Corrida
     public interface ICorridaServico
     {
         DetalheCorridaModel BuscaDetalheCorrida(long idCorrida);
-        OcorrenciaSolicitacaoModel[] BuscaOcorrencias();
+        OcorrenciaDTO[] BuscaOcorrencias();
+        decimal CalculoPrecoCorrida();
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -29,17 +30,22 @@ namespace BHJet_Servico.Corrida
         /// Busca Detalhe Corrida
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public OcorrenciaSolicitacaoModel[] BuscaOcorrencias()
+        public OcorrenciaDTO[] BuscaOcorrencias()
         {
-           return new OcorrenciaSolicitacaoModel[]
-            {
-                new OcorrenciaSolicitacaoModel()
-                {
-                     IDSolicitacao = 1,
-                     DescricaoSolicitacao = "Objeto de pequeno porte"
-                }
-            };
+            return this.Get<OcorrenciaDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.GetOcorrencia}"));
+            //return new OcorrenciaSolicitacaoModel[]
+            //{
+            //    new OcorrenciaSolicitacaoModel()
+            //    {
+            //         IDSolicitacao = 1,
+            //         DescricaoSolicitacao = "Objeto de pequeno porte"
+            //    }
+            //};
         }
 
+        public decimal CalculoPrecoCorrida()
+        {
+            return 10;
+        }
     }
 }
