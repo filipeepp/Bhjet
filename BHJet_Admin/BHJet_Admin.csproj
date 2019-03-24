@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\TratamentoErro.cs" />
+    <Compile Include="Infra\UsuarioLogado.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
     <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\ClienteAvulso\ClienteAvulsoModel.cs" />
@@ -367,6 +368,7 @@
     <Content Include="Views\Entregas\Index.cshtml" />
     <Content Include="Views\Entregas\Resumo.cshtml" />
     <Content Include="Views\Pagamento\Pagamento.cshtml" />
+    <Content Include="Views\Shared\_LayoutExterno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

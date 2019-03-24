@@ -4,6 +4,7 @@ using BHJet_DTO.Corrida;
 using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
@@ -100,19 +101,7 @@ namespace BHJet_WebApi.Controllers
 
         private string Realizar(OSCorridaEntidade entidade)
         {
-            List<string> realizar = new List<string>();
-            if (entidade.bitColetarAssinatura)
-                realizar.Add("Coletar Assinatura");
-            if (entidade.bitEntregarDocumento)
-                realizar.Add("Entregar Documento");
-            if (entidade.bitEntregarObjeto)
-                realizar.Add("Entregar Objeto");
-            if (entidade.bitRetirarDocumento)
-                realizar.Add("Retirar Documento");
-            if (entidade.bitRetirarObjeto)
-                realizar.Add("Retirar Objeto");
-
-            return string.Join(", ", realizar.ToArray());
+            return entidade.DescricaoAtividade;
         }
 
         /// <summary>
@@ -381,21 +370,97 @@ namespace BHJet_WebApi.Controllers
 
         private string MontaAtividade(LogCorridaEntidade entidade)
         {
-            if (entidade.bitEntregarDocumento)
-                return "Entregar Documento";
-            else if (entidade.bitColetarAssinatura)
-                return "Coletar Assinatura";
-            else if (entidade.bitRetirarDocumento)
-                return "Retirar Documento";
-            else if (entidade.bitRetirarObjeto)
-                return "Retirar Objeto";
-            else if (entidade.bitEntregarObjeto)
-                return "Entregar Objeto";
-            else
-                return "Outros";
+            return entidade.DescricaoAtividade;
+        }
+
+        /// <summary>
+        /// Busca preco corrida
+        /// </summary>
+        /// <returns>Doublle</returns>
+        [Route("preco")]
+        [ResponseType(typeof(double))]
+        public IHttpActionResult PostPrecoCorrido([FromBody]CalculoCorridaDTO model)
+        {
+            double? valorTotal = CalculaPrecoCoorrida(model);
+
+            // Return
+            return Ok(valorTotal);
+        }
+
+        private static double? CalculaPrecoCoorrida(CalculoCorridaDTO model)
+        {
+            // Busca tarifa cliente
+            var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente, model.TipoVeiculo);
+
+            // Variaveis Preco
+            var valorKMAdc = Double.Parse(tarifa.ValorKMAdicional?.ToString() ?? "0");
+            var valaorPadrao = Double.Parse(tarifa.ValorContrato?.ToString() ?? "0");
+
+            // Calculo
+            var quantidadeKM = DistanciaUtil.CalculaDistancia(model.Localizacao.Select(l => new Localidade()
+            {
+                Latitude = l.Latitude,
+                Longitude = l.Longitude
+            }).ToArray());
+            var valorKM = (quantidadeKM * tarifa.FranquiaKM) ?? 0;
+            var qtdKMExcecdente = quantidadeKM > tarifa.FranquiaKM ? (quantidadeKM - tarifa.FranquiaKM) * valorKMAdc : 0;
+
+            // Valor total
+            var valorTotal = valaorPadrao + valorKM + qtdKMExcecdente;
+            return valorTotal;
+        }
+
+        /// <summary>
+        /// Incluir Corrida
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Route("")]
+        [ResponseType(typeof(double))]
+        public IHttpActionResult PostCorrido([FromBody]IncluirCorridaDTO model)
+        {
+            // Busca Comissao
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);          
+
+             // Calculo Valor Estimado
+             var valorEstimado = CalculaPrecoCoorrida(new CalculoCorridaDTO()
+            {
+                IDCliente = model.IDCliente ?? 0,
+                TipoVeiculo = model.TipoProfissional ?? 0,
+                Localizacao = model.Enderecos.Select(c => new CalculoCorridaLocalidadeDTO()
+                {
+                    Latitude = Double.Parse(c.Latitude),
+                    Longitude = Double.Parse(c.Longitude)
+                }).ToArray()
+            });
+
+#if DEBUG
+            var usuario = 3;
+#else
+            var usuario = long.Parse(_usuarioAutenticado.LoginID);
+#endif
+
+            // Busca tarifa cliente
+            var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()
+            {
+                IDCliente = model.IDCliente,
+                Comissao = comissao.decPercentualComissao,
+                TipoProfissional = model.TipoProfissional,
+                ValorEstimado = valorEstimado,
+                Enderecos = model.Enderecos.Select(c => new EnderecoModel()
+                {
+                    Descricao = c.Descricao,
+                    Latitude = c.Latitude,
+                    Longitude = c.Longitude,
+                    Observacao = c.Observacao,
+                    ProcurarPessoa = c.ProcurarPessoa,
+                    TipoOcorrencia = c.TipoOcorrencia
+                }).ToList()
+            }, usuario);
+
+            // Return
+            return Ok(idCorrida);
         }
     }
 }
-
 
 

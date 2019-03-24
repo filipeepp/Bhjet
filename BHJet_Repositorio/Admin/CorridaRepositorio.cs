@@ -1,5 +1,6 @@
 ﻿using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 using System.Collections.Generic;
 
@@ -48,14 +49,16 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select CD.idCorrida as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
-	                                concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
+	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
+                                    EC.vcEnderecoCompleto as EnderecoCompleto,
 		                            EC.vcPessoaContato as ProcurarPor,
 		                            LGCD.idStatusCorrida as StatusCorrida,
-	                                EC.bitColetarAssinatura,
-									EC.bitEntregarDocumento,
-									EC.bitEntregarObjeto,
-									EC.bitRetirarDocumento,
-									EC.bitRetirarObjeto,
+                                    TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
+	                                --EC.bitColetarAssinatura,
+									--EC.bitEntregarDocumento,
+									--EC.bitEntregarObjeto,
+									--EC.bitRetirarDocumento,
+									--EC.bitRetirarObjeto,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao AS Observacao,
                                     PT.vcCaminhoProtocolo as CaminhoProtocolo
@@ -63,8 +66,9 @@ namespace BHJet_Repositorio.Admin
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
-								    left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
+								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
+                                    left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
 						        where CD.idCorrida = @id";
 
                 // Execução
@@ -119,13 +123,15 @@ namespace BHJet_Repositorio.Admin
                     // Query
                     string query = @"select top(1) CD.idCorrida as ID,
 							        CD.decValorComissaoNegociado as Comissao,
-							        E.vcRua + ' - ' + E.vcNumero + ', ' + E.vcBairro + ' / ' + E.vcCidade as EnderecoCompleto,
+                                    EC.vcEnderecoCompleto as EnderecoCompleto,
+							        --E.vcRua + ' - ' + E.vcNumero + ', ' + E.vcBairro + ' / ' + E.vcCidade as EnderecoCompleto,
+                                    vcEnderecoCompleto as EnderecoCompleto,
                                     C.vcNomeFantasia as NomeCliente
 							     from tblCorridas CD
 								     join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
-								    join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
+								    --join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
                                     join tblClientes as C on (CD.idCliente = C.idCliente)
                                     left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
 								 where CD.idStatusCorrida = 3
@@ -178,23 +184,26 @@ namespace BHJet_Repositorio.Admin
                                         LC.idStatusCorrida as Status,
                                         EC.idEnderecoCorrida,
                                         EC.dtHoraChegada,
-                                        ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
+                                        --ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
+                                        EC.vcEnderecoCompleto as EnderecoCompleto,
                                         EC.vcPessoaContato,
                                         EC.vcObservacao,
-                                        EC.bitEntregarDocumento,
-                                        EC.bitColetarAssinatura,
-                                        EC.bitRetirarDocumento,
-                                        EC.bitRetirarObjeto,
-                                        EC.bitEntregarObjeto,
-                                        EC.bitOutros,
+                                        TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
+                                        --EC.bitEntregarDocumento,
+                                        --EC.bitColetarAssinatura,
+                                        --EC.bitRetirarDocumento,
+                                        --EC.bitRetirarObjeto,
+                                        --EC.bitEntregarObjeto,
+                                        --EC.bitOutros,
                                         LC.geoPosicao.STY  as vcLatitude, 
 	                                    LC.geoPosicao.STX  as vcLongitude,
                                        PEC.vcCaminhoProtocolo as Foto
 				                        -- TELEFONE NAO TEM
                                   from tblLogCorrida LC
                                   join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
-                                  join tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
+                                  --join tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
                                   left join tblProtocoloEnderecoCorrida PEC on (PEC.idEnderecoCorrida = EC.idEnderecoCorrida)
+                                  left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
                                  where LC.idCorrida = @id";
 
                 // Execução
@@ -437,6 +446,140 @@ namespace BHJet_Repositorio.Admin
                 return sqlConnection.Query<OcorrenciaEntidade>(query);
             }
         }
+
+        /// <summary>
+        /// Incluir Corrida
+        /// </summary>
+        /// <returns>void</returns>
+        public long IncluirCorrida(CorridaFiltro filtro, long idUsuario)
+        {
+            // Variaveis
+            long IDCorrida = 0;
+            long IDEndereco = 0;
+
+            // Execute
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                #region Query Corrida
+                string queryAtualiza = @"INSERT INTO [dbo].[tblCorridas]
+                                                     ([idUsuarioChamador]
+                                                                ,[idUsuarioColaboradorEmpresa]
+                                                                ,[idUsuarioCancelamento]
+                                                                ,[dtDataHoraRegistroCorrida]
+                                                                ,[decValorEstimado]
+                                                                ,[decValorNegociado]
+                                                                ,[decValorComissaoNegociado]
+                                                                ,[decValorFinalizado]
+                                                                ,[bitAgendada]
+                                                                ,[dtDataHoraAgendamento]
+                                                                ,[dtDataHoraInicio]
+                                                                ,[dtDataHoraTermino]
+                                                                ,[idCliente]
+                                                                ,[idStatusCorrida]
+                                                                ,[idTipoProfissional]
+                                                                ,[intKMPercorrido])
+                                                          VALUES
+                                                                (@UsuarioLogado
+                                                                ,null
+                                                                ,@UsuarioLogado
+                                                                ,getdate()
+                                                                ,@ValorEstimado
+                                                                ,@ValorNegociado
+                                                                ,@Comissao
+                                                                ,null
+                                                                ,0
+                                                                ,null
+                                                                ,null
+                                                                ,null
+                                                                ,@IDCliente
+                                                                ,3
+                                                                ,@TipoProfissional
+                                                                ,null) select @@identity";
+
+                IDCorrida = sqlConnection.ExecuteScalar<long>(queryAtualiza, new
+                {
+                    UsuarioLogado = idUsuario,
+                    ValorEstimado = filtro.ValorEstimado,
+                    ValorNegociado = filtro.ValorEstimado,
+                    Comissao = filtro.Comissao,
+                    IDCliente = filtro.IDCliente,
+                    TipoProfissional = filtro.TipoProfissional
+                });
+                #endregion
+            }
+            for (int i = 0; i < filtro.Enderecos.Count; i++)
+            {
+                var endereco = filtro.Enderecos[i];
+
+                using (var sqlCon = this.InstanciaConexao())
+                {
+                    #region Query Endereco Corrida
+                    string queryEnderedo = @"INSERT INTO [dbo].[tblEnderecosCorrida]
+                                                       ([idCorrida]
+                                                       ,[geoPosicao]
+                                                                  ,[intOrdem]
+                                                                  ,[dtHoraChegada]
+                                                                  ,[dtHoraAtendido]
+                                                                  ,[dtHoraSaida]
+                                                                  ,[vcPessoaContato]
+                                                                  ,idTipoOcorrenciaCorrida
+                                                                  ,[vcObservacao])
+                                                            VALUES
+                                                                  (@IDCorrida
+                                                                  ,(select geometry::Point(@log, @lat, 4326))
+                                                                  ,@OrdemChamado
+                                                                  ,null
+                                                                  ,null
+                                                                  ,null
+                                                                  ,@Contato
+		                                                          ,@TipoOcorrencia
+                                                                  ,@Obs) select @@identity";
+
+                    IDEndereco = sqlCon.ExecuteScalar<long>(queryEnderedo, new
+                    {
+                        IDCorrida = IDCorrida,
+                        lat = endereco.Latitude,
+                        log = endereco.Longitude,
+                        OrdemChamado = i,
+                        Contato = endereco.ProcurarPessoa,
+                        TipoOcorrencia = endereco.TipoOcorrencia,
+                        Obs = endereco.Observacao
+                    });
+                    #endregion
+                }
+
+                using (var sqlCon = this.InstanciaConexao())
+                {
+                    #region Query Log Corrida
+                    string queryLogCorrida = @"INSERT INTO [dbo].[tblLogCorrida]
+                                                       ([idCorrida]
+                                                                  ,[idEnderecoCorrida]
+                                                                  ,[idStatusCorrida]
+                                                                  ,[geoPosicao]
+                                                                  ,[dtDataHoraLogCorrida])
+                                                            VALUES
+                                                                  (@IDCorrida
+                                                                  ,@IDCorridaEndereco
+                                                                  ,@StatusCorrida
+                                                                  ,(select geometry::Point(@log, @lat, 4326))
+                                                                  ,getdate())";
+
+                    sqlCon.Execute(queryLogCorrida, new
+                    {
+                        IDCorrida = IDCorrida,
+                        IDCorridaEndereco = IDEndereco,
+                        StatusCorrida = 3,
+                        lat = endereco.Latitude,
+                        log = endereco.Longitude
+                    });
+                    #endregion
+                }
+            }
+
+            // Return
+            return IDCorrida;
+        }
+
     }
 
     public struct LogCorrida

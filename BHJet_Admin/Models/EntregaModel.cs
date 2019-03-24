@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BHJet_Enumeradores;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models
@@ -6,7 +7,9 @@ namespace BHJet_Admin.Models
     public class EntregaModel
     {
         public long? IDCliente { get; set; }
+        public long? OSNumero { get; set; }
         public decimal? ValorCorrida { get; set; }
+        public TipoProfissional? TipoProfissional { get; set; }
         public List<EnderecoModel> Enderecos { get; set; }
     }
 

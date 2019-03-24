@@ -80,8 +80,8 @@ namespace BHJet_Usuario.Controllers
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()
             {
-                label = x.IDSolicitacao + " - " + x.DescricaoSolicitacao,
-                value = x.IDSolicitacao
+                label = x.ID + " - " + x.Descricao,
+                value = x.ID
             }), JsonRequestBehavior.AllowGet);
         }
 

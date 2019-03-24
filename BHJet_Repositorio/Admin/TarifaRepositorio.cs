@@ -1,4 +1,5 @@
 ﻿using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 using System.Collections.Generic;
 
@@ -154,5 +155,8 @@ namespace BHJet_Repositorio.Admin
                 }
             }
         }
+
     }
+
 }
+

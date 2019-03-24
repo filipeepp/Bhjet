@@ -1,5 +1,7 @@
 ﻿using BHJet_Admin.Models;
+using BHJet_DTO.Corrida;
 using BHJet_Servico.Corrida;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -52,7 +54,16 @@ namespace BHJet_Admin.Controllers
             this.TempData["origemSolicitacao"] = origem;
 
             // Busca Precificação
-            var resumo = corridaServico.CalculoPrecoCorrida();
+            var resumo = corridaServico.CalculoPrecoCorrida(new BHJet_DTO.Corrida.CalculoCorridaDTO()
+            {
+                IDCliente = origem.IDCliente ?? 0,
+                TipoVeiculo = (int)origem.TipoProfissional,
+                Localizacao = origem.Enderecos.Select(l => new CalculoCorridaLocalidadeDTO()
+                {
+                    Longitude = Double.Parse(l.Longitude),
+                    Latitude = Double.Parse(l.Latitude)
+                }).ToArray()
+            });
             origem.ValorCorrida = resumo;
 
             return View(origem);
@@ -66,9 +77,29 @@ namespace BHJet_Admin.Controllers
             this.TempData["origemSolicitacao"] = origem;
 
             // Se Logado redireciona para pagamento
-            return RedirectToAction("Pagamento", "Pagamento");
-
-            //return View(origem);
+            if (origem.IDCliente == null)
+                return RedirectToAction("Pagamento", "Pagamento");
+            else
+            {
+                // Incluir Corrida
+                origem.OSNumero = corridaServico.IncluirCorrida(new IncluirCorridaDTO()
+                {
+                    IDCliente = origem.IDCliente,
+                    TipoProfissional = (int)origem.TipoProfissional,
+                    Enderecos = origem.Enderecos.Select(c => new EnderecoCorridaDTO()
+                    {
+                        Descricao = c.Descricao,
+                        Latitude = c.Latitude,
+                        Longitude = c.Longitude,
+                        Observacao = c.Observacao,
+                        ProcurarPessoa = c.ProcurarPessoa,
+                        TipoOcorrencia = c.TipoOcorrencia
+                    }).ToList()
+                });
+                
+                // Redirect
+                return RedirectToAction("Resumo", "Entregas");
+            }
         }
 
         [HttpGet]

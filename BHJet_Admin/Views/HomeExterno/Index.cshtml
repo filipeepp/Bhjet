@@ -1,4 +1,15 @@
-﻿
+﻿@*@{ 
+    if(UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+    }
+}
+
+@using BHJet_Admin.Infra*@
 @using BHJet_Admin.Models
 @using BHJet_Enumeradores
 @model EntregaModel
@@ -30,6 +41,8 @@
                                     @Html.TextBoxFor(model => model.Enderecos[0].Descricao, new { @id = "txtEnderecoPartida", @class = "form-control", placeholder = "Digite o endereço." })
                                     @Html.ValidationMessageFor(model => model.Enderecos[0].Descricao, null, new { @class = "text-danger" })
 
+                                    @Html.HiddenFor(model => model.IDCliente)
+                                    @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
                                     @Html.HiddenFor(model => model.Enderecos[0].Longitude)
                                     @Html.HiddenFor(model => model.Enderecos[0].Latitude)
                                 </div>
@@ -59,13 +72,13 @@
                                         <label class="titulo" for="txtEnderecoPartida">O que deve ser feito:</label>
                                     </div>
 
-                                    @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, 0, new { @class = "option-input radio" })
+                                    @Html.RadioButtonFor(s => s.TipoProfissional, 1, new { @class = "option-input radio" })
                                     @Html.Label("Retirar documento(s) ou objeto(s) de pequeno porte", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
                                     <br />
-                                    @Html.RadioButtonFor(s => s.Enderecos[0].TipoOcorrencia, 1, new { @class = "option-input radio" })
+                                    @Html.RadioButtonFor(s => s.TipoProfissional, 2, new { @class = "option-input radio" })
                                     @Html.Label("Retirar documento(s) ou objeto(s) de maior porte ou pacote(s)", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
 
-                                    @Html.ValidationMessageFor(model => model.Enderecos[0].TipoOcorrencia, null, new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.TipoProfissional, null, new { @class = "text-danger" })
 
                                 </div>
                             </div>

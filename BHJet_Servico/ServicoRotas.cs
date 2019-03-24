@@ -24,6 +24,8 @@ namespace BHJet_Servico
             public const string GetLocalizacaoCorridas = "api/Corrida/status/{0}/profissional/{1}/localizacao";
 			public const string GetCorridaCliente = "api/Corrida/cliente/{0}";
             public const string GetOcorrencia = "api/Corrida/ocorrencias";
+            public const string GetPreco = "api/Corrida/preco";
+            public const string PostCorrida = "api/Corrida";
         }
 
         public class AreaAtuacao

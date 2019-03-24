@@ -2,8 +2,8 @@
 function bsoc() {
     $.ajax({
         type: "POST",
-        url: "../Resumo/CallCB", // the URL of the controller action method
-        data: null, // optional data
+        url: "../Resumo/CallCB",
+        data: null,
         success: function (result) {
 
             var f = result;
@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#draggable").draggable();
 
-    $("#btnEnviar").unbind("click");
-    $("#btnEnviar").click(function () {
-        bsoc();
-        event.stopPropagation();
-    });
+    //$("#btnEnviar").unbind("click");
+    //$("#btnEnviar").click(function () {
+    //    bsoc();
+    //    event.stopPropagation();
+    //});
 
     carregaMapaDir();
     CalculaRota();

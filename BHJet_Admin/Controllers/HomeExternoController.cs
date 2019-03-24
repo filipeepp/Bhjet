@@ -23,7 +23,10 @@ namespace BHJet_Admin.Controllers
             };
 
             if (TempData["origemSolicitacao"] != null)
-                origem = (EntregaModel)TempData["origemSolicitacao"];
+            {
+                var origemt = (EntregaModel)TempData["origemSolicitacao"];
+                origem.IDCliente = origemt.IDCliente;
+            }
 
             return View(origem);
         }
@@ -47,6 +50,8 @@ namespace BHJet_Admin.Controllers
                 {
 
                 });
+
+                model.Enderecos[0].TipoOcorrencia = model.TipoProfissional == BHJet_Enumeradores.TipoProfissional.Motorista ? 4 : 3;
 
                 // Model
                 this.TempData["origemSolicitacao"] = model;
