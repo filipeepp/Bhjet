@@ -21,10 +21,11 @@ namespace BHJet_Admin.Infra
             }
         }
 
-        public static void Logar(string token, TipoUsuario tipo)
+        public static void Logar(string token, string email, TipoUsuario tipo)
         {
             UsuarioLogado.instance.bhTkUsu = token;
             UsuarioLogado.instance.BhjTpUsu = tipo;
+            UsuarioLogado.instance.bhEmlUsu = email;
         }
 
         public string bhTkUsu
@@ -36,7 +37,19 @@ namespace BHJet_Admin.Infra
                 else
                     return string.Empty;
             }
-            set => Session["bhTkUsu"] = value;
+            set => System.Web.HttpContext.Current.Session["bhTkUsu"] = value;
+        }
+
+        public string bhEmlUsu
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.Session != null && System.Web.HttpContext.Current.Session["bhEmlUsu"] != null)
+                    return (string)System.Web.HttpContext.Current.Session["bhEmlUsu"];
+                else
+                    return string.Empty;
+            }
+            set => System.Web.HttpContext.Current.Session["bhEmlUsu"] = value;
         }
 
         public TipoUsuario? BhjTpUsu

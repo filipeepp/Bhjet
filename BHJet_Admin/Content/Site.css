@@ -1,4 +1,6 @@
-﻿html, body {
+﻿@import url(https://fonts.googleapis.com/css?family=Montserrat:300&subset=latin-ext);
+
+html, body {
     font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
     font-size: 12px;
     overflow-x: hidden;
@@ -1438,3 +1440,80 @@ input[type="radio"] {
     color: #cacc13;
 }
 
+
+
+
+/* externo */
+
+.navExt {
+    margin: 0 auto;
+    /*max-width: 800px;*/
+    background: #d5d800;
+    box-shadow: 0 3px 15px rgba(0,0,0,.15);
+}
+
+    .navExt::after {
+        display: block;
+        content: '';
+        clear: both;
+    }
+
+    .navExt ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+        .navExt ul li {
+            float: left;
+            position: relative;
+        }
+
+            .navExt ul li a {
+                display: block;
+                color: rgb(55, 55, 48);
+                text-decoration: none;
+                font-size: 13px;
+                padding: 1rem 2rem;
+                border-top: 2px solid transparent;
+                border-bottom: 2px solid transparent;
+                transition: all .3s ease-in-out;
+            }
+
+                .navExt ul li a:hover,
+                .navExt ul li a:focus {
+                    background: rgba(0, 0, 0, .15);
+                }
+
+                .navExt ul li a:focus {
+                    color: white;
+                }
+
+                .navExt ul li a:not(:only-child)::after {
+                    padding-left: 4px;
+                    content: ' ▾';
+                }
+
+            .navExt ul li ul li {
+                min-width: 190px;
+            }
+
+                .navExt ul li ul li a {
+                    background: transparent;
+                    color: #555;
+                    border-bottom: 1px solid #DDE0E7;
+                }
+
+                    .navExt ul li ul li a:hover,
+                    .navExt ul li ul li a:focus {
+                        background: #eee;
+                        color: #111;
+                    }
+
+.dropdownNavEx {
+    display: none;
+    position: absolute;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(10, 20, 30, .4);
+    z-index: 1;
+}

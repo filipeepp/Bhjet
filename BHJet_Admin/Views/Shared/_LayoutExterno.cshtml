@@ -1,4 +1,6 @@
 ﻿@using System.Web.Optimization;
+@using BHJet_Enumeradores
+@using BHJet_Admin.Infra
 
 <!DOCTYPE html>
 <html>
@@ -9,61 +11,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/Layout.js"></script>
-
-    <style type="text/css">
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            font-size: 15px;
-            font: normal normal normal 14px/1 FontAwesome;
-        }
-
-        li {
-            float: left;
-        }
-
-            li a {
-                display: block;
-                text-align: center;
-                padding: 16px;
-                text-decoration: none;
-                padding: 16px 20px 0 0;
-            }
-
-            li i a {
-                display: block;
-                text-align: center;
-                padding: 16px;
-                text-decoration: none;
-            }
-
-            li button {
-                /*display: block;
-                text-align: center;
-                padding: 16px;
-                text-decoration: none;*/
-            }
-
-        .button-login {
-            width: 95px;
-            height: 30px;
-            line-height: 12px;
-            font-family: tahoma;
-            margin-top: 1px;
-            margin-right: 2px;
-            position: absolute;
-            top: 7px;
-            right: 25px;
-            text-decoration: none;
-            background-color: rgb(51, 122, 183);
-            color: rgb(255, 255, 255);
-            font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
-        }
-    </style>
-
+    <script src="~/Scripts/Menu.js"></script>
 </head>
 <body>
     @{
@@ -71,31 +19,39 @@
     }
 
     <div id="page-wrapper">
-        <!-- Header -->
-        <div id="header-wrapper">
-            <header id="header" class="container">
 
-                <!-- Logo -->
-                <div id="logo">
-                    <img src="~/Images/logobhjet.png" class="logo" style="margin-left: 10px;" />
-                </div>
-
-                <!-- Nav -->
-                <nav id="nav">
-                    <ul>
-                        <li class="current"><a href="index.html">Início</a></li>
-                        <li>
-                            <a href="#">Para Empresas</a>
-                        </li>
-                        <li><a href="#">Para Você</a></li>
-                        <li><a href="#">Quem Somos</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Trabalhe Conosco</a></li>
+        <nav class="navExt">
+            <ul>
+                <li>  <img src="../Images/logoLogisticaPreto.jpg" class="logo" style="margin: 10px;" /></li>
+                <li><a href="#">Inpicio</a>
+                <li class="drop">
+                    <a href="#">Para Empresas</a>
+                    <ul class="dropdownNavEx">
+                        <li><a href="#">Oferta 01</a></li>
+                        <li><a href="#">Oferta 02</a></li>
+                        <li><a href="#">Oferta 03</a></li>
                     </ul>
-                </nav>
-
-            </header>
-        </div>
+                </li>
+                <li><a href="#">Para Você</a> </li>
+                <li><a href="#">Quem Somos</a> </li>
+                <li><a href="#">Contato</a> </li>
+                <li><a href="#">Trabalhe Conosco</a> </li>
+                <li class="drop" style="float:right">
+                    @if (Request.IsAuthenticated && !string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu) && !string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu))
+                    {
+                        <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Bem vindo, @UsuarioLogado.Instance.bhEmlUsu</a>
+                        <ul class="dropdownNavEx">
+                            <li><a href="#">Minha Conta</a></li>
+                            <li><a style="color:red" href="@Url.Action("Logoff", "Home")">Sair</a></li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login", "Home")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Entrar</a>
+                    }
+                </li>
+            </ul>
+        </nav>
 
         @RenderBody()
 
@@ -126,3 +82,8 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+
+
+</script>

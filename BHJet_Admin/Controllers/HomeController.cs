@@ -95,7 +95,7 @@ namespace BHJet_Admin.Controllers
                     Response.Cookies.Add(cookie);
 
                     // Session - Session["IDTKUsuarioJet"] = 
-                    UsuarioLogado.Logar(modelUsu.access_token.ToString(), TipoUsuario.Administrador);
+                    UsuarioLogado.Logar(modelUsu.access_token.ToString(), model.Login, TipoUsuario.Administrador);
                 }
                 catch (Exception e)
                 {
