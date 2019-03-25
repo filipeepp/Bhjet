@@ -23,6 +23,7 @@ namespace BHJet_Repositorio.Admin.Entidade
         public byte[] CaminhoProtocolo { get; set; }
 		public DateTime? DataHoraInicio { get; set; }
 		public DateTime? DataHoraTermino { get; set; }
-		public decimal? ValorFinalizado { get; set; }
+        public decimal? ValorEstimado { get; set; }
+        public decimal? ValorFinalizado { get; set; }
 	}
 }

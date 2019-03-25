@@ -10,6 +10,7 @@ namespace BHJet_Admin.Models.ClienteAvulso
 		public long ID { get; set; }
 		public string Data { get; set; }
 		public string NomeMotorista { get; set; }
-		public string Valor { get; set; }
+        public string ValorEstimado { get; set; }
+        public string Valor { get; set; }
 	}
 }

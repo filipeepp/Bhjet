@@ -21,11 +21,35 @@ namespace BHJet_Admin.Infra
             }
         }
 
-        public static void Logar(string token, string email, TipoUsuario tipo)
+        public static void Logar(string idUsuario, int? idCliente, string token, string email, TipoUsuario tipo)
         {
+            UsuarioLogado.instance.bhIdCli = idCliente;
+            UsuarioLogado.instance.bhIdUsu = idUsuario;
             UsuarioLogado.instance.bhTkUsu = token;
             UsuarioLogado.instance.BhjTpUsu = tipo;
             UsuarioLogado.instance.bhEmlUsu = email;
+        }
+
+        public static void Logoff()
+        {
+            UsuarioLogado.instance.bhIdCli = null;
+            UsuarioLogado.instance.bhIdUsu = string.Empty;
+            UsuarioLogado.instance.bhTkUsu = string.Empty;
+            UsuarioLogado.instance.BhjTpUsu = null;
+            UsuarioLogado.instance.bhEmlUsu = string.Empty;
+        }
+
+
+        public string bhIdUsu
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.Session != null && System.Web.HttpContext.Current.Session["bhIdUsu"] != null)
+                    return (string)System.Web.HttpContext.Current.Session["bhIdUsu"];
+                else
+                    return string.Empty;
+            }
+            set => System.Web.HttpContext.Current.Session["bhIdUsu"] = value;
         }
 
         public string bhTkUsu
@@ -50,6 +74,18 @@ namespace BHJet_Admin.Infra
                     return string.Empty;
             }
             set => System.Web.HttpContext.Current.Session["bhEmlUsu"] = value;
+        }
+
+        public int? bhIdCli
+        {
+            get
+            {
+                if (System.Web.HttpContext.Current.Session != null && System.Web.HttpContext.Current.Session["bhIdCli"] != null)
+                    return (int)System.Web.HttpContext.Current.Session["bhIdCli"];
+                else
+                    return null;
+            }
+            set => System.Web.HttpContext.Current.Session["bhIdCli"] = value;
         }
 
         public TipoUsuario? BhjTpUsu

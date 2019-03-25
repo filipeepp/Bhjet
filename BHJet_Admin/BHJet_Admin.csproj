@@ -287,6 +287,7 @@
     <Content Include="Scripts\Clientes.js" />
     <Content Include="Scripts\ClienteValor.js" />
     <Content Include="Scripts\Destinos.js" />
+    <Content Include="Scripts\DetalheClienteAvulso.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GerarFaturamento.js" />
@@ -370,7 +371,6 @@
     <Content Include="Views\Entregas\Resumo.cshtml" />
     <Content Include="Views\Pagamento\Pagamento.cshtml" />
     <Content Include="Views\Shared\_LayoutExterno.cshtml" />
-    <Content Include="Views\Entregas\Servicos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

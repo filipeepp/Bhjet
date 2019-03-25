@@ -67,6 +67,7 @@ namespace BHJet_Admin.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
+            UsuarioLogado.Logoff();
             return RedirectToAction("Login", "Home");
         }
 
@@ -94,8 +95,11 @@ namespace BHJet_Admin.Controllers
                     // Cookies
                     Response.Cookies.Add(cookie);
 
+                    // Buscar perfil
+                    var perfil = autorizacaoServico.BuscaPerfil(modelUsu.access_token.ToString());
+
                     // Session - Session["IDTKUsuarioJet"] = 
-                    UsuarioLogado.Logar(modelUsu.access_token.ToString(), model.Login, TipoUsuario.Administrador);
+                    UsuarioLogado.Logar(perfil.ID.ToString(), perfil.ClienteSelecionado, modelUsu.access_token.ToString(), model.Login, perfil.TipoUsuario);
                 }
                 catch (Exception e)
                 {
@@ -103,8 +107,11 @@ namespace BHJet_Admin.Controllers
                     return View(new LoginModel());
                 }
 
-                // Return
-                return RedirectToAction("Index", "Home");
+                if (UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador)
+                    return RedirectToAction("Index", "Home");
+                else
+                    return RedirectToAction("Index", "HomeExterno");
+
             }
             else
                 return View(model);

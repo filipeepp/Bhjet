@@ -23,13 +23,13 @@
         <nav class="navExt">
             <ul>
                 <li>  <img src="../Images/logoLogisticaPreto.jpg" class="logo" style="margin: 10px;" /></li>
-                <li><a href="#">Inpicio</a>
+                <li><a href="@Url.Action("Index", "HomeExterno")">Início</a>
                 <li class="drop">
                     <a href="#">Para Empresas</a>
                     <ul class="dropdownNavEx">
-                        <li><a href="#">Oferta 01</a></li>
-                        <li><a href="#">Oferta 02</a></li>
-                        <li><a href="#">Oferta 03</a></li>
+                        <li><a href="#">Teste 01</a></li>
+                        <li><a href="#">Teste 02</a></li>
+                        <li><a href="#">Teste 03</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Para Você</a> </li>
@@ -41,7 +41,7 @@
                     {
                         <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Bem vindo, @UsuarioLogado.Instance.bhEmlUsu</a>
                         <ul class="dropdownNavEx">
-                            <li><a href="#">Minha Conta</a></li>
+                            <li><a href="@Url.Action("Visualizar", "ClienteAvulso", new RouteValueDictionary(new { clienteID = UsuarioLogado.Instance.bhIdCli }))">Minha Conta</a></li>
                             <li><a style="color:red" href="@Url.Action("Logoff", "Home")">Sair</a></li>
                         </ul>
                     }

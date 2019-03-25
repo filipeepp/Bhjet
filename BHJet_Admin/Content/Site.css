@@ -1206,7 +1206,7 @@ input[type="radio"] {
     padding-right: 0px;
 }
 
-.ui-widget-content {
+.ui-corrida-content {
     z-index: 10;
     position: absolute;
     left: 270px;
@@ -1495,6 +1495,7 @@ input[type="radio"] {
                 }
 
             .navExt ul li ul li {
+                width: 100%;
                 min-width: 190px;
             }
 

@@ -2,7 +2,7 @@
 @model OSClienteModel
 
 <ol class="breadcrumb">
-	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
+	<li><a href="history.go(-1);">Home</a></li>
 	<li><a href="#map_canvas">Detalhe OS Cliente </a></li>
 </ol>
 
@@ -17,7 +17,7 @@
 						<div class="col-md-12 text-left">
 							<div class="titulo">
 								<h2>
-									<a href="@Url.Action("Index", "Home")">
+									<a href="history.go(-1);">
 										<i class="fa fa-arrow-left" aria-hidden="true"></i>
 									</a>
 									<b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista

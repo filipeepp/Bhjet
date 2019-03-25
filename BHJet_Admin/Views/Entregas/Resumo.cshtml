@@ -20,7 +20,7 @@
 <div>
     <div id="map_canvas">
     </div>
-    <div id="draggable" class="ui-widget-content">
+    <div id="draggable" class="ui-corrida-content">
 
         <div id="ctnInicio">
             @using (Html.BeginForm("Resumo", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
@@ -57,6 +57,8 @@
                                     </div>
                                     @Html.HiddenFor(model => model.IDCliente)
                                     @Html.HiddenFor(model => model.TipoProfissional)
+                                    @Html.HiddenFor(model => model.Enderecos[0].ProcurarPessoa)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Observacao)
                                     @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
                                     @Html.HiddenFor(model => model.Enderecos[0].Longitude)
                                     @Html.HiddenFor(model => model.Enderecos[0].Latitude)
@@ -111,6 +113,11 @@
                                                 </div>
                                             }
                                         </div>
+                                        @Html.HiddenFor(model => model.IDCliente)
+                                        @Html.HiddenFor(model => model.TipoProfissional)
+                                        @Html.HiddenFor(model => model.Enderecos[i].ProcurarPessoa)
+                                        @Html.HiddenFor(model => model.Enderecos[i].Observacao)
+                                        @Html.HiddenFor(model => model.Enderecos[i].TipoOcorrencia)
                                         @Html.HiddenFor(model => model.Enderecos[i].Longitude)
                                         @Html.HiddenFor(model => model.Enderecos[i].Latitude)
 

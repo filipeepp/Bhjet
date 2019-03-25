@@ -13,7 +13,7 @@ namespace BHJet_Admin.Controllers
         {
             var origem = new EntregaModel
             {
-                IDCliente = idCliente,
+                IDCliente = idCliente == null ? Infra.UsuarioLogado.Instance.bhIdCli : idCliente,
                 Enderecos = new List<EnderecoModel>()
                  {
                      new EnderecoModel()

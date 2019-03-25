@@ -65,7 +65,7 @@ namespace BHJet_Repositorio.Admin
 							    from tblCorridas CD
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
-								    left join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
+								    left join tblEnderecosCorrida as EC on (EC.idCorrida = CD.idCorrida)
 								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
                                     left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
@@ -91,12 +91,13 @@ namespace BHJet_Repositorio.Admin
                 // Query
                 string query = @"SELECT
 									Corrida.idCorrida AS NumeroOS,
-									Corrida.dtDataHoraInicio AS DataHoraInicio,
+									Corrida.dtDataHoraRegistroCorrida AS DataHoraInicio,
+                                    Corrida.decValorEstimado AS ValorEstimado,
 									Corrida.decValorFinalizado AS ValorFinalizado,
 									Profissional.vcNomeCompleto AS NomeProfissional
 								FROM
 									tblCorridas Corrida
-								INNER JOIN
+								LEFT JOIN
 									tblColaboradoresEmpresaSistema Profissional ON Profissional.idColaboradorEmpresaSistema = Corrida.idUsuarioColaboradorEmpresa
 								WHERE 
 									Corrida.idCliente = @ClienteID";

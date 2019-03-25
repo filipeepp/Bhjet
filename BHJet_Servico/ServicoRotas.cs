@@ -66,6 +66,7 @@ namespace BHJet_Servico
             public const string DeleteUsuario = "api/Usuarios/{0}";
             public const string GetUsuario = "api/Usuarios/{0}";
             public const string PutSituacao = "api/Usuarios/situacao/{0}/usuario/{1}";
+            public const string GetPerfil = "api/Usuarios/perfil";
         }
 
         public class Tarifa

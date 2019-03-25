@@ -1,5 +1,6 @@
 ﻿using BHJet_DTO.Usuario;
 using BHJet_Repositorio.Admin;
+using BHJet_WebApi.Util;
 using System.Linq;
 using System.Web.Http;
 
@@ -8,6 +9,22 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Usuarios")]
     public class UsuarioController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
+        public UsuarioLogado UsuarioAutenticado
+        {
+            get
+            {
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
+
+                return _usuarioAutenticado;
+            }
+        }
+
         /// <summary>
         /// Busca lista de usuarios
         /// </summary>
@@ -174,6 +191,37 @@ namespace BHJet_WebApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Busca usuario especifico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("perfil")]
+        public IHttpActionResult GetUsuarioLogado()
+        {
+            // Instancia
+            var usuRep = new UsuarioRepositorio();
+            var id = long.Parse(UsuarioAutenticado.LoginID);
 
+            // Cadastra Usuario
+            var usuario = usuRep.BuscaUsuario(id);
+
+            // Validação
+            if (usuario == null)
+                BadRequest($"Usuário {id} não encontrado.");
+
+            // Return
+            return Ok(new UsuarioDTO()
+            {
+                ID = usuario.idUsuario,
+                ClienteSelecionado = usuario.ClienteSelecionado,
+                Email = usuario.vcEmail,
+                Senha = "",
+                Situacao = usuario.bitAtivo,
+                SituacaoDesc = usuario.bitDescAtivo,
+                TipoUsuario = usuario.idTipoUsuario
+            });
+        }
     }
 }

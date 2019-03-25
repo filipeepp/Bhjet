@@ -29,15 +29,15 @@ namespace BHJet_Repositorio.Admin
                                     // and 
                                     //bitAtivo = 1";
 
-                if (filtro.usuarioTipo != null)
-                    query += " and idTipoUsuario = @usutp";
+                //if (filtro.usuarioTipo != null)
+                //    query += " and idTipoUsuario = @usutp";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
                 {
                     usuemaillogin = filtro.usuarioEmail,
-                    usupass = senhaEncrypByte,
-                    usutp = filtro.usuarioTipo != null ? ((int)filtro.usuarioTipo) : 1
+                    usupass = senhaEncrypByte
+                    //usutp = filtro.usuarioTipo != null ? ((int)filtro.usuarioTipo) : 1
                 });
             }
         }

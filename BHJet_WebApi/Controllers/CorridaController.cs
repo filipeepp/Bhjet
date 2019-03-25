@@ -162,6 +162,7 @@ namespace BHJet_WebApi.Controllers
                 NumeroOS = dtm.NumeroOS,
                 DataInicio = dtm.DataHoraInicio,
                 NomeProfissional = dtm.NomeProfissional,
+                ValorEstimado = dtm.ValorEstimado,
                 ValorFinalizado = dtm.ValorFinalizado
             }));
         }
@@ -419,10 +420,10 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult PostCorrido([FromBody]IncluirCorridaDTO model)
         {
             // Busca Comissao
-            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);          
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);
 
-             // Calculo Valor Estimado
-             var valorEstimado = CalculaPrecoCoorrida(new CalculoCorridaDTO()
+            // Calculo Valor Estimado
+            var valorEstimado = CalculaPrecoCoorrida(new CalculoCorridaDTO()
             {
                 IDCliente = model.IDCliente ?? 0,
                 TipoVeiculo = model.TipoProfissional ?? 0,

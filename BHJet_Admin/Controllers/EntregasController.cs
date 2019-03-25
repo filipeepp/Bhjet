@@ -96,7 +96,9 @@ namespace BHJet_Admin.Controllers
                         TipoOcorrencia = c.TipoOcorrencia
                     }).ToList()
                 });
-                
+
+                this.TempData["origemSolicitacao"] = origem;
+
                 // Redirect
                 return RedirectToAction("Resumo", "Entregas");
             }

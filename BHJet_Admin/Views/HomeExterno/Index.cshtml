@@ -22,7 +22,7 @@
         <div id="map_canvas">
         </div>
 
-        <div id="draggable" class="ui-widget-content">
+        <div id="draggable" class="ui-corrida-content">
 
             <div id="ctnInicio">
                 <div class="cts-titulo-side-bar">
@@ -42,6 +42,7 @@
                                     @Html.ValidationMessageFor(model => model.Enderecos[0].Descricao, null, new { @class = "text-danger" })
 
                                     @Html.HiddenFor(model => model.IDCliente)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Observacao)
                                     @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
                                     @Html.HiddenFor(model => model.Enderecos[0].Longitude)
                                     @Html.HiddenFor(model => model.Enderecos[0].Latitude)
