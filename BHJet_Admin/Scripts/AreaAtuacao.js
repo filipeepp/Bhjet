@@ -102,7 +102,7 @@ function initAutocomplete() {
 
 function BuscaAreasCadastradas(idCom) {
     $.ajax({
-        url: '../Atuacao/BuscaAreas',
+        url: '@Url.Content("~/Atuacao/BuscaAreas")',
         dataType: "json",
         type: "GET",
         success: function (dados) {

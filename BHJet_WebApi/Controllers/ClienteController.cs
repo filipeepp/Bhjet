@@ -153,7 +153,7 @@ namespace BHJet_WebApi.Controllers
                     DataNascimento = cot.DataNascimento
 
                 }).ToArray(),
-                ContratoCarro = entidadeValor.Where(c => c.idTipoVeiculo == 1).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 1).Select(v => new ClienteValorModel()
+                ContratoCarro = entidadeValor.Where(c => c.idTipoVeiculo == 2).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 2).Select(v => new ClienteValorModel()
                 {
                     idTarifario = v.idTarifario,
                     FranquiaHoras = v.idTarifario,
@@ -165,7 +165,7 @@ namespace BHJet_WebApi.Controllers
                     ValorKMAdicional = v.decValorKMAdicional,
                     ValorMinutoParado = v.decValorMinutoParado
                 }).FirstOrDefault() : null,
-                ContratoMoto = entidadeValor.Where(c => c.idTipoVeiculo == 2).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 2).Select(v => new ClienteValorModel()
+                ContratoMoto = entidadeValor.Where(c => c.idTipoVeiculo == 1).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 1).Select(v => new ClienteValorModel()
                 {
                     idTarifario = v.idTarifario,
                     FranquiaHoras = v.idTarifario,

@@ -371,6 +371,7 @@
     <Content Include="Views\Entregas\Resumo.cshtml" />
     <Content Include="Views\Pagamento\Pagamento.cshtml" />
     <Content Include="Views\Shared\_LayoutExterno.cshtml" />
+    <Content Include="Views\Shared\_Registrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

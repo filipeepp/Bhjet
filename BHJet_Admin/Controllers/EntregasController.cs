@@ -1,9 +1,11 @@
-﻿using BHJet_Admin.Models;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using BHJet_DTO.Corrida;
 using BHJet_Servico.Corrida;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace BHJet_Admin.Controllers
 {
@@ -51,7 +53,6 @@ namespace BHJet_Admin.Controllers
         {
             // Busca Solicitação
             var origem = (EntregaModel)TempData["origemSolicitacao"];
-            this.TempData["origemSolicitacao"] = origem;
 
             // Busca Precificação
             var resumo = corridaServico.CalculoPrecoCorrida(new BHJet_DTO.Corrida.CalculoCorridaDTO()
@@ -60,11 +61,13 @@ namespace BHJet_Admin.Controllers
                 TipoVeiculo = (int)origem.TipoProfissional,
                 Localizacao = origem.Enderecos.Select(l => new CalculoCorridaLocalidadeDTO()
                 {
-                    Longitude = Double.Parse(l.Longitude),
-                    Latitude = Double.Parse(l.Latitude)
+                    Longitude = Double.Parse(l.Longitude.Replace(".", ",")),
+                    Latitude = Double.Parse(l.Latitude.Replace(".", ","))
                 }).ToArray()
             });
             origem.ValorCorrida = resumo;
+
+            this.TempData["origemSolicitacao"] = origem;
 
             return View(origem);
         }
@@ -78,7 +81,11 @@ namespace BHJet_Admin.Controllers
 
             // Se Logado redireciona para pagamento
             if (origem.IDCliente == null)
-                return RedirectToAction("Pagamento", "Pagamento");
+            {
+                this.TempData["origemSolicitacao"] = origem;
+                this.TempData["simulandoCorrida"] = true;
+                return RedirectToAction("Login", "Home");
+            }
             else
             {
                 // Incluir Corrida

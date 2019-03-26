@@ -10,12 +10,12 @@
 <![endif]-->
 <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
 <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
-<script src="~/Scripts/jquery-ui.min.js"></script>
-<script src="~/Scripts/owl.carousel.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+<script src="@Url.Content("~/Scripts/owl.carousel.js")"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w"></script>
-<script type="text/javascript" src="~/Scripts/GoogleMapsBHJet.js"></script>
-<script type="text/javascript" src="~/Scripts/Resumo.js"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoogleMapsBHJet.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Resumo.js")"></script>
 
 <div>
     <div id="map_canvas">
@@ -57,6 +57,7 @@
                                     </div>
                                     @Html.HiddenFor(model => model.IDCliente)
                                     @Html.HiddenFor(model => model.TipoProfissional)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Descricao)
                                     @Html.HiddenFor(model => model.Enderecos[0].ProcurarPessoa)
                                     @Html.HiddenFor(model => model.Enderecos[0].Observacao)
                                     @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
@@ -113,8 +114,7 @@
                                                 </div>
                                             }
                                         </div>
-                                        @Html.HiddenFor(model => model.IDCliente)
-                                        @Html.HiddenFor(model => model.TipoProfissional)
+                                        @Html.HiddenFor(model => model.Enderecos[i].Descricao)
                                         @Html.HiddenFor(model => model.Enderecos[i].ProcurarPessoa)
                                         @Html.HiddenFor(model => model.Enderecos[i].Observacao)
                                         @Html.HiddenFor(model => model.Enderecos[i].TipoOcorrencia)
@@ -168,8 +168,10 @@
                                     @Model.OSNumero;
                                 </h3>
 
-
-                                <input type="submit" class="btnPadrao btnConfirmacao" id="btnRdOS" name="btnEnviar" style="font-size: unset;" value="OK" />
+                                <a style="margin-top: -10px;" class="btnPadrao btnConfirmacao" href="@Url.Action("OSCliente", "Dashboard", new ResumoModel() { PesquisaOSCliente = @Model.OSNumero.ToString()})">
+                                    <i class="fa fa-eye" aria-hidden="true"> </i> Detalhar
+                                </a>
+                                @*<input type="submit" class="btnPadrao btnConfirmacao" id="btnRdOS" name="btnEnviar" style="font-size: unset;" value="OK" />*@
                             </div>
                         </div>
                     </div>
@@ -177,10 +179,6 @@
 
             }
         </div>
-
-        @*@{
-                Html.RenderPartial("~/Views/Shared/_Registrar.cshtml");
-            }*@
 
     </div>
 </div>

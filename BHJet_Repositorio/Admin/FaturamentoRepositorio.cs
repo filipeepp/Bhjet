@@ -35,7 +35,7 @@ namespace BHJet_Repositorio.Admin
                         string query = @"--- Busca Corridas ---
 		                                select P.idCorrida,
                                                P.idUsuarioChamador as idUsuarioFaturado,
-	                                           P.idTarifario,
+	                                           --P.idTarifario,
 	                                           P.idUsuarioColaboradorEmpresa as idColaboradorEmpresaSistema,
 	                                           P.decValorFinalizado as decValor,
 	                                           P.decValorComissaoNegociado as decValorComissao

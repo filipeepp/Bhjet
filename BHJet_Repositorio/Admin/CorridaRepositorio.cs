@@ -524,7 +524,7 @@ namespace BHJet_Repositorio.Admin
                                                                   ,[dtHoraSaida]
                                                                   ,[vcPessoaContato]
                                                                   ,idTipoOcorrenciaCorrida
-                                                                  ,[vcObservacao])
+                                                                  ,[vcObservacao], vcEnderecoCompleto)
                                                             VALUES
                                                                   (@IDCorrida
                                                                   ,(select geometry::Point(@log, @lat, 4326))
@@ -534,7 +534,7 @@ namespace BHJet_Repositorio.Admin
                                                                   ,null
                                                                   ,@Contato
 		                                                          ,@TipoOcorrencia
-                                                                  ,@Obs) select @@identity";
+                                                                  ,@Obs, @Endereco) select @@identity";
 
                     IDEndereco = sqlCon.ExecuteScalar<long>(queryEnderedo, new
                     {
@@ -544,7 +544,8 @@ namespace BHJet_Repositorio.Admin
                         OrdemChamado = i,
                         Contato = endereco.ProcurarPessoa,
                         TipoOcorrencia = endereco.TipoOcorrencia,
-                        Obs = endereco.Observacao
+                        Obs = endereco.Observacao,
+                        Endereco = endereco.Descricao
                     });
                     #endregion
                 }

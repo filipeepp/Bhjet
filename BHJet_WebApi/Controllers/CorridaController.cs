@@ -311,8 +311,8 @@ namespace BHJet_WebApi.Controllers
         /// Busca ocorrencia corrida
         /// </summary>
         /// <returns>List<DetalheCorridaModel></returns>
-        [Authorize]
         [Route("ocorrencias")]
+        [AllowAnonymous]
         [ResponseType(typeof(IEnumerable<OcorrenciaDTO>))]
         public IHttpActionResult GetOcorrenciaCorrida()
         {
@@ -429,8 +429,8 @@ namespace BHJet_WebApi.Controllers
                 TipoVeiculo = model.TipoProfissional ?? 0,
                 Localizacao = model.Enderecos.Select(c => new CalculoCorridaLocalidadeDTO()
                 {
-                    Latitude = Double.Parse(c.Latitude),
-                    Longitude = Double.Parse(c.Longitude)
+                    Latitude = Double.Parse(c.Latitude.Replace(".", ",")),
+                    Longitude = Double.Parse(c.Longitude.Replace(".", ","))
                 }).ToArray()
             });
 

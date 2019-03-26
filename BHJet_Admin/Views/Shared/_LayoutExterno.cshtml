@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/Menu.js"></script>
+    <script src="@Url.Content("~/Scripts/Menu.js")"></script>
 </head>
 <body>
     @{
@@ -22,7 +22,7 @@
 
         <nav class="navExt">
             <ul>
-                <li>  <img src="../Images/logoLogisticaPreto.jpg" class="logo" style="margin: 10px;" /></li>
+                <li>  <img src="@Url.Content("~/Images/logoLogisticaPreto.jpg")" class="logo" style="margin: 10px;" /></li>
                 <li><a href="@Url.Action("Index", "HomeExterno")">Início</a>
                 <li class="drop">
                     <a href="#">Para Empresas</a>

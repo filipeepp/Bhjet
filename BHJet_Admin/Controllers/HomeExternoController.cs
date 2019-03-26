@@ -25,7 +25,8 @@ namespace BHJet_Admin.Controllers
             if (TempData["origemSolicitacao"] != null)
             {
                 var origemt = (EntregaModel)TempData["origemSolicitacao"];
-                origem.IDCliente = origemt.IDCliente;
+                if (origemt.IDCliente != null)
+                    origem.IDCliente = origemt.IDCliente;
             }
 
             return View(origem);

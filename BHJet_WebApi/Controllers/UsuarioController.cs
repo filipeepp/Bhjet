@@ -157,7 +157,6 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
         [Route("{id:long}")]
         public IHttpActionResult DeletaUsuario(long id)
         {
