@@ -36,8 +36,8 @@ namespace BHJet_Admin.Models.Usuario
         [Required(ErrorMessage = "Selecione o tipo de usuário.")]
         public TipoUsuario TipoUser { get; set; }
 
-        private int? _ClienteSelecionado;
-        public int? ClienteSelecionado
+        private long? _ClienteSelecionado;
+        public long? ClienteSelecionado
         {
             get
             {
@@ -67,8 +67,8 @@ namespace BHJet_Admin.Models.Usuario
 
         public bool Situacao { get; set; }
 
-        private int? _ClienteSelecionadoBKP;
-        public int? ClienteSelecionadoBKP
+        private long? _ClienteSelecionadoBKP;
+        public long? ClienteSelecionadoBKP
         {
             get
             {

@@ -12,6 +12,7 @@ namespace BHJet_Servico.Cliente
         ClienteDTO[] BuscaClienteContrato(string trechoPesquisa);
         ClienteCompletoModel BuscaClientePorID(long clienteID);
         void IncluirCliente(ClienteCompletoModel clienteModel);
+        void IncluirClienteAvulso(ClienteAvulsoDTO clienteModel);
         void IncluirContato(ClienteContatoModel contatoModel, long clienteID);
         void IncluirValor(ClienteValorModel valorModel, long clienteID);
         void EditarCliente(ClienteCompletoModel clienteModel);
@@ -53,6 +54,11 @@ namespace BHJet_Servico.Cliente
         public void IncluirCliente(ClienteCompletoModel clienteModel)
         {
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostCliente}"), clienteModel);
+        }
+
+        public void IncluirClienteAvulso(ClienteAvulsoDTO clienteModel)
+        {
+            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.PostClienteAvulso}"), clienteModel);
         }
 
         public void IncluirContato(ClienteContatoModel contatoModel, long clienteID)

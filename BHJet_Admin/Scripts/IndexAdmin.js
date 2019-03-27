@@ -193,5 +193,6 @@ $(document).ready(function ($) {
 
     bsccli();
 
+
 });
 

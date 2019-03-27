@@ -43,7 +43,8 @@ namespace BHJet_Servico
 			#region Cliente Normal
 			public const string GetClientes = "api/Cliente";
 			public const string PostCliente = "api/Cliente";
-			public const string PostClienteContato = "api/Cliente/{0}/contato";
+            public const string PostClienteAvulso = "api/Cliente/avulso";
+            public const string PostClienteContato = "api/Cliente/{0}/contato";
 			public const string PostClienteValor = "api/Cliente/{0}/contrato";
 			public const string GetClienteContrato = "api/Cliente/contrato";
 			public const string GetClientesValorAtivo = "api/Cliente/contrato/ativo";

@@ -21,7 +21,7 @@ namespace BHJet_Admin.Infra
             }
         }
 
-        public static void Logar(string idUsuario, int? idCliente, string token, string email, TipoUsuario tipo)
+        public static void Logar(string idUsuario, long? idCliente, string token, string email, TipoUsuario tipo)
         {
             UsuarioLogado.instance.bhIdCli = idCliente;
             UsuarioLogado.instance.bhIdUsu = idUsuario;
@@ -76,12 +76,12 @@ namespace BHJet_Admin.Infra
             set => System.Web.HttpContext.Current.Session["bhEmlUsu"] = value;
         }
 
-        public int? bhIdCli
+        public long? bhIdCli
         {
             get
             {
                 if (System.Web.HttpContext.Current.Session != null && System.Web.HttpContext.Current.Session["bhIdCli"] != null)
-                    return (int)System.Web.HttpContext.Current.Session["bhIdCli"];
+                    return (long)System.Web.HttpContext.Current.Session["bhIdCli"];
                 else
                     return null;
             }

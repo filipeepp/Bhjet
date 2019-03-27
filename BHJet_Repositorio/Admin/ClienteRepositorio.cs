@@ -15,7 +15,7 @@ namespace BHJet_Repositorio.Admin
         /// <param name="email"></param>
         /// <param name="cpf"></param>
         /// <returns></returns>
-        public IEnumerable<ValidaClienteExistente> VerificaExistenciaProfissional(string CpfCnpj)
+        public IEnumerable<ValidaClienteExistente> VerificaExistenciaCliente(string CpfCnpj)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -208,7 +208,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
         /// Busca Profissionais Disponiveis
         /// </summary>
@@ -294,9 +293,9 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ProfissionalCompletoEntidade</param>
         /// <returns>UsuarioEntidade</returns>
-        public void IncluirCliente(ClienteCompletoEntidade cliente)
+        public long? IncluirCliente(ClienteCompletoEntidade cliente)
         {
-            int? idCliente = null;
+            long? idCliente = null;
             int? idEndereco = null;
             int? idContato = null;
             int? idValor = null;
@@ -379,10 +378,11 @@ namespace BHJet_Repositorio.Admin
                             ClienteAvulso = cliente.DadosCadastrais.ClienteAvulso
                         }, trans);
 
-
-
-                        // Insere Contato
-                        string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
+                        // Se nao for avulso inclui contrato
+                        if (!cliente.DadosCadastrais.ClienteAvulso)
+                        {
+                            // Insere Contato
+                            string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
                                            ([idCliente]
                                            ,[vcNomeContato]
                                            ,[vcDepartamento]
@@ -399,34 +399,35 @@ namespace BHJet_Repositorio.Admin
                                            ,@TelefoneCelular
                                            ,@Email)
                                            select @@identity;";
-                        // Execute
-                        foreach (var contato in cliente.Contato)
-                        {
-                            idContato = trans.Connection.ExecuteScalar<int?>(queryContato, new
+                            // Execute
+                            foreach (var contato in cliente.Contato)
                             {
-                                codCliente = idCliente,
-                                Contato = contato.Contato,
-                                Setor = contato.Setor,
-                                DataNascimento = contato.DataNascimento,
-                                TelefoneComercial = contato.TelefoneComercial,
-                                TelefoneCelular = contato.TelefoneCelular,
-                                Email = contato.Email
-                            }, trans);
+                                idContato = trans.Connection.ExecuteScalar<int?>(queryContato, new
+                                {
+                                    codCliente = idCliente,
+                                    Contato = contato.Contato,
+                                    Setor = contato.Setor,
+                                    DataNascimento = contato.DataNascimento,
+                                    TelefoneComercial = contato.TelefoneComercial,
+                                    TelefoneCelular = contato.TelefoneCelular,
+                                    Email = contato.Email
+                                }, trans);
 
-                            Contatos.Add(idContato);
-                        }
+                                Contatos.Add(idContato);
+                            }
 
-                        // Insere Tarifa
-                        if (cliente.ContratoMoto != null)
-                        {
-                            var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 1, cliente.ContratoMoto);
-                            Valores.Add(cont);
-                        }
+                            // Insere Tarifa
+                            if (cliente.ContratoMoto != null)
+                            {
+                                var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 1, cliente.ContratoMoto);
+                                Valores.Add(cont);
+                            }
 
-                        if (cliente.ContratoCarro != null)
-                        {
-                            var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 2, cliente.ContratoCarro);
-                            Valores.Add(cont);
+                            if (cliente.ContratoCarro != null)
+                            {
+                                var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 2, cliente.ContratoCarro);
+                                Valores.Add(cont);
+                            }
                         }
 
                         // Commit
@@ -441,6 +442,8 @@ namespace BHJet_Repositorio.Admin
                     }
                 }
             }
+
+            return idCliente;
         }
 
         /// <summary>
@@ -497,7 +500,6 @@ namespace BHJet_Repositorio.Admin
                 }
             }
         }
-
 
         public int InsereContratoCliente(SqlTransaction trans, long idCliente, int tipoVeiculo, ClienteValorEntidade model)
         {
@@ -610,7 +612,6 @@ namespace BHJet_Repositorio.Admin
         //		}
         //	}
         //}
-
 
         /// <summary>
         /// Atualiza Cliente
@@ -747,7 +748,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
         /// Remove contato da base
         /// </summary>
@@ -794,7 +794,7 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        private void RoolbackCliente(int? idCliente, int? idEndereco, int?[] contatos, int?[] valores)
+        private void RoolbackCliente(long? idCliente, int? idEndereco, int?[] contatos, int?[] valores)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {

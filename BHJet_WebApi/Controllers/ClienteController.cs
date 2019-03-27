@@ -1,6 +1,7 @@
 ﻿using BHJet_Core.Extension;
 using BHJet_DTO.Cliente;
 using BHJet_Repositorio.Admin;
+using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
@@ -229,7 +230,7 @@ namespace BHJet_WebApi.Controllers
             var clienteRepositorio = new ClienteRepositorio();
 
             // Verifica existencia
-            var entidade = clienteRepositorio.VerificaExistenciaProfissional(model.DadosCadastrais.CPFCNPJ);
+            var entidade = clienteRepositorio.VerificaExistenciaCliente(model.DadosCadastrais.CPFCNPJ);
 
             // VALIDACAO
             if (entidade.Any())
@@ -298,6 +299,85 @@ namespace BHJet_WebApi.Controllers
                     intFranquiaMinutosParados = model.ContratoCarro.FranquiaMinutosParados,
                     Observacao = model.ContratoCarro.Observacao
                 } : null
+            });
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// Post Cliente
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("avulso")]
+        public IHttpActionResult PostClienteAvulso([FromBody]ClienteAvulsoDTO model)
+        {
+            // Busca Dados resumidos
+            var clienteRepositorio = new ClienteRepositorio();
+
+            // Verifica existencia
+            var entidade = clienteRepositorio.VerificaExistenciaCliente(model.CPF);
+
+            // VALIDACAO
+            if (entidade.Any())
+            {
+                bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.CPF).Any();
+
+                string msg = "";
+                if (existeCPF)
+                    msg = "mesmo CPF.";
+
+                return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
+            }
+
+            // Incluir Cliente Avulso
+            var idCliente = clienteRepositorio.IncluirCliente(new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
+            {
+                DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+                {
+                    ClienteAvulso = true,
+                    NomeRazaoSocial = string.Empty,
+                    NomeFantasia = string.Empty,
+                    CPFCNPJ = model.CPF,
+                    InscricaoEstadual = string.Empty,
+                    ISS = 0,
+                    Endereco = model.Rua,
+                    NumeroEndereco = model.Numero.ToString(),
+                    Complemento = string.Empty,
+                    Bairro = model.Bairro,
+                    Cidade = model.Cidade,
+                    Estado = model.Estado,
+                    CEP = model.CEP,
+                    Observacoes = string.Empty,
+                    HomePage = string.Empty
+                },
+                Contato = new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[]
+                {
+                    new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
+                    {
+                         Contato = model.Nome,
+                          DataNascimento = model.DataNascimento,
+                           Email = model.Email,
+                            TelefoneCelular = model.Celular,
+                             TelefoneComercial = model.Comercial,
+                              Setor = "",
+                               TelefoneRamal = "",
+                                Whatsapp = 1
+                    }
+                }
+            });
+
+            // Incluir Usuario
+            new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+            {
+                bitAtivo = true,
+                ClienteSelecionado = idCliente,
+                ColaboradorSelecionado = null,
+                idTipoUsuario = BHJet_Enumeradores.TipoUsuario.ClienteAvulsoSite,
+                vcEmail = model.Email,
+                vbIncPassword = model.Senha,
             });
 
             // Return
