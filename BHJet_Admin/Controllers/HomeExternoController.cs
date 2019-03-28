@@ -1,4 +1,5 @@
-﻿using BHJet_Admin.Models;
+﻿using BHJet_Admin.Infra;
+using BHJet_Admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,27 +9,21 @@ namespace BHJet_Admin.Controllers
 {
     public class HomeExternoController : Controller
     {
+        public HomeExternoController()
+        {
+            
+        }
+
         #region Entregas Origem
         public ActionResult Index(long? idCliente = null)
         {
-            var origem = new EntregaModel
-            {
-                IDCliente = idCliente == null ? Infra.UsuarioLogado.Instance.bhIdCli : idCliente,
-                Enderecos = new List<EnderecoModel>()
-                 {
-                     new EnderecoModel()
-                     {
-                     }
-                 }
-            };
+            // Retorna Controle
+            var controleOS =  this.RetornaOSAvulsa();
 
-            if (TempData["origemSolicitacao"] != null)
-            {
-                var origemt = (EntregaModel)TempData["origemSolicitacao"];
-                if (origemt.IDCliente != null)
-                    origem.IDCliente = origemt.IDCliente;
-            }
+            // Cria Controle de OS Avulsa
+            var origem = this.CriaOSAvulsa(controleOS != null ? controleOS.IDCliente : null);
 
+            // Return View
             return View(origem);
         }
 
@@ -47,15 +42,7 @@ namespace BHJet_Admin.Controllers
                 }
 
                 // Adiciona destino
-                model.Enderecos.Add(new EnderecoModel()
-                {
-
-                });
-
-                model.Enderecos[0].TipoOcorrencia = model.TipoProfissional == BHJet_Enumeradores.TipoProfissional.Motorista ? 4 : 3;
-
-                // Model
-                this.TempData["origemSolicitacao"] = model;
+                this.FinalizaOrigem(model);
 
                 // Redirect
                 return RedirectToAction("Index", "Entregas");

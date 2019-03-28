@@ -27,7 +27,8 @@ namespace BHJet_Repositorio.Admin.Entidade
         public string vcObservacoes { get; set; }
         public string vcSite { get; set; }
 		public int bitAtivo { get; set; }
-		public string vcDescricaoTarifario { get; set; }
+        public bool bitAvulso { get; set; }
+        public string vcDescricaoTarifario { get; set; }
 
 	}
 

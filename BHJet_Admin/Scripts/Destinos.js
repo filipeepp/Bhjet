@@ -3,7 +3,7 @@ function bsoc() {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "../Entregas/BcTpOc",
+        url: "Entregas/BcTpOc",
         success: function (data) {
             if (data !== "" && data !== undefined && data.length > 0) {
 
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 function changeButtonClicked() {
     var url = '@Url.Action("Finaliza", "Entregas")';
-    $.post("../Entregas/Finaliza", $('#frmPc').serialize(), function (view) {
+    $.post("Entregas/Finaliza", $('#frmPc').serialize(), function (view) {
         location.reload();
     });
 }

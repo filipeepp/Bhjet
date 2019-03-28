@@ -12,6 +12,8 @@ namespace BHJet_Admin.Models
         [Required(ErrorMessage = "Tipo Profissional obrigatório.")]
         public TipoProfissional? TipoProfissional { get; set; }
         public List<EnderecoModel> Enderecos { get; set; }
+        public OSAvulsoPassos PassoOS { get; set; }
+        public bool SimulandoCorridaSemUsuario { get; set; }
     }
 
     public class EnderecoModel
@@ -30,4 +32,5 @@ namespace BHJet_Admin.Models
 
         public string Observacao { get; set; }
     }
+  
 }

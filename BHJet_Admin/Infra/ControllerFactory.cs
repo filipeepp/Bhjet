@@ -59,6 +59,8 @@ namespace BHJet_Admin.Infra
                 return Activator.CreateInstance(typeof(UsuarioServico), BuscaToken());
             else if(tipo == typeof(IAreaAtuacaoServico))
                 return Activator.CreateInstance(typeof(AreaAtuacaoServico), BuscaToken());
+            else if (tipo == typeof(IOSAvulsaControle))
+                return Activator.CreateInstance(typeof(OSAvulsaControle));
             else
                 return Activator.CreateInstance(tipo);
         }

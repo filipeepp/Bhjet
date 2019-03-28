@@ -26,7 +26,8 @@ namespace BHJet_DTO.Cliente
 		public string vcObservacoes { get; set; }
 		public string vcSite { get; set; }
 		public int bitAtivo { get; set; }
-		public string vcDescricaoTarifario { get; set; }
+        public bool bitAvulso { get; set; }
+        public string vcDescricaoTarifario { get; set; }
 		public IEnumerable<ClienteContatoModel> Contato { get; set; }
     }
 

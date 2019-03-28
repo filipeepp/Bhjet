@@ -134,9 +134,8 @@
                                                 @Html.ValidationMessageFor(model => model.DadosCadastrais.CPFCNPJ, null, new { @class = "text-danger" })
                                             </div>
                                             <div class="form-group col-xs-12 col-md-6">
-                                                <label for="txtInscricaoEstadual"><small class="obrigatorio">*</small>Insc. Estadual</label>
+                                                <label for="txtInscricaoEstadual">Insc. Estadual</label>
                                                 @Html.TextBoxFor(model => model.DadosCadastrais.InscricaoEstadual, new { type = "text", @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.DadosCadastrais.InscricaoEstadual, null, new { @id = "DadosCadastrais_InscricaoEstadual_Error", @class = "text-danger" })
                                             </div>
                                             <div class="form-group col-xs-12 col-md-2">
                                                 <div class="cst-ckb-Novo-Cliente">

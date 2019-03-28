@@ -63,10 +63,7 @@ namespace BHJet_Admin.Controllers
 
         public ActionResult Login()
         {
-            var origem = TempData["origemSolicitacao"] != null ? (EntregaModel)TempData["origemSolicitacao"] : null;
-            this.TempData["origemSolicitacao"] = origem;
-            var simulacao = TempData["simulandoCorrida"] != null ? (bool)TempData["simulandoCorrida"] : false;
-            this.TempData["simulandoCorrida"] = simulacao;
+            this.MantemOSAvulsa();
 
             if (TempData.ContainsKey("Error"))
                 ViewBag.ErroLogin = TempData["Error"].ToString();
@@ -152,10 +149,10 @@ namespace BHJet_Admin.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            var origem = TempData["origemSolicitacao"] != null ? (EntregaModel)TempData["origemSolicitacao"] : null;
-            var simulacao = TempData["simulandoCorrida"] != null ? (bool)TempData["simulandoCorrida"] : false;
-            this.TempData["simulandoCorrida"] = simulacao;
+            // Busca Solicitação
+            var osAvulsa = this.RetornaOSAvulsa();
             long? cliente = null;
+
             if (ModelState.IsValid)
             {
                 try
@@ -190,10 +187,16 @@ namespace BHJet_Admin.Controllers
                     return View(new LoginModel());
                 }
 
-                if (simulacao && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.ClienteAvulsoSite)
+                // Verifica se foi simulado uma corrida sem usuario
+                if (osAvulsa != null && osAvulsa.SimulandoCorridaSemUsuario && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.ClienteAvulsoSite)
                 {
-                    origem.IDCliente = cliente;
-                    this.TempData["origemSolicitacao"] = origem;
+                    // Seta Cliente
+                    osAvulsa.IDCliente = cliente;
+
+                    // Atualiza Corrida
+                    this.AtualizaOSAvulsa(osAvulsa);
+
+                    // Redirect
                     return RedirectToAction("Resumo", "Entregas");
                 }
                 else if (UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador)

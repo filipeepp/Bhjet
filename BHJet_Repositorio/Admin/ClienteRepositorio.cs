@@ -146,7 +146,7 @@ namespace BHJet_Repositorio.Admin
                     parametroAvulso = " AND Cliente.bitAvulso = 1";
 
                 // Query
-                string query = $@"SELECT TOP 50 
+                string query = $@"SELECT 
 									Cliente.idCliente,
 									Cliente.vcNomeRazaoSocial,
 									Cliente.vcNomeFantasia,
@@ -155,6 +155,7 @@ namespace BHJet_Repositorio.Admin
 									Cliente.bitRetemISS,
 									Cliente.vcObservacoes,
 									Cliente.vcSite,
+                                    Cliente.bitAvulso,
 									Endereco.vcRua,
 									Endereco.vcNumero,
 									Endereco.vcComplemento,
@@ -187,18 +188,20 @@ namespace BHJet_Repositorio.Admin
             {
                 // Query
                 string query = @"SELECT
-									Cliente.idCliente,
+						  			Cliente.idCliente,
 									Cliente.vcNomeRazaoSocial,
-									Valor.vcDescricaoTarifario,
-									Valor.bitAtivo
+									Cliente.vcNomeFantasia,
+									Cliente.vcCPFCNPJ,
+									Cliente.vcInscricaoEstadual,
+									Cliente.bitRetemISS,
+									Cliente.vcObservacoes,
+									Cliente.vcSite,
+                                    Cliente.bitAvulso
 								FROM tblClientes Cliente
-								LEFT JOIN 
-									tblClienteTarifario Valor on Valor.idCliente = Cliente.idCliente 
-								WHERE 
+									WHERE 
 									CONVERT(VARCHAR(250), Cliente.idCliente) LIKE @valorPesquisa OR
 									Cliente.vcNomeFantasia LIKE @valorPesquisa OR
-									Cliente.vcNomeRazaoSocial LIKE @valorPesquisa OR
-									Valor.vcDescricaoTarifario LIKE @valorPesquisa";
+									Cliente.vcNomeRazaoSocial LIKE @valorPesquisa";
 
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query, new

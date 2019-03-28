@@ -188,7 +188,7 @@ $(document).ready(function ($) {
     $("#ClienteSelecionado").change(function () {
         var $option = $(this).find('option:selected');
         //location.href = '@Url.Action("Index", "HomeExterno")?idCliente=' + $option.val();
-        location.href = '/HomeExterno/Index?idCliente=' + $option.val();
+        location.href = 'HomeExterno/Index?idCliente=' + $option.val();
     });
 
     bsccli();

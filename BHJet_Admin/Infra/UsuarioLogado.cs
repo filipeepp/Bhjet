@@ -39,7 +39,6 @@ namespace BHJet_Admin.Infra
             UsuarioLogado.instance.bhEmlUsu = string.Empty;
         }
 
-
         public string bhIdUsu
         {
             get

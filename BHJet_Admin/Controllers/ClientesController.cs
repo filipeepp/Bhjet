@@ -44,9 +44,9 @@ namespace BHJet_Admin.Controllers
                     ListModel = entidade.Select(x => new LinhaClienteModel()
                     {
                         ClienteID = x.ID,
-                        NomeRazaoSocial = x.vcNomeRazaoSocial,
+                        NomeRazaoSocial = string.IsNullOrWhiteSpace(x.vcNomeRazaoSocial) ? x.vcNomeFantasia : x.vcNomeRazaoSocial,
                         TipoContrato = x.vcDescricaoTarifario,
-                        ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
+                        ValorAtivado = x.bitAvulso ? "Avulso" : "Interno"
                     }).ToList()
                 });
             }
@@ -76,9 +76,9 @@ namespace BHJet_Admin.Controllers
                     ListModel = entidade.Select(x => new LinhaClienteModel()
                     {
                         ClienteID = x.ID,
-                        NomeRazaoSocial = x.vcNomeRazaoSocial,
+                        NomeRazaoSocial = string.IsNullOrWhiteSpace(x.vcNomeRazaoSocial) ? x.vcNomeFantasia : x.vcNomeRazaoSocial,
                         TipoContrato = x.vcDescricaoTarifario,
-                        ValorAtivado = x.bitAtivo == 1 ? "Ativo" : "Inativo"
+                        ValorAtivado = x.bitAvulso ? "Avulso" : "Interno"
                     }).ToList()
                 });
             }

@@ -195,8 +195,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infra\ControllerFactory.cs" />
+    <Compile Include="Infra\OSAvulsaControle.cs" />
     <Compile Include="Infra\TratamentoErro.cs" />
     <Compile Include="Infra\UsuarioLogado.cs" />
+    <Compile Include="Infra\ValidacaoCorridaAttribute.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
     <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\ClienteAvulso\ClienteAvulsoModel.cs" />
@@ -279,6 +281,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bundle.js" />
     <Content Include="Scripts\bundle.min.js" />

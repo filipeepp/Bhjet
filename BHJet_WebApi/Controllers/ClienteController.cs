@@ -52,10 +52,23 @@ namespace BHJet_WebApi.Controllers
             return Ok(entidade.Select(cli => new ClienteDTO()
             {
                 ID = cli.idCliente,
+                vcNomeFantasia = cli.vcNomeFantasia,
                 vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
-                vcDescricaoTarifario = cli.vcDescricaoTarifario,
-                bitAtivo = cli.bitAtivo
-
+                vcCPFCNPJ = cli.vcCPFCNPJ,
+                vcInscricaoEstadual = cli.vcInscricaoEstadual,
+                bitRetemISS = cli.bitRetemISS,
+                vcObservacoes = cli.vcObservacoes,
+                vcSite = cli.vcSite,
+                vcRua = cli.vcRua,
+                vcNumero = cli.vcNumero,
+                vcComplemento = cli.vcComplemento,
+                vcBairro = cli.vcBairro,
+                vcCidade = cli.vcCidade,
+                vcUF = cli.vcUF,
+                vcCEP = cli.vcCEP,
+                bitAtivo = cli.bitAtivo,
+                bitAvulso = cli.bitAvulso,
+                vcDescricaoTarifario = cli.vcDescricaoTarifario
             }));
         }
 
@@ -95,6 +108,7 @@ namespace BHJet_WebApi.Controllers
                 vcUF = cli.vcUF,
                 vcCEP = cli.vcCEP,
                 bitAtivo = cli.bitAtivo,
+                bitAvulso = cli.bitAvulso,
                 vcDescricaoTarifario = cli.vcDescricaoTarifario
 
             }));
@@ -341,8 +355,8 @@ namespace BHJet_WebApi.Controllers
                     DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
                     {
                         ClienteAvulso = true,
-                        NomeRazaoSocial = string.Empty,
-                        NomeFantasia = string.Empty,
+                        NomeRazaoSocial = $"Avulso - {model.Nome}",
+                        NomeFantasia = $"Avulso - {model.Nome}",
                         CPFCNPJ = model.CPF,
                         InscricaoEstadual = string.Empty,
                         ISS = 0,

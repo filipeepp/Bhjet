@@ -21,7 +21,7 @@ namespace BHJet_Admin.Models.Clientes
         [RegularExpression(@"([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})", ErrorMessage = "Formato de CPF/CNPJ inválido.")]
         public string CPFCNPJ { get; set; }
 
-        [Required(ErrorMessage = "Inscrição Estadual obrigatória.")]
+        //[Required(ErrorMessage = "Inscrição Estadual obrigatória.")]
         public string InscricaoEstadual { get; set; }
 
         public bool ISS { get; set; }

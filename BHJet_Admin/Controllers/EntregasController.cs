@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_DTO.Corrida;
+using BHJet_Enumeradores;
 using BHJet_Servico.Corrida;
 using System;
 using System.Linq;
@@ -18,82 +19,78 @@ namespace BHJet_Admin.Controllers
             corridaServico = _corridaServico;
         }
 
-        // GET: Entregas
-        public ActionResult Index(object model)
+        // Passo 1 - Destinos
+        [ValidacaoCorridaAttribute(OSAvulsoPassos.Destinos)]
+        public ActionResult Index()
         {
-            var origem = (EntregaModel)TempData["origemSolicitacao"];
-            this.TempData["origemSolicitacao"] = origem;
+            // Variaveis
+            var osAvulsa = this.RetornaOSAvulsa();
 
-            return View(origem);
+            // Return View
+            return View(osAvulsa);
         }
 
+        // Passo 1 - Destinos Conclusao
         [HttpPost]
+        [ValidacaoCorridaAttribute(OSAvulsoPassos.Destinos)]
         public ActionResult Index(EntregaModel model)
         {
-            this.TempData["origemSolicitacao"] = model;
+            // Atualiza OS
+            this.AtualizaOSAvulsa(model);
 
+            // Redirect
             return RedirectToAction("Resumo", "Entregas");
         }
 
-        [HttpPost]
-        public JsonResult Finaliza(EntregaModel model)
-        {
-            model.Enderecos.Add(new EnderecoModel()
-            {
-
-            });
-
-            this.TempData["origemSolicitacao"] = model;
-
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: Resumo
+        // Passo 2 - Resumo
+        [ValidacaoCorridaAttribute(OSAvulsoPassos.Conclusao)]
         public ActionResult Resumo()
         {
             // Busca Solicitação
-            var origem = (EntregaModel)TempData["origemSolicitacao"];
+            var osAvulsa = this.RetornaOSAvulsa();
 
             // Busca Precificação
             var resumo = corridaServico.CalculoPrecoCorrida(new BHJet_DTO.Corrida.CalculoCorridaDTO()
             {
-                IDCliente = origem.IDCliente ?? 0,
-                TipoVeiculo = (int)origem.TipoProfissional,
-                Localizacao = origem.Enderecos.Select(l => new CalculoCorridaLocalidadeDTO()
+                IDCliente = osAvulsa.IDCliente ?? 0,
+                TipoVeiculo = (int)osAvulsa.TipoProfissional,
+                Localizacao = osAvulsa.Enderecos.Select(l => new CalculoCorridaLocalidadeDTO()
                 {
                     Longitude = Double.Parse(l.Longitude.Replace(".", ",")),
                     Latitude = Double.Parse(l.Latitude.Replace(".", ","))
                 }).ToArray()
             });
-            origem.ValorCorrida = resumo;
+            osAvulsa.ValorCorrida = resumo;
 
-            this.TempData["origemSolicitacao"] = origem;
+            // Atualiza OS
+            this.AtualizaOSAvulsa(osAvulsa);
 
-            return View(origem);
+            // Return
+            return View(osAvulsa);
         }
 
-        // POST: Resumo
+        // Passo 2 - Resumo Conclusao
         [HttpPost]
+        [ValidacaoCorridaAttribute(OSAvulsoPassos.Conclusao)]
         public ActionResult Resumo(EntregaModel model)
         {
-            var origem = (EntregaModel)TempData["origemSolicitacao"];
-            this.TempData["origemSolicitacao"] = origem;
+            // Busca Solicitação
+            var osAvulsa = this.RetornaOSAvulsa();
 
             // Se Logado redireciona para pagamento
-            if (origem.IDCliente == null)
+            if (osAvulsa.IDCliente == null)
             {
-                this.TempData["origemSolicitacao"] = origem;
-                this.TempData["simulandoCorrida"] = true;
+                osAvulsa.SimulandoCorridaSemUsuario = true;
                 return RedirectToAction("Login", "Home");
             }
             else
             {
                 // Incluir Corrida
-                origem.OSNumero = corridaServico.IncluirCorrida(new IncluirCorridaDTO()
+                osAvulsa.OSNumero = corridaServico.IncluirCorrida(new IncluirCorridaDTO()
                 {
-                    IDCliente = origem.IDCliente,
-                    TipoProfissional = (int)origem.TipoProfissional,
-                    Enderecos = origem.Enderecos.Select(c => new EnderecoCorridaDTO()
+                    IDCliente = osAvulsa.IDCliente,
+                    TipoProfissional = (int)osAvulsa.TipoProfissional,
+                    Enderecos = osAvulsa.Enderecos.Select(c => new EnderecoCorridaDTO()
                     {
                         Descricao = c.Descricao,
                         Latitude = c.Latitude,
@@ -104,13 +101,30 @@ namespace BHJet_Admin.Controllers
                     }).ToList()
                 });
 
-                this.TempData["origemSolicitacao"] = origem;
+                // Atualiza OS
+                this.AtualizaOSAvulsa(osAvulsa);
 
                 // Redirect
                 return RedirectToAction("Resumo", "Entregas");
             }
         }
 
+        #region Ajax Metodos
+        // Adicionar Endereco
+        [HttpPost]
+        public JsonResult Finaliza(EntregaModel model)
+        {
+            model.Enderecos.Add(new EnderecoModel()
+            {
+
+            });
+
+            this.AtualizaOSAvulsa(model);
+
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+        // Busca Tipo de Veiculo
         [HttpGet]
         public JsonResult BcTpOc()
         {
@@ -124,5 +138,6 @@ namespace BHJet_Admin.Controllers
                 value = x.ID
             }), JsonRequestBehavior.AllowGet);
         }
+        #endregion
     }
 }
