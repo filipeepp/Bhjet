@@ -38,6 +38,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public IEnumerable<ClienteContatoEntidade> Contato { get; set; }
         public ClienteValorEntidade ContratoCarro { get; set; }
         public ClienteValorEntidade ContratoMoto { get; set; }
+        public ClienteDadosBancarios DadosBancarios { get; set; }
     }
 
 	public class ClienteDadosCadastraisEntidade
@@ -58,8 +59,15 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public string CEP { get; set; }
 		public string Observacoes { get; set; }
 		public string HomePage { get; set; }
+
 	}
 
+    public class ClienteDadosBancarios
+    {
+        public string NomeCartaoCredito { get; set; }
+        public string NumeroCartaoCredito { get; set; }
+        public string ValidadeCartaoCredito { get; set; }
+    }
 
 	public class ClienteContatoEntidade
 	{

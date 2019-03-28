@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Core.Variaveis;
+using BHJet_CoreGlobal;
 using BHJet_DTO.Autenticacao;
 using BHJet_DTO.Cliente;
 using BHJet_Enumeradores;
@@ -85,6 +86,10 @@ namespace BHJet_Admin.Controllers
 
         public ActionResult Registrar()
         {
+            // Erro
+            if (TempData.ContainsKey("Error"))
+                ViewBag.ErroLogin = TempData["Error"].ToString();
+
             // Return
             return View(new RegistrarUsuarioModel());
         }
@@ -97,6 +102,17 @@ namespace BHJet_Admin.Controllers
             {
                 try
                 {
+                    ViewBag.ErroLogin = "";
+                    // Verifica Senha
+                    if (model.Senha != model.SenhaConfirm)
+                    {
+                        ViewBag.ErroLogin = "As senhas informadas não batem, favor informar corretamente.";
+                        model.Senha = "";
+                        model.SenhaConfirm = "";
+                        return View(model);
+                    }
+
+                    // Incluir Cliente
                     clienteServico.IncluirClienteAvulso(new ClienteAvulsoDTO()
                     {
                         Nome = model.Nome,
@@ -104,13 +120,27 @@ namespace BHJet_Admin.Controllers
                         DataNascimento = model.DataNascimento ?? default(DateTime),
                         Celular = model.Celular,
                         Comercial = model.Comercial,
-                        CPF = model.CPF
-
+                        CPF = model.CPF,
+                        CEP = model.CEP,
+                        Rua = model.Rua,
+                        Bairro = model.Bairro,
+                        Cidade = model.Cidade,
+                        Estado = model.Estado.ToString(),
+                        NomeCartaoCredito = model.NomeCartaoCredito,
+                        Numero = model.Numero ?? 0,
+                        NumeroCartaoCredito = model.NumeroCartaoCredito.Replace(".",""),
+                        Pais = model.Pais,
+                        Senha = CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r"),
+                        Sexo = model.Sexo.ToString(),
+                        ValidadeCartaoCredito = model.ValidadeCartaoCredito
                     });
+
+                    ViewBag.ErroLogin = string.Empty;
+                    ViewBag.SucessoLogin = $"Bem vindo, {model.Nome}, cadastro realizado com sucesso";
                 }
                 catch (Exception e)
                 {
-                    TempData["Error"] = e.Message;
+                    ViewBag.ErroLogin = e.Message;
                     return View(model);
                 }
                 return RedirectToAction("Login", "Home");

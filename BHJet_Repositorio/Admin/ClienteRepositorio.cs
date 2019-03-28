@@ -379,10 +379,9 @@ namespace BHJet_Repositorio.Admin
                         }, trans);
 
                         // Se nao for avulso inclui contrato
-                        if (!cliente.DadosCadastrais.ClienteAvulso)
-                        {
-                            // Insere Contato
-                            string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
+
+                        // Insere Contato
+                        string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
                                            ([idCliente]
                                            ,[vcNomeContato]
                                            ,[vcDepartamento]
@@ -399,23 +398,25 @@ namespace BHJet_Repositorio.Admin
                                            ,@TelefoneCelular
                                            ,@Email)
                                            select @@identity;";
-                            // Execute
-                            foreach (var contato in cliente.Contato)
+                        // Execute
+                        foreach (var contato in cliente.Contato)
+                        {
+                            idContato = trans.Connection.ExecuteScalar<int?>(queryContato, new
                             {
-                                idContato = trans.Connection.ExecuteScalar<int?>(queryContato, new
-                                {
-                                    codCliente = idCliente,
-                                    Contato = contato.Contato,
-                                    Setor = contato.Setor,
-                                    DataNascimento = contato.DataNascimento,
-                                    TelefoneComercial = contato.TelefoneComercial,
-                                    TelefoneCelular = contato.TelefoneCelular,
-                                    Email = contato.Email
-                                }, trans);
+                                codCliente = idCliente,
+                                Contato = contato.Contato,
+                                Setor = contato.Setor,
+                                DataNascimento = contato.DataNascimento,
+                                TelefoneComercial = contato.TelefoneComercial,
+                                TelefoneCelular = contato.TelefoneCelular,
+                                Email = contato.Email
+                            }, trans);
 
-                                Contatos.Add(idContato);
-                            }
+                            Contatos.Add(idContato);
+                        }
 
+                        if (!cliente.DadosCadastrais.ClienteAvulso)
+                        {
                             // Insere Tarifa
                             if (cliente.ContratoMoto != null)
                             {
@@ -428,6 +429,22 @@ namespace BHJet_Repositorio.Admin
                                 var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 2, cliente.ContratoCarro);
                                 Valores.Add(cont);
                             }
+                        }
+                        else
+                        {
+                            // Insere Contato
+                            string queryDadosBancarios = @"insert tblDadosCartaoCredito values (@idCli, @numCartao, @nomCartao, @validade)";
+
+                            // Execute
+                            idContato = trans.Connection.ExecuteScalar<int?>(queryDadosBancarios, new
+                            {
+                                idCli = idCliente,
+                                numCartao = cliente.DadosBancarios.NumeroCartaoCredito,
+                                nomCartao = cliente.DadosBancarios.NomeCartaoCredito,
+                                validade = cliente.DadosBancarios.ValidadeCartaoCredito
+                            }, trans);
+
+                            Contatos.Add(idContato);
                         }
 
                         // Commit
@@ -491,6 +508,41 @@ namespace BHJet_Repositorio.Admin
                         //Comit
                         trans.Commit();
 
+                    }
+                    catch (Exception e)
+                    {
+                        if (trans.Connection != null)
+                            trans.Rollback();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deleta Cliente
+        /// </summary>
+        /// <returns>UsuarioEntidade</returns>
+        public void DeletaCliente(long? clienteID)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        string queryContato = @"delete from tblClientes where idCliente = @codCliente";
+
+                        if (clienteID == null)
+                        {
+                            // Execute
+                            trans.Connection.ExecuteScalar(queryContato, new
+                            {
+                                codCliente = clienteID
+                            }, trans);
+                        }
+
+                        //Comit
+                        trans.Commit();
                     }
                     catch (Exception e)
                     {

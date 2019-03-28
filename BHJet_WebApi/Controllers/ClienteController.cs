@@ -310,51 +310,54 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         [Route("avulso")]
         public IHttpActionResult PostClienteAvulso([FromBody]ClienteAvulsoDTO model)
         {
-            // Busca Dados resumidos
-            var clienteRepositorio = new ClienteRepositorio();
-
-            // Verifica existencia
-            var entidade = clienteRepositorio.VerificaExistenciaCliente(model.CPF);
-
-            // VALIDACAO
-            if (entidade.Any())
+            long? idCliente = null;
+            try
             {
-                bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.CPF).Any();
+                // Busca Dados resumidos
+                var clienteRepositorio = new ClienteRepositorio();
 
-                string msg = "";
-                if (existeCPF)
-                    msg = "mesmo CPF.";
+                // Verifica existencia
+                var entidade = clienteRepositorio.VerificaExistenciaCliente(model.CPF);
 
-                return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
-            }
-
-            // Incluir Cliente Avulso
-            var idCliente = clienteRepositorio.IncluirCliente(new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
-            {
-                DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+                // VALIDACAO
+                if (entidade.Any())
                 {
-                    ClienteAvulso = true,
-                    NomeRazaoSocial = string.Empty,
-                    NomeFantasia = string.Empty,
-                    CPFCNPJ = model.CPF,
-                    InscricaoEstadual = string.Empty,
-                    ISS = 0,
-                    Endereco = model.Rua,
-                    NumeroEndereco = model.Numero.ToString(),
-                    Complemento = string.Empty,
-                    Bairro = model.Bairro,
-                    Cidade = model.Cidade,
-                    Estado = model.Estado,
-                    CEP = model.CEP,
-                    Observacoes = string.Empty,
-                    HomePage = string.Empty
-                },
-                Contato = new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[]
+                    bool existeCPF = entidade.Where(x => x.vcCPFCNPJ == model.CPF).Any();
+
+                    string msg = "";
+                    if (existeCPF)
+                        msg = "mesmo CPF.";
+
+                    return BadRequest($"Existe um cadastro com este {msg}. Favor atualizar os dados corretamente");
+                }
+
+                // Incluir Cliente Avulso
+                idCliente = clienteRepositorio.IncluirCliente(new BHJet_Repositorio.Admin.Entidade.ClienteCompletoEntidade()
                 {
+                    DadosCadastrais = new BHJet_Repositorio.Admin.Entidade.ClienteDadosCadastraisEntidade()
+                    {
+                        ClienteAvulso = true,
+                        NomeRazaoSocial = string.Empty,
+                        NomeFantasia = string.Empty,
+                        CPFCNPJ = model.CPF,
+                        InscricaoEstadual = string.Empty,
+                        ISS = 0,
+                        Endereco = model.Rua,
+                        NumeroEndereco = model.Numero.ToString(),
+                        Complemento = string.Empty,
+                        Bairro = model.Bairro,
+                        Cidade = model.Cidade,
+                        Estado = model.Estado,
+                        CEP = model.CEP,
+                        Observacoes = string.Empty,
+                        HomePage = string.Empty
+                    },
+                    Contato = new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade[]
+                    {
                     new BHJet_Repositorio.Admin.Entidade.ClienteContatoEntidade()
                     {
                          Contato = model.Nome,
@@ -366,19 +369,31 @@ namespace BHJet_WebApi.Controllers
                                TelefoneRamal = "",
                                 Whatsapp = 1
                     }
-                }
-            });
+                    },
+                    DadosBancarios = new ClienteDadosBancarios()
+                    {
+                        NomeCartaoCredito = model.NomeCartaoCredito,
+                        NumeroCartaoCredito = model.NumeroCartaoCredito,
+                        ValidadeCartaoCredito = model.ValidadeCartaoCredito
+                    }
+                });
 
-            // Incluir Usuario
-            new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+                // Incluir Usuario
+                new UsuarioRepositorio().IncluirUsuario(new BHJet_Repositorio.Entidade.UsuarioEntidade()
+                {
+                    bitAtivo = true,
+                    ClienteSelecionado = idCliente,
+                    ColaboradorSelecionado = null,
+                    idTipoUsuario = BHJet_Enumeradores.TipoUsuario.ClienteAvulsoSite,
+                    vcEmail = model.Email,
+                    vbIncPassword = model.Senha,
+                });
+            }
+            catch
             {
-                bitAtivo = true,
-                ClienteSelecionado = idCliente,
-                ColaboradorSelecionado = null,
-                idTipoUsuario = BHJet_Enumeradores.TipoUsuario.ClienteAvulsoSite,
-                vcEmail = model.Email,
-                vbIncPassword = model.Senha,
-            });
+                new ClienteRepositorio().DeletaCliente(idCliente);
+                throw;
+            }
 
             // Return
             return Ok();
