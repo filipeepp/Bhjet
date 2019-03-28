@@ -3,7 +3,7 @@
         $.ajax({
             dataType: "json",
             type: "GET",
-            url: "/Faturamento/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
+            url: "../Faturamento/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
             success: function (data) {
                 if (data !== "" && data !== undefined && data.length > 0) {
                     $("#ClienteSelecionado").find('option').remove().end();

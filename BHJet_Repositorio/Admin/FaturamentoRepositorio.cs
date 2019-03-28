@@ -35,7 +35,7 @@ namespace BHJet_Repositorio.Admin
                         string query = @"--- Busca Corridas ---
 		                                select P.idCorrida,
                                                P.idUsuarioChamador as idUsuarioFaturado,
-	                                           P.idTarifario,
+	                                           --P.idTarifario,
 	                                           P.idUsuarioColaboradorEmpresa as idColaboradorEmpresaSistema,
 	                                           P.decValorFinalizado as decValor,
 	                                           P.decValorComissaoNegociado as decValorComissao
@@ -193,7 +193,7 @@ namespace BHJet_Repositorio.Admin
                             foreach (var nvItemFat in diarias)
                             {
                                 // Busca tarifa cliente
-                                var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(nvItemFat.idCliente);
+                                var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(nvItemFat.idCliente, null);
 
                                 // Busca detalhe diario de bordo
                                 var diarioBordo = new DiariaRepositorio().BuscaDadosTurno(nvItemFat.idColaboradorEmpresaSistema);

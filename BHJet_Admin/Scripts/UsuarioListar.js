@@ -1,22 +1,24 @@
-﻿function ExcluirUsuario(idUser) {
+﻿
 
+function AlterarSituacao(idUser, situacao) {
+    var queryString = "situacao=" + situacao + "&" + "id=" + idUser;
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Usuario/DeletaUsuario?id=" + idUser,
+        url: "AlteraSituacao?" + queryString,
         success: function (dados) {
             $("#loading").hide();
             $("#msgModal").text(dados)
-            $("#imgMensagem").attr("src", "\\.\\Images\\sucesso.png");
+            $("#imgMensagem").attr("src", "..\\Images\\sucesso.png");
             $('#myModal button').click(function () {
-                window.location.href = '/Usuario/Listar/';
+                window.location.href = 'Listar';
             })
             $('#myModal').modal('show')
         },
         error: function (dadosEr) {
             $("#loading").hide();
-            $("#msgModal").text('Não foi possível excluir o usuário selecionado, tente novamente mais tarde.')
-            $("#imgMensagem").attr("src", "\\.\\Images\\warming.png");
+            $("#msgModal").text('Não foi possível alterar a situação do usuário selecionado, tente novamente mais tarde.')
+            $("#imgMensagem").attr("src", "..\\Images\\warming.png");
             $('#myModal').modal('show')
         }
     });
@@ -27,44 +29,20 @@ function AlterarSituacao(idUser, situacao) {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Usuario/AlteraSituacao?" + queryString,
+        url: "AlteraSituacao?" + queryString,
         success: function (dados) {
             $("#loading").hide();
             $("#msgModal").text(dados)
-            $("#imgMensagem").attr("src", "\\.\\Images\\sucesso.png");
+            $("#imgMensagem").attr("src", "..\\Images\\sucesso.png");
             $('#myModal button').click(function () {
-                window.location.href = '/Usuario/Listar/';
+                window.location.href = 'Listar';
             })
             $('#myModal').modal('show')
         },
         error: function (dadosEr) {
             $("#loading").hide();
             $("#msgModal").text('Não foi possível alterar a situação do usuário selecionado, tente novamente mais tarde.')
-            $("#imgMensagem").attr("src", "\\.\\Images\\warming.png");
-            $('#myModal').modal('show')
-        }
-    });
-}
-
-function AlterarSituacao(idUser, situacao) {
-    var queryString = "situacao=" + situacao + "&" + "id=" + idUser;
-    $.ajax({
-        dataType: "json",
-        type: "GET",
-        url: "/Usuario/AlteraSituacao?" + queryString,
-        success: function (dados) {
-            $("#loading").hide();
-            $("#msgModal").text(dados)
-            $("#imgMensagem").attr("src", "\\.\\Images\\sucesso.png");
-            $('#myModal button').click(function () {
-                window.location.href = '/Usuario/Listar/';
-            })
-            $('#myModal').modal('show')
-        },
-        error: function (dadosEr) {
-            $("#loading").hide();
-            $("#msgModal").text('Não foi possível alterar a situação do usuário selecionado, tente novamente mais tarde.')
-            $("#imgMensagem").attr("src", "\\.\\Images\\warming.png");
+            $("#imgMensagem").attr("src", "..\\Images\\warming.png");
             $('#myModal').modal('show')
         }
     });
@@ -81,5 +59,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 function editarUsuarioNavegacao(idUser) {
-    window.location = '/Usuario/Novo?Edicao=true&ID=' + idUser;
+    window.location = 'Novo?Edicao=true&ID=' + idUser;
 }

@@ -15,7 +15,7 @@ namespace BHJet_Repositorio.Admin
         /// <param name="email"></param>
         /// <param name="cpf"></param>
         /// <returns></returns>
-        public IEnumerable<ValidaClienteExistente> VerificaExistenciaProfissional(string CpfCnpj)
+        public IEnumerable<ValidaClienteExistente> VerificaExistenciaCliente(string CpfCnpj)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -56,7 +56,8 @@ namespace BHJet_Repositorio.Admin
 									Endereco.vcBairro AS Bairro,
 									Endereco.vcCidade AS Cidade,
 									Endereco.vcUF AS Estado,
-									Endereco.vcCEP AS CEP
+									Endereco.vcCEP AS CEP,
+                                    Cliente.bitAvulso as ClienteAvulso
 								FROM
 									tblClientes Cliente
 								INNER JOIN
@@ -168,7 +169,7 @@ namespace BHJet_Repositorio.Admin
 									tblEnderecos Endereco ON Endereco.idEndereco = Cliente.idEndereco 
 								--LEFT JOIN
 									--tblClienteTarifario Valor ON Valor.idCliente = Cliente.idCliente
-								 WHERE (1 = 1) {parametroAvulso}";
+								 --WHERE (1 = 1) {parametroAvulso}";
 
                 // Execução
                 return sqlConnection.Query<ClienteEntidade>(query);
@@ -206,7 +207,6 @@ namespace BHJet_Repositorio.Admin
                 });
             }
         }
-
 
         /// <summary>
         /// Busca Profissionais Disponiveis
@@ -293,9 +293,9 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ProfissionalCompletoEntidade</param>
         /// <returns>UsuarioEntidade</returns>
-        public void IncluirCliente(ClienteCompletoEntidade cliente)
+        public long? IncluirCliente(ClienteCompletoEntidade cliente)
         {
-            int? idCliente = null;
+            long? idCliente = null;
             int? idEndereco = null;
             int? idContato = null;
             int? idValor = null;
@@ -375,10 +375,10 @@ namespace BHJet_Repositorio.Admin
                             ISS = cliente.DadosCadastrais.ISS,
                             Observacoes = cliente.DadosCadastrais.Observacoes,
                             HomePage = cliente.DadosCadastrais.HomePage,
-                            ClienteAvulso = 0
+                            ClienteAvulso = cliente.DadosCadastrais.ClienteAvulso
                         }, trans);
 
-
+                        // Se nao for avulso inclui contrato
 
                         // Insere Contato
                         string queryContato = @"INSERT INTO [dbo].[tblColaboradoresCliente]
@@ -415,17 +415,36 @@ namespace BHJet_Repositorio.Admin
                             Contatos.Add(idContato);
                         }
 
-                        // Insere Tarifa
-                        if (cliente.ContratoMoto != null)
+                        if (!cliente.DadosCadastrais.ClienteAvulso)
                         {
-                            var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 1, cliente.ContratoMoto);
-                            Valores.Add(cont);
-                        }
+                            // Insere Tarifa
+                            if (cliente.ContratoMoto != null)
+                            {
+                                var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 1, cliente.ContratoMoto);
+                                Valores.Add(cont);
+                            }
 
-                        if (cliente.ContratoCarro != null)
+                            if (cliente.ContratoCarro != null)
+                            {
+                                var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 2, cliente.ContratoCarro);
+                                Valores.Add(cont);
+                            }
+                        }
+                        else
                         {
-                            var cont = InsereContratoCliente(trans, idCliente ?? 99999999, 2, cliente.ContratoCarro);
-                            Valores.Add(cont);
+                            // Insere Contato
+                            string queryDadosBancarios = @"insert tblDadosCartaoCredito values (@idCli, @numCartao, @nomCartao, @validade)";
+
+                            // Execute
+                            idContato = trans.Connection.ExecuteScalar<int?>(queryDadosBancarios, new
+                            {
+                                idCli = idCliente,
+                                numCartao = cliente.DadosBancarios.NumeroCartaoCredito,
+                                nomCartao = cliente.DadosBancarios.NomeCartaoCredito,
+                                validade = cliente.DadosBancarios.ValidadeCartaoCredito
+                            }, trans);
+
+                            Contatos.Add(idContato);
                         }
 
                         // Commit
@@ -440,6 +459,8 @@ namespace BHJet_Repositorio.Admin
                     }
                 }
             }
+
+            return idCliente;
         }
 
         /// <summary>
@@ -497,6 +518,40 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
+        /// <summary>
+        /// Deleta Cliente
+        /// </summary>
+        /// <returns>UsuarioEntidade</returns>
+        public void DeletaCliente(long? clienteID)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        string queryContato = @"delete from tblClientes where idCliente = @codCliente";
+
+                        if (clienteID == null)
+                        {
+                            // Execute
+                            trans.Connection.ExecuteScalar(queryContato, new
+                            {
+                                codCliente = clienteID
+                            }, trans);
+                        }
+
+                        //Comit
+                        trans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        if (trans.Connection != null)
+                            trans.Rollback();
+                    }
+                }
+            }
+        }
 
         public int InsereContratoCliente(SqlTransaction trans, long idCliente, int tipoVeiculo, ClienteValorEntidade model)
         {
@@ -610,7 +665,6 @@ namespace BHJet_Repositorio.Admin
         //	}
         //}
 
-
         /// <summary>
         /// Atualiza Cliente
         /// </summary>
@@ -664,6 +718,7 @@ namespace BHJet_Repositorio.Admin
 														,[bitRetemISS] = @ISS
 														,[vcObservacoes] = @Observacoes
 														,[vcSite] = @HomePage
+                                                        ,[bitAvulso] = @avulso
 													WHERE
 														idCliente = @ClienteID";
 
@@ -677,7 +732,8 @@ namespace BHJet_Repositorio.Admin
                                 ISS = cliente.DadosCadastrais.ISS,
                                 Observacoes = cliente.DadosCadastrais.Observacoes,
                                 HomePage = cliente.DadosCadastrais.HomePage,
-                                ClienteID = cliente.ID
+                                ClienteID = cliente.ID,
+                                avulso = cliente.DadosCadastrais.ClienteAvulso
                             }, trans);
 
                         }
@@ -744,7 +800,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         /// <summary>
         /// Remove contato da base
         /// </summary>
@@ -791,7 +846,7 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        private void RoolbackCliente(int? idCliente, int? idEndereco, int?[] contatos, int?[] valores)
+        private void RoolbackCliente(long? idCliente, int? idEndereco, int?[] contatos, int?[] valores)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {

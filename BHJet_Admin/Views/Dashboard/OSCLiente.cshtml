@@ -2,7 +2,7 @@
 @model OSClienteModel
 
 <ol class="breadcrumb">
-	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
+	<li><a onclick="history.go(-1);"">Home</a></li>
 	<li><a href="#map_canvas">Detalhe OS Cliente </a></li>
 </ol>
 
@@ -17,7 +17,7 @@
 						<div class="col-md-12 text-left">
 							<div class="titulo">
 								<h2>
-									<a href="@Url.Action("Index", "Home")">
+									<a onclick="history.go(-1);">
 										<i class="fa fa-arrow-left" aria-hidden="true"></i>
 									</a>
 									<b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
@@ -37,7 +37,7 @@
 							<i class="fa fa-map-marker bg-blue"></i>
 							<div class="timeline-item">
 								<div class="col-xs-12 col-md-12">
-									<label class="control-label labelChave bg-light-gray ">Origem:</label>
+                                    <label class="control-label labelChave bg-light-gray ">Endereço:</label>
 									<label class="control-label labelValor">@Model.Origem.EnderecoOrigem</label>
 								</div>
 
@@ -56,7 +56,7 @@
 									<label class="control-label labelValor">@Model.Origem.Status</label>
 								</div>
 
-								@if (string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
+								@if (!string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
 								{
 									<div class="col-xs-12 col-md-12">
 										<label class="control-label labelChave bg-light-gray">Observação:</label>
@@ -102,7 +102,7 @@
 								<i class="fa fa-location-arrow bg-blue"></i>
 								<div class="timeline-item">
 									<div class="col-md-12">
-										<label class="control-label labelChave bg-light-gray ">Origem:</label>
+										<label class="control-label labelChave bg-light-gray ">Endereço:</label>
 										<label class="control-label labelValor">@dest.EnderecoOrigem</label>
 									</div>
 
@@ -121,7 +121,7 @@
 										<label class="control-label labelValor">@dest.Status</label>
 									</div>
 
-									@if (string.IsNullOrWhiteSpace(@dest.Observacao))
+									@if (!string.IsNullOrWhiteSpace(@dest.Observacao))
 									{
 										<div class="col-xs-12 col-md-12">
 											<label class="control-label labelChave bg-light-gray">Observação:</label>
@@ -175,4 +175,4 @@
         };
 	</script>
 }
-<script src="~/Scripts/OSCliente.js"></script>
+<script src="@Url.Content("~/Scripts/OSCliente.js")"></script>

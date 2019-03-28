@@ -89,10 +89,10 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("cliente")]
         [ResponseType(typeof(TarifaDTO))]
-        public IHttpActionResult GetTarifaCliente([FromUri]long? idCliente)
+        public IHttpActionResult GetTarifaCliente([FromUri]long? idCliente, [FromUri]int? tipoVeiculo)
         {
             // Busca Dados resumidos
-            var entidade = new TarifaRepositorio().BuscaTarificaPorCliente(idCliente);
+            var entidade = new TarifaRepositorio().BuscaTarificaPorCliente(idCliente, tipoVeiculo);
 
             // Validacao
             if (entidade == null)

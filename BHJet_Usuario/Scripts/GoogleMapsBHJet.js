@@ -4,6 +4,22 @@ var geocoder;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var marker;
+var markers = [];
+
+function carregaVariavel() {
+    var latlng = new google.maps.LatLng(-19.8157, -43.9542);
+    var myOptions = {
+        zoom: 13,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    if (map == undefined)
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    return map;
+}
+
 
 //Essa e a funcao que criara o mapa GoogleMaps
 function carregaMapa() {
@@ -12,14 +28,8 @@ function carregaMapa() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
 	geocoder = new google.maps.Geocoder();
 
-    var latlng = new google.maps.LatLng(-19.8157, -43.9542); //DEFINE A LOCALIZAÇÃO EXATA DO MAPA
     //aqui vamos configurar o mapa, como o zoom, o centro do mapa, etc
-    var myOptions = {
-        zoom: 15,//utilizaremos o zoom 15
-        center: latlng,//aqui a nossa variavel constando latitude e
-        //longitude ja declarada acima
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
+    map = carregaVariavel();
 
 	if (navigator.geolocation) { // Se o navegador do usuário tem suporte ao Geolocation
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -38,8 +48,6 @@ function carregaMapa() {
 		});
 	}
 
-    //criando o mapa dentro da div com o id="map_canvas" que ja criamos
-	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	directionsDisplay.setMap(map);
 
 	//Mostra trajeto
@@ -50,12 +58,22 @@ function carregaMapa() {
 	marker = new google.maps.Marker({
 		map: map,
 		draggable: true,
-	});
+    });
+
+    markers.push(marker);
 
     //DEFINE AS COORDENADAS do ponto exato - CENTRALIZAÇÃO DO MAPA
 	map.setCenter(new google.maps.LatLng(-19.878946, -43.933877));
 
 	//initialize();
+}
+
+function clearAllMarker() {
+    if (markers != undefined) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
 }
 
 function FazMarcacao(lat, long, bcarro, bdesc) {
@@ -64,13 +82,10 @@ function FazMarcacao(lat, long, bcarro, bdesc) {
     long = long.replace(",", ".");
     var latlong = lat + "," + long;//colocando na conficuracao necessaria (lat,long)
     var myLatLgn = new google.maps.LatLng(lat, long);
-    //criando variavel tipo google.maps.LatLng e
-    //passando como parametro a latitude e longitude
-    //na configuracao: latitude,longitude.
-
 
     //aproximando o mapa, aumentando o zoom
-    map.setZoom(15);
+    map = carregaVariavel();
+    map.setZoom(12);
 
     //fazendo  a marcacao, usando o latitude e longitude da variavel criada acima
     marker = new google.maps.Marker({
@@ -86,6 +101,7 @@ function FazMarcacao(lat, long, bcarro, bdesc) {
         infowindow.open(map, marker);
     });
 
+    markers.push(marker);
 
     //aqui a variavel e o comando que faz a marcação
     map.setCenter(myLatLgn);//leva o mapa para a posicao da marcacao

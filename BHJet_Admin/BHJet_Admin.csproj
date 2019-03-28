@@ -182,10 +182,13 @@
     <Compile Include="Controllers\AtuacaoController.cs" />
     <Compile Include="Controllers\ClienteAvulsoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EntregasController.cs" />
     <Compile Include="Controllers\FaturamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\HomeExternoController.cs" />
     <Compile Include="Controllers\MotoristaController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
     <Compile Include="Controllers\TarifarioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,6 +196,7 @@
     </Compile>
     <Compile Include="Infra\ControllerFactory.cs" />
     <Compile Include="Infra\TratamentoErro.cs" />
+    <Compile Include="Infra\UsuarioLogado.cs" />
     <Compile Include="Infra\ValidacaoUsuarioAttribute.cs" />
     <Compile Include="Models\AutoCompleteModel.cs" />
     <Compile Include="Models\ClienteAvulso\ClienteAvulsoModel.cs" />
@@ -208,6 +212,7 @@
     <Compile Include="Models\Dashboard\ExibeLocalizacaoModel.cs" />
     <Compile Include="Models\Dashboard\OSClienteModel.cs" />
     <Compile Include="Models\Dashboard\ResumoModel.cs" />
+    <Compile Include="Models\EntregaModel.cs" />
     <Compile Include="Models\Faturamento\DetalheFaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
@@ -216,18 +221,23 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Motorista\EditarMotoristaModel.cs" />
     <Compile Include="Models\Motorista\NovoMotoristaModel.cs" />
+    <Compile Include="Models\PagamentoModel.cs" />
     <Compile Include="Models\Tarifario\TarifaModel.cs" />
     <Compile Include="Models\Usuario\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\owl.carousel.min.css" />
+    <Content Include="Content\owl.theme.default.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -270,10 +280,14 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\bundle.js" />
+    <Content Include="Scripts\bundle.min.js" />
     <Content Include="Scripts\CadastroDiariaAvulsa.js" />
     <Content Include="Scripts\ClienteContato.js" />
     <Content Include="Scripts\Clientes.js" />
     <Content Include="Scripts\ClienteValor.js" />
+    <Content Include="Scripts\Destinos.js" />
+    <Content Include="Scripts\DetalheClienteAvulso.js" />
     <Content Include="Scripts\DetalheMotorista.js" />
     <Content Include="Scripts\ExibeLocalizacao.js" />
     <Content Include="Scripts\GerarFaturamento.js" />
@@ -283,16 +297,22 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\ListaClienteAvulso.js" />
     <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\Menu.js" />
     <Content Include="Scripts\MenuAdmin.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NovoCliente.js" />
+    <Content Include="Scripts\Origem.js" />
     <Content Include="Scripts\OSCliente.js" />
+    <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\Registrar.js" />
+    <Content Include="Scripts\Resumo.js" />
     <Content Include="Scripts\Tarifario.js" />
     <Content Include="Scripts\Usuario.js" />
     <Content Include="Scripts\UsuarioListar.js" />
@@ -347,6 +367,12 @@
     <Content Include="Views\Atuacao\Area.cshtml" />
     <Content Include="Views\Tarifario\Index.cshtml" />
     <Content Include="Views\Tarifario\_Detalhe.cshtml" />
+    <Content Include="Views\HomeExterno\Index.cshtml" />
+    <Content Include="Views\Entregas\Index.cshtml" />
+    <Content Include="Views\Entregas\Resumo.cshtml" />
+    <Content Include="Views\Pagamento\Pagamento.cshtml" />
+    <Content Include="Views\Shared\_LayoutExterno.cshtml" />
+    <Content Include="Views\Home\Registrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

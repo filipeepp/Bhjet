@@ -11,12 +11,13 @@ namespace BHJet_Repositorio.Admin.Entidade
         public string EnderecoCompleto { get; set; }
         public string vcPessoaContato { get; set; }
         public string vcObservacao { get; set; }
-        public bool bitEntregarDocumento { get; set; }
-        public bool bitColetarAssinatura { get; set; }
-        public bool bitRetirarDocumento { get; set; }
-        public bool bitRetirarObjeto { get; set; }
-        public bool bitEntregarObjeto { get; set; }
-        public bool bitOutros { get; set; }
+        public string DescricaoAtividade { get; set; }
+        //public bool bitEntregarDocumento { get; set; }
+        //public bool bitColetarAssinatura { get; set; }
+        //public bool bitRetirarDocumento { get; set; }
+        //public bool bitRetirarObjeto { get; set; }
+        //public bool bitEntregarObjeto { get; set; }
+        //public bool bitOutros { get; set; }
         public decimal vcLatitude { get; set; }
         public decimal vcLongitude { get; set; }
         public string vcTelefoneContato { get; set; }

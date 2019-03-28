@@ -69,7 +69,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">trecho</param>
         /// <returns>IEnumerable<ProfissionalEntidade></returns>
-        public IEnumerable<ProfissionalEntidade> BuscaProfissionais(string trecho)
+        public IEnumerable<ProfissionalEntidade> BuscaProfissionais(string trecho, int? tipoVeiculo)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -80,17 +80,19 @@ namespace BHJet_Repositorio.Admin
 									    PRO.bitRegimeContratacaoCLT TipoRegime
 										from tblColaboradoresEmpresaSistema as PRO
     							   JOIN tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
-                                     where convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
+                                     where (convert(varchar(250), PRO.idColaboradorEmpresaSistema) like @valorPesquisa
 									       or
-									       PRO.vcNomeCompleto like @valorPesquisa";
+									       PRO.vcNomeCompleto like @valorPesquisa) %tpQuery%";
 
                 if (string.IsNullOrWhiteSpace(trecho))
                     query.Replace("select", "select top(50)");
+                query = tipoVeiculo != null ? query.Replace("%tpQuery%", "and vcTipoVeiculos like @tipo") : query.Replace("%tpQuery%", "");
 
                 // Execução
                 return sqlConnection.Query<ProfissionalEntidade>(query, new
                 {
                     valorPesquisa = "%" + trecho + "%",
+                    tipo = "%" + tipoVeiculo + "%"
                 });
             }
         }
@@ -155,6 +157,7 @@ namespace BHJet_Repositorio.Admin
 		                            		PRO.vcCPFCNPJ AS CPF,
 				                            PRO.vcDocumentoHabilitacao AS CNH,
 				                            PRO.vcCategoriaDocumentoHabilitacao AS TipoCNH,
+                                            PRO.vcTipoVeiculos as TipoVeiculo,
                                             ED.vcCEP as Cep,
 				                            ED.vcRua AS Rua,
                                             ED.vcNumero AS RuaNumero,
@@ -229,7 +232,8 @@ namespace BHJet_Repositorio.Admin
 	                                    bitRegimeContratacaoCLT = @TipoContrato,
 	                                    vcObservacoes = @Observacao,
 	                                    vcEmail = @Email,
-                                        vcRG = @DocumentoRG  
+                                        vcRG = @DocumentoRG, 
+                                        vcTipoVeiculos = @TipoVeiculos
                                     where 
                                         idColaboradorEmpresaSistema = @ID";
                         // Execução 
@@ -246,7 +250,8 @@ namespace BHJet_Repositorio.Admin
                             Observacao = profissional.Observacao,
                             Email = profissional.Email,
                             ID = profissional.ID,
-                            DocumentoRG = profissional.DocumentoRG
+                            DocumentoRG = profissional.DocumentoRG,
+                            TipoVeiculos = profissional.TipoVeiculo
                         }, trans);
 
                         // Insert Novo Endereco
@@ -466,7 +471,8 @@ namespace BHJet_Repositorio.Admin
                                                      ,[vcObservacoes]
                                                      ,[vcEmail]
                                                      ,[dtDataHoraRegistro]
-                                                     ,[vcRG])
+                                                     ,[vcRG]
+                                                     ,[vcTipoVeiculos])
                                                VALUES
                                                      (@IDGestor
                                                      ,@idEndereco
@@ -480,7 +486,7 @@ namespace BHJet_Repositorio.Admin
                                                      ,@WPP
                                                      ,@CLT
                                                      ,@Observacao
-                                                     ,@Email, getdate(), @RG) select @@identity;";
+                                                     ,@Email, getdate(), @RG, @TipoVeiculos) select @@identity;";
                         // Execução 
                         idColaborador = trans.Connection.ExecuteScalar<int?>(query, new
                         {
@@ -497,7 +503,8 @@ namespace BHJet_Repositorio.Admin
                             CLT = profissional.ContratoCLT,
                             Observacao = profissional.Observacao,
                             Email = profissional.Email,
-                            RG = profissional.DocumentoRG
+                            RG = profissional.DocumentoRG,
+                            TipoVeiculos = profissional.TipoVeiculo
                         }, trans);
 
 
@@ -761,6 +768,22 @@ namespace BHJet_Repositorio.Admin
                 {
                     idUser = idUsuario
                 });
+            }
+        }
+
+        /// <summary>
+        /// Busca Tipo Veiculos
+        /// </summary>
+        /// <returns>ComissaoProfissionalEntidade</returns>
+        public IEnumerable<TipoVeiculoEntidade> BuscaTipoVeiculos()
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"SELECT * FROM tblDOMTipoVeiculo";
+
+                // Query Multiple
+                return sqlConnection.Query<TipoVeiculoEntidade>(query);
             }
         }
     }

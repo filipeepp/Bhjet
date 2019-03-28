@@ -208,7 +208,11 @@ namespace BHJet_Repositorio.Admin
             {
 
                 // Query
-                string query = @"select * from tblUsuarios where idUsuario = @id";
+                string query = @"select USU.idUsuario, USU.idTipoUsuario, USU.vcEmail, USU.bitAtivo, CLI.idCliente AS ClienteSelecionado,  COL.idColaboradorCliente AS ColaboradorSelecionado
+                                from tblUsuarios USU
+	                                LEFT JOIN tblClientes CLI on (USU.idUsuario = CLI.idUsuario)
+	                                LEFT join tblColaboradoresCliente COL ON (COL.idUsuario = cli.idUsuario)
+                                where USU.idUsuario = @id";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new

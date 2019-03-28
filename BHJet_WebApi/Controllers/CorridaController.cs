@@ -4,6 +4,7 @@ using BHJet_DTO.Corrida;
 using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
+using BHJet_Repositorio.Admin.Filtro;
 using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
@@ -100,19 +101,7 @@ namespace BHJet_WebApi.Controllers
 
         private string Realizar(OSCorridaEntidade entidade)
         {
-            List<string> realizar = new List<string>();
-            if (entidade.bitColetarAssinatura)
-                realizar.Add("Coletar Assinatura");
-            if (entidade.bitEntregarDocumento)
-                realizar.Add("Entregar Documento");
-            if (entidade.bitEntregarObjeto)
-                realizar.Add("Entregar Objeto");
-            if (entidade.bitRetirarDocumento)
-                realizar.Add("Retirar Documento");
-            if (entidade.bitRetirarObjeto)
-                realizar.Add("Retirar Objeto");
-
-            return string.Join(", ", realizar.ToArray());
+            return entidade.DescricaoAtividade;
         }
 
         /// <summary>
@@ -173,6 +162,7 @@ namespace BHJet_WebApi.Controllers
                 NumeroOS = dtm.NumeroOS,
                 DataInicio = dtm.DataHoraInicio,
                 NomeProfissional = dtm.NomeProfissional,
+                ValorEstimado = dtm.ValorEstimado,
                 ValorFinalizado = dtm.ValorFinalizado
             }));
         }
@@ -261,19 +251,19 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>List<DetalheCorridaModel></returns>
         [Authorize]
-        [Route("ocorrencias")]
-        [ResponseType(typeof(IEnumerable<OcorrenciaModel>))]
-        public IHttpActionResult GetTipoOcorrenciaCorrida()
+        [Route("status")]
+        [ResponseType(typeof(IEnumerable<StatusModel>))]
+        public IHttpActionResult GetStatusCorrida()
         {
             // Busca Dados detalhados da corrida/OS
-            var entidade = new CorridaRepositorio().BuscaOcorrenciasCorrida();
+            var entidade = new CorridaRepositorio().BuscaStatusCorrida();
 
             // Validacao
             if (entidade == null || !entidade.Any())
                 return StatusCode(System.Net.HttpStatusCode.NoContent);
 
             // Return
-            return Ok(entidade.Select(oc => new OcorrenciaModel()
+            return Ok(entidade.Select(oc => new StatusModel()
             {
                 StatusCorrida = oc.idStatusCorrida,
                 DescricaoStatus = oc.vcDescricaoStatus,
@@ -288,11 +278,11 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [Route("ocorrencias/{idOcorrencia:int}/log/{logCorrida:long}/corrida/{idCorrida:long}")]
-        public IHttpActionResult PutTipoOcorrenciaCorrida(int idOcorrencia, long logCorrida, long idCorrida)
+        [Route("status/{idStatus:int}/log/{logCorrida:long}/corrida/{idCorrida:long}")]
+        public IHttpActionResult PutTipoStatusCorrida(int idStatus, long logCorrida, long idCorrida)
         {
             // Busca Dados detalhados da corrida/OS
-            new CorridaRepositorio().AtualizaOcorrenciasCorrida(idOcorrencia, logCorrida, idCorrida);
+            new CorridaRepositorio().AtualizaStatusCorrida(idStatus, logCorrida, idCorrida);
 
             // Return
             return Ok();
@@ -302,19 +292,43 @@ namespace BHJet_WebApi.Controllers
         /// Encerrar OS
         /// </summary>
         /// /// <param name="idCorrida">long</param>
-        /// /// /// <param name="idOcorrencia">int?</param>
+        /// /// /// <param name="idStatus">int?</param>
         /// /// /// /// <param name="filtro">EncerrarCorridaFiltro</param>
         /// <returns></returns>
         [Authorize]
-        [Route("encerrar/{idCorrida:long}/ocorrencia/{idOcorrencia:int?}")]
-        public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idOcorrencia = null)
+        [Route("encerrar/{idCorrida:long}/status/{idStatus:int?}")]
+        public IHttpActionResult PutEncerrarOS(long idCorrida, [FromBody]EncerrarCorridaFiltro filtro, int? idStatus = null)
         {
             // Instancia
-            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idOcorrencia, 
+            new CorridaRepositorio().EncerrarOrdemServico(idCorrida, idStatus,
                 (filtro.KilometragemRodada != null ? int.Parse(filtro.KilometragemRodada?.ToString()) : 0), filtro.MinutosParados ?? 0);
 
             // Return
             return Ok();
+        }
+
+        /// <summary>
+        /// Busca ocorrencia corrida
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Route("ocorrencias")]
+        [AllowAnonymous]
+        [ResponseType(typeof(IEnumerable<OcorrenciaDTO>))]
+        public IHttpActionResult GetOcorrenciaCorrida()
+        {
+            // Busca Dados detalhados da corrida/OS
+            var entidade = new CorridaRepositorio().BuscaOcorrenciaCorrida();
+
+            // Validacao
+            if (entidade == null || !entidade.Any())
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(entidade.Select(oc => new OcorrenciaDTO()
+            {
+                ID = oc.idTipoOcorrenciaCorrida,
+                Descricao = oc.vcTipoOcorrenciaCorrida
+            }));
         }
 
         /// <summary>
@@ -357,21 +371,97 @@ namespace BHJet_WebApi.Controllers
 
         private string MontaAtividade(LogCorridaEntidade entidade)
         {
-            if (entidade.bitEntregarDocumento)
-                return "Entregar Documento";
-            else if (entidade.bitColetarAssinatura)
-                return "Coletar Assinatura";
-            else if (entidade.bitRetirarDocumento)
-                return "Retirar Documento";
-            else if (entidade.bitRetirarObjeto)
-                return "Retirar Objeto";
-            else if (entidade.bitEntregarObjeto)
-                return "Entregar Objeto";
-            else
-                return "Outros";
+            return entidade.DescricaoAtividade;
+        }
+
+        /// <summary>
+        /// Busca preco corrida
+        /// </summary>
+        /// <returns>Doublle</returns>
+        [Route("preco")]
+        [ResponseType(typeof(double))]
+        public IHttpActionResult PostPrecoCorrido([FromBody]CalculoCorridaDTO model)
+        {
+            double? valorTotal = CalculaPrecoCoorrida(model);
+
+            // Return
+            return Ok(valorTotal);
+        }
+
+        private static double? CalculaPrecoCoorrida(CalculoCorridaDTO model)
+        {
+            // Busca tarifa cliente
+            var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente, model.TipoVeiculo);
+
+            // Variaveis Preco
+            var valorKMAdc = Double.Parse(tarifa.ValorKMAdicional?.ToString() ?? "0");
+            var valaorPadrao = Double.Parse(tarifa.ValorContrato?.ToString() ?? "0");
+
+            // Calculo
+            var quantidadeKM = DistanciaUtil.CalculaDistancia(model.Localizacao.Select(l => new Localidade()
+            {
+                Latitude = l.Latitude,
+                Longitude = l.Longitude
+            }).ToArray());
+            var valorKM = (quantidadeKM * tarifa.FranquiaKM) ?? 0;
+            var qtdKMExcecdente = quantidadeKM > tarifa.FranquiaKM ? (quantidadeKM - tarifa.FranquiaKM) * valorKMAdc : 0;
+
+            // Valor total
+            var valorTotal = valaorPadrao + valorKM + qtdKMExcecdente;
+            return valorTotal;
+        }
+
+        /// <summary>
+        /// Incluir Corrida
+        /// </summary>
+        /// <returns>List<DetalheCorridaModel></returns>
+        [Route("")]
+        [ResponseType(typeof(double))]
+        public IHttpActionResult PostCorrido([FromBody]IncluirCorridaDTO model)
+        {
+            // Busca Comissao
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);
+
+            // Calculo Valor Estimado
+            var valorEstimado = CalculaPrecoCoorrida(new CalculoCorridaDTO()
+            {
+                IDCliente = model.IDCliente ?? 0,
+                TipoVeiculo = model.TipoProfissional ?? 0,
+                Localizacao = model.Enderecos.Select(c => new CalculoCorridaLocalidadeDTO()
+                {
+                    Latitude = Double.Parse(c.Latitude.Replace(".", ",")),
+                    Longitude = Double.Parse(c.Longitude.Replace(".", ","))
+                }).ToArray()
+            });
+
+#if DEBUG
+            var usuario = 3;
+#else
+            var usuario = long.Parse(_usuarioAutenticado.LoginID);
+#endif
+
+            // Busca tarifa cliente
+            var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()
+            {
+                IDCliente = model.IDCliente,
+                Comissao = comissao.decPercentualComissao,
+                TipoProfissional = model.TipoProfissional,
+                ValorEstimado = valorEstimado,
+                Enderecos = model.Enderecos.Select(c => new EnderecoModel()
+                {
+                    Descricao = c.Descricao,
+                    Latitude = c.Latitude,
+                    Longitude = c.Longitude,
+                    Observacao = c.Observacao,
+                    ProcurarPessoa = c.ProcurarPessoa,
+                    TipoOcorrencia = c.TipoOcorrencia
+                }).ToList()
+            }, usuario);
+
+            // Return
+            return Ok(idCorrida);
         }
     }
 }
-
 
 

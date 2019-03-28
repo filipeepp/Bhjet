@@ -72,10 +72,6 @@
                                                             <a onclick="EditarUsuario(@linha.ID)">
                                                                 <i class="fa fa-pencil-square-o" style="color:sandybrown" aria-hidden="true"> Editar</i>
                                                             </a>
-
-                                                            <a onclick="ExcluirUsuario(@linha.ID)">
-                                                                <i class="fa fa-trash-o" style="color:indianred" aria-hidden="true"> Excluir</i>
-                                                            </a>
                                                             @if (@linha.Situacao)
                                                             {
                                                                 <a onclick="AlterarSituacao(@linha.ID, 0)">
@@ -106,7 +102,7 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/UsuarioListar.js"></script>
+<script src="@Url.Content("~/Scripts/UsuarioListar.js")"></script>
 
 
 @if (TempData["mensagemGeral"] != null)

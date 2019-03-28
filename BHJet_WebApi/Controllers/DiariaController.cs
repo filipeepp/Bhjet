@@ -35,7 +35,7 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult PostDiariaAvulsa([FromBody]DiariaAvulsaFiltroDTO model)
         {
             // Busca Tarifa Cliente
-            var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente);
+            //var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente, model.tipo);
 
             // Verifica periodo informado contem varios dias
             if (model.DataFimExpediente.Date > model.DataInicioExpediente)

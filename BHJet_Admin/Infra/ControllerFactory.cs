@@ -65,7 +65,7 @@ namespace BHJet_Admin.Infra
 
         private static string BuscaToken()
         {
-            return System.Web.HttpContext.Current.Session["IDTKUsuarioJet"]?.ToString() ?? "";
+            return UsuarioLogado.Instance.bhTkUsu?.ToString() ?? "";
         }
     }
 }

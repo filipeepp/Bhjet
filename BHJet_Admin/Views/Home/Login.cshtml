@@ -8,7 +8,8 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/jquery")
-<script src="~/Scripts/Login.js"></script>
+@Scripts.Render("~/bundles/bootstrap")
+<script src="@Url.Content("~/Scripts/Login.js")"></script>
 
 <!DOCTYPE html>
 <html>
@@ -16,19 +17,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
 </head>
 <body class="bodyLogin">
 
-    <div class="ctnlogin" style="background-image: url('/./Images/bgLogin.jpg');">
+    <div class="ctnlogin" style="background-image: url('@Url.Content("~/Images/bgLogin.jpg")";">
 
         <div class="ctnLoginPainel text-center">
 
             <div class="row">
                 <div class="col-md-12">
-                    <img class="img-responsive" src="~/Images/logoLogisticaPreto.jpg" />
+                    <img class="img-responsive" src="@Url.Content("~/Images/logoLogisticaPreto.jpg")" />
                 </div>
             </div>
 
@@ -80,6 +82,14 @@
                         </b>
                     </p>
 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="@Url.Action("Registrar", "Home")" class="">
+                        <i class="fa fa-address-card" aria-hidden="true"> </i> Registrar conta BHJet
+                    </a>
                 </div>
             </div>
 

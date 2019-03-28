@@ -1,11 +1,10 @@
-﻿function BuscaProfissionais() {
+﻿function BuscaProfissionais(tipoVeiculo) {
     var jqVariavel = $("#pesquisaProfissional");
     $("#ProfissionalSelecionado").find('option').remove().end();
-    var tipoProfissional = $('input[name=TipoProfissional]:checked').val();
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoProfissional,
+        url: "../Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ProfissionalSelecionado").find('option').remove().end();
@@ -24,20 +23,35 @@
     });
 }
 
-function BuscaTarifas(idCliente) {
+function BuscaVeiculos() {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaTarifas?idCliente=" + idCliente,
+        url: "../Dashboard/BcTpVec",
+        success: function (data) {
+            if (data !== "" && data !== undefined && data.length > 0) {
+                $("#TipoVeiculoSelecionado").find('option').remove().end();
+                var div_data = "";
+                $(div_data).appendTo('#TipoVeiculoSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                    $(div_data).appendTo('#TipoVeiculoSelecionado');
+                });
+                BuscaProfissionais($('#TipoVeiculoSelecionado').val());
+                $("#TipoVeiculoSelecionado").mouseup();
+            }
+        },
+    });
+}
+
+function BuscaTarifas(idCliente) {
+    var veiTp = $('#TipoVeiculoSelecionado').val();
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "../Dashboard/BuscaTarifas?idCliente=" + idCliente + "&tipoVeiculo=" + veiTp,
         success: function (data) {
             if (data !== "" && data !== undefined) {
-                //$("#TarifaCliente").find('option').remove().end();
-                //var div_data = "<option value=></option>";
-                //$(div_data).appendTo('#TarifaCliente');
-                //$.each(data, function (i, obj) {
-                //    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
-                //    $(div_data).appendTo('#TarifaCliente');
-                //});
                 $("#ValorDiaria").val(data.DecValorDiaria);
                 $("#ValorKMAdicional").val(data.decValorKMAdicionalDiaria);
                 $("#FranquiaKMDiaria").val(data.decFranquiaKMDiaria);
@@ -50,7 +64,7 @@ function BuscaComissaoProfissional(idProfissional) {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaComissao?idProfissional=" + idProfissional,
+        url: "../Dashboard/BuscaComissao?idProfissional=" + idProfissional,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ValorComissao").val(data.decPercentualComissao);
@@ -67,7 +81,7 @@ function BuscaClientes() {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
+        url: "../Dashboard/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
         success: function (data) {
             if (data !== "" && data !== undefined && data.length > 0) {
                 $("#ClienteSelecionado").find('option').remove().end();
@@ -84,7 +98,6 @@ function BuscaClientes() {
             }
         },
     });
-
 }
 
 function validaDatePickerManual(id, valor) {
@@ -169,6 +182,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 
+    $("#TipoVeiculoSelecionado").change(function () {
+        var $option = $(this).find('option:selected');
+        if ($option != undefined) {
+            var value = $option.val();
+            var text = $option.text();
+            if (value != undefined && value != "") {
+                BuscaProfissionais(value);
+            }
+        }
+    });
+
     $('input[type=radio][name=TipoProfissional]').change(function () {
         $("#ProfissionalSelecionado").find('option').remove().end();
         BuscaProfissionais();
@@ -185,8 +209,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 
+    BuscaVeiculos();
     BuscaClientes();
-    BuscaProfissionais();
+
 
 });
 

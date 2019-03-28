@@ -1,15 +1,12 @@
 ﻿using BHJet_Core.Extension;
 using BHJet_Core.Utilitario;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
-namespace BHJet_Usuario.Infra
+namespace BHJet_Usuario.Controllers
 {
-	public static class TratamentoErro
+    public static class TratamentoErro
 	{
 		public static void TrataErro(this Controller controle, Exception e)
 		{

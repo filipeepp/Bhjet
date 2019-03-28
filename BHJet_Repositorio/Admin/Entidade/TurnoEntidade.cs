@@ -1,4 +1,6 @@
-﻿namespace BHJet_Repositorio.Admin.Entidade
+﻿using System;
+
+namespace BHJet_Repositorio.Admin.Entidade
 {
     public class TurnoEntidade
     {
@@ -105,6 +107,32 @@
             set
             {
                 _KMFim = value;
+            }
+        }
+
+        private string _NomeCliente;
+        public string NomeCliente
+        {
+            get
+            {
+                return _NomeCliente;
+            }
+            set
+            {
+                _NomeCliente = value;
+            }
+        }
+
+        private string _EnderecoCliente;
+        public string EnderecoCliente
+        {
+            get
+            {
+                return _EnderecoCliente;
+            }
+            set
+            {
+                _EnderecoCliente = value;
             }
         }
     }

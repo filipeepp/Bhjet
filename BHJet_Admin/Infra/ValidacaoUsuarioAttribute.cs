@@ -18,7 +18,7 @@ namespace BHJet_Admin.Infra
         private void CheckIfUserIsAuthenticated(AuthorizationContext filterContext)
         {
             // Tkn Usuario Logado
-            var tknBrUs = HttpContext.Current.Session["IDTKUsuarioJet"]?.ToString();
+            var tknBrUs = UsuarioLogado.Instance.bhTkUsu?.ToString();
 
             // Validacao Usuario
             if (!HttpContext.Current.User.Identity.IsAuthenticated || string.IsNullOrWhiteSpace(tknBrUs))

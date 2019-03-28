@@ -1,0 +1,188 @@
+﻿
+@using BHJet_Admin.Models
+@using BHJet_Enumeradores
+@model EntregaModel
+
+@Scripts.Render("~/bundles/jqueryval")
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+<link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+<script src="@Url.Content("~/Scripts/owl.carousel.js")"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&libraries=places&callback=initAutocomplete"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoogleMapsBHJet.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Destinos.js")"></script>
+
+<div>
+    <div id="map_canvas">
+    </div>
+    <div id="draggable" class="ui-corrida-content">
+
+        <div id="ctnInicio">
+            @using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @id = "frmPc", @class = "form-horizontal" }))
+            {
+                <div class="cts-titulo-side-bar">
+                    <span class="titulo">Solicitar entrega / serviço</span>
+                    <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
+                </div>
+
+                <div class="">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
+                                <span class="titulo">Origem</span>
+                                <span class="iconeLeft"><i id="iconeExpandeOrigem" class="fa fa-plus" aria-hidden="true"></i></span>
+                            </div>
+
+                            <div id="ctnOrigem" class="ctnEntregaInterno">
+                                <div class="container" style="width: auto;">
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="titulo" for="txtEnderecoPartida">Origem:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Model.Enderecos[0].Descricao
+                                            @Html.HiddenFor(model => model.Enderecos[0].Descricao)
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="titulo" for="txtEnderecoPartida">Procurar:</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Model.Enderecos[0].ProcurarPessoa
+                                            @Html.HiddenFor(model => model.Enderecos[0].ProcurarPessoa)
+                                        </div>
+                                    </div>
+                                    @Html.HiddenFor(model => model.IDCliente)
+                                    @Html.HiddenFor(model => model.TipoProfissional)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Descricao)
+                                    @Html.HiddenFor(model => model.Enderecos[0].ProcurarPessoa)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Observacao)
+                                    @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Longitude)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Latitude)
+                                    <hr />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                    </div>
+                </div>
+
+                <div class="owl-carousel owl-theme">
+                    @for (int i = 1; i <= Model.Enderecos.Count() - 1; i++)
+                    {
+                        <div class="item">
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="cts-subtitulo-side-bar">
+                                            <span class="titulo">Destino @i</span>
+                                            <span class="titulo subtitulo">Quantidade de destinos: @{ (Model.Enderecos.Count() - 1).ToString(); }</span>
+                                            <span class="iconeLeft"><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
+                                        </div>
+
+                                        <div class="ctnEntregaInterno">
+                                            <div class="container" style="width: auto;">
+                                                <div class="row">
+                                                    <label class="titulo" for="txtEnderecoPartida">Endereço:</label>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Enderecos[i].Descricao, new { @class = "form-control", placeholder = "Digite o endereço." })
+                                                @Html.ValidationMessageFor(model => model.Enderecos[i].Descricao, null, new { @class = "text-danger" })
+
+                                                @Html.HiddenFor(model => model.Enderecos[i].Longitude)
+                                                @Html.HiddenFor(model => model.Enderecos[i].Latitude)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="ctnEntregaInterno">
+                                            <div class="container" style="width: auto;">
+                                                <div class="row">
+                                                    <label class="titulo" for="">Pessoa a ser procurada:</label>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Enderecos[i].ProcurarPessoa, new { @class = "form-control", placeholder = "Digite o nome do destinatário." })
+                                                @Html.ValidationMessageFor(model => model.Enderecos[i].ProcurarPessoa, null, new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="ctnEntregaInterno">
+                                            <div class="container" style="width: auto;">
+                                                <div class="row">
+                                                    <label class="titulo" for="">O que deve ser feito:</label>
+                                                </div>
+                                                <div class="row">
+
+                                                    @Html.DropDownListFor(model => model.Enderecos[i].TipoOcorrencia, new List<SelectListItem>(), new { @class = "form-control", placeholder = "Selecione o tipo de serviço desejado." })
+                                                    @Html.ValidationMessageFor(model => model.Enderecos[i].TipoOcorrencia, null, new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="ctnEntregaInterno">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <label class="titulo" for="">Observação:</label>
+                                                </div>
+                                                <div class="row">
+                                                    @Html.TextAreaFor(model => model.Enderecos[i].Observacao, new { @class = "form-control", @style = "height: 70px;" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div>
+                    <input type="submit" class="btnPadrao btnConfirmacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Finalizar solicitação" />
+                </div>
+
+            }
+            @*@using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
+            {*@
+            <input type="submit" class="btnPadrao btnSolicitacao" onclick="changeButtonClicked();" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino" />
+            @*}*@
+        </div>
+
+    </div>
+</div>
+
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}

@@ -1,3 +1,13 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+    }
 }
+
+@using BHJet_Enumeradores
+@using BHJet_Admin.Infra

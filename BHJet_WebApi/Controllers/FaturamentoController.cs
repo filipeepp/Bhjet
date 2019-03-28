@@ -16,8 +16,8 @@ namespace BHJet_WebApi.Controllers
         /// Método para inclusão de diaria avulsa
         /// </summary>
         /// <returns></returns>
-        [Authorize]
         [Route("")]
+        [Authorize]
         public IHttpActionResult PostGerarFaturamento([FromBody]GerarFaturamentoDTO model)
         {
             try

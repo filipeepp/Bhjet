@@ -5,7 +5,7 @@ function BuscaClientes(idPreCliente) {
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "/Usuario/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
+        url: "../Usuario/BuscaClientes?trechoPesquisa=" + jqVariavel.val(),
         success: function (data) {
             if (data !== "" && data !== undefined && data.length > 0) {
                 $("#ClienteSelecionado").find('option').remove().end();

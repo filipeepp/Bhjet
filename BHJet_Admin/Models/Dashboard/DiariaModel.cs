@@ -51,6 +51,21 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
+        private int? _TipoVeiculoSelecionado;
+        [Required(ErrorMessage = "Veiculo obrigatório.")]
+        public int? TipoVeiculoSelecionado
+        {
+            get
+            {
+                return _TipoVeiculoSelecionado;
+            }
+            set
+            {
+                _TipoVeiculoSelecionado = value;
+            }
+        }
+
+
         private TimeSpan? _HorarioInicial;
         [Required(ErrorMessage = "Horário inicial de trabalho obrigatória.")]
         public TimeSpan? HorarioInicial

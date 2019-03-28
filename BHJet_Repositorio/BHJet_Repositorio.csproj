@@ -62,6 +62,7 @@
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\LogCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\OcorrenciaEntidade.cs" />
+    <Compile Include="Admin\Entidade\StatusEntidade.cs" />
     <Compile Include="Admin\Entidade\OSCorridaEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalDisponivelEntidade.cs" />
     <Compile Include="Admin\Entidade\ProfissionalEntidade.cs" />
@@ -70,11 +71,13 @@
     <Compile Include="Admin\Entidade\ResumoChamados.cs" />
     <Compile Include="Admin\Entidade\ResumoEntidade.cs" />
     <Compile Include="Admin\Entidade\TarifaEntidade.cs" />
+    <Compile Include="Admin\Entidade\TipoVeiculoEntidade.cs" />
     <Compile Include="Admin\Entidade\TurnoEntidade.cs" />
     <Compile Include="Admin\Entidade\UsuarioEntidade.cs" />
     <Compile Include="Admin\Entidade\ValidaClienteExistente.cs" />
     <Compile Include="Admin\Entidade\ValidaProfissionalExistente.cs" />
     <Compile Include="Admin\FaturamentoRepositorio.cs" />
+    <Compile Include="Admin\Filtro\CorridaFiltro.cs" />
     <Compile Include="Admin\Filtro\DisponibilidadeFiltro.cs" />
     <Compile Include="Admin\Filtro\NovaDiariaAvulsaFiltro.cs" />
     <Compile Include="Admin\Filtro\ValidaUsuarioFiltro.cs" />

@@ -1,0 +1,200 @@
+﻿@{
+    Layout = null;
+    ViewContext.FormContext = new FormContext();
+}
+
+@using BHJet_Enumeradores;
+@using BHJet_Admin.Models
+@model RegistrarUsuarioModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script type="text/javascript" src="~/Scripts/ViaCep.js"></script>
+    <script type="text/javascript" src="~/Scripts/Registrar.js"></script>
+</head>
+<body class="bodyLogin">
+    <div class="ctnlogin" style="background-image: url('@Url.Content("~/Images/bgLogin.jpg")')">
+        @using (Html.BeginForm("Registrar", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div id="mdSu" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Criar minha conta BHJet:</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
+                            {
+                                <p class="text-danger" style="background-color: red; color:white; padding: 10px;">
+                                    <b>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
+                                    </b>
+                                </p>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(@ViewBag.SucessoLogin))
+                            {
+                                <p class="text-success" style="background-color: green; color:white; padding: 10px;">
+                                    <b>
+                                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.SucessoLogin
+                                    </b>
+                                </p>
+                            }
+
+                            <div class="">
+                                <div class="modal-header" style="margin-top: 10px; padding: 5px;">
+                                    <h4 class="modal-title">Dados básicos</h4>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="uname"><b>Nome *</b></label>
+                                        @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", placeholder = "Nome" })
+                                        @Html.ValidationMessageFor(model => model.Nome, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="uname"><b>Email *</b></label>
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                                        @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Telefone Celular *</b></label>
+                                        @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", placeholder = "Tel. Celular" })
+                                        @Html.ValidationMessageFor(model => model.Celular, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Telefone Comercial *</b></label>
+                                        @Html.TextBoxFor(model => model.Comercial, new { @class = "form-control", placeholder = "Tel. Comercial" })
+                                        @Html.ValidationMessageFor(model => model.Comercial, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Senha *</b></label>
+                                        @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @type = "password", placeholder = "Senha" })
+                                        @Html.ValidationMessageFor(model => model.Senha, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Confirmação Senha *</b></label>
+                                        @Html.TextBoxFor(model => model.SenhaConfirm, new { @class = "form-control", @type = "password", placeholder = "Confirmação de Senha" })
+                                        @Html.ValidationMessageFor(model => model.SenhaConfirm, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label for="psw"><b>CPF *</b></label>
+                                        @Html.TextBoxFor(model => model.CPF, new { @class = "form-control", placeholder = "CPF" })
+                                        @Html.ValidationMessageFor(model => model.CPF, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="psw"><b>Data nascimento *</b></label>
+                                        @Html.TextBoxFor(model => model.DataNascimento, new { @class = "form-control", placeholder = "Data nascimento" })
+                                        @Html.ValidationMessageFor(model => model.DataNascimento, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="psw"><b>Sexo *</b></label>
+                                        @Html.DropDownListFor(model => model.Sexo, EnumHelper.GetSelectList(typeof(Sexo)), null, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Sexo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="modal-header" style="margin-top: 10px; padding: 5px;">
+                                    <h4 class="modal-title">Dados bancários</h4>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="psw"><b>Nome idêntico ao cartão de crédito *</b></label>
+                                        @Html.TextBoxFor(model => model.NomeCartaoCredito, new { @class = "form-control", placeholder = "Nome cartão" })
+                                        @Html.ValidationMessageFor(model => model.NomeCartaoCredito, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Número idêntico ao cartão de crédito *</b></label>
+                                        @Html.TextBoxFor(model => model.NumeroCartaoCredito, new { @class = "form-control", placeholder = "Número do cartão" })
+                                        @Html.ValidationMessageFor(model => model.NumeroCartaoCredito, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Validade *</b></label>
+                                        @Html.TextBoxFor(model => model.ValidadeCartaoCredito, new { @class = "form-control", placeholder = "Validade" })
+                                        @Html.ValidationMessageFor(model => model.ValidadeCartaoCredito, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="modal-header" style="margin-top: 10px; padding: 5px;">
+                                    <h4 class="modal-title">Endereço</h4>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>CEP *</b></label>
+                                        @Html.TextBoxFor(model => model.CEP, new { @class = "form-control", placeholder = "CEP" })
+                                        @Html.ValidationMessageFor(model => model.CEP, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Rua *</b></label>
+                                        @Html.TextBoxFor(model => model.Rua, new { @class = "form-control", placeholder = "Rua" })
+                                        @Html.ValidationMessageFor(model => model.Rua, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Número *</b></label>
+                                        @Html.TextBoxFor(model => model.Numero, new { @class = "form-control", placeholder = "Número" })
+                                        @Html.ValidationMessageFor(model => model.Numero, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Bairro *</b></label>
+                                        @Html.TextBoxFor(model => model.Bairro, new { @class = "form-control", placeholder = "Bairro" })
+                                        @Html.ValidationMessageFor(model => model.Bairro, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Cidade *</b></label>
+                                        @Html.TextBoxFor(model => model.Cidade, new { @class = "form-control", placeholder = "Cidade" })
+                                        @Html.ValidationMessageFor(model => model.Cidade, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>Estado *</b></label>
+                                        @Html.DropDownListFor(s => s.Estado, new SelectList(from UF e in Enum.GetValues(typeof(UF))
+                                                                                            select new { Id = e, Name = e.ToString() }, "Id", "Name", typeof(UF)) , new { @class = "form-control" })
+
+                                        @Html.ValidationMessageFor(model => model.Estado, null, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="psw"><b>País *</b></label>
+                                        @Html.TextBoxFor(model => model.Pais, new { @class = "form-control", placeholder = "Pais" })
+                                        @Html.ValidationMessageFor(model => model.Pais, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default">Cadastrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

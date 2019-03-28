@@ -1,0 +1,117 @@
+﻿
+@using BHJet_Admin.Models
+@using BHJet_Enumeradores
+@model EntregaModel
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm("Index", "HomeExterno", FormMethod.Post, new { @id = "fmOrgPed", @class = "form-horizontal" }))
+{
+    <div>
+        <div id="map_canvas">
+        </div>
+
+        <div id="draggable" class="ui-corrida-content">
+
+            <div id="ctnInicio">
+                <div class="cts-titulo-side-bar">
+                    <span class="titulo">Solicitar entrega / serviço</span>
+                    <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
+                </div>
+
+                <div class="contaifner">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="ctnEntregaInterno">
+                                <div class="">
+                                    <div class="row">
+                                        <label class="titulo" for="txtEnderecoPartida">Origem:</label>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Enderecos[0].Descricao, new { @id = "txtEnderecoPartida", @class = "form-control", placeholder = "Digite o endereço." })
+                                    @Html.ValidationMessageFor(model => model.Enderecos[0].Descricao, null, new { @class = "text-danger" })
+
+                                    @Html.HiddenFor(model => model.IDCliente)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Observacao)
+                                    @Html.HiddenFor(model => model.Enderecos[0].TipoOcorrencia)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Longitude)
+                                    @Html.HiddenFor(model => model.Enderecos[0].Latitude)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="ctnEntregaInterno">
+                                <div class="">
+                                    <div class="row">
+                                        <label class="titulo" for="txtEnderecoPartida">Pessoa a ser procurada:</label>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Enderecos[0].ProcurarPessoa, new { @class = "form-control", placeholder = "Digite o nome do destinatário." })
+                                    @Html.ValidationMessageFor(model => model.Enderecos[0].ProcurarPessoa, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="ctnEntregaInterno">
+                                <div class="">
+                                    <div class="row">
+                                        <label class="titulo" for="txtEnderecoPartida">O que deve ser feito:</label>
+                                    </div>
+
+                                    @Html.RadioButtonFor(s => s.TipoProfissional, 1, new { @class = "option-input radio" })
+                                    @Html.Label("Retirar documento(s) ou objeto(s) de pequeno porte", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
+                                    <br />
+                                    @Html.RadioButtonFor(s => s.TipoProfissional, 2, new { @class = "option-input radio" })
+                                    @Html.Label("Retirar documento(s) ou objeto(s) de maior porte ou pacote(s)", new { @for = "Enderecos[0].TipoOcorrencia", @style = "vertical-align: -webkit-baseline-middle;font-size: 17px; font-weight: 100; " })
+
+                                    @Html.ValidationMessageFor(model => model.TipoProfissional, null, new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="submit" class="btnPadrao btnSolicitacao" id="btnEnviar" name="btnEnviar" value="Adicionar destino" />
+                    </div>
+
+                </div>
+
+                @*<div id="trajeto-texto" style="height: 300px; width: 200px"></div>*@
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<script>
+    $(function () {
+        $("#draggable").draggable();
+    });
+</script>
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&libraries=places&callback=initAutocomplete"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoogleMapsBHJet.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/Origem.js")"></script>
+

@@ -8,6 +8,8 @@ namespace BHJet_Admin.Models.Clientes
 	{
 		public int ID { get; set; }
 
+        public bool ClienteAvulso { get; set; }
+
         [Required(ErrorMessage = "Nome ou Razão Social obrigatório.")]
         public string NomeRazaoSocial { get; set; }
 

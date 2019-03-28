@@ -10,7 +10,7 @@ namespace BHJet_Repositorio.Entidade
         public bool bitAtivo { get; set; }
         public string bitDescAtivo { get; set; }
         public string vbIncPassword { get; set; }
-        public int? ClienteSelecionado { get; set; }
+        public long? ClienteSelecionado { get; set; }
         public long? ColaboradorSelecionado { get; set; }
     }
 }

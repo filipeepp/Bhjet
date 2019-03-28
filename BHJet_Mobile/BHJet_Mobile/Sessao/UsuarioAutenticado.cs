@@ -1,7 +1,11 @@
 ﻿using BHJet_Enumeradores;
 using BHJet_Mobile.Infra.Database;
+using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Servico.Motorista.Model;
+using Plugin.Geolocator;
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace BHJet_Mobile.Sessao
 {
@@ -83,6 +87,24 @@ namespace BHJet_Mobile.Sessao
             Instance.IDCorridaAtendimento = null;
             Instance.StatusAplicatico = false;
             instance = null;
+
+            await CancelarDisponibilidade();
+        }
+
+        public async Task CancelarDisponibilidade()
+        {
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
+            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+            // Atualiza
+            await new MotoristaServico().AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
+            {
+                bitDisponivel = false,
+                idTipoProfissional = Instance.Tipo,
+                latitude = position.Latitude,
+                longitude = position.Longitude
+            });
         }
     }
 }

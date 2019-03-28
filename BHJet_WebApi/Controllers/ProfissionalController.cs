@@ -112,10 +112,10 @@ namespace BHJet_WebApi.Controllers
         [Authorize]
         [Route("")]
         [ResponseType(typeof(IEnumerable<ProfissionalModel>))]
-        public IHttpActionResult GetListaProfissionais([FromUri]string trecho = "")
+        public IHttpActionResult GetListaProfissionais([FromUri]string trecho = "", [FromUri]int? tipoVeiculo = null)
         {
             // Busca Dados resumidos
-            var entidade = new ProfissionalRepositorio().BuscaProfissionais(trecho);
+            var entidade = new ProfissionalRepositorio().BuscaProfissionais(trecho, tipoVeiculo);
 
             // Validacao
             if (entidade == null)
@@ -181,6 +181,7 @@ namespace BHJet_WebApi.Controllers
                 CelularWpp = entidade.CelularWpp,
                 CNH = entidade.CNH,
                 ContratoCLT = entidade.ContratoCLT,
+                TipoVeiculos = entidade.TipoVeiculo.Split(',').Select(v => int.Parse(v)).ToArray(),
                 CPF = entidade.CPF,
                 Email = entidade.Email,
                 Rua = entidade.Rua,
@@ -249,6 +250,7 @@ namespace BHJet_WebApi.Controllers
                 Observacao = model.Observacao,
                 TipoCNH = model.TipoCNH,
                 CNH = model.CNH,
+                TipoVeiculo = string.Join(",", model.TipoVeiculos),
                 TipoProfissional = model.TipoProfissional,
                 TipoRegime = model.TipoRegime,
                 ContratoCLT = model.ContratoCLT,
@@ -321,6 +323,7 @@ namespace BHJet_WebApi.Controllers
                 Email = model.Email,
                 Observacao = model.Observacao,
                 TipoCNH = model.TipoCNH,
+                TipoVeiculo = string.Join(",", model.Veiculos),
                 CNH = model.CNH,
                 TipoProfissional = model.TipoProfissional,
                 TipoRegime = model.TipoRegime,
@@ -435,7 +438,29 @@ namespace BHJet_WebApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Busca lista de Profissionais
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional</returns>
+        [Authorize]
+        [Route("veiculo/tipos")]
+        [ResponseType(typeof(TipoVeiculoDTO))]
+        public IHttpActionResult GetTipoVeiculo()
+        {
+            // Busca Dados resumidos
+            var tipos = new ProfissionalRepositorio().BuscaTipoVeiculos();
 
+            // Validacao
+            if (tipos == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(tipos.Select(t => new TipoVeiculoDTO()
+            {
+                ID = t.idTipoVeiculo,
+                Descricao = t.vcDescricaoTipoVeiculo
+            }));
+        }
 
     }
 }

@@ -7,12 +7,13 @@ namespace BHJet_Servico.Profissional
 {
     public interface IProfissionalServico
     {
-        IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa);
+        IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa, int? tipoVeiculo);
         IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional tipoProfissional);
         ProfissionalCompletoModel BuscaProfissional(long id);
         void AtualizaDadosProfissional(ProfissionalCompletoModel proModel);
         void IncluirProfissional(ProfissionalCompletoModel proModel);
         ComissaoModel BuscaComissaoProfissional(long id);
+        TipoVeiculoDTO[] BuscaTipoVeiculos();
     }
 
     public class ProfissionalServico : ServicoBase, IProfissionalServico
@@ -26,9 +27,23 @@ namespace BHJet_Servico.Profissional
         /// Busca Lista de profissionais
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa)
+        public IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa, int? tipoVeiculo)
         {
-            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionais}?trecho={trechoPesquisa}"));
+            string parms1 = string.IsNullOrWhiteSpace(trechoPesquisa) ? "" : "trecho=" + trechoPesquisa;
+            string parms2 = tipoVeiculo == null ? "" : "tipoVeiculo=" + tipoVeiculo;
+            string parametroCompleto = "";
+
+            if (parms1 != "")
+            {
+                parametroCompleto = parms1;
+                if (parms2 != "")
+                    parametroCompleto += parms2;
+            }
+            else if (parms2 != "")
+                parametroCompleto = parms2;
+
+            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}" +
+                $"{ServicoRotas.Profissional.GetProfissionais}?{parametroCompleto}"));
         }
 
         /// <summary>
@@ -75,6 +90,19 @@ namespace BHJet_Servico.Profissional
         public ComissaoModel BuscaComissaoProfissional(long id)
         {
             return this.Get<ComissaoModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Profissional.GetComissaoProfissional, id)}"));
+        }
+
+        public TipoVeiculoDTO[] BuscaTipoVeiculos()
+        {
+            return this.Get<TipoVeiculoDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetTipoVeiculos}"));
+            //return new TipoVeiculoDTO[]
+            //{
+            //    new TipoVeiculoDTO()
+            //    {
+            //         ID = 1,
+            //         Descricao = "Carro"
+            //    }
+            //};
         }
     }
 }

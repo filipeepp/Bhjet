@@ -1,6 +1,7 @@
 ﻿using BHJet_CoreGlobal;
 using BHJet_Enumeradores;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Motorista
@@ -83,6 +84,21 @@ namespace BHJet_Admin.Models.Motorista
         }
 
         public bool Situacao { get; set; }
+
+        public string TipoVeiculos { get; set; }
+
+        private IEnumerable<int> _VeiculoSelecionado;
+        public IEnumerable<int> VeiculoSelecionado
+        {
+            get
+            {
+                return _VeiculoSelecionado;
+            }
+            set
+            {
+                _VeiculoSelecionado = value;
+            }
+        }
 
         public NovoMotoristaComissaoModel[] Comissao { get; set; }
     }

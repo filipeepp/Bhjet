@@ -42,7 +42,13 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         </p>
 
-
+                        <div class="form-group ">
+                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o tipo de veículo:</label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(model => model.TipoVeiculoSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um tipo de veículo." })
+                                @Html.ValidationMessageFor(model => model.TipoVeiculoSelecionado, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
 
                         <div class="form-group ">
                             <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o cliente:</label>
@@ -50,19 +56,8 @@
                                 <input id="pesquisaCliente" class="form-control input-sm" placeholder="Digite o código ou nome do cliente." />
                                 @Html.DropDownListFor(model => model.ClienteSelecionado, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
                                 @Html.ValidationMessageFor(model => model.ClienteSelecionado, null, new { @class = "text-danger" })
-
                             </div>
                         </div>
-
-                        @*<div class="form-group ">
-                <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione a tirafa:</label>
-                <div class="col-sm-4">
-
-                    @Html.DropDownListFor(model => model.TarifaCliente, new List<SelectListItem>(), new { @class = "form-control", @placeholder = "Selecione um cliente para ver as tarifas." })
-                    @Html.ValidationMessageFor(model => model.TarifaCliente, null, new { @class = "text-danger" })
-
-                </div>
-            </div>*@
 
                         <div class="form-group ">
                             <label class="control-label col-xs-12 col-sm-5"><small class="obrigatorio">*</small>Período das Diarias:</label>
@@ -90,17 +85,8 @@
                             </div>
                         </div>
 
-                        @*<div class="form-group ">
-                            <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o TIPO de Veículo:</label>
-                            <div class="col-sm-4">
-                                @Html.RadioButtonFor(m => m.TipoProfissional, TipoProfissional.Motociclista, new { @checked = true }) @Html.Label("Moto")
-                                @Html.RadioButtonFor(m => m.TipoProfissional, TipoProfissional.Motorista) @Html.Label("Carro")
-                                @Html.ValidationMessageFor(model => model.TipoProfissional, null, new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Selecione um profissional:</label>
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Selecione um profissional:</label>
                             <div class="col-sm-4">
                                 <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
                                 @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
@@ -109,7 +95,7 @@
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor da diária:</label>
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Valor da diária:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorDiaria, new { placeholder = "R$", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorDiaria, null, new { @class = "text-danger", title = "Mask: 99/99/9999" })
@@ -117,7 +103,7 @@
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor da comissão:</label>
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Valor da comissão:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorComissao, new { placeholder = "%", @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ValorComissao, null, new { @class = "text-danger" })
@@ -126,21 +112,21 @@
 
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Valor KM Adicional:</label>
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Valor KM Adicional:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.ValorKMAdicional, new { placeholder = "R$", @class = "form-control" })
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" ><small class="obrigatorio">*</small>Franquia KM diária:</label>
+                            <label class="control-label col-sm-5"><small class="obrigatorio">*</small>Franquia KM diária:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(model => model.FranquiaKMDiaria, new { placeholder = "0", @class = "form-control" })
                             </div>
                         </div>
 
                         <div class="form-group ">
-                            <label class="control-label col-sm-5" >Observações:</label>
+                            <label class="control-label col-sm-5">Observações:</label>
                             <div class="col-sm-4">
                                 @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
                             </div>
@@ -178,4 +164,4 @@
         };
     </script>
 }
-<script src="~/Scripts/CadastroDiariaAvulsa.js"></script>
+<script src="@Url.Content("~/Scripts/CadastroDiariaAvulsa.js")"></script>

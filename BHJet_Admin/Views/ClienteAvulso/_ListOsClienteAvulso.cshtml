@@ -1,71 +1,80 @@
 ﻿@using BHJet_Admin.Models.ClienteAvulso
 @using BHJet_Enumeradores
+@using BHJet_Admin.Models
 @model ClienteAvulsoModel
 
 @Scripts.Render("~/bundles/jqueryval")
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <div class="form-horizontal">
-	<div class="row form-group ">
-		@Html.HiddenFor(model => model.ID);
+    <div class="row form-group ">
+        @Html.HiddenFor(model => model.ID);
 
-		<div class="panel panel-default" style="margin:30px; margin-top:-25px">
-			<div class="panel-body">
-				<div class="titulo">
-					<h2>
-						<a onclick="history.go(-1);">
-							<i class="fa fa-id-card-o" aria-hidden="true"></i>
-						</a>
-						Serviços prestados
-					</h2>
-				</div>
-				@if (Model.OrdemServico.Count() > 0)
-				{
-					<div class="col-md-12">
-						<div class="table-responsive">
-							<br />
-							<table class="table table-bordered">
-								<thead>
-									<tr class="bg-light-gray">
-										<th scope="col">OS</th>
-										<th scope="col">Data</th>
-										<th scope="col">Motorista</th>
-										<th scope="col">Valor</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach (var linha in Model.OrdemServico)
-									{
-										<tr class="cst-tbl-Clientes" id="@linha.ID">
-											<td> <label>@linha.ID</label></td>
-											<td> <label>@linha.Data</label></td>
-											<td> <label>@linha.NomeMotorista</label></td>
-											<td> <label>@linha.Valor</label></td>
-										</tr>
-									}
-								</tbody>
-							</table>
-						</div>
+        <div class="panel panel-default" style="margin:30px; margin-top:-25px">
+            <div class="panel-body">
+                <div class="titulo">
+                    <h2>
+                        <a onclick="history.go(-1);" >
+                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                        </a>
+                        Serviços prestados
+                    </h2>
+                </div>
+                @if (Model.OrdemServico != null && Model.OrdemServico.Count() > 0)
+                {
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <br />
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="bg-light-gray">
+                                        <th scope="col">Detalhar</th>
+                                        <th scope="col">OS</th>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Motorista</th>
+                                        <th scope="col">Valor Estimado</th>
+                                        <th scope="col">Valor Finalizado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var linha in Model.OrdemServico)
+                                    {
+                                        <tr class="cst-tbl-Clientes" id="@linha.ID">
+                                            <td>
+                                                <a href="@Url.Action("OSCliente", "Dashboard", new ResumoModel() { PesquisaOSCliente = @linha.ID.ToString()})">
+                                                    <i class="fa fa-eye" aria-hidden="true"> </i> Detalhar
+                                                </a>
+                                            </td>
+                                            <td> <label>@linha.ID</label></td>
+                                            <td> <label>@linha.Data</label></td>
+                                            <td> <label>@linha.NomeMotorista</label></td>
+                                            <td> <label>@linha.ValorEstimado</label></td>
+                                            <td> <label>@linha.Valor</label></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-					</div>
-				}
-				else
-				{
-					<div class="col-md-12 cst-msg-select-null">
-						<h4>Não foram encontrados serviços prestados para este cliente.</h4>
-					</div>
-				}
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-12 cst-msg-select-null">
+                        <h4>Não foram encontrados serviços prestados.</h4>
+                    </div>
+                }
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 @if (TempData["mensagemGeral"] != null)
 {
-	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
-	<script type="text/javascript">
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
 
 		window.onload = function () {
 			var mensagem = $("#mensagemController").val();
@@ -73,9 +82,9 @@
             $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
             $('#myModal').modal('show')
         };
-	</script>
+    </script>
 }
 <script src="@Url.Content("~/Scripts/jquery.mask.min.js")"></script>
 <script src="@Url.Content("~/Scripts/ViaCep.js")"></script>
-<script src="~/Scripts/DetalheMotorista.js"></script>
+<script src="@Url.Content("~/Scripts/DetalheMotorista.js")"></script>
 

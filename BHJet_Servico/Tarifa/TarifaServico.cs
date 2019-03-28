@@ -5,7 +5,7 @@ namespace BHJet_Servico.Tarifa
 {
     public interface ITarifaServico
     {
-        TarifaDTO BuscaTaritaCliente(long? idCliente);
+        TarifaDTO BuscaTaritaCliente(long? idCliente, int? tipoVeiculo);
         TarifaDTO BuscaTarifaAtiva(int codigoTipoVeiculo);
         TarifarioDTO[] BuscaTarifaPadrao();
         void AtualizaTarifaPadrao(TarifarioDTO[] filtro);
@@ -28,9 +28,9 @@ namespace BHJet_Servico.Tarifa
             this.Put(new Uri($"{ServicoRotas.Base}{ServicoRotas.Tarifa.GetTarifarioPadrao}"), filtro);
         }
 
-        public TarifaDTO BuscaTaritaCliente(long? idCliente)
+        public TarifaDTO BuscaTaritaCliente(long? idCliente, int? tipoVeiculo)
         {
-            return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Tarifa.GetTarifaCliente}?idCliente={idCliente}"));
+            return this.Get<TarifaDTO>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Tarifa.GetTarifaCliente}?idCliente={idCliente}&tipoVeiculo={tipoVeiculo}"));
         }
 
         public TarifaDTO BuscaTarifaAtiva(int codigoTipoVeiculo)

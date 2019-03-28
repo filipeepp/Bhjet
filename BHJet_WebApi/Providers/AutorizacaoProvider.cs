@@ -27,10 +27,11 @@ namespace BHJet_WebApi.Providers
                 var parameters = context.Request.ReadFormAsync();
 
                 // Aplicação
-                var aplicacao = parameters?.Result?.Get("area") ?? string.Empty;
+                //var aplicacao = parameters?.Result?.Get("area") ?? string.Empty;
 
                 // Busca e valida usuario
-                var user = ValidaUsuario(ref context, int.Parse(aplicacao));
+                // var user = ValidaUsuario(ref context, int.Parse(aplicacao));
+                var user = ValidaUsuario(ref context);
 
                 if (context.HasError)
                     return;
@@ -48,26 +49,26 @@ namespace BHJet_WebApi.Providers
             }
         }
 
-        private static UsuarioEntidade ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context, int tipo)
+        private static UsuarioEntidade ValidaUsuario(ref OAuthGrantResourceOwnerCredentialsContext context)
         {
             // Tipo de usuario desejado
-            TipoUsuario? tipoUsuario = null;
-            switch ((TipoAplicacao)tipo)
-            {
-                case TipoAplicacao.Interna:
-                    tipoUsuario = TipoUsuario.Administrador;
-                    break;
-                case TipoAplicacao.Colaborador:
-                    tipoUsuario = TipoUsuario.Profissional;
-                    break;
-            }
+            //TipoUsuario? tipoUsuario = null;
+            //switch ((TipoAplicacao)tipo)
+            //{
+            //    case TipoAplicacao.Interna:
+            //        tipoUsuario = TipoUsuario.Administrador;
+            //        break;
+            //    case TipoAplicacao.Colaborador:
+            //        tipoUsuario = TipoUsuario.Profissional;
+            //        break;
+            //}
 
             // Válidar usuario aqui
             var user = new AutenticacaoRepositorio().BuscaUsuario(new BHJet_Repositorio.Filtro.ValidaUsuarioFiltro()
             {
                 usuarioEmail = context.UserName,
-                usuarioSenha = context.Password,
-                usuarioTipo = tipoUsuario
+                usuarioSenha = context.Password
+                //usuarioTipo = tipoUsuario
             });
 
             // Validacao procura

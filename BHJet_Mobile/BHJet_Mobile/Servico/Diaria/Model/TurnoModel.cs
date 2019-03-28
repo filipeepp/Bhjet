@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BHJet_Mobile.Servico.Diaria.Model
 {
@@ -42,6 +40,16 @@ namespace BHJet_Mobile.Servico.Diaria.Model
         }
 
         public string KMFim
+        {
+            get; set;
+        }
+
+        public string NomeCliente
+        {
+            get; set;
+        }
+
+        public string EnderecoCliente
         {
             get; set;
         }
