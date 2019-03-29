@@ -29,8 +29,26 @@ namespace BHJet_Admin.Infra
             var corrida = filterContext.Controller.TempData[OSAvulsaControle.NomeVD] != null ? (EntregaModel)filterContext.Controller.TempData[OSAvulsaControle.NomeVD] : null;
 
             // Validacao Usuario
-            if (corrida != null && (((int)corrida.PassoOS) + 1) != (int)Passo)
-                filterContext.Result = new RedirectResult("~/HomeExterno/Index");
+            if (corrida != null)
+            {
+                switch (Passo)
+                {
+                    case OSAvulsoPassos.Origem:
+                        break;
+                    case OSAvulsoPassos.Destinos:
+                        if(corrida.PassoOS != OSAvulsoPassos.Origem && corrida.PassoOS != OSAvulsoPassos.Conclusao)
+                            filterContext.Result = new RedirectResult("~/HomeExterno/Index");
+                        break;
+                    case OSAvulsoPassos.Conclusao:
+                        if (corrida.PassoOS != OSAvulsoPassos.Destinos)
+                            filterContext.Result = new RedirectResult("~/HomeExterno/Index");
+                        break;
+                    case OSAvulsoPassos.Pagamento:
+                        if (corrida.PassoOS != OSAvulsoPassos.Destinos && corrida.PassoOS != OSAvulsoPassos.Conclusao)
+                            filterContext.Result = new RedirectResult("~/HomeExterno/Index");
+                        break;
+                }
+            }
         }
     }
 }

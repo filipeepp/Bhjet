@@ -18,6 +18,7 @@ namespace BHJet_Servico.Cliente
         void EditarCliente(ClienteCompletoModel clienteModel);
         void ExcluirContato(int idContato);
         void ExcluirValor(int idValor);
+        DadosBancariosDTO BuscaDadosBancariosCliente(long idCliente);
 
         //Cliente Avulso
         ClienteDTO[] BuscaClientesAvulsosValorAtivo();
@@ -92,6 +93,11 @@ namespace BHJet_Servico.Cliente
         public ClienteDTO[] BuscaClientesAvulsosValorAtivo()
         {
             return this.Get<ClienteDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Cliente.GetClientesAvulsosValorAtivo}"));
+        }
+
+        public DadosBancariosDTO BuscaDadosBancariosCliente(long idCliente)
+        {
+            return this.Get<DadosBancariosDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Cliente.GetDadosBancarios, idCliente)}"));
         }
 
         public DetalheCorridaModel[] BuscaOsCliente(long clienteID)

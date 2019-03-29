@@ -864,5 +864,25 @@ namespace BHJet_Repositorio.Admin
 
             }
         }
+
+        /// <summary>
+        /// Busca dados bancarios
+        /// </summary>
+        /// <param name="filtro">clienteID</param>
+        /// <returns>UsuarioEntidade</returns>
+        public DadosBancariosEntidade BuscaDadosBancarios(long clienteID)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select * from tblDadosCartaoCredito where idCliente = @ClienteID";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<DadosBancariosEntidade>(query, new
+                {
+                    ClienteID = clienteID
+                });
+            }
+        }
     }
 }

@@ -314,6 +314,7 @@
     <Content Include="Scripts\Origem.js" />
     <Content Include="Scripts\OSCliente.js" />
     <Content Include="Scripts\owl.carousel.js" />
+    <Content Include="Scripts\Pagamento.js" />
     <Content Include="Scripts\Registrar.js" />
     <Content Include="Scripts\Resumo.js" />
     <Content Include="Scripts\Tarifario.js" />
@@ -373,7 +374,7 @@
     <Content Include="Views\HomeExterno\Index.cshtml" />
     <Content Include="Views\Entregas\Index.cshtml" />
     <Content Include="Views\Entregas\Resumo.cshtml" />
-    <Content Include="Views\Pagamento\Pagamento.cshtml" />
+    <Content Include="Views\Pagamento\_Pagamento.cshtml" />
     <Content Include="Views\Shared\_LayoutExterno.cshtml" />
     <Content Include="Views\Home\Registrar.cshtml" />
   </ItemGroup>

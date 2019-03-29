@@ -607,6 +607,30 @@ namespace BHJet_WebApi.Controllers
             }));
         }
 
+        /// <summary>
+        /// Busca dados bancarios
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCliente:long}/dados/bancarios")]
+        [ResponseType(typeof(DadosBancariosDTO))]
+        public IHttpActionResult GetDadosBancarios(long idCliente)
+        {
+            // Busca Dados
+            var entidade = new ClienteRepositorio().BuscaDadosBancarios(idCliente);
+
+            // Validacao
+            if (entidade == null)
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Return
+            return Ok(new DadosBancariosDTO()
+            {
+                NomeCartaoCredito = entidade.vcNomeImpresso,
+                NumeroCartaoCredito = entidade.vcNumeroCartao,
+                Validade = entidade.vcValidadeMesAno
+            });
+        }
         #endregion
 
     }
