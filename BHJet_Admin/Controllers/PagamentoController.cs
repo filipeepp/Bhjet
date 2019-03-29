@@ -22,10 +22,7 @@ namespace BHJet_Admin.Controllers
             var origem = (EntregaModel)TempData["origemSolicitacao"];
             this.TempData["origemSolicitacao"] = origem;
 
-            return View(new PagamentoModel()
-            {
-                NumeroOS = 1555
-            });
+            return View(new PagamentoModel());
         }
     }
 }

@@ -2,6 +2,7 @@
 using BHJet_Admin.Models;
 using BHJet_DTO.Corrida;
 using BHJet_Enumeradores;
+using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using System;
 using System.Linq;
@@ -14,9 +15,12 @@ namespace BHJet_Admin.Controllers
     {
         private readonly ICorridaServico corridaServico;
 
-        public EntregasController(ICorridaServico _corridaServico)
+        private readonly IClienteServico clienteServico;
+
+        public EntregasController(ICorridaServico _corridaServico, IClienteServico _clienteServico)
         {
             corridaServico = _corridaServico;
+            clienteServico = _clienteServico;
         }
 
         // Passo 1 - Destinos
@@ -36,6 +40,7 @@ namespace BHJet_Admin.Controllers
         public ActionResult Index(EntregaModel model)
         {
             // Atualiza OS
+            model.PassoOS = OSAvulsoPassos.Destinos;
             this.AtualizaOSAvulsa(model);
 
             // Redirect
@@ -61,6 +66,25 @@ namespace BHJet_Admin.Controllers
                 }).ToArray()
             });
             osAvulsa.ValorCorrida = resumo;
+
+            // Busca Dados de Pagamento
+            try
+            {
+                // Busca
+                var dadosBd = clienteServico.BuscaDadosBancariosCliente(osAvulsa.IDCliente ?? 0);
+
+                // Dados
+                osAvulsa.DadosPagamento = new PagamentoModel()
+                {
+                    NomeCartaoCredito = dadosBd.NomeCartaoCredito,
+                    NumeroCartaoCredito = dadosBd.NumeroCartaoCredito,
+                    Validade = dadosBd.Validade
+                };
+            }
+            catch
+            {
+                osAvulsa.DadosPagamento = new PagamentoModel();
+            }
 
             // Atualiza OS
             this.AtualizaOSAvulsa(osAvulsa);

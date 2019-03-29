@@ -14,6 +14,7 @@ namespace BHJet_Admin.Models
         public List<EnderecoModel> Enderecos { get; set; }
         public OSAvulsoPassos PassoOS { get; set; }
         public bool SimulandoCorridaSemUsuario { get; set; }
+        public PagamentoModel DadosPagamento { get; set; }
     }
 
     public class EnderecoModel

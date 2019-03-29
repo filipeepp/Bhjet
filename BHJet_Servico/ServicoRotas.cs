@@ -56,8 +56,9 @@ namespace BHJet_Servico
 
 			#region Cliente Avulso
 			public const string GetClientesAvulsosValorAtivo = "api/Cliente/avulso/contrato/ativo";
-			#endregion
-		}
+            public const string GetDadosBancarios = "api/Cliente/{0}/dados/bancarios";
+            #endregion
+        }
 
 		public class Usuario
         {

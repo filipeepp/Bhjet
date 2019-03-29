@@ -1,6 +1,7 @@
 ﻿
 @using BHJet_Admin.Models
 @using BHJet_Enumeradores
+@using BHJet_Admin.Infra
 @model EntregaModel
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -139,6 +140,11 @@
                     }
                 </div>
 
+                if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.ClienteAvulsoSite)
+                {
+                    Html.RenderPartial("~/Views/Pagamento/_Pagamento.cshtml", Model.DadosPagamento);
+                }
+
                 <div class="row">
                     <div class="col-md-12">
                         <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
@@ -154,7 +160,7 @@
                             }
                         </div>
                     </div>
-                </div>
+                </div>               
 
                 if (Model.IDCliente != null && Model.OSNumero != null)
                 {

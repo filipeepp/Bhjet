@@ -1,0 +1,44 @@
+﻿
+@using BHJet_Admin.Models
+@using BHJet_Enumeradores
+@model PagamentoModel
+
+    <div class="row">
+        <div class="col-12">
+            <div class="cts-subtitulo-side-bar">
+                <span class="titulo">Pagamento</span>
+                <span class="iconeLeft"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></span>
+            </div>
+            <div id="ctnOrigem" class="ctnEntregaInterno">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="titulo" for="txtEnderecoPartida">Digite seu nome idêntico ao cartão de crédito:</label>
+                            @Html.TextBoxFor(model => model.NomeCartaoCredito, new { placeholder = "Nome no cartão.", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NomeCartaoCredito, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="titulo" for="txtEnderecoPartida">Número do cartão de crédito:</label>
+                            @Html.TextBoxFor(model => model.NumeroCartaoCredito, new { placeholder = "Número no cartão.", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NumeroCartaoCredito, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="titulo" for="txtEnderecoPartida">Válidade:</label>
+                            @Html.TextBoxFor(model => model.Validade, new { placeholder = "Número no cartão.", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Validade, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="titulo" for="txtEnderecoPartida">Código de verificação:</label>
+                            @Html.TextBoxFor(model => model.CodigoVerificacao, new { @type = "password", placeholder = "Código de verificação.", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CodigoVerificacao, null, new {  @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+</div>
+
