@@ -1,9 +1,9 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
-using BHJet_Enumeradores;
 using BHJet_Core.Extension;
 using BHJet_DTO.Diaria;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using BHJet_Servico.Dashboard;
@@ -14,8 +14,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using BHJet_DTO.Profissional;
-using System.Collections.Generic;
 
 namespace BHJet_Admin.Controllers
 {
@@ -40,7 +38,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult ExibeLocalizacao(DashboardTipoDisponivelEnum? tipoSolicitacao)
         {
             // Consiste Entrada
@@ -54,7 +52,7 @@ namespace BHJet_Admin.Controllers
             return View();
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult ExibeLocalizacao(DashboardTipoDisponivelEnum? tipoSolicitacao, ResumoModel model)
         {
             // Consiste Entrada
@@ -70,7 +68,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaLocalizacao()
         {
             // Modelo
@@ -146,7 +144,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaResumoSituacaoChamados()
         {
             // Recupera dados
@@ -157,7 +155,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaResumoAtendimentos()
         {
             // Recupera dados
@@ -167,7 +165,7 @@ namespace BHJet_Admin.Controllers
             return Json(entidade, JsonRequestBehavior.AllowGet);
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult OSCliente(ResumoModel model)
         {
             try
@@ -219,7 +217,7 @@ namespace BHJet_Admin.Controllers
         }
 
         #region Diaria Avulsa
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult CadastroDiariaAvulsa()
         {
             return View(new DiariaModel()
@@ -229,7 +227,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
             try
@@ -295,7 +293,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
         {
             // Recupera dados
@@ -310,7 +308,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaClientes(string trechoPesquisa)
         {
             // Recupera dados
@@ -325,7 +323,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaTarifas(long idCliente, int tipoVeiculo)
         {
             // Recupera dados
@@ -341,7 +339,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaComissao(long idProfissional)
         {
             try
@@ -366,7 +364,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BcTpVec()
         {
             // Recupera dados

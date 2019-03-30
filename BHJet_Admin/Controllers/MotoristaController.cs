@@ -23,14 +23,14 @@ namespace BHJet_Admin.Controllers
             profissionalServico = _profissional;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             return View();
         }
 
         #region Novo/Edicao Motorista
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Novo(bool? Edicao, long? ID, NovoMotoristaModel model, bool? alteraComissao = false)
         {
             try
@@ -127,7 +127,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Novo(NovoMotoristaModel model)
         {
             try
@@ -236,7 +236,7 @@ namespace BHJet_Admin.Controllers
         }
 
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpPost]
         public JsonResult AddComissao(NovoMotoristaModel data)
         {
@@ -266,7 +266,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpPost]
         public JsonResult ExcluirComissao(NovoMotoristaModel data, int numeroComissao)
         {
@@ -304,7 +304,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Listar Motoristas
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Listar(string palavraChave)
         {
             try
@@ -344,7 +344,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BcTpVec()
         {
             // Recupera dados

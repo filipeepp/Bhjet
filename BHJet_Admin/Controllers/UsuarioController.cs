@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Usuario;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Usuario;
 using System;
@@ -20,14 +21,14 @@ namespace BHJet_Admin.Controllers
             clienteServico = _clienteServico;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: Usuario
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Listar(string trechoPqs = "")
         {
             try
@@ -60,7 +61,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Novo(bool? Edicao, long? ID)
         {
 
@@ -102,7 +103,7 @@ namespace BHJet_Admin.Controllers
 
         // POST: Usuario
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Novo(UsuarioModel model)
         {
             try
@@ -174,7 +175,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult DeletaUsuario(long id)
         {
             // Recupera dados
@@ -185,7 +186,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult AlteraSituacao(int situacao, long id)
         {
             // Recupera dados
@@ -198,7 +199,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaClientes(string trechoPesquisa)
         {
             // Recupera dados

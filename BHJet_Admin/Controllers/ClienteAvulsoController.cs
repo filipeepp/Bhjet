@@ -1,5 +1,6 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models.ClienteAvulso;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace BHJet_Admin.Controllers
             clienteServico = _cliente;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             return View();
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Listar()
         {
             try
@@ -52,7 +53,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.ClienteAvulsoSite)]
         public ActionResult Visualizar(string clienteID)
         {
             try

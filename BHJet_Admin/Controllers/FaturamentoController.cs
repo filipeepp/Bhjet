@@ -5,7 +5,6 @@ using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Faturamento;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,21 +22,21 @@ namespace BHJet_Admin.Controllers
             faturamentoServico = _faturamentoServico;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             return View();
         }
 
         #region Gerar Faturamento
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult GerarFaturamento()
         {
             return View(new GerarFaturamantoModel());
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult GerarFaturamento(GerarFaturamantoModel model)
         {
             try
@@ -79,7 +78,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscaClientes(string trechoPesquisa)
         {
             // Recupera dados
@@ -95,7 +94,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Faturamento Normal
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult FaturamentoNormal()
         {
             return View(new FaturamentoNormal()
@@ -105,7 +104,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult FaturamentoNormal(FaturamentoNormal model)
         {
             try
@@ -146,7 +145,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Faturamento Avulso
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult FaturamentoAvulso()
         {
 
@@ -165,7 +164,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult FaturamentoAvulso(FaturamentoAvulsoModel model)
         {
             var cli = new System.Collections.Generic.Dictionary<int, string>();
@@ -194,7 +193,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         #region Detalhe Faturamento
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult DetalheFaturamento()
         {
             return View(new DetalheFaturamentoModel()
@@ -249,7 +248,7 @@ namespace BHJet_Admin.Controllers
             });
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo)
         {
             try

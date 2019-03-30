@@ -1,8 +1,8 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_DTO.Area;
+using BHJet_Enumeradores;
 using BHJet_Servico.Area;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace BHJet_Admin.Controllers
@@ -16,13 +16,13 @@ namespace BHJet_Admin.Controllers
             areaServico = _area;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Area()
         {
             return View();
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpGet]
         public JsonResult BuscaAreas()
         {
@@ -43,7 +43,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpPost]
         public JsonResult CadastraAreas(IEnumerable<AreasFiltroDTO> data)
         {
@@ -61,7 +61,6 @@ namespace BHJet_Admin.Controllers
                 return Json("", JsonRequestBehavior.AllowGet);
             }
         }
-
     }
 }
 

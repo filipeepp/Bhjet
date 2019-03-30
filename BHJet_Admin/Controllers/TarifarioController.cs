@@ -2,6 +2,7 @@
 using BHJet_Admin.Models.Tarifario;
 using BHJet_Core.Extension;
 using BHJet_DTO.Tarifa;
+using BHJet_Enumeradores;
 using BHJet_Servico.Tarifa;
 using System;
 using System.Globalization;
@@ -40,7 +41,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index(TarifarioModel model)
         {
             var TarifaModel = new TarifarioModel();
@@ -83,7 +84,6 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-
         private TarifarioModel BuscaTarifaPadrao()
         {
             // Busca tarifas
@@ -114,9 +114,8 @@ namespace BHJet_Admin.Controllers
             };
         }
 
-
         [HttpGet]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public JsonResult BuscarTarifarioPadraoAtivo(int codigoTipoVeiculo)
         {
             var data = tarifaServico.BuscaTarifaAtiva(codigoTipoVeiculo);
