@@ -1,16 +1,16 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Clientes;
-using BHJet_Enumeradores;
 using BHJet_Core.Extension;
 using BHJet_DTO.Cliente;
+using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Tarifa;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using System.Globalization;
 
 namespace BHJet_Admin.Controllers
 {
@@ -25,13 +25,13 @@ namespace BHJet_Admin.Controllers
             tarifaServico = _tarifaServico;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             return View();
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Clientes()
         {
             try
@@ -61,9 +61,8 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Clientes(string palavraChave)
         {
             try
@@ -89,8 +88,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult NovoCliente(bool edicao = false, string clienteID = "")
         {
             if (edicao)
@@ -181,7 +179,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult NovoCliente(ClienteModel model)
         {
             var edicao = TempData["MetodoPaginaEdicao"] != null ? (bool)TempData["MetodoPaginaEdicao"] : false;
@@ -288,7 +286,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpPost]
         public ActionResult ExcluirContato(string idContato = "")
         {
@@ -307,7 +305,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpPost]
         public ActionResult ExcluirValor(string idValor = "")
         {
@@ -326,14 +324,13 @@ namespace BHJet_Admin.Controllers
             }
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult CarregarNovoContato(ClienteModel model)
         {
             return PartialView("_Contato", model);
         }
 
-
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult CarregarNovoValor(ClienteModel model)
         {
             return PartialView("_Valor", model);

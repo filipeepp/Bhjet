@@ -4,6 +4,8 @@ namespace BHJet_Enumeradores
 {
     public enum TipoUsuario
     {
+        [Display(Name = "Visitante")]
+        Visitante = 0,
         [Display(Name = "Administrador")]
         Administrador = 1,
         [Display(Name = "Profissional Motorista")]
