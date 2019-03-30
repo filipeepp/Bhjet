@@ -206,7 +206,7 @@ namespace BHJet_Admin.Controllers
             var entidade = clienteServico.BuscaListaClientes(trechoPesquisa);
 
             // Return
-            return Json(entidade.Select(x => new AutoCompleteModel()
+            return Json(entidade.Where(c => c.bitAvulso == false).Select(x => new AutoCompleteModel()
             {
                 label = x.ID + " - " + x.vcNomeFantasia,
                 value = x.ID

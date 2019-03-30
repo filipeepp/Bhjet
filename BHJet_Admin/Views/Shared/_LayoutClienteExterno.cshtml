@@ -1,0 +1,89 @@
+﻿@using System.Web.Optimization;
+@using BHJet_Enumeradores
+@using BHJet_Admin.Infra
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="@Url.Content("~/Scripts/Menu.js")"></script>
+</head>
+<body>
+    @{
+        Html.RenderPartial("~/Views/Shared/_Loading.cshtml");
+    }
+
+    <div id="page-wrapper">
+
+        <nav class="navExt">
+            <ul>
+                <li>  <img src="@Url.Content("~/Images/logoLogisticaPreto.jpg")" class="logo" style="margin: 10px;" /></li>
+                <li><a href="@Url.Action("Index", "HomeExterno")">Início</a>
+                <li class="drop">
+                    <a href="#">Para Empresas</a>
+                    <ul class="dropdownNavEx">
+                        <li><a href="#">Teste 01</a></li>
+                        <li><a href="#">Teste 02</a></li>
+                        <li><a href="#">Teste 03</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Para Você</a> </li>
+                <li><a href="#">Quem Somos</a> </li>
+                <li><a href="#">Contato</a> </li>
+                <li><a href="#">Trabalhe Conosco</a> </li>
+                <li class="drop" style="float:right">
+                    @if (Request.IsAuthenticated && !string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu) && !string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu))
+                    {
+                        <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Bem vindo, @UsuarioLogado.Instance.bhEmlUsu</a>
+                        <ul class="dropdownNavEx">
+                            <li><a href="@Url.Action("Visualizar", "ClienteAvulso", new RouteValueDictionary(new { clienteID = UsuarioLogado.Instance.bhIdCli }))">Minha Conta</a></li>
+                            <li><a style="color:red" href="@Url.Action("Logoff", "Home")">Sair</a></li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login", "Home")"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Entrar</a>
+                    }
+                </li>
+            </ul>
+        </nav>
+
+        @RenderBody()
+
+        <div id="myModal" class="modal fade" style="margin-top: 10%;" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="color: white;" aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Atenção</h4>
+                    </div>
+                    <div class="modal-body">
+                        <img id="imgMensagem" /><br /><br />
+                        <p id="msgModal"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeMsgGeral" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<script>
+
+
+</script>
