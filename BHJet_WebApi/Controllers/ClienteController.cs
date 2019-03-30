@@ -220,6 +220,8 @@ namespace BHJet_WebApi.Controllers
                 ID = cli.idCliente,
                 bitRetemISS = cli.bitRetemISS,
                 idEndereco = cli.idEndereco,
+                bitAvulso = cli.bitAvulso,
+                bitAtivo = cli.bitAtivo,
                 idUsuario = cli.idEndereco,
                 vcNomeRazaoSocial = cli.vcNomeRazaoSocial,
                 vcNomeFantasia = cli.vcNomeFantasia,

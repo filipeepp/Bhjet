@@ -3,9 +3,13 @@
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
+    else if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.FuncionarioCliente)
+    {
+        Layout = "~/Views/Shared/_LayoutClienteInterno.cshtml";
+    }
     else
     {
-        Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+        Layout = "~/Views/Shared/_LayoutClienteExterno.cshtml";
     }
 }
 
