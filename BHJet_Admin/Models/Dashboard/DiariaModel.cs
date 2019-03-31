@@ -37,9 +37,9 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private int? _ClienteSelecionado;
+        private long? _ClienteSelecionado;
         [Required(ErrorMessage = "Cliente obrigatório.")]
-        public int? ClienteSelecionado
+        public long? ClienteSelecionado
         {
             get
             {

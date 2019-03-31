@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Faturamento;
+using BHJet_DTO.Faturamento;
 using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Faturamento;
@@ -248,17 +249,29 @@ namespace BHJet_Admin.Controllers
             });
         }
 
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo)
         {
             try
             {
-                var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
-                var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
-
-                // Busca detalhe
-                var resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
-
+                // Variaveis
+                ItemFaturamentoDetalheDTO[] resultado = new ItemFaturamentoDetalheDTO[] { };
+                string Periodo = string.Empty;
+                // Execute
+                if (string.IsNullOrWhiteSpace(periodo))
+                {
+                    resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente);
+                    Periodo = " TODOS";
+                }
+                else
+                {
+                    // Datas pesquisa
+                    var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
+                    var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
+                    periodo = datIni.ToShortDateString() + " a " + datFim.ToShortDateString();
+                    // Busca detalhe
+                    resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
+                }
                 ViewBag.Total = resultado.Sum(x => x.Valor);
 
                 // Return View
@@ -266,7 +279,7 @@ namespace BHJet_Admin.Controllers
                 {
                     Cliente = resultado.FirstOrDefault().NomeCliente,
                     DataRelatorio = DateTime.Now.ToLongDateString(),
-                    PeriodoIntervalo = datIni.ToShortDateString() + " a " + datFim.ToShortDateString(),
+                    PeriodoIntervalo = periodo,
                     Registros = resultado.Select(c => new DetalheFaturamentoAvulsoRegistros()
                     {
                         DataCorrida = c.Data,
@@ -280,7 +293,7 @@ namespace BHJet_Admin.Controllers
             }
             catch (Exception e)
             {
-                this.TrataErro(new Exception("Erro ao detalhar faturamento, tente novamente mais tarde."));
+                this.TrataErro(e);
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }

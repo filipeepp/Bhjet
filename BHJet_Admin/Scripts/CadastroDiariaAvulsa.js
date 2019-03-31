@@ -39,6 +39,10 @@ function BuscaVeiculos() {
                 });
                 BuscaProfissionais($('#TipoVeiculoSelecionado').val());
                 $("#TipoVeiculoSelecionado").mouseup();
+
+                if ($("#ClienteSelecionado") != undefined && $("#ClienteSelecionado").val() != undefined && $("#ClienteSelecionado").val() != "") {
+                    BuscaTarifas($("#ClienteSelecionado").val())
+                }
             }
         },
     });
@@ -189,6 +193,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             var text = $option.text();
             if (value != undefined && value != "") {
                 BuscaProfissionais(value);
+
+                if ($("#ClienteSelecionado") != undefined && $("#ClienteSelecionado").val() != undefined && $("#ClienteSelecionado").val() != "") {
+                    BuscaTarifas($("#ClienteSelecionado").val())
+                }
             }
         }
     });
@@ -210,7 +218,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     BuscaVeiculos();
-    BuscaClientes();
+    if ($("#ClienteSelecionado") == undefined || $("#ClienteSelecionado").val() == undefined || $("#ClienteSelecionado").val() == "") {
+        BuscaClientes();
+    }
 
 
 });

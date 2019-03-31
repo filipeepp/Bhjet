@@ -31,7 +31,7 @@ namespace BHJet_Admin.Controllers
             clienteServico = _cliente;
         }
 
-        [ValidacaoUsuarioAttribute()]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult Index()
         {
             try
