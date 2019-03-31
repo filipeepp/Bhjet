@@ -4,10 +4,12 @@ namespace BHJet_Repositorio.Admin.Entidade
 {
     public class DiariaAvulsaEntidade
     {
+        public long idRegistroDiaria { get; set; }
         public int IDCliente { get; set; }
         public int IDTarifario { get; set; }
         public int IDColaboradorEmpresa { get; set; }
         public long IDUsuarioSolicitacao { get; set; }
+        public string vcNomeCompleto { get; set; }
         public DateTime DataHoraInicioExpediente { get; set; }
         public int? OdometroInicioExpediente { get; set; }
         public DateTime? DataHoraInicioIntervalo { get; set; }

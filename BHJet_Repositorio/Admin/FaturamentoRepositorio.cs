@@ -521,6 +521,7 @@ namespace BHJet_Repositorio.Admin
                 return diariasDetalhe;
             }
         }
+
     }
 }
 

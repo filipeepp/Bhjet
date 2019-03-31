@@ -249,29 +249,23 @@ namespace BHJet_Admin.Controllers
             });
         }
 
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo)
         {
             try
             {
                 // Variaveis
                 ItemFaturamentoDetalheDTO[] resultado = new ItemFaturamentoDetalheDTO[] { };
-                string Periodo = string.Empty;
-                // Execute
-                if (string.IsNullOrWhiteSpace(periodo))
-                {
-                    resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente);
-                    Periodo = " TODOS";
-                }
-                else
-                {
-                    // Datas pesquisa
-                    var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
-                    var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
-                    periodo = datIni.ToShortDateString() + " a " + datFim.ToShortDateString();
-                    // Busca detalhe
-                    resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
-                }
+
+                // Datas pesquisa
+                var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
+                var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
+                string periodoDesc = datIni.ToShortDateString() + " a " + datFim.ToShortDateString();
+
+                // Busca detalhe
+                resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
+
+                // Total
                 ViewBag.Total = resultado.Sum(x => x.Valor);
 
                 // Return View
@@ -279,7 +273,7 @@ namespace BHJet_Admin.Controllers
                 {
                     Cliente = resultado.FirstOrDefault().NomeCliente,
                     DataRelatorio = DateTime.Now.ToLongDateString(),
-                    PeriodoIntervalo = periodo,
+                    PeriodoIntervalo = periodoDesc,
                     Registros = resultado.Select(c => new DetalheFaturamentoAvulsoRegistros()
                     {
                         DataCorrida = c.Data,
@@ -297,6 +291,50 @@ namespace BHJet_Admin.Controllers
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
+        #endregion
+
+        #region Faturamento CLiente Interno
+
+        [ValidacaoUsuarioAttribute(TipoUsuario.FuncionarioCliente)]
+        public ActionResult FaturamentoClienteInterno()
+        {
+            try
+            {
+                // Busca Corridas
+                var corridas = clienteServico.BuscaOsCliente(UsuarioLogado.Instance.bhIdCli ?? 9999999);
+
+                // Busca Diarias
+                var diarias = clienteServico.BuscaDiariaCliente(UsuarioLogado.Instance.bhIdCli ?? 9999999);
+
+                // Return View
+                return View(new FaturamentoClienteInterno()
+                {
+                    TotalCorrida = corridas.Sum(c => c.ValorFinalizado != null ? c.ValorFinalizado : c.ValorEstimado)?.ToString("C", new CultureInfo("pt-BR")),
+                    Corridas = corridas.Select(c => new FaturamentoClienteInternoCorrida()
+                    {
+                        NumeroOS = c.NumeroOS,
+                        Profissional = c.NomeProfissional,
+                        DataCorrida = c.DataInicio,
+                        ValorEstimado = c.ValorEstimado ?? 0,
+                        ValorFinalizado = c.ValorFinalizado ?? 0
+                    }).ToArray(),
+                    TotalDiaria = diarias.Sum(c => c.ValorDiariaNegociado)?.ToString("C", new CultureInfo("pt-BR")),
+                    Diarias = diarias.Select(d => new FaturamentoClienteInternoDiaria()
+                    {
+                        NumeroOS = d.ID,
+                        DataCorrida = d.DataHoraSolicitacao,
+                        Profissional = d.NomeColaboradorEmpresa,
+                        Valor = d.ValorDiariaNegociado ?? 0
+                    }).ToArray()
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
         #endregion
     }
 }

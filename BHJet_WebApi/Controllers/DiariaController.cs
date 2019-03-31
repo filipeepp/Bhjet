@@ -3,6 +3,7 @@ using BHJet_DTO.Diaria;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
+using System.Linq;
 using System.Web.Http;
 
 namespace BHJet_WebApi.Controllers
@@ -157,6 +158,27 @@ namespace BHJet_WebApi.Controllers
 
             // Retorna
             return Ok(turno);
+        }
+
+        [Authorize]
+        [Route("cliente/{clienteID:long}")]
+        public IHttpActionResult GetDiariaCliente(long clienteID)
+        {
+            // Busca verificação
+            var diarias = new DiariaRepositorio().BuscaDiariasCliente(clienteID);
+
+            // Verifica se existe
+            if (diarias == null || !diarias.Any())
+                return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+            // Retorna
+            return Ok(diarias.Select(d => new DiariaAvulsaDTO()
+            {
+                ID = d.idRegistroDiaria,
+                DataHoraSolicitacao = d.DataHoraSolicitacao,
+                NomeColaboradorEmpresa = d.vcNomeCompleto,
+                ValorDiariaNegociado = d.ValorDiariaNegociado
+            }));
         }
     }
 }

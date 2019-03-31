@@ -1,0 +1,170 @@
+﻿@using BHJet_Admin.Models.Faturamento
+@model FaturamentoClienteInterno
+
+<ol class="breadcrumb">
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="">Consultar Faturamento</a></li>
+    <li><a href="">Detalhe Faturamento</a></li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="titulo">
+                        <h2>
+                            <a onclick="history.go(-1);">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Detalhe Faturamento
+                        </h2>
+                    </div>
+
+                    <div class="panel panel-default" style="margin:30px">
+                        <div class="panel-body">
+                            <div class="titulo">
+                                <h2>
+                                    <a onclick="history.go(-1);">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    </a>
+                                    Cabeçalho
+                                </h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-lg-12">
+                                    <br />
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <label for="txtNome">Data do relatório: </label>
+                                    @Html.Label(Model.DataRelatorio)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="panel panel-default" style="margin:30px">
+                                    <div class="panel-body">
+                                        <div class="titulo">
+                                            <h2>
+                                                <a onclick="history.go(-1);">
+                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                </a>
+                                                Corridas
+                                            </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                @if (@Model.TotalCorrida != null)
+                                                {
+                                                    <div class="box-total">
+                                                        <h5 class="box-total-tit">TOTAL PARCIAL</h5>
+                                                        <h5><i class="fa fa-money" aria-hidden="true"></i> @Model.TotalCorrida</h5>
+                                                    </div>
+                                                }
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr class="bg-light-gray">
+                                                            <th>Data</th>
+                                                            <th>OS</th>
+                                                            <th class="hidden-xs">Tipo Chamado</th>
+                                                            <th class="hidden-xs">Profissional</th>
+                                                            <th class="text-right">Valor Estimado</th>
+                                                            <th class="text-right">Valor Finalizado</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (FaturamentoClienteInternoCorrida fat in @Model.Corridas)
+                                                        {
+                                                            <tr>
+                                                                <td>@fat.DataCorrida</td>
+                                                                <td>@fat.NumeroOS</td>
+                                                                <td class="hidden-xs">@fat.TipoContrato</td>
+                                                                <td class="hidden-xs">@fat.Profissional</td>
+                                                                <td class="hidden-xs">@fat.ValorEstimado.ToString("C")</td>
+                                                                <td class="text-right">@fat.ValorFinalizado.ToString("C")</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="panel panel-default" style="margin:30px">
+                                    <div class="panel-body">
+                                        <div class="titulo">
+                                            <h2>
+                                                <a onclick="history.go(-1);">
+                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                                </a>
+                                                Diárias
+                                            </h2>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                @if (@Model.TotalCorrida != null)
+                                                {
+                                                    <div class="box-total">
+                                                        <h5 class="box-total-tit">TOTAL PARCIAL</h5>
+                                                        <h5><i class="fa fa-money" aria-hidden="true"></i>@Model.TotalDiaria</h5>
+                                                    </div>
+                                                }
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr class="bg-light-gray">
+                                                            <th>Data</th>
+                                                            <th>OS</th>
+                                                            <th class="hidden-xs">Tipo Chamado</th>
+                                                            <th class="hidden-xs">Profissional</th>
+                                                            <th class="text-right">Valor</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (FaturamentoClienteInternoDiaria fat in @Model.Diarias)
+                                                        {
+                                                            <tr>
+                                                                <td>@fat.DataCorrida</td>
+                                                                <td>@fat.NumeroOS</td>
+                                                                <td class="hidden-xs">@fat.TipoContrato</td>
+                                                                <td class="hidden-xs">@fat.Profissional</td>
+                                                                <td class="text-right">@fat.Valor.ToString("C")</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["mensagemGeral"] != null)
+{
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
+
+		window.onload = function () {
+			var mensagem = $("#mensagemController").val();
+            $("#msgModal").text(mensagem)
+            $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
+            $('#myModal').modal('show')
+        };
+    </script>
+}
