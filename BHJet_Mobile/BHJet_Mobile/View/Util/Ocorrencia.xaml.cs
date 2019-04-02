@@ -95,11 +95,12 @@ namespace BHJet_Mobile.View.Util
             }
         }
 
-        private void Ligar_Clicked(object sender, EventArgs e)
+        private async void Ligar_Clicked(object sender, EventArgs e)
         {
             try
             {
-                PhoneDialer.Open("031983363474");
+                var telefone = await ViewModel.BuscaTelefoneContato();
+                PhoneDialer.Open(telefone);
             }
             catch (Exception ex)
             {

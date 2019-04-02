@@ -80,7 +80,7 @@ namespace BHJet_Mobile.View.Util
             if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
                 App.Current.MainPage = new DiariaDeBordo();
             else
-                App.Current.MainPage = new Index();
+                App.Current.MainPage = new Index(true);
         }
     }
 }

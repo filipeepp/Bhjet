@@ -289,6 +289,21 @@ namespace BHJet_WebApi.Controllers
         }
 
         /// <summary>
+        /// Busca telefone de contato OCORRENICA corrida
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [Route("{idCorrida:long}/contato")]
+        public IHttpActionResult GetContatoOcorrencia(long idCorrida)
+        {
+            // Busca Dados detalhados da corrida/OS
+            var telefone = new CorridaRepositorio().BuscaTelefoneClienteCorrida(idCorrida);
+
+            // Return
+            return Ok(telefone);
+        }
+
+        /// <summary>
         /// Encerrar OS
         /// </summary>
         /// /// <param name="idCorrida">long</param>

@@ -3,7 +3,7 @@
     public class ServicoRotas
     {
        // public static readonly string Base = "http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
-        public static readonly string Base = "http://bhjet.jrmendonca.com.br/api/";
+        public static readonly string Base = "http://bhjetapi.sa-east-1.elasticbeanstalk.com/";
 
         public class Autenticacao
         {
@@ -35,6 +35,7 @@
             public const string PutOcorrenciaCorrida = "api/Corrida/status/{0}/log/{1}/corrida/{2}";
             public const string PostRecusarCorrida = "api/Corrida/recusar/{0}";
             public const string PostLiberarCorrida = "api/Corrida/liberar/{0}";
+            public const string GetContatoCorrida = "api/Corrida/{0}/contato";
         }
     }
 }
