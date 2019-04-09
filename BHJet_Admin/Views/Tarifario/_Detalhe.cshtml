@@ -1,115 +1,154 @@
 ﻿@using BHJet_Admin.Models.Tarifario
+@using BHJet_Enumeradores;
 @model TarifarioModel
+
 
 
 @Scripts.Render("~/bundles/jqueryval")
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.rawgit.com/plentz/jquery-maskmoney/master/dist/jquery.maskMoney.min.js"></script>
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        $("#tabs").tabs();
+
+    });
+
+    window.onload = function () {
+      
+    };
+</script>
 
 @using (Html.BeginForm("Index", "Tarifario", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-<div class="row form-group ">
+    <div class="row form-group ">
 
-    <div>
-        <div class="col-xs-12 col-md-12 text-center" style="margin: -25px;">
-            <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
-                <i class="fa fa-share"></i>Confirmar Solicitação
-            </button>
-        </div>
-    </div>
-
-    @for (int i = 0; i < Model.Tarifas.Count(); i++)
-    {
-        <div class="panel panel-default" style="margin:30px;">
-            <div class="panel-body">
-                <div class="titulo">
-                    <h2>
-                        <a onclick="history.go(-1);">
-                            <i class="fa fa-usd" aria-hidden="true"></i>
-                        </a>
-                        @Html.TextBoxFor(model => model.Tarifas[i].idTarifario, new { @class = "form-control inputDesc", @autocomplete = "off", @style = "width: 35px;" })
-                        @Html.ValidationMessageFor(model => model.Tarifas[i].idTarifario, null, new { @class = "text-danger", @autocomplete = "off" })
-
-                        @Html.TextBoxFor(model => model.Tarifas[i].DescricaoTarifario, new { @class = "form-control inputDesc", @autocomplete = "off" })
-                        @Html.ValidationMessageFor(model => model.Tarifas[i].DescricaoTarifario, null, new { @class = "text-danger", @autocomplete = "off" })
-                    </h2>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-lg-12">
-                    <div class="row">
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor do contrato</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].ValorContrato, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].ValorContrato, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Franquia KM</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].FranquiaKM, new { @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaKM, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Valor KM adicional</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].ValorKMAdicional, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].ValorKMAdicional, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Franquia minutos parados</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].FranquiaMinutosParados, new { @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaMinutosParados, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Valor minuto parado</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].ValorMinutoParado, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].ValorMinutoParado, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Franquia horas</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].FranquiaHoras, new { @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaHoras, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                        <div class=" col-md-3 col-lg-3">
-                            <label for="txtNomeFantasia">Valor horas adicional</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].ValorHoraAdicional, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].ValorHoraAdicional, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-
-                        <div class=" col-md-6 col-lg-4">
-                            <label for="txtNomeFantasia">Valor ponto excedente</label>
-                            @Html.TextBoxFor(model => model.Tarifas[i].ValorPontoExcedente, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].ValorPontoExcedente, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class=" col-md-12 col-lg-12">
-                            <label for="txtNomeFantasia">Observação</label>
-                            @Html.TextAreaFor(model => model.Tarifas[i].Observacao, new { @class = "form-control", @autocomplete = "off" })
-                            @Html.ValidationMessageFor(model => model.Tarifas[i].Observacao, null, new { @class = "text-danger", @autocomplete = "off" })
-                        </div>
-                    </div>
-
-
-                </div>
-
+        <div>
+            <div class="col-xs-12 col-md-12 text-center" style="margin: -45px;">
+                <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
+                    <i class="fa fa-share"></i>Confirmar Solicitação
+                </button>
             </div>
         </div>
-    }
 
-    <div style="margin:20px">
-        <div class="col-xs-12 col-md-12 text-center">
-            <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
-                <i class="fa fa-share"></i>Confirmar Solicitação
-            </button>
+        <div class="container-fluid">
+            <div id="tabs" style="display: grid; position: relative">
+
+                <ul>
+                    @{
+                        var tipoVeiculosT = Model.Tarifas.Select(c => c.idTipoVeiculo).Distinct();
+                        var id = 1;
+                        foreach (var tipoVeiculo in tipoVeiculosT)
+                        {
+                            <li><a href="#tabs-@id"><i class="fa fa-usd" aria-hidden="true"></i> Tarifa @tipoVeiculo.ToString()</a></li>
+                            id++;
+                        }
+                    }
+                </ul>
+
+                @{
+                    id = 1;
+                    foreach (var tipoVeiculo in tipoVeiculosT)
+                    {
+                        var tarifas = Model.Tarifas.Where(c => c.idTipoVeiculo == tipoVeiculo).Select(c => c.idTarifario);
+                        <div id="tabs-@id">
+                            @for (int i = 0; i < Model.Tarifas.Count(); i++)
+                            {
+                                var idAt = Model.Tarifas[i].idTarifario;
+                                if (tarifas.Contains(idAt))
+                                {
+                                    <div class="panel panel-default" style="margin:30px;">
+                                        <div class="panel-body">
+                                            <div class="titulo">
+                                                <h2>
+                                                    <a onclick="history.go(-1);">
+                                                        <i class="fa fa-usd" aria-hidden="true"></i>
+                                                    </a>
+                                                    @Html.HiddenFor(model => model.Tarifas[i].idTarifario)
+                                                    @Html.HiddenFor(model => model.Tarifas[i].DescricaoTarifario)
+
+                                                    @Html.TextBox("Tarifa_" + i, Model.Tarifas[i].DescricaoTarifario, new { @class = "form-control inputDesc", @autocomplete = "off" })
+                                                    @Html.ValidationMessageFor(model => model.Tarifas[i].DescricaoTarifario, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                </h2>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-lg-12">
+                                                <div class="row">
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor do contrato</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].ValorContrato, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].ValorContrato, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Franquia KM</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].FranquiaKM, new { @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaKM, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Valor KM adicional</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].ValorKMAdicional, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].ValorKMAdicional, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Franquia minutos parados</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].FranquiaMinutosParados, new { @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaMinutosParados, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Valor minuto parado</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].ValorMinutoParado, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].ValorMinutoParado, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Franquia horas</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].FranquiaHoras, new { @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].FranquiaHoras, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                    <div class=" col-md-3 col-lg-3">
+                                                        <label for="txtNomeFantasia">Valor horas adicional</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].ValorHoraAdicional, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].ValorHoraAdicional, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+
+                                                    <div class=" col-md-6 col-lg-4">
+                                                        <label for="txtNomeFantasia">Valor ponto excedente</label>
+                                                        @Html.TextBoxFor(model => model.Tarifas[i].ValorPontoExcedente, new { placeholder = "R$", @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].ValorPontoExcedente, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class=" col-md-12 col-lg-12">
+                                                        <label for="txtNomeFantasia">Observação</label>
+                                                        @Html.TextAreaFor(model => model.Tarifas[i].Observacao, new { @class = "form-control", @autocomplete = "off" })
+                                                        @Html.ValidationMessageFor(model => model.Tarifas[i].Observacao, null, new { @class = "text-danger", @autocomplete = "off" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        id++;
+                    }
+                }
+            </div>
+
+            <div style="margin:20px">
+                <div class="col-xs-12 col-md-12 text-center">
+                    <button id="confirmaMotorista" type="submit" class="btn btn-default" value="Pesquisar">
+                        <i class="fa fa-share"></i>Confirmar Solicitação
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
-
-</div>
 }

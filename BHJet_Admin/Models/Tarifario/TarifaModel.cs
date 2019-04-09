@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHJet_Enumeradores;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace BHJet_Admin.Models.Tarifario
@@ -11,8 +12,8 @@ namespace BHJet_Admin.Models.Tarifario
     public class TarifaModel
     {
         public int idTarifario { get; set; }
-        public int idTipoServico { get; set; }
-        public int idTipoVeiculo { get; set; }
+        public TipoServico idTipoServico { get; set; }
+        public TipoVeiculo idTipoVeiculo { get; set; }
         public string DescricaoTarifario { get; set; }
         public DateTime? DataInicioVigencia { get; set; }
         public DateTime? DataFimVigencia { get; set; }
