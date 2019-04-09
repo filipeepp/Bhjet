@@ -388,7 +388,7 @@ namespace BHJet_WebApi.Controllers
         /// Busca lista de Profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional</returns>
-        [Authorize]
+      
         [Route("Perfil")]
         [ResponseType(typeof(PerfilModel))]
         public IHttpActionResult GetPerfil()

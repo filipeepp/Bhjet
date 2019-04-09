@@ -217,6 +217,7 @@
     <Compile Include="Models\EntregaModel.cs" />
     <Compile Include="Models\Faturamento\DetalheFaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoAvulsoModel.cs" />
+    <Compile Include="Models\Faturamento\FaturamentoClienteInterno.cs" />
     <Compile Include="Models\Faturamento\FaturamentoModel.cs" />
     <Compile Include="Models\Faturamento\FaturamentoNormal.cs" />
     <Compile Include="Models\Faturamento\GerarFaturamantoModel.cs" />
@@ -378,6 +379,7 @@
     <Content Include="Views\Shared\_LayoutClienteExterno.cshtml" />
     <Content Include="Views\Home\Registrar.cshtml" />
     <Content Include="Views\Shared\_LayoutClienteInterno.cshtml" />
+    <Content Include="Views\Faturamento\FaturamentoClienteInterno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

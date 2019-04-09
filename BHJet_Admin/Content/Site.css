@@ -225,6 +225,7 @@ input[type="radio"], input[type="checkbox"] {
             position: relative;
             margin: 0;
             padding: 0;
+            cursor: pointer;
         }
 
 .content-wrapper {

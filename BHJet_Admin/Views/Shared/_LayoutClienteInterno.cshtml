@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using BHJet_Admin.Infra
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,23 +34,23 @@
 
         <section id="menuLateral" class="sidebar" style="height: auto;">
             <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="header">Painel do Cliente, </br> <b style="color:#667c8a">@HttpContext.Current.User.Identity.Name</b></li>
+                <li class="header">Painel do Cliente, <br/> <b style="color:#667c8a">@HttpContext.Current.User.Identity.Name</b></li>
 
                 <li class="treeview">
                     <a href="@Url.Action("Index", "Home")">
-                        <i class="fa fa-home"></i> <span>Solicitar Entrega Avulsa</span>
+                        <i class="fa fa-motorcycle"></i> <span>Solicitar Entrega Avulsa</span>
                     </a>
                 </li>
 
                 <li class="treeview">
-                    <a href="@Url.Action("Index", "Faturamento")">
-                        <i class="fa fa-bar-chart"></i> <span>Solicitar Diaria Avulsa</span>
+                    <a href="@Url.Action("CadastroDiariaAvulsa", "Dashboard")">
+                        <i class="fa fa-calendar-check-o"></i> <span>Solicitar Diaria Avulsa</span>
                     </a>
                 </li>
 
                 <li class="treeview">
-                    <a href="@Url.Action("Index", "Clientes")">
-                        <i class="fa fa-address-book"></i> <span>Relatório de Faturamento</span>
+                    <a href="@Url.Action("FaturamentoClienteInterno", "Faturamento")">
+                        <i class="fa fa-bar-chart"></i> <span>Relatório de Faturamento</span>
                     </a>
                 </li>
 

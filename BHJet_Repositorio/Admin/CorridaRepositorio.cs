@@ -322,6 +322,28 @@ namespace BHJet_Repositorio.Admin
         }
 
         /// <summary>
+        /// Busca Telefone cliente corrida
+        /// </summary>
+        /// <returns>string</returns>
+        public string BuscaTelefoneClienteCorrida(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select CASE 
+         WHEN vcTelefoneCelular IS NULL THEN vcTelefoneComercial
+         ELSE vcTelefoneCelular
+       END as Telefone from tblColaboradoresCliente where idCliente = (select idCliente from tblCorridas where idCorrida = @idcli)";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<string>(query, new
+                {
+                    idcli = idCorrida
+                });
+            }
+        }
+
+        /// <summary>
         /// Encerrar Ordem Servico
         /// </summary>
         /// <param name="idCorrida"></param>

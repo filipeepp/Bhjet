@@ -4,8 +4,10 @@ namespace BHJet_DTO.Diaria
 {
     public class DiariaAvulsaDTO
     {
+        public long ID { get; set; }
         public int IDCliente { get; set; }
         public int IDColaboradorEmpresa { get; set; }
+        public string NomeColaboradorEmpresa { get; set; }
         public DateTime DataHoraInicioExpediente { get; set; }
         public int? OdometroInicioExpediente { get; set; }
         public DateTime? DataHoraInicioIntervalo { get; set; }

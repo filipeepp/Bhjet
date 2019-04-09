@@ -10,21 +10,21 @@
 
         <StackLayout BackgroundColor="#ffd423" >
 
-            <ScrollView>
-                <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
-
+            <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"  >
+                <ScrollView>
                     <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="CenterAndExpand">
-                        <Grid VerticalOptions="StartAndExpand" >
+                        <Grid VerticalOptions="StartAndExpand" RowSpacing="20" >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
@@ -87,10 +87,9 @@
 
                         </Grid>
                     </Frame>
+                </ScrollView>
+            </StackLayout>
 
-                </StackLayout>
-            </ScrollView>
-            
             <local:Menu></local:Menu>
 
 

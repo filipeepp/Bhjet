@@ -408,8 +408,7 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
-        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoDiaria(long idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoDiaria(long idCliente, DateTime? periodoFatInico, DateTime? periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -422,12 +421,13 @@ namespace BHJet_Repositorio.Admin
 						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
 						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
 						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
-				where PF.dtDataInicioPeriodoFaturamento = @dtIni 
-						 and PF.dtDataFimPeriodoFaturamento = @dtFim  
-						 and it.idCorrida is null
+				where  it.idCorrida is null
 						 and IT.idRegistroDiaria is not null 
-						 and RG.idCliente = @idcli";
+						 and RG.idCliente = @idcli %datas%";
 
+                string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
+
+                queryDiarias = (periodoFatInico != null && periodoFatFim != null) ? queryDiarias.Replace("%datas%", datas) : queryDiarias.Replace("%datas%", string.Empty);
 
                 // Retorno
                 var diarias = sqlConnection.Query<long>(queryDiarias, new
@@ -465,7 +465,7 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoCorrida(long idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoCorrida(long idCliente, DateTime? periodoFatInico, DateTime? periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -478,12 +478,13 @@ namespace BHJet_Repositorio.Admin
 						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
 						join tblCorridas CR on (CR.idCorrida = it.idCorrida)
 						join tblClientes CLI on (CR.idCliente = CLI.idCliente)
-				where PF.dtDataInicioPeriodoFaturamento = @dtIni 
-						 and PF.dtDataFimPeriodoFaturamento = @dtFim  
-						 and it.idRegistroDiaria is null
+				where  it.idRegistroDiaria is null
 						 and IT.idCorrida is not null
-						 and CR.idCliente = @idCliente";
+						 and CR.idCliente = @idCliente %datas%";
 
+                string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
+
+                queryCorridas = (periodoFatInico != null && periodoFatFim != null) ? queryCorridas.Replace("%datas%", datas) : queryCorridas.Replace("%datas%", string.Empty);
 
                 // Retorno
                 var corridas = sqlConnection.Query<long>(queryCorridas, new
@@ -520,6 +521,7 @@ namespace BHJet_Repositorio.Admin
                 return diariasDetalhe;
             }
         }
+
     }
 }
 

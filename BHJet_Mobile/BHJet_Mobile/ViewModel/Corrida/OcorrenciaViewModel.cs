@@ -184,6 +184,13 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 return 0;
             }
         }
+
+
+        public async Task<string> BuscaTelefoneContato()
+        {
+            // Busca telefone ocorrencia
+            return await corridaServico.BuscaTelefoneContato(IDCorrida);
+        }
     }
 
     public class OcorrenciaItemViewModel : PropertyChangedClass

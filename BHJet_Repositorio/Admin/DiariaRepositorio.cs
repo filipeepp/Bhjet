@@ -2,6 +2,7 @@
 using BHJet_Repositorio.Admin.Filtro;
 using Dapper;
 using System;
+using System.Collections.Generic;
 
 namespace BHJet_Repositorio.Admin
 {
@@ -142,7 +143,6 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-
         private DateTime? BuscaDataTurno(string horaTurno)
         {
             if (string.IsNullOrWhiteSpace(horaTurno))
@@ -154,6 +154,31 @@ namespace BHJet_Repositorio.Admin
                 var minuto = int.Parse(horaTurno.Split(':')[1]);
                 // Data
                 return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hora, minuto, 00);
+            }
+        }
+
+
+        /// <summary>
+        /// Busca diarias cliente
+        /// </summary>
+        /// <param name="idCLiente"></param>
+        /// <returns></returns>
+        public IEnumerable<DiariaAvulsaEntidade> BuscaDiariasCliente(long idCLiente)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select RD.idRegistroDiaria AS idRegistroDiaria,
+	                                    RD.dtDataHoraSolicitacao AS DataHoraSolicitacao,
+	                                    CE.vcNomeCompleto as vcNomeCompleto,
+                            	        RD.decValorDiariaNegociado as ValorDiariaNegociado from tblRegistroDiarias RD
+				              left join tblColaboradoresEmpresaSistema CE on (RD.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema) 
+                                  WHERE idCliente = @id";
+
+                return sqlConnection.Query<DiariaAvulsaEntidade>(query, new
+                {
+                    id = idCLiente
+                });
             }
         }
 

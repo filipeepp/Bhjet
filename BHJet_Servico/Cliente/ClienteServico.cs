@@ -1,5 +1,6 @@
 ﻿using BHJet_DTO.Cliente;
 using BHJet_DTO.Corrida;
+using BHJet_DTO.Diaria;
 using System;
 
 namespace BHJet_Servico.Cliente
@@ -23,6 +24,7 @@ namespace BHJet_Servico.Cliente
         //Cliente Avulso
         ClienteDTO[] BuscaClientesAvulsosValorAtivo();
         DetalheCorridaModel[] BuscaOsCliente(long clienteID);
+        DiariaAvulsaDTO[] BuscaDiariaCliente(long clienteID);
     }
 
     public class ClienteServico : ServicoBase, IClienteServico
@@ -110,9 +112,19 @@ namespace BHJet_Servico.Cliente
             {
                 return new DetalheCorridaModel[] { };
             }
-
         }
 
+        public DiariaAvulsaDTO[] BuscaDiariaCliente(long clienteID)
+        {
+            try
+            {
+                return this.Get<DiariaAvulsaDTO[]>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetDiariaCliente, clienteID)}"));
+            }
+            catch
+            {
+                return new DiariaAvulsaDTO[] { };
+            }
+        }
         #endregion
     }
 }

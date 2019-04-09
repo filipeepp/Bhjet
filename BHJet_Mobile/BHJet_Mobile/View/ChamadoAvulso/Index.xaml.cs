@@ -13,11 +13,12 @@ namespace BHJet_Mobile.View.ChamadoAvulso
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Index : ContentPage
     {
-        public Index()
+        public Index(bool logando = false)
         {
             InitializeComponent();
             ViewModel = new IndexViewModel(UsuarioAutenticado.Instance, new MotoristaServico(), new CorridaServico());
             BindingContext = ViewModel;
+            Logando = logando;
             MessagingCenter.Unsubscribe<string, int>("ObservableChamada", "ObservableChamada");
             MessagingCenter.Subscribe<string, int>("ObservableChamada", "ObservableChamada", async (s, a) =>
             {
@@ -41,6 +42,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             });
         }
 
+        private bool Logando { get; set; }
+
         /// <summary>
         /// ViewModel da Pagina
         /// </summary>
@@ -56,14 +59,19 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 // Carrega Inicio
                 ViewModel.Carrega();
 
-                // Inicia Pesquisa
-                if (UsuarioAutenticado.Instance.StatusAplicatico)
+                if (Logando)
                 {
-                    EfeitoPesquisaAtivada();
-                    DoWorkAsyncInfiniteLoop();
+                    // Logado
+                    Logando = false;
+                    // Inicia Pesquisa
+                    if (UsuarioAutenticado.Instance.StatusAplicatico)
+                    {
+                        EfeitoPesquisaAtivada();
+                        DoWorkAsyncInfiniteLoop();
+                    }
+                    else
+                        EfeitoPesquisaDesativada();
                 }
-                else
-                    EfeitoPesquisaDesativada();
             }
             catch (Exception e)
             {

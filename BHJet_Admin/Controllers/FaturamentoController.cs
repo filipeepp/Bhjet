@@ -1,6 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Faturamento;
+using BHJet_DTO.Faturamento;
 using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Faturamento;
@@ -253,12 +254,18 @@ namespace BHJet_Admin.Controllers
         {
             try
             {
+                // Variaveis
+                ItemFaturamentoDetalheDTO[] resultado = new ItemFaturamentoDetalheDTO[] { };
+
+                // Datas pesquisa
                 var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
                 var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
+                string periodoDesc = datIni.ToShortDateString() + " a " + datFim.ToShortDateString();
 
                 // Busca detalhe
-                var resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
+                resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
 
+                // Total
                 ViewBag.Total = resultado.Sum(x => x.Valor);
 
                 // Return View
@@ -266,7 +273,7 @@ namespace BHJet_Admin.Controllers
                 {
                     Cliente = resultado.FirstOrDefault().NomeCliente,
                     DataRelatorio = DateTime.Now.ToLongDateString(),
-                    PeriodoIntervalo = datIni.ToShortDateString() + " a " + datFim.ToShortDateString(),
+                    PeriodoIntervalo = periodoDesc,
                     Registros = resultado.Select(c => new DetalheFaturamentoAvulsoRegistros()
                     {
                         DataCorrida = c.Data,
@@ -280,10 +287,54 @@ namespace BHJet_Admin.Controllers
             }
             catch (Exception e)
             {
-                this.TrataErro(new Exception("Erro ao detalhar faturamento, tente novamente mais tarde."));
+                this.TrataErro(e);
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
+        #endregion
+
+        #region Faturamento CLiente Interno
+
+        [ValidacaoUsuarioAttribute(TipoUsuario.FuncionarioCliente)]
+        public ActionResult FaturamentoClienteInterno()
+        {
+            try
+            {
+                // Busca Corridas
+                var corridas = clienteServico.BuscaOsCliente(UsuarioLogado.Instance.bhIdCli ?? 9999999);
+
+                // Busca Diarias
+                var diarias = clienteServico.BuscaDiariaCliente(UsuarioLogado.Instance.bhIdCli ?? 9999999);
+
+                // Return View
+                return View(new FaturamentoClienteInterno()
+                {
+                    TotalCorrida = corridas.Sum(c => c.ValorFinalizado != null ? c.ValorFinalizado : c.ValorEstimado)?.ToString("C", new CultureInfo("pt-BR")),
+                    Corridas = corridas.Select(c => new FaturamentoClienteInternoCorrida()
+                    {
+                        NumeroOS = c.NumeroOS,
+                        Profissional = c.NomeProfissional,
+                        DataCorrida = c.DataInicio,
+                        ValorEstimado = c.ValorEstimado ?? 0,
+                        ValorFinalizado = c.ValorFinalizado ?? 0
+                    }).ToArray(),
+                    TotalDiaria = diarias.Sum(c => c.ValorDiariaNegociado)?.ToString("C", new CultureInfo("pt-BR")),
+                    Diarias = diarias.Select(d => new FaturamentoClienteInternoDiaria()
+                    {
+                        NumeroOS = d.ID,
+                        DataCorrida = d.DataHoraSolicitacao,
+                        Profissional = d.NomeColaboradorEmpresa,
+                        Valor = d.ValorDiariaNegociado ?? 0
+                    }).ToArray()
+                });
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+        }
+
         #endregion
     }
 }

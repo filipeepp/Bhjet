@@ -34,7 +34,7 @@ namespace BHJet_Admin.Infra
             }
 
             // Validacao Tipo Usuario
-            if (TipoUsuario != null && tknTpUs != null && !TipoUsuario.Contains(tknTpUs ?? BHJet_Enumeradores.TipoUsuario.Visitante))
+            if (TipoUsuario == null || tknTpUs == null || !TipoUsuario.Contains(tknTpUs ?? BHJet_Enumeradores.TipoUsuario.Visitante))
             {
                 filterContext.Controller.TempData["Error"] = "Usuário não tem permissão de acesso a esta funcionalidade.";
                 filterContext.Result = new RedirectResult("~/HomeExterno/Index");

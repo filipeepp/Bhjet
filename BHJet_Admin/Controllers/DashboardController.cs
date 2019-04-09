@@ -217,21 +217,27 @@ namespace BHJet_Admin.Controllers
         }
 
         #region Diaria Avulsa
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public ActionResult CadastroDiariaAvulsa()
         {
+            long? cliente = null;
+            if (UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.FuncionarioCliente)
+                cliente = UsuarioLogado.Instance.bhIdCli;
+
             return View(new DiariaModel()
             {
-                Observacao = null,
+                ClienteSelecionado = cliente,
+                Observacao = null
             });
         }
 
         [HttpPost]
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public ActionResult CadastroDiariaAvulsa(DiariaModel modelo)
         {
             try
             {
+                #region Validacoes
                 if (modelo.HorarioInicial == null)
                 {
                     ModelState.AddModelError("", "Hora inicio do expediente.");
@@ -247,7 +253,6 @@ namespace BHJet_Admin.Controllers
                     ModelState.AddModelError("", "Hora Fim do expediente não pode ser menor que o horario inicial.");
                     return View(modelo);
                 }
-
                 if (modelo.PeriodoFinal.ToString().ToDate() < modelo.PeriodoInicial.ToString().ToDate())
                 {
                     ModelState.AddModelError("", "A data de expediente final deve ser maior que a inicial.");
@@ -258,11 +263,42 @@ namespace BHJet_Admin.Controllers
                     ModelState.AddModelError("", "Favor selecionar um cliente na lista.");
                     return View(modelo);
                 }
+                #endregion
 
-                if (ModelState.IsValid)
+                // Entrada
+                var diariaAvulsa = new DiariaAvulsaFiltroDTO();
+
+                if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.FuncionarioCliente)
                 {
-                    // Incluir diaria
-                    diariaServico.IncluirDiaria(new DiariaAvulsaFiltroDTO()
+                    // Busca Tarifa do Cliente Interno da BHJET
+                    var entidade = tarifaServico.BuscaTaritaCliente(UsuarioLogado.Instance.bhIdCli, modelo.TipoVeiculoSelecionado);
+                    var profissional = profissionalServico.BuscaComissaoProfissional(modelo.ProfissionalSelecionado ?? default(int));
+
+                    // Validacoes 
+                    if(entidade.ValorContrato == null || entidade.FranquiaKM == null || entidade.ValorKMAdicional == null)
+                    {
+                        ModelState.AddModelError("", "Não foi possível buscar informações para seu contrato de diaria, favor entrar em contato com a Administração da BHJet.");
+                        return View(modelo);
+                    }
+
+                    // Modelo Diaria
+                    diariaAvulsa = new DiariaAvulsaFiltroDTO()
+                    {
+                        IDCliente = modelo.ClienteSelecionado ?? 0,
+                        IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
+                        DataInicioExpediente = modelo.PeriodoInicial.ToDate() ?? new DateTime(),
+                        DataFimExpediente = modelo.PeriodoFinal.ToDate() ?? new DateTime(),
+                        HoraInicioExpediente = modelo.HorarioInicial ?? new TimeSpan(),
+                        HoraFimExpediente = modelo.HorarioFim ?? new TimeSpan(),
+                        ValorDiariaNegociado = entidade.ValorContrato ?? 0,
+                        ValorDiariaComissaoNegociado = profissional.decPercentualComissao,
+                        FranquiaKMDiaria = entidade.FranquiaKM ?? 0,
+                        ValorKMAdicionalNegociado = entidade.ValorKMAdicional ?? 0
+                    };
+                }
+                else
+                {
+                    diariaAvulsa = new DiariaAvulsaFiltroDTO()
                     {
                         IDCliente = modelo.ClienteSelecionado ?? 0,
                         IDColaboradorEmpresa = modelo.ProfissionalSelecionado ?? 0,
@@ -274,7 +310,13 @@ namespace BHJet_Admin.Controllers
                         ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency(),
                         FranquiaKMDiaria = modelo.FranquiaKMDiaria.ToDecimalCurrency(),
                         ValorKMAdicionalNegociado = modelo.ValorKMAdicional.ToDecimalCurrency()
-                    });
+                    };
+                }
+
+                if (ModelState.IsValid)
+                {
+                    // Incluir diaria
+                    diariaServico.IncluirDiaria(diariaAvulsa);
 
                     this.MensagemSucesso("Diaria avulsa cadastrada com sucesso.");
 
@@ -293,7 +335,7 @@ namespace BHJet_Admin.Controllers
         #endregion
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
         {
             // Recupera dados
@@ -323,7 +365,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BuscaTarifas(long idCliente, int tipoVeiculo)
         {
             // Recupera dados
@@ -339,7 +381,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BuscaComissao(long idProfissional)
         {
             try
@@ -364,7 +406,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [HttpGet]
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BcTpVec()
         {
             // Recupera dados

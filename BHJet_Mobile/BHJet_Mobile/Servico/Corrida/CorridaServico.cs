@@ -18,6 +18,7 @@ namespace BHJet_Mobile.Servico.Corrida
         Task AtualizaOcorrenciaCorrida(long statusCorrida, long idLog, long idCorrida);
         Task RecusarOrdemServico(long idCorrida);
         Task LiberarOrdemServico(long idCorrida);
+        Task<string> BuscaTelefoneContato(long IDCorrida);
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -106,6 +107,16 @@ namespace BHJet_Mobile.Servico.Corrida
         {
             // status/{idStatus:long}/{idCorrida:long}
             await this.Post(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostLiberarCorrida, idCorrida)}"), "");
+        }
+
+        /// <summary>
+        /// LIBERAR OS 
+        /// </summary>
+        /// <returns>ResumoModel</returns>
+        public async Task<string> BuscaTelefoneContato(long IDCorrida)
+        {
+            // status/{idStatus:long}/{idCorrida:long}
+            return await this.Get<string>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.GetContatoCorrida, IDCorrida)}"));
         }
     }
 }
