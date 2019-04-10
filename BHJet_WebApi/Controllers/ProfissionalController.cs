@@ -197,6 +197,7 @@ namespace BHJet_WebApi.Controllers
                 TelefoneCelular = entidade.TelefoneCelular,
                 TelefoneResidencial = entidade.TelefoneResidencial,
                 TipoCNH = entidade.TipoCNH,
+                Status = entidade.StatusUsuario,
                 TipoRegime = entidade.TipoRegime,
                 TipoProfissional = entidade.TipoProfissional,
                 DocumentoRG = entidade.DocumentoRG,
@@ -236,7 +237,6 @@ namespace BHJet_WebApi.Controllers
         /// Atualiza profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
-        [Authorize]
         [Route("{idProfissional:long}")]
         public IHttpActionResult PutProfissional(long idProfissional, [FromBody]ProfissionalCompletoModel model)
         {
@@ -388,7 +388,7 @@ namespace BHJet_WebApi.Controllers
         /// Busca lista de Profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional</returns>
-      
+
         [Route("Perfil")]
         [ResponseType(typeof(PerfilModel))]
         public IHttpActionResult GetPerfil()

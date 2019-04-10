@@ -543,7 +543,7 @@ input[type="radio"], input[type="checkbox"] {
     .ctnLoginPainel {
         padding: 50px !important;
         min-height: 430px !important;
-        height: 400px;
+        height: 480px;
     }
 
     .timeline > li > .timeline-item {

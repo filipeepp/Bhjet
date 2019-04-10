@@ -56,7 +56,7 @@ namespace BHJet_Admin.Controllers
                     return View(new NovoMotoristaModel()
                     {
                         ID = profissional.ID,
-                        TipoVeiculos = string.Join(",",profissional.TipoVeiculos),
+                        TipoVeiculos = string.Join(",", profissional.TipoVeiculos),
                         VeiculoSelecionado = profissional.TipoVeiculos,
                         NomeCompleto = profissional.NomeCompleto,
                         TipoRegimeContratacao = profissional.TipoRegime,
@@ -81,6 +81,7 @@ namespace BHJet_Admin.Controllers
                         DocumentoRG = profissional.DocumentoRG,
                         Senha = "",
                         Situacao = profissional.Status,
+                        ValorComissao = profissional.Comissoes.OrderBy(c => c.dtDataInicioVigencia).FirstOrDefault().decPercentualComissao.ToString("C"),
                         Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
                         {
                             ID = c.ID,
@@ -106,6 +107,7 @@ namespace BHJet_Admin.Controllers
                         EdicaoCadastro = false,
                         ID = 0,
                         Bairro = "",
+                        Situacao = true,
                         Senha = "",
                         Email = "",
                         Comissao = new NovoMotoristaComissaoModel[]
@@ -133,24 +135,24 @@ namespace BHJet_Admin.Controllers
             try
             {
                 // Validacoes
-                if (model.Comissao != null && model.Comissao.Any())
-                {
-                    model.Comissao.All(x =>
-                    {
-                        if (!DateTime.TryParse(x.VigenciaInicio, out DateTime ini) || !DateTime.TryParse(x.VigenciaFim, out DateTime fim))
-                            throw new Exception($"Preencha datá válida para vigência da comissão.");
-                        else if (DateTime.Parse(x.VigenciaFim) <= DateTime.Now.Date || DateTime.Parse(x.VigenciaFim) < DateTime.Parse(x.VigenciaInicio))
-                            throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
-                        else if (x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
-                            throw new Exception($"Preencha ao menos uma comissão para o profissional.");
-                        return true;
-                    });
-                }
-                else
-                {
-                    model.Comissao = new NovoMotoristaComissaoModel[] { };
-                    throw new Exception($"Preencha ao menos uma comissão para o profissional.");
-                }
+                //if (model.Comissao != null && model.Comissao.Any())
+                //{
+                //    model.Comissao.All(x =>
+                //    {
+                //        if (!DateTime.TryParse(x.VigenciaInicio, out DateTime ini) || !DateTime.TryParse(x.VigenciaFim, out DateTime fim))
+                //            throw new Exception($"Preencha datá válida para vigência da comissão.");
+                //        else if (DateTime.Parse(x.VigenciaFim) <= DateTime.Now.Date || DateTime.Parse(x.VigenciaFim) < DateTime.Parse(x.VigenciaInicio))
+                //            throw new Exception($"A comissão {x.ID} está com a data de vigência final menor que a data atual ou que a vigência inicial, favor atualizar.");
+                //        else if (x.ValorComissao == null || x.VigenciaInicio == null || x.VigenciaFim == null)
+                //            throw new Exception($"Preencha ao menos uma comissão para o profissional.");
+                //        return true;
+                //    });
+                //}
+                //else
+                //{
+                //    model.Comissao = new NovoMotoristaComissaoModel[] { };
+                //    throw new Exception($"Preencha ao menos uma comissão para o profissional.");
+                //}
                 if (model.VeiculoSelecionado == null || !model.VeiculoSelecionado.Any() || (model.VeiculoSelecionado.Count() == 1 && model.VeiculoSelecionado.FirstOrDefault() == 0))
                     throw new Exception($"Preencha ao menos um tipo de veiculo que o motorista possui ou irá utilizar.");
 
@@ -182,14 +184,15 @@ namespace BHJet_Admin.Controllers
                     DocumentoRG = model.DocumentoRG,
                     Senha = model.Senha != null ? CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r") : null,
                     Status = model.Situacao,
-                    Comissoes = model.Comissao.Any() ? model.Comissao.Select(x => new ProfissionalComissaoModel()
+                    Comissoes = new ProfissionalComissaoModel[] {
+                    new ProfissionalComissaoModel()
                     {
-                        ID = x.ID,
-                        Observacao = x.Observacao,
-                        decPercentualComissao = x.ValorComissao.ToDecimalCurrency(),
-                        dtDataFimVigencia = DateTime.Parse(x.VigenciaFim),
-                        dtDataInicioVigencia = DateTime.Parse(x.VigenciaInicio)
-                    }).ToArray() : new ProfissionalComissaoModel[] { }
+                        ID = 1,
+                        Observacao = "",
+                        decPercentualComissao = model.ValorComissao.ToDecimalCurrency(),
+                        dtDataFimVigencia = DateTime.Now,
+                        dtDataInicioVigencia = DateTime.Now.AddYears(3000)
+                    }}
                 };
 
                 // Alteração
