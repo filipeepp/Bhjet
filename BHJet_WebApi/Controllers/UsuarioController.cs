@@ -1,4 +1,5 @@
-﻿using BHJet_DTO.Usuario;
+﻿using BHJet_Core.Utilitario;
+using BHJet_DTO.Usuario;
 using BHJet_Repositorio.Admin;
 using BHJet_WebApi.Util;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web.Http;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Usuarios")]
+    [RoutePrefix("Usuarios")]
     public class UsuarioController : ApiController
     {
         private UsuarioLogado _usuarioAutenticado;
@@ -222,5 +223,22 @@ namespace BHJet_WebApi.Controllers
                 TipoUsuario = usuario.idTipoUsuario
             });
         }
+
+        /// <summary>
+        /// Recupera senha de usuario especifico
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [Route("recuperar/Senha")]
+        public IHttpActionResult PostRecuperaSenha([FromBody]string email)
+        {
+            // Instancia
+            Email.EnviaMensagemEmail(email, "teste", "recuperacao de senha");
+
+            // Return
+            return Ok("Suadsad");
+        }
+
+
     }
 }

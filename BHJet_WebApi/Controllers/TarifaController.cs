@@ -1,4 +1,5 @@
 ﻿using BHJet_DTO.Tarifa;
+using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
 using System.Collections.Generic;
@@ -32,8 +33,8 @@ namespace BHJet_WebApi.Controllers
             {
                 idTarifario = tf.idTarifario,
                 Ativo = tf.bitAtivo,
-                idTipoServico = tf.idTipoServico,
-                idTipoVeiculo = tf.idTipoVeiculo,
+                idTipoServico = (TipoServico)tf.idTipoServico,
+                idTipoVeiculo = (TipoVeiculo)tf.idTipoVeiculo,
                 DataFimVigencia = tf.dtDataFimVigencia,
                 DataInicioVigencia = tf.dtDataInicioVigencia,
                 DescricaoTarifario = tf.vcDescricaoTarifario,
@@ -62,8 +63,8 @@ namespace BHJet_WebApi.Controllers
             {
                 idTarifario = tf.idTarifario,
                 bitAtivo = tf.Ativo,
-                idTipoServico = tf.idTipoServico,
-                idTipoVeiculo = tf.idTipoVeiculo,
+                idTipoServico = (int)tf.idTipoServico,
+                idTipoVeiculo = (int)tf.idTipoVeiculo,
                 dtDataFimVigencia = tf.DataFimVigencia,
                 dtDataInicioVigencia = tf.DataInicioVigencia,
                 vcDescricaoTarifario = tf.DescricaoTarifario,
