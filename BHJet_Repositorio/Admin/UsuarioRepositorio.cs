@@ -52,7 +52,7 @@ namespace BHJet_Repositorio.Admin
         public void IncluirUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbIncPassword);
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -117,7 +117,7 @@ namespace BHJet_Repositorio.Admin
         public void AtualizaUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbIncPassword);
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -218,6 +218,26 @@ namespace BHJet_Repositorio.Admin
                 return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
                 {
                     id = idUser
+                });
+            }
+        }
+
+        /// <summary>
+        /// Busca situacao Usuario
+        /// </summary>
+        /// <returns></returns>
+        public UsuarioEntidade BuscaUsuario(string email)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+
+                // Query
+                string query = @"select * from tblUsuarios where vcEmail = @email";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<UsuarioEntidade>(query, new
+                {
+                    email = email
                 });
             }
         }

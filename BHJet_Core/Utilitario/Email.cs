@@ -7,15 +7,13 @@ namespace BHJet_Core.Utilitario
     public static class Email
     {
 
-        const string remetente = "jrmendoncaemail@gmail.com.br";
-
-        public static void EnviaMensagemEmail(string Destinatario, string Assunto, string enviaMensagem)
+        public static void EnviaMensagemEmail(string Destinatario, string Assunto, string Mensagem)
         {
             // Cnfiguracao
             var config = BuscaConfiguracao();
 
             // Mensagem
-            MailMessage mensagemEmail = new MailMessage(remetente, Destinatario, Assunto, enviaMensagem);
+            MailMessage mensagemEmail = new MailMessage(config.Remetente, Destinatario, Assunto, Mensagem);
 
             // Smtp Cliente
             SmtpClient client = new SmtpClient(config.Servidor, config.Porta);

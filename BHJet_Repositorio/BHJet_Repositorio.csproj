@@ -51,6 +51,7 @@
     <Compile Include="Admin\CorridaRepositorio.cs" />
     <Compile Include="Admin\DashboardRepositorio.cs" />
     <Compile Include="Admin\DiariaRepositorio.cs" />
+    <Compile Include="Admin\EmailRepositorio.cs" />
     <Compile Include="Admin\Entidade\AreaAtuacaoEntidade.cs" />
     <Compile Include="Admin\Entidade\ClienteEntidade.cs" />
     <Compile Include="Admin\Entidade\ComissaoProfissionalEntidade.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Admin\Entidade\DadosBancariosEntidade.cs" />
     <Compile Include="Admin\Entidade\DiariaAvulsaEntidade.cs" />
     <Compile Include="Admin\Entidade\DisponibilidadeEntidade.cs" />
+    <Compile Include="Admin\Entidade\EmailEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoDetalheEntidade.cs" />
     <Compile Include="Admin\Entidade\ItemFaturamentoEntidade.cs" />
     <Compile Include="Admin\Entidade\LocalizacaoCorridaEntidade.cs" />

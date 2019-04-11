@@ -402,7 +402,7 @@ namespace BHJet_WebApi.Controllers
                     ColaboradorSelecionado = null,
                     idTipoUsuario = BHJet_Enumeradores.TipoUsuario.ClienteAvulsoSite,
                     vcEmail = model.Email,
-                    vbIncPassword = model.Senha,
+                    vbPassword = model.Senha,
                 });
             }
             catch
