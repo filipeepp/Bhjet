@@ -221,6 +221,6 @@ namespace BHJet_WebApi.Controllers
                 SituacaoDesc = usuario.bitDescAtivo,
                 TipoUsuario = usuario.idTipoUsuario
             });
-        }
+        } 
     }
 }
