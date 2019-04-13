@@ -178,6 +178,10 @@ namespace BHJet_Admin.Controllers
                     var perfil = autorizacaoServico.BuscaPerfil(modelUsu.access_token.ToString());
                     cliente = perfil.ClienteSelecionado;
 
+                    // Verifica
+                    if (perfil.TipoUsuario == TipoUsuario.Profissional)
+                        throw new Exception("Perfil não autorizado a acessar esta aplicação.");
+
                     // Session - Session["IDTKUsuarioJet"] = 
                     UsuarioLogado.Logar(perfil.ID.ToString(), perfil.ClienteSelecionado, modelUsu.access_token.ToString(), model.Login, perfil.TipoUsuario);
                 }

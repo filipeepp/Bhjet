@@ -16,7 +16,8 @@
     var input = document.getElementById('txtEnderecoPartida');
     var options = {
         'address': ', Brasil',
-        'region': 'BR'
+        'region': 'PT',
+        componentRestrictions: { country: "BR" }
     };
     var autocomplete = new google.maps.places.Autocomplete(input, options);
     autocomplete.addListener('place_changed', function () {

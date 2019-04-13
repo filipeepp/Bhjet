@@ -66,28 +66,33 @@
                             </div>
                         </div>
 
+                        <p class="text-danger">
+                            <b>
+                                @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
+                                {
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
+                                }
+                            </b>
+                        </p>
+
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10 text-right">
+                            <div class="col-md-12">
                                 <button id="btnLogar" type="submit" class="loginbtn">Entrar</button>
                             </div>
                         </div>
                     }
-
-                    <p class="text-danger">
-                        <b>
-                            @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
-                            {
-                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
-                            }
-                        </b>
-                    </p>
 
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <a href="@Url.Action("Registrar", "Home")" class="">
+                    <a href="@Url.Action("Registrar", "Home")" style="color: #f6f6f6;
+    text-decoration: none;
+    BACKGROUND-COLOR: #322f2f;
+    PADDING: 10PX;
+    BORDER-RADIUS: 5PX;
+    MARGIN-TOP: 50PX;" class="">
                         <i class="fa fa-address-card" aria-hidden="true"> </i> Registrar conta BHJet
                     </a>
                 </div>

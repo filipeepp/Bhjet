@@ -294,41 +294,41 @@ namespace BHJet_Repositorio.Admin
                                                         ,@Obs
                                                         ,1) select @@identity;";
 
-                        string queryRemoveComissao = @"Delete from [dbo].[tblComissaoColaboradorEmpresaSistema] WHERE idComissaoColaboradorEmpresaSistema not in (@ids) and idColaboradorEmpresaSistema = @idCol";
+                        string queryRemoveComissao = @"Delete from [dbo].[tblComissaoColaboradorEmpresaSistema] WHERE idColaboradorEmpresaSistema = @idCol"; //not in (@ids) and idColaboradorEmpresaSistema = @idCol";
 
                         // Notificacoes a excluir
-                        long?[] notificacoesAntigasMantidas = profissional.Comissoes.Where(x => x.idComissaoColaboradorEmpresaSistema != null).Select(x => x.idComissaoColaboradorEmpresaSistema).ToArray();
+                        //long?[] notificacoesAntigasMantidas = profissional.Comissoes.Where(x => x.idComissaoColaboradorEmpresaSistema != null).Select(x => x.idComissaoColaboradorEmpresaSistema).ToArray();
                         trans.Connection.Execute(queryRemoveComissao, new
                         {
-                            ids = string.Join(",", notificacoesAntigasMantidas),
+                            //ids = string.Join(",", notificacoesAntigasMantidas),
                             idCol = profissional.ID
                         }, trans);
 
                         // Notificacoes antigas e novas
-                        foreach (var com in profissional.Comissoes)
-                        {
-                            if (com.dtDataInicioVigencia == null || com.dtDataInicioVigencia == null)
-                                continue;
+                        //foreach (var com in profissional.Comissoes)
+                        //{
+                        //    if (com.dtDataInicioVigencia == null || com.dtDataInicioVigencia == null)
+                        //        continue;
 
-                            if (com.idComissaoColaboradorEmpresaSistema != null || ExisteComissao(trans, com.idComissaoColaboradorEmpresaSistema, profissional.ID))
-                                trans.Connection.Execute(queryComissao, new
-                                {
-                                    decCom = com.decPercentualComissao,
-                                    dtIni = com.dtDataInicioVigencia,
-                                    dtFim = com.dtDataFimVigencia,
-                                    Obs = com.vcObservacoes,
-                                    id = com.idComissaoColaboradorEmpresaSistema
-                                }, trans);
-                            else
-                                trans.Connection.Execute(queryAddComissao, new
-                                {
-                                    decCom = com.decPercentualComissao,
-                                    dtIni = com.dtDataInicioVigencia,
-                                    dtFim = com.dtDataFimVigencia,
-                                    Obs = com.vcObservacoes,
-                                    id = profissional.ID
-                                }, trans);
-                        }
+                        //    if (com.idComissaoColaboradorEmpresaSistema != null || ExisteComissao(trans, com.idComissaoColaboradorEmpresaSistema, profissional.ID))
+                        //        trans.Connection.Execute(queryComissao, new
+                        //        {
+                        //            decCom = com.decPercentualComissao,
+                        //            dtIni = com.dtDataInicioVigencia,
+                        //            dtFim = com.dtDataFimVigencia,
+                        //            Obs = com.vcObservacoes,
+                        //            id = com.idComissaoColaboradorEmpresaSistema
+                        //        }, trans);
+                        //    else
+                        trans.Connection.Execute(queryAddComissao, new
+                        {
+                            decCom = profissional.Comissoes.FirstOrDefault().decPercentualComissao,
+                            dtIni = profissional.Comissoes.FirstOrDefault().dtDataInicioVigencia,
+                            dtFim = profissional.Comissoes.FirstOrDefault().dtDataFimVigencia,
+                            Obs = profissional.Comissoes.FirstOrDefault().vcObservacoes,
+                            id = profissional.ID
+                        }, trans);
+                        //}
 
                         // Atualiza senha
                         if (!string.IsNullOrWhiteSpace(profissional.Senha))

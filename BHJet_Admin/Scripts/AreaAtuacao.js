@@ -48,7 +48,6 @@ function adicionarArea(triangleCoords) {
     getPolygonCoords();
 }
 
-
 function getPolygonCoords() {
     var htmlStr = "[\n ";
     htmlStr += " {\n ";
@@ -80,7 +79,9 @@ function getPolygonCoords() {
 function initAutocomplete() {
     var input = document.getElementById('pac-input');
     var options = {
-
+        'address': ', Brasil',
+        'region': 'PT',
+        componentRestrictions: { country: "BR" }
     };
     autocomplete = new google.maps.places.Autocomplete(input, options);
 
