@@ -213,7 +213,7 @@ namespace BHJet_WebApi.Controllers
             // Validação
             if (usuario == null)
                 BadRequest($"Usuário {id} não encontrado.");
-
+             
             // Return
             return Ok(new UsuarioDTO()
             {
