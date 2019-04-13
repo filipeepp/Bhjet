@@ -520,7 +520,7 @@ namespace BHJet_Repositorio.Admin
                             ClienteSelecionado = null,
                             idTipoUsuario = TipoUsuario.Profissional,
                             vcEmail = profissional.Email,
-                            vbPassword = profissional.Senha,
+                            vbsPassword = profissional.Senha,
                             ColaboradorSelecionado = idColaborador
                         });
                         #endregion

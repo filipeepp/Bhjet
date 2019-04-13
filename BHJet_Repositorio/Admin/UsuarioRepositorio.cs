@@ -5,6 +5,8 @@ using BHJet_Repositorio.Entidade;
 using Dapper;
 using System.Collections.Generic;
 using System.Text;
+using System;
+using System.Linq;
 
 namespace BHJet_Repositorio.Admin
 {
@@ -52,7 +54,7 @@ namespace BHJet_Repositorio.Admin
         public void IncluirUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbPassword);
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbsPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -117,7 +119,7 @@ namespace BHJet_Repositorio.Admin
         public void AtualizaUsuario(UsuarioEntidade usuario)
         {
             // Monta senha
-            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbPassword);
+            var senhaEncrypByte = RetornaSenhaEncriptada(usuario.vbsPassword);
 
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -240,6 +242,37 @@ namespace BHJet_Repositorio.Admin
                     email = email
                 });
             }
+        }
+
+        public string ResetaSenhaUsuario(long idusu)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Gera senha
+                var senha = GeraSenhaAleatoria();
+                byte[] senhabt = RetornaSenhaEncriptada(senha);
+
+                // Query
+                string query = @"UPDATE tblUsuarios set vbPassword = @_senha where idUsuario = @_id";
+
+                // Execução
+                sqlConnection.ExecuteScalar(query, new
+                {
+                    _id = idusu,
+                    _senha = senhabt
+                });
+
+                // return
+                return senha;
+            }
+        }
+
+
+        private string GeraSenhaAleatoria()
+        {
+            Random random = new Random();
+            const string chars = "@#%!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public byte[] RetornaSenhaEncriptada(string senha)

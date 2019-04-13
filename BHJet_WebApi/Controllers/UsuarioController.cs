@@ -81,7 +81,7 @@ namespace BHJet_WebApi.Controllers
                 vcEmail = model.Email,
                 bitAtivo = model.Situacao,
                 idTipoUsuario = model.TipoUsuario,
-                vbPassword = model.Senha,
+                vbsPassword = model.Senha,
                 ClienteSelecionado = model.ClienteSelecionado
             });
 
@@ -117,7 +117,7 @@ namespace BHJet_WebApi.Controllers
                 vcEmail = model.Email,
                 idTipoUsuario = model.TipoUsuario,
                 ClienteSelecionado = model.ClienteSelecionado,
-                vbPassword = model.Senha
+                vbsPassword = model.Senha
             });
 
             // Return
@@ -238,25 +238,27 @@ namespace BHJet_WebApi.Controllers
             // Busca Senha do usuario
             var usuario = new UsuarioRepositorio().BuscaUsuario(email);
 
-            // Busca template de email
-            //var template = new EmailRepositorio().BuscaTemplate(1);
-            var template = new EmailEntidade()
-            {
-                id = 1,
-                vcAssunto = "testando email",
-                vcCorpo = File.ReadAllText(@"C:\Users\lhsilva\Desktop\tempEmail.html")
-            };
-
             // Verifica existencia
             if (usuario == null)
                 BadRequest($"Usuário {email} não encontrado.");
 
+            // Busca template de email
+            var template = new EmailRepositorio().BuscaTemplate(1);
+            //var template = new EmailEntidade()
+            //{
+            //    id = 1,
+            //    vcAssunto = "testando email",
+            //    vcCorpo = File.ReadAllText(@"C:\Users\lhsilva\Desktop\tempEmail.html")
+            //};
+
+            // Atualiza senha
+            var senhaGerada = new UsuarioRepositorio().ResetaSenhaUsuario(usuario.idUsuario);
+
             // Corpo email
-            var senhaDividida = divideSenha(usuario.vbPassword);
-            string corpo = string.Format(template.vcCorpo, email, senhaDividida.Item2, senhaDividida.Item1);
+            string corpo = template.vcCorpo.Replace("{0}", email).Replace("{1}", senhaGerada);
 
             // Instancia
-            Email.EnviaMensagemEmail(email, template.vcAssunto, template.vcCorpo);
+            Email.EnviaMensagemEmail(email, template.vcAssunto, corpo);
 
             // Return
             return Ok("Sua senha foi enviada para seu e-mail.");
@@ -265,7 +267,7 @@ namespace BHJet_WebApi.Controllers
         private Tuple<string, string> divideSenha(string senha)
         {
             var partes = senha.Length / 2;
-            return new Tuple<string, string>(senha.Substring(0, partes), senha.Substring(partes, senha.Length));
+            return new Tuple<string, string>(senha.Substring(0, partes), senha.Substring(partes, senha.Length - partes));
         }
 
     }

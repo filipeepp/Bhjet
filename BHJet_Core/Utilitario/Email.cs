@@ -14,6 +14,7 @@ namespace BHJet_Core.Utilitario
 
             // Mensagem
             MailMessage mensagemEmail = new MailMessage(config.Remetente, Destinatario, Assunto, Mensagem);
+            mensagemEmail.IsBodyHtml = true;
 
             // Smtp Cliente
             SmtpClient client = new SmtpClient(config.Servidor, config.Porta);
