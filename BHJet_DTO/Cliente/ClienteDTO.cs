@@ -82,6 +82,8 @@ namespace BHJet_DTO.Cliente
         public decimal? ValorHoraAdicional { get; set; }
         public int? FranquiaMinutosParados { get; set; }
         public decimal? ValorMinutoParado { get; set; }
+        public decimal? ValorPontoExcedente { get; set; }
+        public decimal? ValorPontoColeta { get; set; }
         public string Observacao { get; set; }
     }
 

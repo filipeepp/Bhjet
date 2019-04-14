@@ -250,7 +250,7 @@ namespace BHJet_Repositorio.Admin
             {
                 // Gera senha
                 var senha = GeraSenhaAleatoria();
-                byte[] senhabt = RetornaSenhaEncriptada(senha);
+                byte[] senhabt = RetornaSenhaEncriptada(CriptografiaUtil.Criptografa(senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r"));
 
                 // Query
                 string query = @"UPDATE tblUsuarios set vbPassword = @_senha where idUsuario = @_id";

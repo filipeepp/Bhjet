@@ -11,6 +11,7 @@ namespace BHJet_Servico.Usuario
         void AtualizaUsuario(UsuarioDTO model);
         void DeletaUsuario(long id);
         UsuarioDTO BuscaUsuario(long id);
+        void RecuperaUsuario(string email);
     }
 
     public class UsuarioServico : ServicoBase, IUsuarioServico
@@ -48,6 +49,11 @@ namespace BHJet_Servico.Usuario
         public UsuarioDTO BuscaUsuario(long id)
         {
             return this.Get<UsuarioDTO>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Usuario.GetUsuario, id)}"));
+        }
+
+        public void RecuperaUsuario(string email)
+        {
+            this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PostRecuperaSenha}"), email);
         }
     }
 }

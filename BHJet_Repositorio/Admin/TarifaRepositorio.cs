@@ -31,6 +31,7 @@ namespace BHJet_Repositorio.Admin
                                                    intFranquiaHoras,
                                                    decValorHoraAdicional,
 												   bitAtivo as Ativo,
+                                                   decValorPontoExcedente , decValorPontoColeta, decValorMinutoParado , 
 												  vcObservacao as Observacao from tblClienteTarifario where idCliente = @IDCliente  and bitAtivo = 1 &tpVei& order by dtDataInicioVigencia desc
                                 ELSE   
                                     select top(1) idTarifario as ID,
@@ -40,9 +41,10 @@ namespace BHJet_Repositorio.Admin
 												   intFranquiaMinutosParados as MinutosParados,
 												   decValorMinutoParado as ValorMinutosParados,
 												   intFranquiaKM as FranquiaKM,  
-                                                        intFranquiaHoras,
+                                                   intFranquiaHoras,
                                                    decValorHoraAdicional,
 												   decValorKMAdicional as ValorKMAdicional,
+                                                   decValorPontoExcedente , decValorPontoColeta, decValorMinutoParado , 
 												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1  &tpVei& order by dtDataInicioVigencia desc";
 
                 query = tipoVeiculo != null ? query.Replace("&tpVei&", "and idTipoVeiculo = @tp") : query.Replace("&tpVei&", "");
@@ -127,6 +129,7 @@ namespace BHJet_Repositorio.Admin
                                                         intFranquiaHoras = @franquiaHoras,
                                                         decValorHoraAdicional = @valorHora,
                                                         decValorPontoExcedente = @ValoPonto,
+                                                        decValorPontoColeta = @ValorColeta, 
                                                         vcObservacao = @obs where idTarifario = @id";
 
                             trans.Connection.Execute(queryAtualiza, new
@@ -140,6 +143,7 @@ namespace BHJet_Repositorio.Admin
                                 franquiaHoras = tarifa.intFranquiaHoras,
                                 valorHora = tarifa.decValorHoraAdicional,
                                 ValoPonto = tarifa.decValorPontoExcedente,
+                                ValorColeta = tarifa.decValorPontoColeta,
                                 obs = tarifa.vcObservacao
                             }, trans);
                         }
@@ -147,7 +151,7 @@ namespace BHJet_Repositorio.Admin
                         // Comit
                         trans.Commit();
                     }
-                    catch
+                    catch (System.Exception e)
                     {
                         trans.Rollback();
                         throw;

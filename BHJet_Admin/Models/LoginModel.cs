@@ -83,4 +83,11 @@ namespace BHJet_Admin.Models
         public string Pais { get; set; }
     }
 
+    public class EsqueciMinhaSenhaModel
+    {
+        [Required(ErrorMessage = "E-mail obrigatório.")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "E-mail inválido")]
+        public string Email { get; set; }
+    }
 }

@@ -66,14 +66,7 @@
                             </div>
                         </div>
 
-                        <p class="text-danger">
-                            <b>
-                                @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
-                                {
-                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
-                                }
-                            </b>
-                        </p>
+
 
                         <div class="form-group">
                             <div class="col-md-12">
@@ -85,18 +78,43 @@
                 </div>
             </div>
 
+            <br />
+
             <div class="row">
                 <div class="col-md-12">
-                    <a href="@Url.Action("Registrar", "Home")" style="color: #f6f6f6;
-    text-decoration: none;
-    BACKGROUND-COLOR: #322f2f;
-    PADDING: 10PX;
-    BORDER-RADIUS: 5PX;
-    MARGIN-TOP: 50PX;" class="">
+                    <a href="@Url.Action("Registrar", "Home")" style="color: #f6f6f6; text-decoration: none; BACKGROUND-COLOR: #322f2f; PADDING: 10PX; BORDER-RADIUS: 5PX; MARGIN-TOP: 50PX;" class="">
                         <i class="fa fa-address-card" aria-hidden="true"> </i> Registrar conta BHJet
                     </a>
                 </div>
+            </div>   <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="@Url.Action("RecuperarSenha", "Home")" style="color: #f6f6f6; text-decoration: none; BACKGROUND-COLOR: #9a3030; PADDING: 10PX; BORDER-RADIUS: 5PX; MARGIN-TOP: 50PX;" class="">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"> </i> Esqueci minha senha
+                    </a>
+                </div>
             </div>
+
+            <br/>
+
+            <p class="text-danger">
+                <b>
+                    @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
+                    {
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
+                    }
+                </b>
+            </p>
+
+            <p class="text-success">
+                <b>
+                    @if (!string.IsNullOrWhiteSpace(@ViewBag.SucessoLogin))
+                    {
+                        <i class="fa fa-check-circle" aria-hidden="true"></i> @ViewBag.SucessoLogin
+                    }
+                </b>
+            </p>
 
         </div>
 

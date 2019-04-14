@@ -393,8 +393,8 @@ namespace BHJet_WebApi.Controllers
         /// Busca preco corrida
         /// </summary>
         /// <returns>Doublle</returns>
-        [Route("preco")]
         [ResponseType(typeof(double))]
+        [Route("preco")]
         public IHttpActionResult PostPrecoCorrido([FromBody]CalculoCorridaDTO model)
         {
             double? valorTotal = CalculaPrecoCoorrida(model);
@@ -405,12 +405,23 @@ namespace BHJet_WebApi.Controllers
 
         private static double? CalculaPrecoCoorrida(CalculoCorridaDTO model)
         {
+            //valor minimo
+            //valor do ponto de coleta
+            //valor por ponto de entrega
+            //valor por km rodado
+            //valor de espera(Mais de 10 minutos é cobrado)
+
             // Busca tarifa cliente
             var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente, model.TipoVeiculo);
 
             // Variaveis Preco
-            var valorKMAdc = Double.Parse(tarifa.ValorKMAdicional?.ToString() ?? "0");
             var valaorPadrao = Double.Parse(tarifa.ValorContrato?.ToString() ?? "0");
+            var valorPontoColeta = Double.Parse(tarifa.decValorPontoColeta?.ToString() ?? "0");
+            var valorPontoEntrega = Double.Parse(tarifa.decValorPontoExcedente?.ToString() ?? "0");
+            var valorEspera = Double.Parse(tarifa.decValorMinutoParado?.ToString() ?? "0");
+            var valorKMAdc = Double.Parse(tarifa.ValorKMAdicional?.ToString() ?? "0");
+            var quantidadeDestinos = model.Localizacao.Count() - 1;
+            var valorPorMinutosEspera = model.MinutosEspera > 10 ? valorEspera * model.MinutosEspera : 0;
 
             // Calculo
             var quantidadeKM = DistanciaUtil.CalculaDistancia(model.Localizacao.Select(l => new Localidade()
@@ -418,12 +429,16 @@ namespace BHJet_WebApi.Controllers
                 Latitude = l.Latitude,
                 Longitude = l.Longitude
             }).ToArray());
-            var valorKM = (quantidadeKM * tarifa.FranquiaKM) ?? 0;
-            var qtdKMExcecdente = quantidadeKM > tarifa.FranquiaKM ? (quantidadeKM - tarifa.FranquiaKM) * valorKMAdc : 0;
 
-            // Valor total
-            var valorTotal = valaorPadrao + valorKM + qtdKMExcecdente;
-            return valorTotal;
+            // Total calculado
+            var TOTALCORRIDA = valorEspera + valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
+
+            // Total
+            if (TOTALCORRIDA < valaorPadrao)
+                TOTALCORRIDA = valaorPadrao;
+
+            // Return
+            return TOTALCORRIDA;
         }
 
         /// <summary>

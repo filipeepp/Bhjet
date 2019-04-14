@@ -4,13 +4,14 @@ using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Web.Http;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Usuarios")]
+    [RoutePrefix("api/Usuarios")]
     public class UsuarioController : ApiController
     {
         private UsuarioLogado _usuarioAutenticado;
@@ -235,33 +236,47 @@ namespace BHJet_WebApi.Controllers
         [Route("recuperar/Senha")]
         public IHttpActionResult PostRecuperaSenha([FromBody]string email)
         {
-            // Busca Senha do usuario
-            var usuario = new UsuarioRepositorio().BuscaUsuario(email);
+            try
+            {
+                // Busca Senha do usuario
+                var usuario = new UsuarioRepositorio().BuscaUsuario(email);
 
-            // Verifica existencia
-            if (usuario == null)
-                BadRequest($"Usuário {email} não encontrado.");
+                // Verifica existencia
+                if (usuario == null)
+                    BadRequest($"Usuário {email} não encontrado.");
 
-            // Busca template de email
-            var template = new EmailRepositorio().BuscaTemplate(1);
-            //var template = new EmailEntidade()
-            //{
-            //    id = 1,
-            //    vcAssunto = "testando email",
-            //    vcCorpo = File.ReadAllText(@"C:\Users\lhsilva\Desktop\tempEmail.html")
-            //};
+                // Busca template de email
+                var template = new EmailRepositorio().BuscaTemplate(1);
+                //var template = new EmailEntidade()
+                //{
+                //    id = 1,
+                //    vcAssunto = "testando email",
+                //    vcCorpo = File.ReadAllText(@"C:\Users\lhsilva\Desktop\tempEmail.html")
+                //};
 
-            // Atualiza senha
-            var senhaGerada = new UsuarioRepositorio().ResetaSenhaUsuario(usuario.idUsuario);
+                // Atualiza senha
+                var senhaGerada = new UsuarioRepositorio().ResetaSenhaUsuario(usuario.idUsuario);
 
-            // Corpo email
-            string corpo = template.vcCorpo.Replace("{0}", email).Replace("{1}", senhaGerada);
+                // Corpo email
+                string corpo = template.vcCorpo.Replace("{0}", email).Replace("{1}", senhaGerada);
 
-            // Instancia
-            Email.EnviaMensagemEmail(email, template.vcAssunto, corpo);
+                // Instancia
+                Email.EnviaMensagemEmail(email, template.vcAssunto, corpo);
 
-            // Return
-            return Ok("Sua senha foi enviada para seu e-mail.");
+                // Return
+                return Ok("Sua senha foi enviada para seu e-mail.");
+            }
+            catch(Exception e)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry("Mensagem: " + e.Message + Environment.NewLine +
+                                        "Inner: " + e.InnerException + Environment.NewLine +
+                                        "Stack: " + e.StackTrace, EventLogEntryType.Error, 101, 1);
+                }
+                return BadRequest("Funcionalidade de recuperação de senha indisponível no momento. Contate a adminstração da BHJET.");
+            }
         }
 
         private Tuple<string, string> divideSenha(string senha)

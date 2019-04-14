@@ -541,7 +541,7 @@ input[type="radio"], input[type="checkbox"] {
         }
 
     .ctnLoginPainel {
-        padding: 50px !important;
+        padding: 15px !important;
         min-height: 430px !important;
         height: 480px;
     }
@@ -923,7 +923,7 @@ input[type="radio"] {
     -moz-box-shadow: 0px -2px 46px -6px rgba(0,0,0,0.75);
     box-shadow: 0px -2px 46px -6px rgba(0,0,0,0.75);
     min-height: 500px;
-    padding: 110px;
+    padding: 70px;
 }
 
     .ctnLoginPainel button {

@@ -34,6 +34,7 @@ namespace BHJet_DTO.Tarifa
         public int? FranquiaHoras { get; set; }
         public decimal? ValorHoraAdicional { get; set; }
         public decimal? ValorPontoExcedente { get; set; }
+        public decimal? ValorPontoColeta { get; set; }
         public bool Ativo { get; set; }
         public string Observacao { get; set; }
     }

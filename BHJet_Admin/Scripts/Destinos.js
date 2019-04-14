@@ -80,7 +80,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var input = document.getElementById($(this).attr('id'));
         var options = {
             'address': ', Brasil',
-            'region': 'BR'
+            'region': 'PT',
+            componentRestrictions: { country: "BR" }
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
 

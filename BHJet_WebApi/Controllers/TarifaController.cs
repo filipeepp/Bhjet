@@ -46,7 +46,8 @@ namespace BHJet_WebApi.Controllers
                 ValorHoraAdicional = tf.decValorHoraAdicional,
                 ValorKMAdicional = tf.decValorKMAdicional,
                 ValorMinutoParado = tf.decValorMinutoParado,
-                ValorPontoExcedente = tf.decValorPontoExcedente
+                ValorPontoExcedente = tf.decValorPontoExcedente,
+                ValorPontoColeta = tf.decValorPontoColeta
             }));
         }
 
@@ -54,8 +55,8 @@ namespace BHJet_WebApi.Controllers
         /// Busca todo o tarifario
         /// </summary>
         /// <returns>IEnumerable<TarifaDTO></returns>
-        [Authorize]
         [Route("")]
+        [Authorize]
         public IHttpActionResult PutTarifas([FromBody]TarifarioDTO[] filtro)
         {
             // Busca tarifa
@@ -76,7 +77,8 @@ namespace BHJet_WebApi.Controllers
                 decValorHoraAdicional = tf.ValorHoraAdicional,
                 decValorKMAdicional = tf.ValorKMAdicional,
                 decValorMinutoParado = tf.ValorMinutoParado,
-                decValorPontoExcedente = tf.ValorPontoExcedente
+                decValorPontoExcedente = tf.ValorPontoExcedente,
+                decValorPontoColeta = tf.ValorPontoColeta
             }).ToArray());
 
             // Return

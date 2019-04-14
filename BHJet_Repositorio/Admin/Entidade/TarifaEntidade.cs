@@ -16,6 +16,9 @@ namespace BHJet_Repositorio.Admin.Entidade
         public int? intFranquiaHoras { get; set; }
         public decimal? decValorHoraAdicional { get; set; }
         public bool Ativo { get; set; }
+        public decimal? decValorPontoExcedente { get; set; }
+        public decimal? decValorPontoColeta { get; set; }
+        public decimal? decValorMinutoParado { get; set; }
         public string Observacao { get; set; }
     }
 
@@ -28,13 +31,14 @@ namespace BHJet_Repositorio.Admin.Entidade
         public DateTime? dtDataInicioVigencia { get; set; }
         public DateTime? dtDataFimVigencia { get; set; }
         public int? intFranquiaMinutosParados { get; set; }
-        public decimal? decValorMinutoParado { get; set; }
         public decimal? decValorContrato { get; set; }
         public int? intFranquiaKM { get; set; }
         public decimal? decValorKMAdicional { get; set; }
         public int? intFranquiaHoras { get; set; }
         public decimal? decValorHoraAdicional { get; set; }
         public decimal? decValorPontoExcedente { get; set; }
+        public decimal? decValorPontoColeta { get; set; }
+        public decimal? decValorMinutoParado { get; set; }
         public bool bitAtivo { get; set; }
         public string vcObservacao { get; set; }
     }

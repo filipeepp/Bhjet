@@ -178,7 +178,9 @@ namespace BHJet_WebApi.Controllers
                     ValorContrato = v.decValorContrato,
                     ValorHoraAdicional = v.decValorHoraAdicional,
                     ValorKMAdicional = v.decValorKMAdicional,
-                    ValorMinutoParado = v.decValorMinutoParado
+                    ValorMinutoParado = v.decValorMinutoParado,
+                    ValorPontoColeta = v.decValorPontoColeta,
+                    ValorPontoExcedente = v.decValorPontoExcedente
                 }).FirstOrDefault() : null,
                 ContratoMoto = entidadeValor.Where(c => c.idTipoVeiculo == 1).Any() ? entidadeValor.Where(c => c.idTipoVeiculo == 1).Select(v => new ClienteValorModel()
                 {
@@ -190,7 +192,9 @@ namespace BHJet_WebApi.Controllers
                     ValorContrato = v.decValorContrato,
                     ValorHoraAdicional = v.decValorHoraAdicional,
                     ValorKMAdicional = v.decValorKMAdicional,
-                    ValorMinutoParado = v.decValorMinutoParado
+                    ValorMinutoParado = v.decValorMinutoParado,
+                    ValorPontoColeta = v.decValorPontoColeta,
+                    ValorPontoExcedente = v.decValorPontoExcedente
                 }).FirstOrDefault() : null
             };
 

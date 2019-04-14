@@ -380,6 +380,7 @@
     <Content Include="Views\Home\Registrar.cshtml" />
     <Content Include="Views\Shared\_LayoutClienteInterno.cshtml" />
     <Content Include="Views\Faturamento\FaturamentoClienteInterno.cshtml" />
+    <Content Include="Views\Home\RecuperarSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

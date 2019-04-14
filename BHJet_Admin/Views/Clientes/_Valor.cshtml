@@ -61,7 +61,7 @@
             <div class="col-xs-12 col-sm-12 col-lg-12">
                 <div class="row">
                     <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor do contrato</label>
+                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor da diária</label>
                         @Html.TextBoxFor(model => model.ValorMoto.ValorContrato, new { placeholder = "R$", @class = "form-control", @autocomplete = "off", data_cont = "true" })
                         @Html.ValidationMessageFor(model => model.ValorMoto.ValorContrato, null, new { @class = "text-danger", @autocomplete = "off", data_cont = "true" })
                     </div>
@@ -86,19 +86,6 @@
                         <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor hora adicional</label>
                         @Html.TextBoxFor(model => model.ValorMoto.ValorHoraAdicional, new { @class = "form-control", @autocomplete = "off", data_cont = "true" })
                         @Html.ValidationMessageFor(model => model.ValorMoto.ValorHoraAdicional, null, new { @class = "text-danger", @autocomplete = "off", data_cont = "true" })
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Franquia minutos parados</label>
-                        @Html.TextBoxFor(model => model.ValorMoto.FranquiaMinutosParados, new { @class = "form-control", @autocomplete = "off", data_cont = "true" })
-                        @Html.ValidationMessageFor(model => model.ValorMoto.FranquiaMinutosParados, null, new { @class = "text-danger", @autocomplete = "off", data_cont = "true" })
-                    </div>
-                    <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor minutos parados</label>
-                        @Html.TextBoxFor(model => model.ValorMoto.ValorMinutoParado, new { placeholder = "R$", @class = "form-control", @autocomplete = "off", data_cont = "true" })
-                        @Html.ValidationMessageFor(model => model.ValorMoto.ValorMinutoParado, null, new { placeholder = "R$", @class = "text-danger", @autocomplete = "off", data_cont = "true" })
                     </div>
                 </div>
 
@@ -128,7 +115,7 @@
             <div class="col-xs-12 col-sm-12 col-lg-12">
                 <div class="row">
                     <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor do contrato</label>
+                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor da diária</label>
                         @Html.TextBoxFor(model => model.ValorCarro.ValorContrato, new { placeholder = "R$", @class = "form-control", @autocomplete = "off", data_cont = "true" })
                         @Html.ValidationMessageFor(model => model.ValorCarro.ValorContrato, null, new { placeholder = "R$", @class = "text-danger", @autocomplete = "off", data_cont = "true" })
                     </div>
@@ -153,19 +140,6 @@
                         <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor hora adicional</label>
                         @Html.TextBoxFor(model => model.ValorCarro.ValorHoraAdicional, new { @class = "form-control", @autocomplete = "off", data_cont = "true" })
                         @Html.ValidationMessageFor(model => model.ValorCarro.ValorHoraAdicional, null, new { @class = "text-danger", @autocomplete = "off", data_cont = "true" })
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Franquia minutos parados</label>
-                        @Html.TextBoxFor(model => model.ValorCarro.FranquiaMinutosParados, new { @class = "form-control", @autocomplete = "off", data_cont = "true" })
-                        @Html.ValidationMessageFor(model => model.ValorCarro.FranquiaMinutosParados, null, new { @class = "text-danger", @autocomplete = "off", data_cont = "true" })
-                    </div>
-                    <div class=" col-md-3 col-lg-3">
-                        <label for="txtNomeFantasia"><small class="obrigatorio">*</small>Valor minutos parados</label>
-                        @Html.TextBoxFor(model => model.ValorCarro.ValorMinutoParado, new { placeholder = "R$", @class = "form-control", @autocomplete = "off", data_cont = "true" })
-                        @Html.ValidationMessageFor(model => model.ValorCarro.ValorMinutoParado, null, new { placeholder = "R$", @class = "text-danger", @autocomplete = "off", data_cont = "true" })
                     </div>
                 </div>
 

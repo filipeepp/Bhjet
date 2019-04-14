@@ -8,6 +8,7 @@ using BHJet_Enumeradores;
 using BHJet_Servico.Autorizacao;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Dashboard;
+using BHJet_Servico.Usuario;
 using Newtonsoft.Json;
 using System;
 using System.Web;
@@ -24,11 +25,14 @@ namespace BHJet_Admin.Controllers
 
         private readonly IClienteServico clienteServico;
 
-        public HomeController(IAutorizacaoServico _autorizacaoServico, IResumoServico _resumoServico, IClienteServico _cliente)
+        private readonly IUsuarioServico usuarioServico;
+
+        public HomeController(IAutorizacaoServico _autorizacaoServico, IResumoServico _resumoServico, IClienteServico _cliente, IUsuarioServico _usuarioServico)
         {
             autorizacaoServico = _autorizacaoServico;
             resumoServico = _resumoServico;
             clienteServico = _cliente;
+            usuarioServico = _usuarioServico;
         }
 
         [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
@@ -67,6 +71,8 @@ namespace BHJet_Admin.Controllers
 
             if (TempData.ContainsKey("Error"))
                 ViewBag.ErroLogin = TempData["Error"].ToString();
+            if (TempData.ContainsKey("SucessoLogin"))
+                ViewBag.SucessoLogin = TempData["SucessoLogin"].ToString();
 
             return View(new LoginModel()
             {
@@ -125,7 +131,7 @@ namespace BHJet_Admin.Controllers
                         Estado = model.Estado.ToString(),
                         NomeCartaoCredito = model.NomeCartaoCredito,
                         Numero = model.Numero ?? 0,
-                        NumeroCartaoCredito = model.NumeroCartaoCredito.Replace(".",""),
+                        NumeroCartaoCredito = model.NumeroCartaoCredito.Replace(".", ""),
                         Pais = model.Pais,
                         Senha = CriptografiaUtil.Criptografa(model.Senha, "ch4v3S3m2nt3BHJ0e1tA9u4t4hu1s33r"),
                         Sexo = model.Sexo.ToString(),
@@ -133,7 +139,7 @@ namespace BHJet_Admin.Controllers
                     });
 
                     ViewBag.ErroLogin = string.Empty;
-                    ViewBag.SucessoLogin = $"Bem vindo, {model.Nome}, cadastro realizado com sucesso";
+                    TempData["SucessoLogin"] = $"Bem vindo, {model.Nome}, cadastro realizado com sucesso";
                 }
                 catch (Exception e)
                 {
@@ -211,6 +217,42 @@ namespace BHJet_Admin.Controllers
             }
             else
                 return View(model);
+        }
+
+        public ActionResult RecuperarSenha()
+        {
+            if (TempData.ContainsKey("Error"))
+                ViewBag.ErroLogin = TempData["Error"].ToString();
+
+            // Return
+            return View(new EsqueciMinhaSenhaModel()
+            {
+                Email = string.Empty
+            });
+        }
+
+        [HttpPost]
+        public ActionResult RecuperarSenha(EsqueciMinhaSenhaModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View();
+
+                    // Executa servico de recuperacao de senha
+                    usuarioServico.RecuperaUsuario(model.Email);
+
+                // Sucesso
+                TempData["SucessoLogin"] = "Foi enviado uma e-mail com a sua nova senha.";
+
+                // Return
+                return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErroLogin = e.Message;
+                return View(new EsqueciMinhaSenhaModel());
+            }
         }
     }
 }

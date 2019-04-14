@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = null;
+    ViewContext.FormContext = new FormContext();
+}
+
+@using BHJet_Admin.Models
+@model EsqueciMinhaSenhaModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+</head>
+<body class="bodyLogin">
+
+    <div class="ctnlogin" style="background-image: url('@Url.Content("~/Images/bgLogin.jpg")" ;">
+
+        <div class="ctnLoginPainel text-center">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="img-responsive" src="@Url.Content("~/Images/logoLogisticaPreto.jpg")" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    @using (Html.BeginForm("RecuperarSenha", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-left">
+                                <i class="fa fa-user" aria-hidden="true"> Email</i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <p class="text-danger">
+                            <b>
+                                @if (!string.IsNullOrWhiteSpace(@ViewBag.ErroLogin))
+                                {
+                                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> @ViewBag.ErroLogin
+                                }
+                            </b>
+                        </p>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button id="btnLogar" type="submit" class="loginbtn">Recuperar senha</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+
+        </div>
+
+        @{
+            Html.RenderPartial("~/Views/Shared/_Loading.cshtml");
+        }
+
+    </div>
+
+
+</body>
+</html>

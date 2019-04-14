@@ -65,7 +65,9 @@ namespace BHJet_Admin.Controllers
                     ValorContrato = tf.ValorContrato?.ToDecimalCurrency(),
                     ValorHoraAdicional = tf.ValorHoraAdicional?.ToDecimalCurrency(),
                     ValorKMAdicional = tf.ValorKMAdicional?.ToDecimalCurrency(),
-                    ValorMinutoParado = tf.ValorMinutoParado?.ToDecimalCurrency()
+                    ValorMinutoParado = tf.ValorMinutoParado?.ToDecimalCurrency(),
+                    ValorPontoExcedente = tf.ValorPontoExcedente?.ToDecimalCurrency(),
+                    ValorPontoColeta = tf.ValorPontoColeta?.ToDecimalCurrency()
                 }).ToArray());
 
                 // Busca tarifas
@@ -109,7 +111,8 @@ namespace BHJet_Admin.Controllers
                     ValorHoraAdicional = tf.ValorHoraAdicional?.ToString("C", new CultureInfo("pt-BR")),
                     ValorKMAdicional = tf.ValorKMAdicional?.ToString("C", new CultureInfo("pt-BR")),
                     ValorMinutoParado = tf.ValorMinutoParado?.ToString("C", new CultureInfo("pt-BR")),
-                    ValorPontoExcedente = tf.ValorPontoExcedente?.ToString("C", new CultureInfo("pt-BR"))
+                    ValorPontoExcedente = tf.ValorPontoExcedente?.ToString("C", new CultureInfo("pt-BR")),
+                    ValorPontoColeta = tf.ValorPontoColeta?.ToString("C", new CultureInfo("pt-BR"))
                 }).ToArray()
             };
         }

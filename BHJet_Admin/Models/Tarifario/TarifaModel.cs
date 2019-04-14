@@ -38,6 +38,8 @@ namespace BHJet_Admin.Models.Tarifario
 
         public string ValorPontoExcedente { get; set; }
 
+        public string ValorPontoColeta { get; set; }
+
         public bool Ativo { get; set; }
         public string Observacao { get; set; }
     }

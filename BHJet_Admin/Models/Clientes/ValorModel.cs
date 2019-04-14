@@ -27,6 +27,10 @@
         //[Required(ErrorMessage = "Valor Minuto Parado obrigatório.")]
         public string ValorMinutoParado { get; set; }
 
+        public string ValorPontoExcedente { get; set; }
+
+        public string ValorPontoColeta { get; set; }
+
         public string Observacao { get; set; }
     }
 }

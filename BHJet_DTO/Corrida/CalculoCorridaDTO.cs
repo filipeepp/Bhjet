@@ -5,7 +5,7 @@
         public long IDCliente { get; set; }
         public int TipoVeiculo { get; set; }
         public CalculoCorridaLocalidadeDTO[] Localizacao { get; set; }
-
+        public int MinutosEspera { get; set; }
     }
 
     public class CalculoCorridaLocalidadeDTO

@@ -237,7 +237,7 @@ namespace BHJet_Admin.Controllers
                         ValorContrato = model.ValorCarro.ValorContrato?.ToDecimalCurrency(),
                         ValorHoraAdicional = model.ValorCarro.ValorHoraAdicional?.ToDecimalCurrency(),
                         ValorKMAdicional = model.ValorCarro.ValorKMAdicional?.ToDecimalCurrency(),
-                        ValorMinutoParado = model.ValorCarro.ValorMinutoParado?.ToDecimalCurrency(),
+                        ValorMinutoParado = model.ValorCarro.ValorMinutoParado?.ToDecimalCurrency()
                     },
                     ContratoMoto = model.Contrato == TipoContrato.ChamadosAvulsos ? null : new ClienteValorModel()
                     {

@@ -94,6 +94,8 @@ namespace BHJet_Repositorio.Admin.Entidade
         public decimal? decValorHoraAdicional { get; set; }
         public int? intFranquiaMinutosParados { get; set; }
         public decimal? decValorMinutoParado { get; set; }
+        public decimal? decValorPontoExcedente { get; set; }
+        public decimal? decValorPontoColeta { get; set; }
         public string Observacao { get; set; }
     }
 }
