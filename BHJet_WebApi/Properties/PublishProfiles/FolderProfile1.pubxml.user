@@ -16,40 +16,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:47</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:47</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:47</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.pdb">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:47</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>03/28/2019 11:31:51</publishTime>
+      <publishTime>04/14/2019 15:27:49</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>03/28/2019 11:31:51</publishTime>
+      <publishTime>04/14/2019 15:27:49</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:48</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.pdb">
-      <publishTime>03/28/2019 11:31:50</publishTime>
+      <publishTime>04/14/2019 15:27:48</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.dll">
-      <publishTime>03/28/2019 11:31:52</publishTime>
+      <publishTime>04/14/2019 19:33:40</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.pdb">
-      <publishTime>03/28/2019 11:31:52</publishTime>
+      <publishTime>04/14/2019 19:33:40</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>03/28/2019 11:32:25</publishTime>
+      <publishTime>04/14/2019 19:33:43</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>03/28/2019 11:32:25</publishTime>
+      <publishTime>04/14/2019 19:33:43</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>
@@ -565,7 +565,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 17:28:38</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/28/2019 11:32:27</publishTime>
+      <publishTime>04/14/2019 15:27:54</publishTime>
     </File>
   </ItemGroup>
 </Project>

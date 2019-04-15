@@ -30,6 +30,9 @@ namespace BHJet_Admin.Controllers
             // Variaveis
             var osAvulsa = this.RetornaOSAvulsa();
 
+            if(osAvulsa == null)
+                return RedirectToAction("~/HomeExterno/Index");
+
             // Return View
             return View(osAvulsa);
         }
@@ -83,7 +86,10 @@ namespace BHJet_Admin.Controllers
             }
             catch
             {
-                osAvulsa.DadosPagamento = new PagamentoModel();
+                osAvulsa.DadosPagamento = new PagamentoModel()
+                {
+                    Validade = "/"
+                };
             }
 
             // Atualiza OS

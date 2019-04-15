@@ -412,7 +412,7 @@ namespace BHJet_WebApi.Controllers
             //valor de espera(Mais de 10 minutos é cobrado)
 
             // Busca tarifa cliente
-            var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(model.IDCliente, model.TipoVeiculo);
+            var tarifa = new TarifaRepositorio().BuscaTarificaCorrida(model.TipoVeiculo);
 
             // Variaveis Preco
             var valaorPadrao = Double.Parse(tarifa.ValorContrato?.ToString() ?? "0");

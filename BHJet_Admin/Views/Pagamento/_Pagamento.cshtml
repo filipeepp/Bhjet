@@ -26,13 +26,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="titulo" for="txtEnderecoPartida">Válidade:</label>
-                            @Html.TextBoxFor(model => model.Validade, new { placeholder = "Número no cartão.", @class = "form-control" })
+                            @Html.TextBoxFor(model => model.Validade, new { placeholder = "Validade no cartão.", @class = "form-control", @autocomplete = "off" })
                             @Html.ValidationMessageFor(model => model.Validade, null, new { @class = "text-danger" })
                         </div>
                         <div class="col-md-6">
                             <label class="titulo" for="txtEnderecoPartida">Código de verificação:</label>
-                            @Html.TextBoxFor(model => model.CodigoVerificacao, new { @type = "password", placeholder = "Código de verificação.", @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CodigoVerificacao, null, new {  @class = "text-danger" })
+                            @Html.TextBoxFor(model => model.CodigoVerificacao, new { placeholder = "Código de verificação.", @class = "form-control", @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.CodigoVerificacao, null, new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>

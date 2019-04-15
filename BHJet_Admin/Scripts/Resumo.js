@@ -23,14 +23,11 @@ function bsoc() {
 document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#draggable").draggable();
-
-    //$("#btnEnviar").unbind("click");
-    //$("#btnEnviar").click(function () {
-    //    bsoc();
-    //    event.stopPropagation();
-    //});
+    $('#Validade').mask('00/0000');
+    $('#NumeroCartaoCredito').mask('0000.0000.0000.0000');
 
     carregaMapaDir();
+
     CalculaRota();
 });
 

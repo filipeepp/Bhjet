@@ -19,7 +19,7 @@ namespace BHJet_Admin.Infra
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            base.OnAuthorization(filterContext);
+            //base.OnAuthorization(filterContext);
             VerificaPassoDaSoliciracaoCorrida(filterContext);
         }
 
@@ -27,6 +27,8 @@ namespace BHJet_Admin.Infra
         {
             // Variaveis
             var corrida = filterContext.Controller.TempData[OSAvulsaControle.NomeVD] != null ? (EntregaModel)filterContext.Controller.TempData[OSAvulsaControle.NomeVD] : null;
+
+            filterContext.Controller.TempData[OSAvulsaControle.NomeVD] = corrida;
 
             // Validacao Usuario
             if (corrida != null)

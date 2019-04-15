@@ -84,7 +84,7 @@ namespace BHJet_Admin.Controllers
             FormsAuthentication.SignOut();
             Session.Abandon();
             UsuarioLogado.Logoff();
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "HomeExterno");
         }
 
         public ActionResult Registrar()

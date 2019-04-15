@@ -45,7 +45,7 @@ namespace BHJet_Repositorio.Admin
                                                    decValorHoraAdicional,
 												   decValorKMAdicional as ValorKMAdicional,
                                                    decValorPontoExcedente , decValorPontoColeta, decValorMinutoParado , 
-												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1  &tpVei& order by dtDataInicioVigencia desc";
+												   bitAtivo as Ativo from tblTarifario where bitAtivo = 1 and idTipoServico = 2 &tpVei& order by dtDataInicioVigencia desc";
 
                 query = tipoVeiculo != null ? query.Replace("&tpVei&", "and idTipoVeiculo = @tp") : query.Replace("&tpVei&", "");
 
@@ -53,6 +53,32 @@ namespace BHJet_Repositorio.Admin
                 return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new
                 {
                     id = clienteID,
+                    tp = tipoVeiculo
+                });
+            }
+        }
+
+        public TarifaEntidade BuscaTarificaCorrida(int tipoVeiculo)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @" select top(1) idTarifario as ID,
+												   vcDescricaoTarifario as Descricao,
+												   dtDataInicioVigencia as DataInicioVigencia,
+												   decValorContrato as ValorContrato,
+												   intFranquiaMinutosParados as MinutosParados,
+												   decValorMinutoParado as ValorMinutosParados,
+												   intFranquiaKM as FranquiaKM,  
+                                                   intFranquiaHoras,
+                                                   decValorHoraAdicional,
+												   decValorKMAdicional as ValorKMAdicional,
+                                                   decValorPontoExcedente , decValorPontoColeta, decValorMinutoParado , 
+												   bitAtivo as Ativo from tblTarifario where idTipoVeiculo = @tp  and idTipoServico = 1 order by dtDataInicioVigencia desc";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<TarifaEntidade>(query, new
+                {
                     tp = tipoVeiculo
                 });
             }
