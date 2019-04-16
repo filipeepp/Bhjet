@@ -3,7 +3,7 @@
     public class ServicoRotas
     {
        // public static readonly string Base = "http://bhjetapi.sa-east-1.elasticbeanstalk.com/api/";
-        public static readonly string Base = "http://bhjetapi.sa-east-1.elasticbeanstalk.com/";
+        public static readonly string Base = "http://bhjet.jrmendonca.com.br/api/";
 
         public class Autenticacao
         {
