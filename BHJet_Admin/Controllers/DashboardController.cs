@@ -308,7 +308,7 @@ namespace BHJet_Admin.Controllers
                         HoraFimExpediente = modelo.HorarioFim ?? new TimeSpan(),
                         ValorDiariaNegociado = modelo.ValorDiaria.ToDecimalCurrency(),
                         ValorDiariaComissaoNegociado = modelo.ValorComissao.ToDecimalCurrency(),
-                        FranquiaKMDiaria = modelo.FranquiaKMDiaria.ToDecimalCurrency(),
+                        FranquiaKMDiaria = modelo.FranquiaKMDiaria.ToString().ToDecimalCurrency(),
                         ValorKMAdicionalNegociado = modelo.ValorKMAdicional.ToDecimalCurrency()
                     };
                 }
@@ -376,7 +376,7 @@ namespace BHJet_Admin.Controllers
             {
                 DecValorDiaria = entidade.ValorContrato?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
                 decValorKMAdicionalDiaria = entidade.ValorKMAdicional?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty,
-                decFranquiaKMDiaria = entidade.FranquiaKM?.ToString("C", new CultureInfo("pt-BR")) ?? string.Empty
+                decFranquiaKMDiaria = entidade.FranquiaKM?.ToString() ?? string.Empty
             }, JsonRequestBehavior.AllowGet);
         }
 

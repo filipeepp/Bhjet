@@ -177,9 +177,8 @@ namespace BHJet_Admin.Models.Dashboard
             }
         }
 
-        private string _FranquiaKMDiaria;
-        [DataType(DataType.Currency)]
-        public string FranquiaKMDiaria
+        private long _FranquiaKMDiaria;
+        public long FranquiaKMDiaria
         {
             get
             {

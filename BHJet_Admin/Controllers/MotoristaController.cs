@@ -81,7 +81,7 @@ namespace BHJet_Admin.Controllers
                         DocumentoRG = profissional.DocumentoRG,
                         Senha = "",
                         Situacao = profissional.Status,
-                        ValorComissao = profissional.Comissoes.OrderBy(c => c.dtDataInicioVigencia).FirstOrDefault().decPercentualComissao.ToString("C"),
+                        ValorComissao = "% " + profissional.Comissoes.OrderBy(c => c.dtDataInicioVigencia).FirstOrDefault().decPercentualComissao.ToString(),
                         Comissao = profissional.Comissoes != null ? profissional.Comissoes.Select(c => new NovoMotoristaComissaoModel()
                         {
                             ID = c.ID,

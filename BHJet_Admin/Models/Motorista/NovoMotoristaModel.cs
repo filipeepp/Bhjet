@@ -79,8 +79,7 @@ namespace BHJet_Admin.Models.Motorista
         public string Observacao { get; set; }
 
         private string _ValorComissao;
-        [DataType(DataType.Currency)]
-        [Required(ErrorMessage = "Valor (R$) de comissão obrigatório.")]
+        [Required(ErrorMessage = "Valor (%) de comissão obrigatório.")]
         public string ValorComissao
         {
             get

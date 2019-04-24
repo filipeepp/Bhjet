@@ -38,7 +38,7 @@ namespace BHJet_Admin.Infra
                     case OSAvulsoPassos.Origem:
                         break;
                     case OSAvulsoPassos.Destinos:
-                        if(corrida.PassoOS != OSAvulsoPassos.Origem && corrida.PassoOS != OSAvulsoPassos.Conclusao)
+                        if(corrida.PassoOS != OSAvulsoPassos.Destinos && corrida.PassoOS != OSAvulsoPassos.Origem && corrida.PassoOS != OSAvulsoPassos.Conclusao)
                             filterContext.Result = new RedirectResult("~/HomeExterno/Index");
                         break;
                     case OSAvulsoPassos.Conclusao:

@@ -15,7 +15,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Corrida")]
+    [RoutePrefix("Corrida")]
     public class CorridaController : ApiController
     {
         private UsuarioLogado _usuarioAutenticado;
@@ -431,7 +431,7 @@ namespace BHJet_WebApi.Controllers
             }).ToArray());
 
             // Total calculado
-            var TOTALCORRIDA = valorEspera + valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
+            var TOTALCORRIDA =  valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
 
             // Total
             if (TOTALCORRIDA < valaorPadrao)

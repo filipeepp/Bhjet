@@ -11,6 +11,8 @@ namespace BHJet_CoreGlobal
 
         public static double CalculaDistancia(Localidade localizacao1, Localidade localizacao2)
         {
+            
+
             double circuferencia = 40000.0; // Circuferencia da terra
             double distancia = 0.0;
 
