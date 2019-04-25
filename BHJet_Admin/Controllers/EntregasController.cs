@@ -68,7 +68,8 @@ namespace BHJet_Admin.Controllers
                     Latitude = Double.Parse(l.Latitude.Replace(".", ","))
                 }).ToArray()
             });
-            osAvulsa.ValorCorrida = resumo;
+            osAvulsa.ValorCorrida = resumo.Preco;
+            osAvulsa.QuantidadeKM = resumo.QuantidadeKM;
 
             // Busca Dados de Pagamento
             try

@@ -15,7 +15,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Corrida")]
+    [RoutePrefix("api/Corrida")]
     public class CorridaController : ApiController
     {
         private UsuarioLogado _usuarioAutenticado;
@@ -393,17 +393,17 @@ namespace BHJet_WebApi.Controllers
         /// Busca preco corrida
         /// </summary>
         /// <returns>Doublle</returns>
-        [ResponseType(typeof(double))]
+        [ResponseType(typeof(PrecoCorridaDTO))]
         [Route("preco")]
         public IHttpActionResult PostPrecoCorrido([FromBody]CalculoCorridaDTO model)
         {
-            double? valorTotal = CalculaPrecoCoorrida(model);
+            var valorTotal = CalculaPrecoCoorrida(model);
 
             // Return
             return Ok(valorTotal);
         }
 
-        private static double? CalculaPrecoCoorrida(CalculoCorridaDTO model)
+        private static PrecoCorridaDTO CalculaPrecoCoorrida(CalculoCorridaDTO model)
         {
             //valor minimo
             //valor do ponto de coleta
@@ -431,14 +431,18 @@ namespace BHJet_WebApi.Controllers
             }).ToArray());
 
             // Total calculado
-            var TOTALCORRIDA =  valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
+            var TOTALCORRIDA = valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
 
             // Total
             if (TOTALCORRIDA < valaorPadrao)
                 TOTALCORRIDA = valaorPadrao;
 
             // Return
-            return TOTALCORRIDA;
+            return new PrecoCorridaDTO()
+            {
+                Preco = TOTALCORRIDA,
+                QuantidadeKM = quantidadeKM
+            };
         }
 
         /// <summary>
@@ -476,7 +480,7 @@ namespace BHJet_WebApi.Controllers
                 IDCliente = model.IDCliente,
                 Comissao = comissao.decPercentualComissao,
                 TipoProfissional = model.TipoProfissional,
-                ValorEstimado = valorEstimado,
+                ValorEstimado = valorEstimado.Preco,
                 Enderecos = model.Enderecos.Select(c => new EnderecoModel()
                 {
                     Descricao = c.Descricao,

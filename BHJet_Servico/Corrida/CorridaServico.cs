@@ -7,7 +7,7 @@ namespace BHJet_Servico.Corrida
     {
         DetalheCorridaModel BuscaDetalheCorrida(long idCorrida);
         OcorrenciaDTO[] BuscaOcorrencias();
-        decimal CalculoPrecoCorrida(CalculoCorridaDTO filtro);
+        PrecoCorridaDTO CalculoPrecoCorrida(CalculoCorridaDTO filtro);
         long IncluirCorrida(IncluirCorridaDTO filtro);
     }
 
@@ -36,9 +36,9 @@ namespace BHJet_Servico.Corrida
             return this.Get<OcorrenciaDTO[]>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.GetOcorrencia}"));
         }
 
-        public decimal CalculoPrecoCorrida(CalculoCorridaDTO filtro)
+        public PrecoCorridaDTO CalculoPrecoCorrida(CalculoCorridaDTO filtro)
         {
-            return this.Post<CalculoCorridaDTO, decimal>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.GetPreco}"), filtro);
+            return this.Post<CalculoCorridaDTO, PrecoCorridaDTO>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.GetPreco}"), filtro);
         }
 
         public long IncluirCorrida(IncluirCorridaDTO filtro)
