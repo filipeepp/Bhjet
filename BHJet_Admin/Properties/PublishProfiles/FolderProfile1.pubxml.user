@@ -85,43 +85,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:01</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.dll">
-      <publishTime>04/14/2019 20:56:23</publishTime>
+      <publishTime>04/25/2019 18:56:38</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.pdb">
-      <publishTime>04/14/2019 20:56:23</publishTime>
+      <publishTime>04/25/2019 18:56:38</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>04/14/2019 15:27:47</publishTime>
+      <publishTime>04/23/2019 21:01:45</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>04/14/2019 15:27:47</publishTime>
+      <publishTime>04/23/2019 21:01:45</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
-      <publishTime>04/14/2019 15:27:47</publishTime>
+      <publishTime>04/25/2019 12:19:51</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.pdb">
-      <publishTime>04/14/2019 15:27:47</publishTime>
+      <publishTime>04/25/2019 12:19:51</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>04/14/2019 15:27:49</publishTime>
+      <publishTime>04/25/2019 12:19:51</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>04/14/2019 15:27:49</publishTime>
+      <publishTime>04/25/2019 12:19:51</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
-      <publishTime>04/14/2019 15:27:48</publishTime>
+      <publishTime>04/25/2019 12:19:50</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.pdb">
-      <publishTime>04/14/2019 15:27:48</publishTime>
+      <publishTime>04/25/2019 12:19:50</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.dll">
-      <publishTime>04/14/2019 18:55:58</publishTime>
+      <publishTime>04/25/2019 18:43:02</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.pdb">
-      <publishTime>04/14/2019 18:55:58</publishTime>
+      <publishTime>04/25/2019 18:43:02</publishTime>
     </File>
     <File Include="bin/DataAnnotationsExtensions.dll">
-      <publishTime>08/02/2018 00:55:52</publishTime>
+      <publishTime>02/08/2018 00:55:52</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>02/04/2019 10:06:25</publishTime>
@@ -580,7 +580,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:26</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>10/05/2018 22:38:08</publishTime>
+      <publishTime>05/10/2018 22:38:08</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/04/2019 10:06:26</publishTime>
@@ -754,7 +754,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/28/2019 10:31:15</publishTime>
     </File>
     <File Include="Scripts/DetalheMotorista.js">
-      <publishTime>03/28/2019 10:31:15</publishTime>
+      <publishTime>04/23/2019 21:52:26</publishTime>
     </File>
     <File Include="Scripts/ExibeLocalizacao.js">
       <publishTime>03/28/2019 10:31:15</publishTime>
@@ -901,7 +901,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/13/2019 09:21:55</publishTime>
     </File>
     <File Include="Views/Entregas/Resumo.cshtml">
-      <publishTime>04/13/2019 09:21:55</publishTime>
+      <publishTime>04/24/2019 22:27:15</publishTime>
     </File>
     <File Include="Views/Faturamento/DetalheFaturamento.cshtml">
       <publishTime>02/04/2019 10:06:02</publishTime>
@@ -1006,7 +1006,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/30/2019 16:28:01</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/14/2019 18:56:01</publishTime>
+      <publishTime>04/25/2019 18:56:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

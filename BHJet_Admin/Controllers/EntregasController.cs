@@ -69,7 +69,7 @@ namespace BHJet_Admin.Controllers
                 }).ToArray()
             });
             osAvulsa.ValorCorrida = resumo.Preco;
-            osAvulsa.QuantidadeKM = resumo.QuantidadeKM;
+            osAvulsa.QuantidadeKM = Math.Round(resumo.QuantidadeKM, 2);
 
             // Busca Dados de Pagamento
             try
