@@ -9,7 +9,8 @@ namespace BHJet_Admin.Models
         public long? IDCliente { get; set; }
         public long? OSNumero { get; set; }
         public double? ValorCorrida { get; set; }
-        public double? QuantidadeKM { get; set; }
+        public double? QtdKM { get; set; }
+        public string QsusasnstsisdsasdsesKsM { get; set; }
         [Required(ErrorMessage = "Tipo Profissional obrigatório.")]
         public TipoProfissional? TipoProfissional { get; set; }
         public List<EnderecoModel> Enderecos { get; set; }

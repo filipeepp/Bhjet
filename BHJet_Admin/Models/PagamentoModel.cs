@@ -8,8 +8,8 @@ namespace BHJet_Admin.Models
         public string NomeCartaoCredito { get; set; }
 
         [Required(ErrorMessage = "Número Cartão Crédito obrigatório.")]
-        [RegularExpression(@"^[0-9]*$", ErrorMessage = "Digite apenas números.")]
-        [StringLength(16, ErrorMessage = "Número de cartão deve conter 16 caracteres númericos.", MinimumLength = 16)]
+        [RegularExpression(@"^[0-9.]*$", ErrorMessage = "Formato de número inválido.")]
+        [StringLength(19, ErrorMessage = "Número de cartão deve conter 19 caracteres incluido os pontos.", MinimumLength = 19)]
         public string NumeroCartaoCredito { get; set; }
 
         [Required(ErrorMessage = "Válidade obrigatório.")]

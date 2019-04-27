@@ -149,10 +149,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
-                            <span class="titulo">KM estimado: </span> <h3 class="total">
-                                @if (Model.QuantidadeKM != null)
+                            <span class="titulo">Distâncîa: </span> <h3 class="total">
+                                @if (Model.QtdKM != null)
                                 {
-                                    @Model.QuantidadeKM.Value.ToString();
+                                    @Html.LabelFor(model => model.QtdKM, new { @id = "QtdKM" })
+                                    @*@Model.QtdKM.Value.ToString();*@
                                 }
                             </h3>
 
@@ -168,7 +169,7 @@
                             }
                         </div>
                     </div>
-                </div>               
+                </div>
 
                 if (Model.IDCliente != null && Model.OSNumero != null)
                 {
@@ -191,6 +192,7 @@
                     </div>
                 }
 
+                @Html.HiddenFor(model => model.QsusasnstsisdsasdsesKsM)
             }
         </div>
 

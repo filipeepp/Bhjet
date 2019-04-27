@@ -84,6 +84,15 @@ function CalculaRota() {
             directionsService.route(request, function (result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
+                    var totalDistance = 0;
+                    var totalDuration = 0;
+                    var legs = result.routes[0].legs;
+                    for (var i = 0; i < legs.length; ++i) {
+                        totalDistance += legs[i].distance.value;
+                        totalDuration += legs[i].duration.value;
+                    }
+                    var dkmc = Math.round(totalDistance / 100) / 10;
+                    $('#QtdKM').text(dkmc + " km"); $('#QsusasnstsisdsasdsesKsM').val(dkmc);
                 }
             });
         }
