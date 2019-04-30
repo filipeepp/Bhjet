@@ -1210,7 +1210,7 @@ input[type="radio"] {
 .ui-corrida-content {
     z-index: 10;
     position: absolute;
-    left: 270px;
+    left: 50px;
     top: 62px;
     max-width: 700px;
     padding: 50px;

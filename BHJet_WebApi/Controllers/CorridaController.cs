@@ -1,5 +1,6 @@
 ﻿using BHJet_Core.Variaveis;
 using BHJet_CoreGlobal;
+using BHJet_CoreGlobal.GoogleUtil;
 using BHJet_DTO.Corrida;
 using BHJet_Enumeradores;
 using BHJet_Repositorio.Admin;
@@ -8,6 +9,7 @@ using BHJet_Repositorio.Admin.Filtro;
 using BHJet_WebApi.Util;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -397,13 +399,13 @@ namespace BHJet_WebApi.Controllers
         [Route("preco")]
         public IHttpActionResult PostPrecoCorrido([FromBody]CalculoCorridaDTO model)
         {
-            var valorTotal = CalculaPrecoCoorrida(model);
+            var valorTotal = CalculaPrecoCorrida(model);
 
             // Return
             return Ok(valorTotal);
         }
 
-        private static PrecoCorridaDTO CalculaPrecoCoorrida(CalculoCorridaDTO model)
+        private static PrecoCorridaDTO CalculaPrecoCorrida(CalculoCorridaDTO model)
         {
             //valor minimo
             //valor do ponto de coleta
@@ -423,15 +425,28 @@ namespace BHJet_WebApi.Controllers
             var quantidadeDestinos = model.Localizacao.Count() - 1;
             var valorPorMinutosEspera = model.MinutosEspera > 10 ? valorEspera * model.MinutosEspera : 0;
 
-            // Calculo
-            var quantidadeKM = DistanciaUtil.CalculaDistancia(model.Localizacao.Select(l => new Localidade()
+            // Distancia de KM
+            var googleAPI = new GoogleApiUtil(ConfigurationManager.AppSettings["GoogleApiKey"]);
+            var distanciaKM = googleAPI.BuscaDistanciaMatrix(new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoMatrixModel()
             {
-                Latitude = l.Latitude,
-                Longitude = l.Longitude
-            }).ToArray());
+                Origem = new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
+                {
+                    Latitude = model.Localizacao.FirstOrDefault().Latitude,
+                    Longitude = model.Localizacao.FirstOrDefault().Longitude
+                },
+                Destinos = model.Localizacao.Skip(1).Select(c => new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
+                {
+                    Latitude = c.Latitude,
+                    Longitude = c.Longitude
+                }).ToArray()
+            });
+
+            // Validacao
+            if (distanciaKM == null)
+                throw new NullReferenceException("Não foi possível calcular o preço da corrida. Tente novamente mais tarde.");
 
             // Total calculado
-            var TOTALCORRIDA = valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * quantidadeKM) + valorPorMinutosEspera;
+            var TOTALCORRIDA = valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * distanciaKM) + valorPorMinutosEspera;
 
             // Total
             if (TOTALCORRIDA < valaorPadrao)
@@ -440,8 +455,8 @@ namespace BHJet_WebApi.Controllers
             // Return
             return new PrecoCorridaDTO()
             {
-                Preco = TOTALCORRIDA,
-                QuantidadeKM = quantidadeKM
+                Preco = TOTALCORRIDA ?? 0,
+                QuantidadeKM = distanciaKM ?? 0
             };
         }
 
@@ -457,7 +472,7 @@ namespace BHJet_WebApi.Controllers
             var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);
 
             // Calculo Valor Estimado
-            var valorEstimado = CalculaPrecoCoorrida(new CalculoCorridaDTO()
+            var valorEstimado = CalculaPrecoCorrida(new CalculoCorridaDTO()
             {
                 IDCliente = model.IDCliente ?? 0,
                 TipoVeiculo = model.TipoProfissional ?? 0,

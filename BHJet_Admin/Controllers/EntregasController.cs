@@ -69,7 +69,7 @@ namespace BHJet_Admin.Controllers
                 }).ToArray()
             });
             osAvulsa.ValorCorrida = resumo.Preco;
-            osAvulsa.QtdKM = 0;
+            //osAvulsa.QtdKM = 0;
 
             // Busca Dados de Pagamento
             try
