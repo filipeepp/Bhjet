@@ -442,7 +442,7 @@ namespace BHJet_WebApi.Controllers
             });
 
             // Validacao
-            if (distanciaKM == null)
+            if (distanciaKM == null || distanciaKM == 0)
                 throw new NullReferenceException("Não foi possível calcular o preço da corrida. Tente novamente mais tarde.");
 
             // Total calculado

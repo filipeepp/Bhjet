@@ -35,18 +35,20 @@ namespace BHJet_CoreGlobal.GoogleUtil
 
         public double? BuscaDistanciaMatrix(GeoLocalizacaoMatrixModel filtro)
         {
-            double? distanciaKM = null;
+            double? distanciaKM = 0;
             string origemChave = $"{filtro.Origem.Latitude.ToString().Replace(",", ".")},{filtro.Origem.Longitude.ToString().Replace(",", ".")}";
-            string destinosChave = string.Join("%", filtro.Destinos.Select(c => c.Latitude.ToString().Replace(",",".") + "," + c.Longitude.ToString().Replace(",", ".")));
+            string destinosChave = string.Join("|", filtro.Destinos.Select(c => c.Latitude.ToString().Replace(",", ".") + "," + c.Longitude.ToString().Replace(",", ".")));
             string request = $"distancematrix/json?units=imperial&origins={origemChave}&destinations={destinosChave}";
 
             var googleDistance = GoogleRequest<DistanceMatrixModel>(request);
 
             if (googleDistance.status == "OK")
             {
-                var distancia = googleDistance.rows.FirstOrDefault().elements.FirstOrDefault().distance.value;
-                double distanciaM = distancia / 100;
-                distanciaKM = Math.Round(distanciaM, 2) / 10;
+                foreach (Element coord in googleDistance.rows.FirstOrDefault().elements)
+                {
+                    double distanciaM = coord.distance.value / 100;
+                    distanciaKM += Math.Round(distanciaM, 2) / 10;
+                }
             }
 
             return distanciaKM;
