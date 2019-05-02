@@ -22,34 +22,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/30/2019 10:31:06</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>05/02/2019 15:50:00</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.pdb">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>05/02/2019 15:50:00</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>05/02/2019 15:50:02</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>05/02/2019 15:50:02</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
-      <publishTime>04/25/2019 12:19:50</publishTime>
+      <publishTime>05/02/2019 15:50:00</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.pdb">
-      <publishTime>04/25/2019 12:19:50</publishTime>
+      <publishTime>05/02/2019 15:50:00</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.dll">
-      <publishTime>04/30/2019 10:31:08</publishTime>
+      <publishTime>05/02/2019 15:50:04</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.pdb">
-      <publishTime>04/30/2019 10:31:08</publishTime>
+      <publishTime>05/02/2019 15:50:04</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>04/30/2019 10:44:32</publishTime>
+      <publishTime>05/02/2019 15:50:08</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>04/30/2019 10:44:32</publishTime>
+      <publishTime>05/02/2019 15:50:08</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>

@@ -427,22 +427,37 @@ namespace BHJet_WebApi.Controllers
 
             // Distancia de KM
             var googleAPI = new GoogleApiUtil(ConfigurationManager.AppSettings["GoogleApiKey"]);
-            var distanciaKM = googleAPI.BuscaDistanciaMatrix(new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoMatrixModel()
+
+            // Calcula distancia
+            double distanciaKM = 0;
+
+            for(int i =0; i < model.Localizacao.Length;i++)
             {
-                Origem = new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
+                // Localizacoes
+                var origem = model.Localizacao[i];
+
+                if (model.Localizacao.Length <= i + 1)
+                    break;
+
+                var destino = model.Localizacao[i + 1];
+
+                distanciaKM += googleAPI.BuscaDistanciaMatrix(new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoMatrixModel()
                 {
-                    Latitude = model.Localizacao.FirstOrDefault().Latitude,
-                    Longitude = model.Localizacao.FirstOrDefault().Longitude
-                },
-                Destinos = model.Localizacao.Skip(1).Select(c => new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
-                {
-                    Latitude = c.Latitude,
-                    Longitude = c.Longitude
-                }).ToArray()
-            });
+                    Origem = new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
+                    {
+                        Latitude = origem.Latitude,
+                        Longitude = origem.Longitude
+                    },
+                    Destino = new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
+                    {
+                        Latitude = destino.Latitude,
+                        Longitude = destino.Longitude
+                    }
+                }) ?? 0;
+            }
 
             // Validacao
-            if (distanciaKM == null || distanciaKM == 0)
+            if (distanciaKM == 0)
                 throw new NullReferenceException("Não foi possível calcular o preço da corrida. Tente novamente mais tarde.");
 
             // Total calculado
@@ -455,8 +470,8 @@ namespace BHJet_WebApi.Controllers
             // Return
             return new PrecoCorridaDTO()
             {
-                Preco = TOTALCORRIDA ?? 0,
-                QuantidadeKM = distanciaKM ?? 0
+                Preco = TOTALCORRIDA,
+                QuantidadeKM = distanciaKM
             };
         }
 

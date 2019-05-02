@@ -9,6 +9,6 @@
     public class GeoLocalizacaoMatrixModel
     {
         public GeoLocalizacaoModel Origem { get; set; }
-        public GeoLocalizacaoModel[] Destinos { get; set; }
+        public GeoLocalizacaoModel Destino { get; set; }
     }
 }

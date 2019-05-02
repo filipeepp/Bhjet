@@ -36,8 +36,11 @@ namespace BHJet_CoreGlobal.GoogleUtil
         public double? BuscaDistanciaMatrix(GeoLocalizacaoMatrixModel filtro)
         {
             double? distanciaKM = 0;
+            //string origemChave = $"{filtro.Origem.Latitude.ToString().Replace(",", ".")},{filtro.Origem.Longitude.ToString().Replace(",", ".")}";
+            //string destinosChave = string.Join("|", filtro.Destinos.Select(c => c.Latitude.ToString().Replace(",", ".") + "," + c.Longitude.ToString().Replace(",", ".")));
+            //string request = $"distancematrix/json?units=imperial&origins={origemChave}&destinations={destinosChave}";
             string origemChave = $"{filtro.Origem.Latitude.ToString().Replace(",", ".")},{filtro.Origem.Longitude.ToString().Replace(",", ".")}";
-            string destinosChave = string.Join("|", filtro.Destinos.Select(c => c.Latitude.ToString().Replace(",", ".") + "," + c.Longitude.ToString().Replace(",", ".")));
+            string destinosChave = $"{filtro.Destino.Latitude.ToString().Replace(",", ".")},{filtro.Destino.Longitude.ToString().Replace(",", ".")}";
             string request = $"distancematrix/json?units=imperial&origins={origemChave}&destinations={destinosChave}";
 
             var googleDistance = GoogleRequest<DistanceMatrixModel>(request);
