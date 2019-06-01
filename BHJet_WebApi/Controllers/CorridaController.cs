@@ -17,11 +17,9 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("api/Corrida")]
+    [RoutePrefix("Corrida")]
     public class CorridaController : ApiController
     {
-        private UsuarioLogado _usuarioAutenticado;
-
         /// <summary>
         /// Informações do usuário autenticado
         /// </summary>
@@ -29,10 +27,14 @@ namespace BHJet_WebApi.Controllers
         {
             get
             {
-                if (_usuarioAutenticado == null)
-                    _usuarioAutenticado = new UsuarioLogado();
+                if (UsuarioAutenticado == null)
+                    UsuarioAutenticado = new UsuarioLogado();
 
-                return _usuarioAutenticado;
+                return UsuarioAutenticado;
+            }
+            private set
+            {
+                UsuarioAutenticado = value;
             }
         }
 
@@ -431,7 +433,7 @@ namespace BHJet_WebApi.Controllers
             // Calcula distancia
             double distanciaKM = 0;
 
-            for(int i =0; i < model.Localizacao.Length;i++)
+            for (int i = 0; i < model.Localizacao.Length; i++)
             {
                 // Localizacoes
                 var origem = model.Localizacao[i];
@@ -480,11 +482,12 @@ namespace BHJet_WebApi.Controllers
         /// </summary>
         /// <returns>List<DetalheCorridaModel></returns>
         [Route("")]
+        [Authorize]
         [ResponseType(typeof(double))]
-        public IHttpActionResult PostCorrido([FromBody]IncluirCorridaDTO model)
+        public IHttpActionResult PostCorrida([FromBody]IncluirCorridaDTO model)
         {
             // Busca Comissao
-            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(54);
+            var comissao = new ProfissionalRepositorio().BuscaComissaoProfissional(model.IDProfissional ?? 0);
 
             // Calculo Valor Estimado
             var valorEstimado = CalculaPrecoCorrida(new CalculoCorridaDTO()
@@ -501,14 +504,14 @@ namespace BHJet_WebApi.Controllers
 #if DEBUG
             var usuario = 3;
 #else
-            var usuario = long.Parse(_usuarioAutenticado.LoginID);
+            var usuario = long.Parse(UsuarioAutenticado.LoginID);
 #endif
 
             // Busca tarifa cliente
             var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()
             {
                 IDCliente = model.IDCliente,
-                Comissao = comissao.decPercentualComissao,
+                Comissao = comissao != null ? comissao.decPercentualComissao : (decimal?)null,
                 TipoProfissional = model.TipoProfissional,
                 ValorEstimado = valorEstimado.Preco,
                 Enderecos = model.Enderecos.Select(c => new EnderecoModel()

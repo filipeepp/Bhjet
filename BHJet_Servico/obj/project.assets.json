@@ -285,23 +285,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lhsilva\\.nuget\\packages\\": {},
+    "C:\\Users\\LEOZI\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "projectUniqueName": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
       "projectName": "BHJet_Servico",
-      "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
-      "packagesPath": "C:\\Users\\lhsilva\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Servico\\obj\\",
+      "projectPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Servico\\BHJet_Servico.csproj",
+      "packagesPath": "C:\\Users\\LEOZI\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Servico\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\lhsilva\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LEOZI\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -309,26 +309,22 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://api.nuget.org/v3/index.json": {},
-        "http://nuget/nuget/dtp-debug/": {},
-        "http://nuget/nuget/dtp/": {},
-        "http://nuget/nuget/produtos-debug/": {},
-        "http://nuget/nuget/produtos/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj"
+            "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj": {
+              "projectPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_CoreGlobal\\BHJet_CoreGlobal.csproj"
             },
-            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
+            "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj": {
+              "projectPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Core\\BHJet_Core.csproj"
             },
-            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
+            "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj": {
+              "projectPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_DTO\\BHJet_DTO.csproj"
             },
-            "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
-              "projectPath": "C:\\Users\\lhsilva\\Source\\Repos\\filipeepp\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
+            "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj": {
+              "projectPath": "C:\\Users\\LEOZI\\Source\\Repos\\Bhjet\\BHJet_Enumeradores\\BHJet_Enumeradores.csproj"
             }
           }
         }

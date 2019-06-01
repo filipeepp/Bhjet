@@ -150,10 +150,7 @@
                     <div class="col-md-12">
                         <div id="ctnOrigemTitulo" class="cts-subtitulo-side-bar">
                             <span class="titulo">Distâncîa: </span> <h3 class="total">
-                                @if (Model.QtdKM != null && Model.QtdKM > 0)
-                                {
-                                    @Html.LabelFor(model => model.QtdKM, new { @id = "QtdKM"})
-                                }
+                                @Html.LabelFor(model => model.QtdKM, new { @id = "QtdKM" })
                             </h3>
 
                             <span class="titulo">Valor estimado: </span> <h3 class="total">

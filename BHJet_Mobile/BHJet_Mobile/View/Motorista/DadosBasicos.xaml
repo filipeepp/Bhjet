@@ -54,8 +54,12 @@
                         <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#193651" TextColor="White" Margin="20, 5, 20, 0" Clicked="AtualizaDados_Clicked" 
                                 Text="Atualizar dados" ></Button>
 
-                        <Button Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="Red" TextColor="White" Margin="20, 5, 20, 0" Clicked="Sair_Clicked" 
-                            Text="Sair/Logoff" ></Button>
+
+                        <Button Grid.Row="10" Grid.Column="0"  BackgroundColor="#414d59" TextColor="White" Margin="20, 5, 0, 0" Clicked="TrocarVeiculo_Clicked" 
+                            Text="Trocar Veículo" VerticalOptions="FillAndExpand"></Button>
+
+                        <Button Grid.Row="10" Grid.Column="1"  BackgroundColor="Red" TextColor="White" Margin="2, 5, 20, 0" Clicked="Sair_Clicked" 
+                            Text="Sair/Logoff" VerticalOptions="FillAndExpand"></Button>
                         
                         <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="11" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
                         
