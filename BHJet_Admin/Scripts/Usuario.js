@@ -54,7 +54,7 @@ window.onload = function () {
 document.addEventListener("DOMContentLoaded", function (event) {
 
     var x = document.getElementById("TipoUser");
-    x.remove(2);
+    x.remove(0);
     x.remove(1);
 
     $("#TipoUser").change(function () {
