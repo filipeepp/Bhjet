@@ -53,6 +53,7 @@ namespace BHJet_Servico.Usuario
 
         public void RecuperaUsuario(string email)
         {
+            email = $"\"{email}\"";
             this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Usuario.PostRecuperaSenha}"), email);
         }
     }

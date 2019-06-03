@@ -7,6 +7,7 @@ namespace BHJet_DTO.Corrida
     public class IncluirCorridaDTO
     {
         public long? IDCliente { get; set; }
+        public long? IDProfissional { get; set; }
         public int? TipoProfissional { get; set; }
         public List<EnderecoCorridaDTO> Enderecos { get; set; }
     }

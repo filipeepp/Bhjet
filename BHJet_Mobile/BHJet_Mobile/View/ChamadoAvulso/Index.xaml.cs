@@ -72,6 +72,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                     else
                         EfeitoPesquisaDesativada();
                 }
+
+                if (ViewModel.PermitePesquisaCorrida)
+                    EfeitoPesquisaAtivada();
             }
             catch (Exception e)
             {

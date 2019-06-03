@@ -1,6 +1,7 @@
 ﻿using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
+using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Motorista;
 using System;
 using Xamarin.Forms;
@@ -47,6 +48,18 @@ namespace BHJet_Mobile.View.Motorista
 
                 // Mensagem
                 await this.DisplayAlert("Atenção", Mensagem.Sucesso.OK, "OK");
+            }
+            catch (Exception ex)
+            {
+                this.TrataExceptionMobile(ex);
+            }
+        }
+
+        private void TrocarVeiculo_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                App.Current.MainPage = new TipoVeiculo();
             }
             catch (Exception ex)
             {
