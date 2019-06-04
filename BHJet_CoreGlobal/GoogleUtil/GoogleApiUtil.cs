@@ -35,7 +35,7 @@ namespace BHJet_CoreGlobal.GoogleUtil
 
         public double? BuscaDistanciaMatrix(GeoLocalizacaoMatrixModel filtro)
         {
-            double? distanciaKM = 0;
+            double? distanciaMetro = 0;
             //string origemChave = $"{filtro.Origem.Latitude.ToString().Replace(",", ".")},{filtro.Origem.Longitude.ToString().Replace(",", ".")}";
             //string destinosChave = string.Join("|", filtro.Destinos.Select(c => c.Latitude.ToString().Replace(",", ".") + "," + c.Longitude.ToString().Replace(",", ".")));
             //string request = $"distancematrix/json?units=imperial&origins={origemChave}&destinations={destinosChave}";
@@ -49,12 +49,13 @@ namespace BHJet_CoreGlobal.GoogleUtil
             {
                 foreach (Element coord in googleDistance.rows.FirstOrDefault().elements)
                 {
-                    double distanciaM = coord.distance.value / 100;
-                    distanciaKM += Math.Round(distanciaM, 2) / 10;
+                    double distanciaM = coord.distance.value;
+                    //distanciaKM += Math.Round(distanciaM, 2) / 10;
+                    distanciaMetro += distanciaM;
                 }
             }
 
-            return distanciaKM;
+            return distanciaMetro;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BHJet_Core.Variaveis;
+﻿using BHJet_Core.Utilitario;
+using BHJet_Core.Variaveis;
 using BHJet_CoreGlobal;
 using BHJet_CoreGlobal.GoogleUtil;
 using BHJet_DTO.Corrida;
@@ -17,7 +18,7 @@ using System.Web.Http.Description;
 
 namespace BHJet_WebApi.Controllers
 {
-    [RoutePrefix("Corrida")]
+    [RoutePrefix("api/Corrida")]
     public class CorridaController : ApiController
     {
         /// <summary>
@@ -431,8 +432,9 @@ namespace BHJet_WebApi.Controllers
             var googleAPI = new GoogleApiUtil(ConfigurationManager.AppSettings["GoogleApiKey"]);
 
             // Calcula distancia
-            double distanciaKM = 0;
+            double distanciaMetros = 0;
 
+            // Percorre todas localizacoes
             for (int i = 0; i < model.Localizacao.Length; i++)
             {
                 // Localizacoes
@@ -443,7 +445,7 @@ namespace BHJet_WebApi.Controllers
 
                 var destino = model.Localizacao[i + 1];
 
-                distanciaKM += googleAPI.BuscaDistanciaMatrix(new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoMatrixModel()
+                distanciaMetros += googleAPI.BuscaDistanciaMatrix(new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoMatrixModel()
                 {
                     Origem = new BHJet_CoreGlobal.GoogleUtil.Model.GeoLocalizacaoModel()
                     {
@@ -457,6 +459,9 @@ namespace BHJet_WebApi.Controllers
                     }
                 }) ?? 0;
             }
+
+            // Calculo de KM
+            double distanciaKM = distanciaMetros.MetroParaKM();
 
             // Validacao
             if (distanciaKM == 0)

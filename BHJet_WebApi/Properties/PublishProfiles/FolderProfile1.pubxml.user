@@ -16,40 +16,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>04/30/2019 10:31:06</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
-      <publishTime>05/02/2019 15:50:00</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.pdb">
-      <publishTime>05/02/2019 15:50:00</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>05/02/2019 15:50:02</publishTime>
+      <publishTime>06/04/2019 08:39:59</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>05/02/2019 15:50:02</publishTime>
+      <publishTime>06/04/2019 08:39:59</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
-      <publishTime>05/02/2019 15:50:00</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.pdb">
-      <publishTime>05/02/2019 15:50:00</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.dll">
-      <publishTime>05/02/2019 15:50:04</publishTime>
+      <publishTime>06/04/2019 08:39:58</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.pdb">
-      <publishTime>05/02/2019 15:50:04</publishTime>
+      <publishTime>06/04/2019 08:39:58</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>05/02/2019 15:50:08</publishTime>
+      <publishTime>06/04/2019 08:42:26</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>05/02/2019 15:50:08</publishTime>
+      <publishTime>06/04/2019 08:42:26</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>
