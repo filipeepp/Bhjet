@@ -88,7 +88,7 @@
                                         </div>
 
                                         <div>
-                                            <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Digite o código ou nome do profissional." />
+                                            <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Pesquise pelo Código ou Nome." />
                                             @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
                                         </div>
