@@ -1,5 +1,7 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
+using BHJet_Enumeradores;
+using BHJet_Servico.Profissional;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,11 @@ namespace BHJet_Admin.Controllers
 {
     public class HomeExternoController : Controller
     {
-        public HomeExternoController()
+        private readonly IProfissionalServico profissionalServico;
+
+        public HomeExternoController(IProfissionalServico _profServico)
         {
-            
+            profissionalServico = _profServico;
         }
 
         #region Entregas Origem
@@ -54,5 +58,20 @@ namespace BHJet_Admin.Controllers
             }
         }
         #endregion
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
+        public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa, tipoProfissional);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.NomeCompleto?.ToUpper(),
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
+        }
     }
 }

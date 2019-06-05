@@ -9,6 +9,7 @@ namespace BHJet_Admin.Models
         public long? IDCliente { get; set; }
         public long? OSNumero { get; set; }
         public double? ValorCorrida { get; set; }
+        public int? ProfissionalSelecionado { get; set; }
         public double? QtdKM { get; set; }
         public string QsusasnstsisdsasdsesKsM { get; set; }
         [Required(ErrorMessage = "Tipo Profissional obrigatório.")]
