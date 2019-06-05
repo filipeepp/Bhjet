@@ -72,6 +72,7 @@
     <Compile Include="Utilitario\DataUtil.cs" />
     <Compile Include="Utilitario\Email.cs" />
     <Compile Include="Utilitario\ExcpetionBase.cs" />
+    <Compile Include="Utilitario\MedidaUtil.cs" />
     <Compile Include="Variaveis\Mensagem.cs" />
   </ItemGroup>
   <ItemGroup>

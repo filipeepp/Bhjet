@@ -85,43 +85,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:01</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.dll">
-      <publishTime>04/29/2019 20:53:30</publishTime>
+      <publishTime>06/04/2019 08:46:34</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.pdb">
-      <publishTime>04/29/2019 20:53:30</publishTime>
+      <publishTime>06/04/2019 08:46:34</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>04/23/2019 21:01:45</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>04/23/2019 21:01:45</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
-      <publishTime>04/29/2019 20:45:18</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.pdb">
-      <publishTime>04/29/2019 20:45:18</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>04/25/2019 12:19:51</publishTime>
+      <publishTime>06/04/2019 08:39:59</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>04/25/2019 12:19:51</publishTime>
+      <publishTime>06/04/2019 08:39:59</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
-      <publishTime>04/25/2019 12:19:50</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.pdb">
-      <publishTime>04/25/2019 12:19:50</publishTime>
+      <publishTime>06/04/2019 08:39:56</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.dll">
-      <publishTime>04/29/2019 20:53:28</publishTime>
+      <publishTime>06/04/2019 08:46:32</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.pdb">
-      <publishTime>04/29/2019 20:53:28</publishTime>
+      <publishTime>06/04/2019 08:46:32</publishTime>
     </File>
     <File Include="bin/DataAnnotationsExtensions.dll">
-      <publishTime>08/02/2018 00:55:52</publishTime>
+      <publishTime>02/08/2018 00:55:52</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>02/04/2019 10:06:25</publishTime>
@@ -580,7 +580,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:26</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>10/05/2018 22:38:08</publishTime>
+      <publishTime>05/10/2018 22:38:08</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/04/2019 10:06:26</publishTime>
@@ -658,10 +658,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/28/2019 10:31:15</publishTime>
     </File>
     <File Include="Content/owl.theme.default.min.css">
-      <publishTime>03/28/2019 10:31:15</publishTime>
+      <publishTime>04/29/2019 21:30:20</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>04/13/2019 19:10:06</publishTime>
+      <publishTime>06/03/2019 15:32:46</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>02/04/2019 10:06:05</publishTime>
@@ -835,13 +835,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/28/2019 10:31:15</publishTime>
     </File>
     <File Include="Scripts/Resumo.js">
-      <publishTime>04/27/2019 15:17:19</publishTime>
+      <publishTime>04/29/2019 21:27:20</publishTime>
     </File>
     <File Include="Scripts/Tarifario.js">
       <publishTime>04/13/2019 15:37:58</publishTime>
     </File>
     <File Include="Scripts/Usuario.js">
-      <publishTime>03/28/2019 10:31:15</publishTime>
+      <publishTime>05/02/2019 22:13:52</publishTime>
     </File>
     <File Include="Scripts/UsuarioListar.js">
       <publishTime>03/28/2019 10:31:15</publishTime>
@@ -898,10 +898,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/28/2019 10:31:15</publishTime>
     </File>
     <File Include="Views/Entregas/Index.cshtml">
-      <publishTime>04/13/2019 09:21:55</publishTime>
+      <publishTime>04/29/2019 21:32:20</publishTime>
     </File>
     <File Include="Views/Entregas/Resumo.cshtml">
-      <publishTime>04/27/2019 14:59:43</publishTime>
+      <publishTime>06/03/2019 15:32:46</publishTime>
     </File>
     <File Include="Views/Faturamento/DetalheFaturamento.cshtml">
       <publishTime>02/04/2019 10:06:02</publishTime>
@@ -946,7 +946,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/09/2019 17:26:05</publishTime>
     </File>
     <File Include="Views/HomeExterno/Index.cshtml">
-      <publishTime>04/13/2019 09:21:55</publishTime>
+      <publishTime>06/03/2019 15:32:46</publishTime>
     </File>
     <File Include="Views/Motorista/Index.cshtml">
       <publishTime>02/04/2019 10:06:02</publishTime>
@@ -1006,7 +1006,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/30/2019 16:28:01</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/29/2019 20:53:32</publishTime>
+      <publishTime>06/04/2019 08:46:35</publishTime>
     </File>
   </ItemGroup>
 </Project>
