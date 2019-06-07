@@ -121,6 +121,7 @@ namespace BHJet_Admin.Controllers
                 {
                     IDCliente = osAvulsa.IDCliente,
                     TipoProfissional = (int)osAvulsa.TipoProfissional,
+                    IDProfissional = osAvulsa.ProfissionalSelecionado,
                     Enderecos = osAvulsa.Enderecos.Select(c => new EnderecoCorridaDTO()
                     {
                         Descricao = c.Descricao,

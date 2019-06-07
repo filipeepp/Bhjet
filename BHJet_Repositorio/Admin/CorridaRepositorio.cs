@@ -503,7 +503,7 @@ namespace BHJet_Repositorio.Admin
                                                                 ,[intKMPercorrido])
                                                           VALUES
                                                                 (@UsuarioLogado
-                                                                ,null
+                                                                ,@idMotorista
                                                                 ,@UsuarioLogado
                                                                 ,getdate()
                                                                 ,@ValorEstimado
@@ -522,6 +522,7 @@ namespace BHJet_Repositorio.Admin
                 IDCorrida = sqlConnection.ExecuteScalar<long>(queryAtualiza, new
                 {
                     UsuarioLogado = idUsuario,
+                    idMotorista = filtro.IDProfissional,
                     ValorEstimado = filtro.ValorEstimado,
                     ValorNegociado = filtro.ValorEstimado,
                     Comissao = filtro.Comissao,

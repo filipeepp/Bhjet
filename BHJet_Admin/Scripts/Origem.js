@@ -1,8 +1,32 @@
-﻿document.addEventListener("DOMContentLoaded", function (event) {
+﻿
+function BuscaProfissionais() {
+    var jqVariavel = $("#pesquisaProfissional");
+    $("#ProfissionalSelecionado").find('option').remove().end();
+    var tipoVeiculo = $("input[id='TipoProfissional']:checked").val();;
 
-    //$("#trajeto-texto").change(function () {
-    //    $(".adp-directions").hide();// Esconde trajeto e mostra apenas ponteiro
-    //});
+    $.ajax({
+        dataType: "json",
+        type: "GET",
+        url: "BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
+        success: function (data) {
+            if (data !== "" && data !== undefined) {
+                $("#ProfissionalSelecionado").find('option').remove().end();
+                var div_data = "<option value=></option>";
+                $(div_data).appendTo('#ProfissionalSelecionado');
+                $.each(data, function (i, obj) {
+                    var div_data = "<option value=" + obj.value + ">" + obj.label + "</option>";
+                    $(div_data).appendTo('#ProfissionalSelecionado');
+                });
+                $("#ProfissionalSelecionado").mouseup();
+            }
+            else {
+                AdicionarErroCampo('ProfissionalSelecionado', 'Não foi possível encontrar o profissional desejado.', 4000);
+            }
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#loading").hide();
 
@@ -12,7 +36,15 @@
         }
     })
 
-    //Auto completa os campos de endereço de partida e de chegada
+    $("#pesquisaProfissional").keyup(delay(function (e) {
+        BuscaProfissionais();
+    }, 500));
+
+    $('input[type=radio][name=TipoProfissional]').change(function () {
+        $("#ProfissionalSelecionado").find('option').remove().end();
+        BuscaProfissionais();
+    });
+
     var input = document.getElementById('txtEnderecoPartida');
     var options = {
         'address': ', Brasil',
@@ -33,4 +65,5 @@
     });
 
     carregaMapaDir();
+    BuscaProfissionais();
 });

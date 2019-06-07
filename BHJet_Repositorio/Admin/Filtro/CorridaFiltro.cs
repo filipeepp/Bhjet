@@ -1,11 +1,11 @@
-﻿using BHJet_Enumeradores;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BHJet_Repositorio.Admin.Filtro
 {
     public class CorridaFiltro
     {
         public long? IDCliente { get; set; }
+        public long? IDProfissional { get; set; }
         public double? ValorEstimado { get; set; }
         public decimal? Comissao { get; set; }
         public int? TipoProfissional { get; set; }

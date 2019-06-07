@@ -1,6 +1,7 @@
 ﻿
 @using BHJet_Admin.Models
 @using BHJet_Enumeradores
+@using BHJet_Admin.Infra
 @model EntregaModel
 
 @Scripts.Render("~/bundles/jqueryval")
@@ -42,7 +43,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="ctnEntregaInterno"> 
+                            <div class="ctnEntregaInterno">
                                 <div class="">
                                     <div class="row">
                                         <label class="titulo" for="txtEnderecoPartida">Pessoa a ser procurada:</label>
@@ -74,6 +75,28 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador ||
+                      UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.FuncionarioCliente)
+                    {
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="ctnEntregaInterno">
+                                    <div class="">
+                                        <div class="row">
+                                            <label class="titulo" for="txtEnderecoPartida">Caso deseje, selecione um motorista de preferência:</label>
+                                        </div>
+
+                                        <div>
+                                            <input id="pesquisaProfissional" class="form-control input-sm" placeholder="Pesquise pelo Código ou Nome." />
+                                            @Html.DropDownListFor(model => model.ProfissionalSelecionado, new List<SelectListItem>(), new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.ProfissionalSelecionado, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                     <div>
                         <input type="submit" class="btnPadrao btnSolicitacao" id="btnEnviar" name="btnEnviar" value="Adicionar destino" />

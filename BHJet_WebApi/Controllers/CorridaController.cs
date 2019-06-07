@@ -516,6 +516,7 @@ namespace BHJet_WebApi.Controllers
             var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()
             {
                 IDCliente = model.IDCliente,
+                IDProfissional = model.IDProfissional,
                 Comissao = comissao != null ? comissao.decPercentualComissao : (decimal?)null,
                 TipoProfissional = model.TipoProfissional,
                 ValorEstimado = valorEstimado.Preco,
