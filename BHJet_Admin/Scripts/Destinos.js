@@ -52,8 +52,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     })
 
     $("#loading").hide();
-    $('.owl-stage').removeAttr("style");
-    $('.owl-item').removeAttr("style");
+    if ($('.owl-item').length <= 1) {
+        $('.owl-stage').removeAttr("style");
+        $('.owl-item').removeAttr("style");
+    }
 
     $('input[type="submit"]').click(function () {
         if ($('#frmPc').valid()) {
