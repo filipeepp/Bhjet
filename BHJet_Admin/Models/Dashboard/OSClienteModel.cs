@@ -18,5 +18,7 @@
         public string Status { get; set; }
         public byte[] Foto { get; set; }
         public string Espera { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
     }
 }

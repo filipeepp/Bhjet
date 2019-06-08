@@ -46,7 +46,7 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select CD.idCorrida as NumeroOS, 
+                string query = @"select distinct(CD.idCorrida) as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,

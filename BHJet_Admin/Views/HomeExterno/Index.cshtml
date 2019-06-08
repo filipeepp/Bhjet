@@ -28,7 +28,7 @@
                                     <div class="row">
                                         <label class="titulo" for="txtEnderecoPartida">Origem:</label>
                                     </div>
-                                    @Html.TextBoxFor(model => model.Enderecos[0].Descricao, new { @id = "txtEnderecoPartida", @class = "form-control", placeholder = "Digite o endereço." })
+                                    @Html.TextBoxFor(model => model.Enderecos[0].Descricao, new { @id = "txtEnderecoPartida", @class = "form-control", placeholder = "Digite o endereço.", autocomplete = "off" })
                                     @Html.ValidationMessageFor(model => model.Enderecos[0].Descricao, null, new { @class = "text-danger" })
 
                                     @Html.HiddenFor(model => model.IDCliente)

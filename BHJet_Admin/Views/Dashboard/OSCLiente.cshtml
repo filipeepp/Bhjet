@@ -2,177 +2,210 @@
 @model OSClienteModel
 
 <ol class="breadcrumb">
-	<li><a onclick="history.go(-1);"">Home</a></li>
-	<li><a href="#map_canvas">Detalhe OS Cliente </a></li>
+    <li><a onclick="history.go(-1);" ">Home</a></li>
+    <li><a href="#map_canvas">Detalhe OS Cliente </a></li>
 </ol>
 
 <div class="container-fluid">
 
-	<div class="row">
-		<div class="col-xs-12 col-sm-7 col-md-12 text-center">
-			<div class="panel panel-default">
-				<div class="panel-body">
+    <div id="map_canvas">
+    </div>
 
-					<div class="row">
-						<div class="col-md-12 text-left">
-							<div class="titulo">
-								<h2>
-									<a onclick="history.go(-1);">
-										<i class="fa fa-arrow-left" aria-hidden="true"></i>
-									</a>
-									<b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
-								</h2>
-							</div>
-						</div>
-					</div>
+    <div class="row" style="
+    /* z-index: 10; */
+    position: absolute;
+    /* left: 250px; */
+    top: 120px;
+    /* max-width: 700px; */
+    padding: 50px;
+    /* width: auto; */
+    /* min-width: 800px; */
+    height: auto;
+    font-weight: bold !important;
+    color: #0090c5;
+    /* background: rgba(51, 49, 49, 0.3); */
+    /* border: 1px solid rgb(113, 110, 110); */
+    /* box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 16px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px !important; */
+">
+        <div class="col-xs-12 col-sm-7 col-md-12 text-center">
+            <div class="panel panel-default">
+                <div class="panel-body">
 
-					<div class="row">
-						<h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
-							<i class="fa fa-map-marker" aria-hidden="true"></i>Origem
-						</h5>
-					</div>
+                    <div class="row">
+                        <div class="col-md-12 text-left">
+                            <div class="titulo">
+                                <h2>
+                                    <a onclick="history.go(-1);">
+                                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                    </a>
+                                    <b>OS Nº: </b> @Model.NumeroOS - <b>Cliente:</b> @Model.Cliente - <b>Motorista:</b> @Model.Motorista
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
 
-					<ul class="timeline">
-						<li>
-							<i class="fa fa-map-marker bg-blue"></i>
-							<div class="timeline-item">
-								<div class="col-xs-12 col-md-12">
-                                    <label class="control-label labelChave bg-light-gray ">Endereço:</label>
-									<label class="control-label labelValor">@Model.Origem.EnderecoOrigem</label>
-								</div>
 
-								<div class="col-xs-12 col-md-12">
-									<label class="control-label labelChave bg-light-gray">Procurar por:</label>
-									<label class="control-label labelValor">@Model.Origem.ProcurarPessoa</label>
-								</div>
+                    <div class="row">
+                        <div id="origem" class="boxRotas col-md-3 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 20px 30px; background: #e8e8e8;">
+                            <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
+                                Origem
+                            </h5>
+                            <ul class="timeline">
+                                <li>
+                                    <i class="fa fa-map-marker bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <div class="col-xs-12 col-md-12">
+                                            <br />
+                                            <label class="control-label labelChave bg-light-gray ">Endereço:</label>
+                                            <label class="control-label labelValor">@Model.Origem.EnderecoOrigem</label>
+                                        </div>
 
-								<div class="col-xs-12 col-md-12">
-									<label class="control-label labelChave bg-light-gray">Realizar:</label>
-									<label class="control-label labelValor">@Model.Origem.Realizar</label>
-								</div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Procurar por:</label>
+                                            <label class="control-label labelValor">@Model.Origem.ProcurarPessoa</label>
+                                        </div>
 
-								<div class="col-xs-12 col-md-12">
-									<label class="control-label labelChave bg-light-gray">Status:</label>
-									<label class="control-label labelValor">@Model.Origem.Status</label>
-								</div>
+                                        <div class="col-xs-12 col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Realizar:</label>
+                                            <label class="control-label labelValor">@Model.Origem.Realizar</label>
+                                        </div>
 
-								@if (!string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
-								{
-									<div class="col-xs-12 col-md-12">
-										<label class="control-label labelChave bg-light-gray">Observação:</label>
-										<label class="control-label labelValor">@Model.Origem.Observacao</label>
-									</div>
-								}
+                                        <div class="col-xs-12 col-md-12">
+                                            <label class="control-label labelChave bg-light-gray">Status:</label>
+                                            <label class="control-label labelValor">@Model.Origem.Status</label>
+                                        </div>
 
-								@if (@Model.Origem.Espera != null)
-								{
-									<div class="col-xs-12 col-md-12">
-										<label class="control-label labelChave bg-light-gray">Espera:</label>
-										<label class="control-label labelValor">@Model.Origem.Espera</label>
-									</div>
-								}
+                                        @if (!string.IsNullOrWhiteSpace(@Model.Origem.Observacao))
+                                        {
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                                <label class="control-label labelValor">@Model.Origem.Observacao</label>
+                                            </div>
+                                        }
 
-								@if (@Model.Origem.Foto != null && @Model.Origem.Foto.Length > 0)
-								{
-									var base64 = Convert.ToBase64String(@Model.Origem.Foto);
-									var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
+                                        @if (@Model.Origem.Espera != null)
+                                        {
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                                <label class="control-label labelValor">@Model.Origem.Espera</label>
+                                            </div>
+                                        }
 
-									<div class="col-xs-12 col-md-12">
-										<label class="control-label labelChave bg-light-gray">Foto Registro:</label>
-										<label class="control-label labelValor" rel="popover" data-img="@imgSrc">
-											<i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
-										</label>
-									</div>
-								}
-							</div>
-						</li>
-					</ul>
+                                        @if (@Model.Origem.Foto != null && @Model.Origem.Foto.Length > 0)
+                                        {
+                                            var base64 = Convert.ToBase64String(@Model.Origem.Foto);
+                                            var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
 
-					<div class="row">
-						<h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
-							<i class="fa fa-location-arrow" aria-hidden="true"></i>Destinos
-						</h5>
-					</div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Foto Registro:</label>
+                                                <label class="control-label labelValor" rel="popover" data-img="@imgSrc">
+                                                    <i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
+                                                </label>
+                                            </div>
+                                        }
+                                        @Html.HiddenFor(model => Model.Origem.Longitude)
+                                        @Html.HiddenFor(model => Model.Origem.Latitude)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        @*@foreach (OSClienteEnderecoModel dest in @Model.Desinos)*@
+                        @for (int i = 0; i < @Model.Desinos.Count(); i++)
+                        {
+                            @Html.HiddenFor(model => Model.Desinos[i].Longitude)
+                            @Html.HiddenFor(model => Model.Desinos[i].Latitude)
 
-					<ul class="timeline">
+                            <div id="destino_@i" class="boxRotas col-md-3 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 20px 30px; background: #e8e8e8;">
+                                <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
+                                    Destino
+                                </h5>
+                                <ul title="Destinos" class="timeline">
+                                    <li>
+                                        <i class="fa fa-location-arrow bg-blue"></i>
 
-						@foreach (OSClienteEnderecoModel dest in @Model.Desinos)
-						{
-							<li>
-								<i class="fa fa-location-arrow bg-blue"></i>
-								<div class="timeline-item">
-									<div class="col-md-12">
-										<label class="control-label labelChave bg-light-gray ">Endereço:</label>
-										<label class="control-label labelValor">@dest.EnderecoOrigem</label>
-									</div>
+                                        <div class="timeline-item">
+                                            <div class="col-xs-12 col-md-12">
+                                                <br />
 
-									<div class="col-md-12">
-										<label class="control-label labelChave bg-light-gray">Procurar por:</label>
-										<label class="control-label labelValor">@dest.ProcurarPessoa</label>
-									</div>
+                                                <label class="control-label labelChave bg-light-gray ">Endereço:</label>
+                                                <label class="control-label labelValor">@Model.Desinos[i].EnderecoOrigem</label>
+                                            </div>
 
-									<div class="col-md-12">
-										<label class="control-label labelChave bg-light-gray">Realizar:</label>
-										<label class="control-label labelValor">@dest.Realizar</label>
-									</div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Procurar por:</label>
+                                                <label class="control-label labelValor">@Model.Desinos[i].ProcurarPessoa</label>
+                                            </div>
 
-									<div class="col-md-12">
-										<label class="control-label labelChave bg-light-gray">Status:</label>
-										<label class="control-label labelValor">@dest.Status</label>
-									</div>
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Realizar:</label>
+                                                <label class="control-label labelValor">@Model.Desinos[i].Realizar</label>
+                                            </div>
 
-									@if (!string.IsNullOrWhiteSpace(@dest.Observacao))
-									{
-										<div class="col-xs-12 col-md-12">
-											<label class="control-label labelChave bg-light-gray">Observação:</label>
-											<label class="control-label labelValor">@dest.Observacao</label>
-										</div>
-									}
+                                            <div class="col-xs-12 col-md-12">
+                                                <label class="control-label labelChave bg-light-gray">Status:</label>
+                                                <label class="control-label labelValor">@Model.Desinos[i].Status</label>
+                                            </div>
 
-									@if (@dest.Espera != null)
-									{
-										<div class="col-md-12">
-											<label class="control-label labelChave bg-light-gray">Espera:</label>
-											<label class="control-label labelValor">@dest.Espera</label>
-										</div>
-									}
+                                            @if (!string.IsNullOrWhiteSpace(Model.Desinos[i].Observacao))
+                                            {
+                                                <div class="col-xs-12 col-md-12">
+                                                    <label class="control-label labelChave bg-light-gray">Observação:</label>
+                                                    <label class="control-label labelValor">@Model.Desinos[i].Observacao</label>
+                                                </div>
+                                            }
 
-									@if (@dest.Foto != null && @dest.Foto.Length > 0)
-									{
-										var base64 = Convert.ToBase64String(@dest.Foto);
-										var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
+                                            @if (Model.Desinos[i].Espera != null)
+                                            {
+                                                <div class="col-xs-12 col-md-12">
+                                                    <label class="control-label labelChave bg-light-gray">Espera:</label>
+                                                    <label class="control-label labelValor">@Model.Desinos[i].Espera</label>
+                                                </div>
+                                            }
 
-										<div class="col-xs-12 col-md-12">
-											<label class="control-label labelChave bg-light-gray">Foto Registro:</label>
-											<label class="control-label labelValor" rel="popover" data-img="@imgSrc">
-												<i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
-											</label>
-										</div>
-									}
+                                            @if (Model.Desinos[i].Foto != null && Model.Desinos[i].Foto.Length > 0)
+                                            {
+                                                var base64 = Convert.ToBase64String(Model.Desinos[i].Foto);
+                                                var imgSrc = String.Format("'data:image/gif;base64,{0}'", base64);
 
-								</div>
-							</li>
-							<hr />
-						}
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+                                                <div class="col-xs-12 col-md-12">
+                                                    <label class="control-label labelChave bg-light-gray">Foto Registro:</label>
+                                                    <label class="control-label labelValor" rel="popover" data-img="@imgSrc">
+                                                        <i class="fa fa-camera" aria-hidden="true"> Clique aqui</i>
+                                                    </label>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 @if (TempData["mensagemGeral"] != null)
 {
-	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
-	<script type="text/javascript">
-
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
 		window.onload = function () {
 			var mensagem = $("#mensagemController").val();
             $("#msgModal").text(mensagem)
             $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
             $('#myModal').modal('show')
         };
-	</script>
+    </script>
 }
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsLOayqVHkWA29P5c2P98nkKcSZERTd0w&language=pt&region=PT"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoogleMapsBHJet.js")"></script>
 <script src="@Url.Content("~/Scripts/OSCliente.js")"></script>
+<script src="@Url.Content("~/Scripts/leader-line.min.js")"></script>
+

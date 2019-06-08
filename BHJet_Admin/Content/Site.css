@@ -134,11 +134,12 @@ input[type="radio"], input[type="checkbox"] {
 .labelChave {
     padding: 5px;
     min-width: 100px;
+    margin-bottom: 0px;
 }
 
 .labelValor {
     padding: 5px;
-    min-width: 400px;
+    min-width: 320px;
     max-width: 400px;
     background-color: #d6c93d;
     cursor: pointer;
@@ -365,7 +366,7 @@ input[type="radio"], input[type="checkbox"] {
 
 
 .bg-light-gray {
-    background-color: #505a8c !important;
+    background-color: #067ba7 !important;
     color: #fff !important;
 }
 
@@ -568,7 +569,7 @@ input[type="radio"], input[type="checkbox"] {
 
 .timeline {
     position: relative;
-    margin: 0 0 30px 0;
+    margin: 0 0 0px 0;
     padding: 0;
     list-style: none;
 }
@@ -589,8 +590,8 @@ input[type="radio"], input[type="checkbox"] {
             background: #d6c93d;
             border-radius: 50%;
             text-align: center;
-            left: 205px;
-            top: 0;
+            left: 2px;
+            top: 0px;
         }
 
     .timeline > .time-label > span {
@@ -617,8 +618,8 @@ input[type="radio"], input[type="checkbox"] {
         margin-top: 0;
         background: #fff;
         color: #444;
-        margin-left: 60px;
-        margin-right: 15px;
+        /*margin-left: 60px;
+        margin-right: 15px;*/
         padding: 0;
         position: relative;
     }
