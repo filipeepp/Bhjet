@@ -3,11 +3,15 @@ function BuscaProfissionais() {
     var jqVariavel = $("#pesquisaProfissional");
     $("#ProfissionalSelecionado").find('option').remove().end();
     var tipoVeiculo = $("input[id='TipoProfissional']:checked").val();;
+    var urlInicio = "HomeExterno/BuscaProfissionais?trechoPesquisa=";
+    if (window.location.href.indexOf("HomeExterno") > -1) {
+        urlInicio = "../" + urlInicio;
+    } 
 
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
+        url: urlInicio  + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ProfissionalSelecionado").find('option').remove().end();
