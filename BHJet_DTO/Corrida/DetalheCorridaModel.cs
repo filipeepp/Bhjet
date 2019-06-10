@@ -1,5 +1,4 @@
 ﻿using BHJet_Enumeradores;
-using BHJet_Enumeradores;
 using System;
 
 namespace BHJet_DTO.Corrida
@@ -26,5 +25,7 @@ namespace BHJet_DTO.Corrida
         public StatusCorrida StatusCorrida { get; set; }
         public TimeSpan? TempoEspera { get; set; }
         public byte[] CaminhoProtocolo { get; set; }
+        public string vcLatitude { get; set; }
+        public string vcLongitude { get; set; }
     }
 }

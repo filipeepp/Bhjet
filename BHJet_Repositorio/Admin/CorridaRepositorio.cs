@@ -46,7 +46,8 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select distinct(CD.idCorrida) as NumeroOS, 
+                string query = @"select  distinct(ec.idEnderecoCorrida) as fdfdsfsd,
+                                    CD.idCorrida as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
@@ -61,7 +62,9 @@ namespace BHJet_Repositorio.Admin
 									--EC.bitRetirarObjeto,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao AS Observacao,
-                                    PT.vcCaminhoProtocolo as CaminhoProtocolo
+                                    PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    EC.geoPosicao.STY  as vcLatitude, 
+							        EC.geoPosicao.STX  as vcLongitude
 							    from tblCorridas CD
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
@@ -69,7 +72,7 @@ namespace BHJet_Repositorio.Admin
 								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
                                     left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
-						        where CD.idCorrida = @id";
+						        where CD.idCorrida = @id order by EC.idEnderecoCorrida";
 
                 // Execução
                 return sqlConnection.Query<OSCorridaEntidade>(query, new

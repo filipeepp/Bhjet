@@ -11,7 +11,7 @@
     <div id="map_canvas">
     </div>
 
-    <div class="row" style="
+    <div id="prContent" class="col-xs-12 col-sm-7 col-md-6 text-center" style="
     /* z-index: 10; */
     position: absolute;
     /* left: 250px; */
@@ -27,7 +27,7 @@
     /* border: 1px solid rgb(113, 110, 110); */
     /* box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 16px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px !important; */
 ">
-        <div class="col-xs-12 col-sm-7 col-md-12 text-center">
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -45,8 +45,8 @@
                     </div>
 
 
-                    <div class="row">
-                        <div id="origem" class="boxRotas col-md-3 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 20px 30px; background: #e8e8e8;">
+                    <div class="row" style="padding: 10px;">
+                        <div id="origem" class="boxRotas col-md-12 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 10px 0px; background: #e8e8e8;">
                             <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
                                 Origem
                             </h5>
@@ -115,7 +115,7 @@
                             @Html.HiddenFor(model => Model.Desinos[i].Longitude)
                             @Html.HiddenFor(model => Model.Desinos[i].Latitude)
 
-                            <div id="destino_@i" class="boxRotas col-md-3 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 20px 30px; background: #e8e8e8;">
+                            <div id="destino_@i" class="boxRotas col-md-12 text-left" style="padding: 20px 0px; border: 2px solid #d5d800;margin: 10px 0px; background: #e8e8e8;">
                                 <h5 class="control-label col-xs-12 col-sm-12 bg-light-gray text-center labelChave">
                                     Destino
                                 </h5>

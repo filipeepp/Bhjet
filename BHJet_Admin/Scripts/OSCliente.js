@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     desenhaLinhas();
     carregaMapaDir();
+
+    $("#map_canvas").css("position", "absolute");
+    $("#map_canvas").height($("#prContent").height() + 150);
+
     CalculaRota();
 });
 
@@ -42,7 +46,7 @@ function desenhaLinhas() {
                 }
             }
         );
-        myLine.setOptions({ startSocket: 'right', endSocket: 'left', positionByWindowResize: true, color: '#23201d' });
+        myLine.setOptions({ startSocket: 'bottom', endSocket: 'top', positionByWindowResize: true, color: '#cecccc' });
         lines.push(myLine);
     }
 }

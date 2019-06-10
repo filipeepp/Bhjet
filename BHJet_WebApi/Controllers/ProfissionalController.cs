@@ -237,6 +237,8 @@ namespace BHJet_WebApi.Controllers
         /// Atualiza profissionais
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
+
+        [Authorize]
         [Route("{idProfissional:long}")]
         public IHttpActionResult PutProfissional(long idProfissional, [FromBody]ProfissionalCompletoModel model)
         {
