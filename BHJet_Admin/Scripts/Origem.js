@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     var input = document.getElementById('txtEnderecoPartida');
+
     var options = {
         'address': ', Brasil',
         'region': 'PT',

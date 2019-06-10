@@ -142,7 +142,7 @@
                     }
                 </div>
 
-                if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.ClienteAvulsoSite)
+                if (UsuarioLogado.Instance.BhjTpUsu != null && UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.ClienteAvulsoSite && Model.OSNumero == null)
                 {
                     Html.RenderPartial("~/Views/Pagamento/_Pagamento.cshtml", Model.DadosPagamento);
                 }

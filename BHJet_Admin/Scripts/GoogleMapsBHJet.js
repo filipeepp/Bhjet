@@ -49,7 +49,7 @@ function carregaMapaDir() {
             },
                 function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                        $("#txtEnderecoPartida").val(results[0].formatted_address);
+                       // $("#txtEnderecoPartida").val(results[0].formatted_address);
                     }
                 });
         });

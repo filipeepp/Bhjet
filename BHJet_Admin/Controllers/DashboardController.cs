@@ -165,7 +165,7 @@ namespace BHJet_Admin.Controllers
             return Json(entidade, JsonRequestBehavior.AllowGet);
         }
 
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente, TipoUsuario.ClienteAvulsoSite)]
         public ActionResult OSCliente(ResumoModel model)
         {
             try
