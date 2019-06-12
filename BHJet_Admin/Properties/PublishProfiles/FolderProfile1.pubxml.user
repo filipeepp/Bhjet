@@ -85,16 +85,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:01</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.dll">
-      <publishTime>06/10/2019 15:24:09</publishTime>
+      <publishTime>06/12/2019 14:39:23</publishTime>
     </File>
     <File Include="bin/BHJet_Admin.pdb">
-      <publishTime>06/10/2019 15:24:09</publishTime>
+      <publishTime>06/12/2019 14:39:23</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>06/07/2019 17:13:21</publishTime>
+      <publishTime>06/12/2019 13:10:55</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>06/07/2019 17:13:21</publishTime>
+      <publishTime>06/12/2019 13:10:55</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
       <publishTime>06/07/2019 17:13:22</publishTime>
@@ -103,10 +103,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2019 17:13:22</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>06/10/2019 12:18:20</publishTime>
+      <publishTime>06/12/2019 13:10:55</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>06/10/2019 12:18:20</publishTime>
+      <publishTime>06/12/2019 13:10:55</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
       <publishTime>06/07/2019 17:13:22</publishTime>
@@ -115,13 +115,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/07/2019 17:13:22</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.dll">
-      <publishTime>06/10/2019 12:20:41</publishTime>
+      <publishTime>06/12/2019 13:10:56</publishTime>
     </File>
     <File Include="bin/BHJet_Servico.pdb">
-      <publishTime>06/10/2019 12:20:41</publishTime>
+      <publishTime>06/12/2019 13:10:56</publishTime>
     </File>
     <File Include="bin/DataAnnotationsExtensions.dll">
-      <publishTime>08/02/2018 00:55:52</publishTime>
+      <publishTime>02/08/2018 00:55:52</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>02/04/2019 10:06:25</publishTime>
@@ -580,7 +580,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:26</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>10/05/2018 22:38:08</publishTime>
+      <publishTime>05/10/2018 22:38:08</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/04/2019 10:06:26</publishTime>
@@ -802,7 +802,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/04/2019 10:06:02</publishTime>
     </File>
     <File Include="Scripts/leader-line.min.js">
-      <publishTime>03/01/2019 08:31:48</publishTime>
+      <publishTime>01/03/2019 08:31:48</publishTime>
     </File>
     <File Include="Scripts/ListaClienteAvulso.js">
       <publishTime>02/04/2019 10:06:02</publishTime>
@@ -844,7 +844,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/13/2019 15:37:58</publishTime>
     </File>
     <File Include="Scripts/Usuario.js">
-      <publishTime>02/05/2019 22:13:52</publishTime>
+      <publishTime>05/02/2019 22:13:52</publishTime>
     </File>
     <File Include="Scripts/UsuarioListar.js">
       <publishTime>03/28/2019 10:31:15</publishTime>

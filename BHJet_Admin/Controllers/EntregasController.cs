@@ -109,7 +109,7 @@ namespace BHJet_Admin.Controllers
             var osAvulsa = this.RetornaOSAvulsa();
 
             // Se Logado redireciona para pagamento
-            if (osAvulsa.IDCliente == null)
+            if (string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu) || osAvulsa.IDCliente == null)
             {
                 osAvulsa.SimulandoCorridaSemUsuario = true;
                 return RedirectToAction("Login", "Home");
