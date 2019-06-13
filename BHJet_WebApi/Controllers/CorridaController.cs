@@ -510,11 +510,11 @@ namespace BHJet_WebApi.Controllers
                 }).ToArray()
             });
 
-            //#if DEBUG
+#if DEBUG
             var usuario = 55;
-            //#else
-            //            var usuario = long.Parse(UsuarioAutenticado.LoginID);
-            //#endif
+#else
+            var usuario = long.Parse(UsuarioAutenticado.LoginID);
+#endif
 
             // Busca tarifa cliente
             var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()

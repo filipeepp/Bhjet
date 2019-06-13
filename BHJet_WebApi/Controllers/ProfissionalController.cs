@@ -11,25 +11,25 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BHJet_Repositorio.Admin.Filtro;
+using System.Diagnostics;
 
 namespace BHJet_WebApi.Controllers
 {
     [RoutePrefix("api/Profissional")]
     public class ProfissionalController : ApiController
     {
-        private UsuarioLogado _usuarioAutenticado;
-
-        /// <summary>
-        /// Informações do usuário autenticado
-        /// </summary>
         public UsuarioLogado UsuarioAutenticado
         {
             get
             {
-                if (_usuarioAutenticado == null)
-                    _usuarioAutenticado = new UsuarioLogado();
+                if (UsuarioAutenticado == null)
+                    UsuarioAutenticado = new UsuarioLogado();
 
-                return _usuarioAutenticado;
+                return UsuarioAutenticado;
+            }
+            private set
+            {
+                UsuarioAutenticado = value;
             }
         }
 
@@ -392,27 +392,41 @@ namespace BHJet_WebApi.Controllers
         /// <returns>List<LocalizacaoProfissional</returns>
 
         [Route("Perfil")]
+        [Authorize]
         [ResponseType(typeof(PerfilModel))]
         public IHttpActionResult GetPerfil()
         {
-            // Busca Dados resumidos
-            var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
-
-            // Validacao
-            if (perfil == null)
-                return StatusCode(System.Net.HttpStatusCode.NoContent);
-
-            // Return
-            return Ok(new PerfilModel()
+            try
             {
-                idUsuario = perfil.idUsuario,
-                idColaboradorEmpresaSistema = perfil.idColaboradorEmpresaSistema,
-                Email = perfil.vcEmail,
-                NomeCompleto = perfil.vcNomeCompleto,
-                idRegistroDiaria = perfil.idRegistroDiaria,
-                idCorrida = perfil.IDCorrida,
-                TipoProfissional = perfil.idTipoProfissional
-            });
+                // Busca Dados resumidos
+                var perfil = new ProfissionalRepositorio().BuscaPerfilProfissional(UsuarioAutenticado.LoginID);
+
+                // Validacao
+                if (perfil == null)
+                    return StatusCode(System.Net.HttpStatusCode.NoContent);
+
+                // Return
+                return Ok(new PerfilModel()
+                {
+                    idUsuario = perfil.idUsuario,
+                    idColaboradorEmpresaSistema = perfil.idColaboradorEmpresaSistema,
+                    Email = perfil.vcEmail,
+                    NomeCompleto = perfil.vcNomeCompleto,
+                    idRegistroDiaria = perfil.idRegistroDiaria,
+                    idCorrida = perfil.IDCorrida,
+                    TipoProfissional = perfil.idTipoProfissional
+                });
+            }
+            catch(Exception e)
+            {
+                using (EventLog eventLog = new EventLog("Application"))
+                {
+                    eventLog.Source = "Application";
+                    eventLog.WriteEntry(e.Message + e.StackTrace, EventLogEntryType.Error, 101, 1);
+                }
+
+                return BadRequest("erro");
+            }
         }
 
         /// <summary>
