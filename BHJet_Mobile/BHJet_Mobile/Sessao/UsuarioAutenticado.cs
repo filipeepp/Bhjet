@@ -76,19 +76,31 @@ namespace BHJet_Mobile.Sessao
             Instance.StatusAplicatico = true;
         }
 
-        public async void Sair()
+        public async Task Sair()
         {
-            Instance.CancelaPesquisaChamado();
-            using (var db = new Database())
+            try
             {
-                await db.LimpaTabela("BHJetMotorista");
-            };
-            Instance.IDProfissional = null;
-            Instance.IDCorridaAtendimento = null;
-            Instance.StatusAplicatico = false;
-            instance = null;
+                //
+                Instance.CancelaPesquisaChamado();
 
-            await CancelarDisponibilidade();
+                //
+                using (var db = new Database())
+                {
+                    await db.LimpaTabela("BHJetMotorista");
+                };
+
+                // Variaveis
+                Instance.IDProfissional = null;
+                Instance.IDCorridaAtendimento = null;
+                Instance.StatusAplicatico = false;
+
+                //
+                await CancelarDisponibilidade();
+            }
+            finally
+            {
+                instance = null;
+            }
         }
 
         public async Task CancelarDisponibilidade()

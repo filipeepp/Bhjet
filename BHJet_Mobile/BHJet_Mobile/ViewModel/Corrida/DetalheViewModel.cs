@@ -102,7 +102,7 @@ namespace BHJet_Mobile.ViewModel.Corrida
             await corridaServico.CadastraProtocolo(foto, idEnderecoCorrida);
 
             // Busca LOG
-            var log = ListaLogs.Where(lg => lg.idCorrida == idEnderecoCorrida).FirstOrDefault();
+            var log = ListaLogs.Where(lg => lg.idEnderecoCorrida == idEnderecoCorrida).FirstOrDefault();
 
             // Registro
             log.RegistroFoto = foto;

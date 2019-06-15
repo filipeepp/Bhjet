@@ -5,18 +5,16 @@
              x:Class="BHJet_Mobile.View.Util.Ocorrencia">
 
     <ContentPage.Content>
-
         <StackLayout BackgroundColor="#ffd423" >
-
             <StackLayout BackgroundColor="#ffd423" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
 
                 <Frame x:Name="ctnMotorista" BackgroundColor="White" Margin="15,0,15,10"  CornerRadius="5" VerticalOptions="FillAndExpand">
-                    <Grid VerticalOptions="StartAndExpand" >
+                    <Grid VerticalOptions="FillAndExpand" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <!--<RowDefinition Height="Auto" />-->
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -32,30 +30,36 @@
                                 <DataTemplate>
                                     <ViewCell>
 
-                                        <Button Clicked="SelecionaOcorrencia" BackgroundColor="#193651" Margin="0,0,0,15"
+                                        <Button Clicked="SelecionaOcorrencia" BackgroundColor="#114f91" Margin="0,0,0,15"
                                                 Image="opcao" TextColor="White" CommandParameter="{Binding StatusCorrida}" 
-                                                Text="{Binding DescricaoStatus}"></Button>
+                                                Text="{Binding DescricaoStatus}">
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button" Binding="{Binding Inicia}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#407c52" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Button" Binding="{Binding Finaliza}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#114f91" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Button" Binding="{Binding Cancela}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="#f44336" />
+                                                </DataTrigger>
+                                            </Button.Triggers>
+                                        </Button>
 
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
 
-                        <Button  Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
+                        <!--<Button  Clicked="Ligar_Clicked" Grid.Row="3" Grid.Column="0" Image="ligar" BackgroundColor="#4caf50" VerticalOptions="End" TextColor="White" Text="Ligar Cliente"></Button>
 
-                        <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" VerticalOptions="End" TextColor="White" Text="Encerrar OS"></Button>
+                        <Button Clicked="EncerrarOS" Grid.Row="3" Grid.Column="1" Image="cancelar" BackgroundColor="#f44336" VerticalOptions="End" TextColor="White" Text="Encerrar OS"></Button>-->
 
                         <control:ActivityIndicator Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding Loading}"/>
-
                     </Grid>
-
                 </Frame>
 
             </StackLayout>
-
         </StackLayout>
-
-
     </ContentPage.Content>
-
 </ContentPage>

@@ -88,11 +88,11 @@
                             <Label Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" FontSize="15"  HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Start" Text="Chamado encontrado" TextColor="#193651"  />
                             <BoxView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Color="#141414" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  />
 
-                            <Label Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="Solicitante: " TextColor="#193651" FontAttributes="Bold" />
-                            <Label Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.NomeCliente}" TextColor="#193651"  />
+                            <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Solicitante: " TextColor="#193651" FontAttributes="Bold" />
+                            <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.NomeCliente}" TextColor="#193651"  />
 
-                            <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="Comissão: " TextColor="#193651"  FontAttributes="Bold"/>
-                            <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.Comissao }" TextColor="#193651"  />
+                            <!--<Label Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="Comissão: " TextColor="#193651"  FontAttributes="Bold"/>
+                            <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.Comissao }" TextColor="#193651"  />-->
 
                             <Label Grid.Row="4" Grid.Column="0"  Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="Destino inicial: " TextColor="#193651" FontAttributes="Bold"  />
                             <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Start" Text="{Binding chamadoItem.DestinoInicial }" TextColor="#193651"  />

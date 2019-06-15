@@ -72,8 +72,7 @@ namespace BHJet_Mobile.View.Motorista
             try
             {
                 // Atualizado dados
-                await ViewModel.SairApp();
-                UsuarioAutenticado.Instance.Sair();
+                await UsuarioAutenticado.Instance.Sair();
             }
             catch (Exception ex)
             {

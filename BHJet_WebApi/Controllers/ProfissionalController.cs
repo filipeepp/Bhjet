@@ -18,18 +18,19 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Profissional")]
     public class ProfissionalController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
+        /// <summary>
+        /// Informações do usuário autenticado
+        /// </summary>
         public UsuarioLogado UsuarioAutenticado
         {
             get
             {
-                if (UsuarioAutenticado == null)
-                    UsuarioAutenticado = new UsuarioLogado();
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
 
-                return UsuarioAutenticado;
-            }
-            private set
-            {
-                UsuarioAutenticado = value;
+                return _usuarioAutenticado;
             }
         }
 

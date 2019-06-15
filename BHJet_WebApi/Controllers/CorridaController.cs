@@ -21,6 +21,8 @@ namespace BHJet_WebApi.Controllers
     [RoutePrefix("api/Corrida")]
     public class CorridaController : ApiController
     {
+        private UsuarioLogado _usuarioAutenticado;
+
         /// <summary>
         /// Informações do usuário autenticado
         /// </summary>
@@ -28,16 +30,13 @@ namespace BHJet_WebApi.Controllers
         {
             get
             {
-                if (UsuarioAutenticado == null)
-                    UsuarioAutenticado = new UsuarioLogado();
+                if (_usuarioAutenticado == null)
+                    _usuarioAutenticado = new UsuarioLogado();
 
-                return UsuarioAutenticado;
-            }
-            private set
-            {
-                UsuarioAutenticado = value;
+                return _usuarioAutenticado;
             }
         }
+
 
         /// <summary>
         /// Busca localização de chamados de um tipo especifico para um tipo especifico de motorista
