@@ -306,6 +306,7 @@
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\leader-line.min.js" />
     <Content Include="Scripts\ListaClienteAvulso.js" />
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Menu.js" />

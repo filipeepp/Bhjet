@@ -25,5 +25,7 @@ namespace BHJet_Repositorio.Admin.Entidade
 		public DateTime? DataHoraTermino { get; set; }
         public decimal? ValorEstimado { get; set; }
         public decimal? ValorFinalizado { get; set; }
-	}
+        public string vcLatitude { get; set; }
+        public string vcLongitude { get; set; }
+    }
 }

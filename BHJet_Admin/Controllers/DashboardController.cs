@@ -195,7 +195,9 @@ namespace BHJet_Admin.Controllers
                         ProcurarPessoa = entidade.Origem.ProcurarPor,
                         Realizar = entidade.Origem.Realizar,
                         Status = entidade.Origem.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
-                        Foto = entidade.Origem.CaminhoProtocolo
+                        Foto = entidade.Origem.CaminhoProtocolo,
+                        Latitude = entidade.Origem.vcLatitude.Replace(",", "."),
+                        Longitude = entidade.Origem.vcLongitude.Replace(",", ".")
                     },
                     Desinos = entidade.Destinos.Select(dest => new OSClienteEnderecoModel()
                     {
@@ -205,7 +207,9 @@ namespace BHJet_Admin.Controllers
                         ProcurarPessoa = dest.ProcurarPor,
                         Realizar = dest.Realizar,
                         Status = dest.StatusCorrida.RetornaDescricaoEnum(typeof(StatusCorrida)),
-                        Foto = dest.CaminhoProtocolo
+                        Foto = dest.CaminhoProtocolo,
+                        Latitude = dest.vcLatitude.Replace(",", "."),
+                        Longitude = dest.vcLongitude.Replace(",", ".")
                     }).ToArray()
                 });
             }
@@ -275,7 +279,7 @@ namespace BHJet_Admin.Controllers
                     var profissional = profissionalServico.BuscaComissaoProfissional(modelo.ProfissionalSelecionado ?? default(int));
 
                     // Validacoes 
-                    if(entidade.ValorContrato == null || entidade.FranquiaKM == null || entidade.ValorKMAdicional == null)
+                    if (entidade.ValorContrato == null || entidade.FranquiaKM == null || entidade.ValorKMAdicional == null)
                     {
                         ModelState.AddModelError("", "Não foi possível buscar informações para seu contrato de diaria, favor entrar em contato com a Administração da BHJet.");
                         return View(modelo);

@@ -164,6 +164,9 @@ namespace BHJet_Mobile.ViewModel.Corrida
         {
             using (var db = new Database())
             {
+                if (await db.ExisteTabela<LocalizacaoCorrida>() == false)
+                    return 0;
+
                 // Insere localizacao
                 var trajetoPercorrido = await db.BuscaItems<LocalizacaoCorrida>();
 

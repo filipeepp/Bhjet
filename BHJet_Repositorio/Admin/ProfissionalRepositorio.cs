@@ -214,6 +214,9 @@ namespace BHJet_Repositorio.Admin
         /// <returns>UsuarioEntidade</returns>
         public void AtualizaProfissional(ProfissionalCompletoEntidade profissional)
         {
+
+            var teste = new UsuarioRepositorio().RetornaSenhaEncriptada(profissional.Senha);
+
             using (var sqlConnection = this.InstanciaConexao())
             {
                 using (var trans = sqlConnection.BeginTransaction())
@@ -341,10 +344,12 @@ namespace BHJet_Repositorio.Admin
                             }, trans);
                         }
                         // Atualiza status
-                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
+                        string queryUpdateStatus = @"update tblUsuarios set bitAtivo = @status, vcEmail = @Email  
+                                                            where idUsuario = (select idUsuario from tblColaboradoresEmpresaSistema where idColaboradorEmpresaSistema = @idCol)";
                         trans.Connection.Execute(queryUpdateStatus, new
                         {
                             status = profissional.StatusUsuario,
+                            Email = profissional.Email,
                             idCol = profissional.ID
                         }, trans);
 

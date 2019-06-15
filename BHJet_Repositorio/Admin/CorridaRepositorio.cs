@@ -46,7 +46,8 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select distinct(CD.idCorrida) as NumeroOS, 
+                string query = @"select  distinct(ec.idEnderecoCorrida) as fdfdsfsd,
+                                    CD.idCorrida as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
@@ -61,7 +62,9 @@ namespace BHJet_Repositorio.Admin
 									--EC.bitRetirarObjeto,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao AS Observacao,
-                                    PT.vcCaminhoProtocolo as CaminhoProtocolo
+                                    PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    EC.geoPosicao.STY  as vcLatitude, 
+							        EC.geoPosicao.STX  as vcLongitude
 							    from tblCorridas CD
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
@@ -69,7 +72,7 @@ namespace BHJet_Repositorio.Admin
 								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
                                     left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
-						        where CD.idCorrida = @id";
+						        where CD.idCorrida = @id order by EC.idEnderecoCorrida";
 
                 // Execução
                 return sqlConnection.Query<OSCorridaEntidade>(query, new
@@ -180,32 +183,37 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select
-                                        LC.idCorrida,
-                                        LC.idStatusCorrida as Status,
-                                        EC.idEnderecoCorrida,
-                                        EC.dtHoraChegada,
-                                        --ED.vcRua + ' - ' + ED.vcNumero + ', ' + ED.vcBairro + ' / ' + ED.vcCidade as EnderecoCompleto,
-                                        EC.vcEnderecoCompleto as EnderecoCompleto,
-                                        EC.vcPessoaContato,
-                                        EC.vcObservacao,
-                                        TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
-                                        --EC.bitEntregarDocumento,
-                                        --EC.bitColetarAssinatura,
-                                        --EC.bitRetirarDocumento,
-                                        --EC.bitRetirarObjeto,
-                                        --EC.bitEntregarObjeto,
-                                        --EC.bitOutros,
-                                        LC.geoPosicao.STY  as vcLatitude, 
-	                                    LC.geoPosicao.STX  as vcLongitude,
-                                       PEC.vcCaminhoProtocolo as Foto
-				                        -- TELEFONE NAO TEM
-                                  from tblLogCorrida LC
-                                  join tblEnderecosCorrida EC on (LC.idCorrida = EC.idCorrida)
-                                  --join tblEnderecos ED on(EC.idEndereco = ED.idEndereco)
-                                  left join tblProtocoloEnderecoCorrida PEC on (PEC.idEnderecoCorrida = EC.idEnderecoCorrida)
-                                  left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
-                                 where LC.idCorrida = @id";
+                string query = @"select  distinct(ec.idEnderecoCorrida) as fdfdsfsd,
+                                    CD.idCorrida, 
+	                                CD.idUsuarioChamador as IDCliente,
+									LGCD.idStatusCorrida as Status,
+                                    EC.idEnderecoCorrida,
+		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
+	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
+                                    EC.vcEnderecoCompleto as EnderecoCompleto,
+		                            EC.vcPessoaContato as ProcurarPor,
+		                            LGCD.idStatusCorrida as StatusCorrida,
+                                    TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
+	                                --EC.bitColetarAssinatura,
+									--EC.bitEntregarDocumento,
+									--EC.bitEntregarObjeto,
+									--EC.bitRetirarDocumento,
+									--EC.bitRetirarObjeto,
+									EC.dtHoraChegada,
+		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
+                                    EC.vcObservacao,
+                                    PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    EC.geoPosicao.STY  as vcLatitude, 
+							        EC.geoPosicao.STX  as vcLongitude,
+                                    PT.vcCaminhoProtocolo as Foto
+							    from tblCorridas CD
+								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
+								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
+								    left join tblEnderecosCorrida as EC on (EC.idCorrida = CD.idCorrida)
+								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
+                                    left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
+                                    left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
+						        where CD.idCorrida = 17 order by EC.idEnderecoCorrida";
 
                 // Execução
                 return sqlConnection.Query<LogCorridaEntidade>(query, new

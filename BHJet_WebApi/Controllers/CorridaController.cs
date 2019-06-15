@@ -43,8 +43,8 @@ namespace BHJet_WebApi.Controllers
         /// Busca localização de chamados de um tipo especifico para um tipo especifico de motorista
         /// </summary>
         /// <returns>List<LocalizacaoProfissional></returns>
-        [Authorize]
         [Route("{idOS:long}")]
+        [Authorize]
         [ResponseType(typeof(DetalheCorridaModel))]
         public IHttpActionResult GetCorrida(int idOS)
         {
@@ -69,7 +69,9 @@ namespace BHJet_WebApi.Controllers
                     StatusCorrida = entidade.FirstOrDefault().StatusCorrida,
                     TempoEspera = entidade.FirstOrDefault().TempoEspera?.TimeOfDay,
                     Observacao = entidade.FirstOrDefault().Observacao,
-                    CaminhoProtocolo = entidade.FirstOrDefault().CaminhoProtocolo
+                    CaminhoProtocolo = entidade.FirstOrDefault().CaminhoProtocolo,
+                    vcLatitude = entidade.FirstOrDefault().vcLatitude,
+                    vcLongitude = entidade.FirstOrDefault().vcLongitude
                 },
                 Destinos = entidade.Count() > 1 ? entidade.Skip(1).Select(x => new DetalheOSEnderecoModel()
                 {
@@ -79,7 +81,9 @@ namespace BHJet_WebApi.Controllers
                     StatusCorrida = x.StatusCorrida,
                     TempoEspera = x.TempoEspera?.TimeOfDay,
                     Observacao = x.Observacao,
-                    CaminhoProtocolo = x.CaminhoProtocolo
+                    CaminhoProtocolo = x.CaminhoProtocolo,
+                    vcLatitude = x.vcLatitude,
+                    vcLongitude = x.vcLongitude
                 }).ToArray() : new DetalheOSEnderecoModel[] { }
             });
         }
@@ -506,11 +510,11 @@ namespace BHJet_WebApi.Controllers
                 }).ToArray()
             });
 
-//#if DEBUG
+#if DEBUG
             var usuario = 55;
-//#else
-//            var usuario = long.Parse(UsuarioAutenticado.LoginID);
-//#endif
+#else
+            var usuario = long.Parse(UsuarioAutenticado.LoginID);
+#endif
 
             // Busca tarifa cliente
             var idCorrida = new CorridaRepositorio().IncluirCorrida(new BHJet_Repositorio.Admin.Filtro.CorridaFiltro()
