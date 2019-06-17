@@ -16,7 +16,8 @@ namespace BHJet_Mobile.iOS.DependencyService
             longitude = longitude.Replace(",", ".");
 
             // URL
-            string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
+            //string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
+            string url = $"comgooglemaps-x-callback://?q=dessert&center={latitude},{longitude}&directionsmode=transit";
 
             // Requisição
             NSUrl request = new NSUrl(url);

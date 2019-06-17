@@ -65,7 +65,7 @@
                                                 <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Text="{Binding Observacao}" TextColor="#193651" />
 
                                                 <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="AbrirWaze" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1" Margin="0,0,0,5"
-                                                    Image="waze" TextColor="#193651" Text="Navegar com Waze" ></Button>
+                                                    Image="waze" TextColor="#193651" Text="Navegar com Google Maps" ></Button>
 
                                                 <Button CommandParameter="{Binding idEnderecoCorrida}" Clicked="RegistrarChegada" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="Transparent" BorderColor="Gray" BorderRadius="10" BorderWidth="1"  Margin="0,0,0,5"
                                                     Image="relogio" TextColor="#193651" Text="Registrar chegada"></Button>

@@ -135,6 +135,7 @@ namespace BHJet_Mobile.ViewModel
                     {
                         // ID Corrida
                         IDCorridaEncontrada = corrida.ID;
+                        usuarioAutenticado.IDCorridaPesquisada = corrida.ID;
 
                         // Binding
                         chamadoItem = new ChamadoEncontradoItemViewModel()
@@ -162,6 +163,7 @@ namespace BHJet_Mobile.ViewModel
 
         public void AceitarCorrida()
         {
+            usuarioAutenticado.IDCorridaPesquisada = null;
             usuarioAutenticado.IDCorridaAtendimento = IDCorridaEncontrada;
         }
 
@@ -193,6 +195,7 @@ namespace BHJet_Mobile.ViewModel
         {
             if (IDCorridaEncontrada != null)
             {
+                usuarioAutenticado.IDCorridaPesquisada = null;
                 await corridaServico.RecusarOrdemServico(IDCorridaEncontrada ?? 0);
                 IDCorridaEncontrada = null;
             }

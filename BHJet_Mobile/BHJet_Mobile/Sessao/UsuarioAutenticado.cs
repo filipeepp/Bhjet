@@ -16,6 +16,7 @@ namespace BHJet_Mobile.Sessao
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
         long? IDCorridaAtendimento { get; set; }
+        long? IDCorridaPesquisada { get; set; }
         CancellationTokenSource CancelaPesquisa { get; set; }
         bool StatusAplicatico { get; set; }
         void SetPerfil(PerfilMotoristaModel perfil);
@@ -49,6 +50,8 @@ namespace BHJet_Mobile.Sessao
         public string Nome { get; set; }
 
         public bool StatusAplicatico { get; set; }
+
+        public long? IDCorridaPesquisada{ get; set; }
 
         public long? IDCorridaAtendimento { get; set; }
 

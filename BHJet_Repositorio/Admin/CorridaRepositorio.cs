@@ -46,14 +46,15 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select  distinct(ec.idEnderecoCorrida) as fdfdsfsd,
+                string query = @"select  distinct ec.idEnderecoCorrida as fdfdsfsd,
                                     CD.idCorrida as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
                                     EC.vcEnderecoCompleto as EnderecoCompleto,
 		                            EC.vcPessoaContato as ProcurarPor,
-		                            LGCD.idStatusCorrida as StatusCorrida,
+                                    (SELECT idStatusCorrida FROM tblLogCorrida WHERE idEnderecoCorrida = EC.idEnderecoCorrida) as StatusCorrida,
+		                            --LGCD.idStatusCorrida as StatusCorrida,
                                     TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
 	                                --EC.bitColetarAssinatura,
 									--EC.bitEntregarDocumento,
@@ -62,7 +63,8 @@ namespace BHJet_Repositorio.Admin
 									--EC.bitRetirarObjeto,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao AS Observacao,
-                                    PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    --PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    (SELECT top (1) vcCaminhoProtocolo FROM tblProtocoloEnderecoCorrida WHERE idEnderecoCorrida = EC.idEnderecoCorrida) as CaminhoProtocolo,
                                     EC.geoPosicao.STY  as vcLatitude, 
 							        EC.geoPosicao.STX  as vcLongitude
 							    from tblCorridas CD
@@ -70,7 +72,7 @@ namespace BHJet_Repositorio.Admin
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)
 								    left join tblEnderecosCorrida as EC on (EC.idCorrida = CD.idCorrida)
 								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
-                                    left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
+                                    left join tblProtocoloEnderecoCorrida PT on (EC.idEnderecoCorrida = PT.idEnderecoCorrida)
                                     left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
 						        where CD.idCorrida = @id order by EC.idEnderecoCorrida";
 
@@ -142,7 +144,7 @@ namespace BHJet_Repositorio.Admin
 										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
                                         AND (CD.idUsuarioColaboradorEmpresa IS NULL or CD.idUsuarioColaboradorEmpresa = @profissional)
                                         AND (CR.idCorrida IS NULL OR  CR.idCorrida != CD.idCorrida)
-										order by CD.dtDataHoraRegistroCorrida DESC";
+										order by CD.dtDataHoraRegistroCorrida asc";
 
                     // Execução
                     var corrida = trans.Connection.QueryFirstOrDefault<CorridaEncontradaEntidade>(query, new
@@ -183,7 +185,7 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select  distinct(ec.idEnderecoCorrida) as fdfdsfsd,
+                string query = @"select distinct ec.idEnderecoCorrida as fdfdsfsd,
                                     CD.idCorrida, 
 	                                CD.idUsuarioChamador as IDCliente,
 									LGCD.idStatusCorrida as Status,
@@ -192,7 +194,8 @@ namespace BHJet_Repositorio.Admin
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
                                     EC.vcEnderecoCompleto as EnderecoCompleto,
 		                            EC.vcPessoaContato as vcPessoaContato,
-		                            LGCD.idStatusCorrida as StatusCorrida,
+                                    (SELECT idStatusCorrida FROM tblLogCorrida WHERE idEnderecoCorrida = EC.idEnderecoCorrida) as StatusCorrida,
+		                            --LGCD.idStatusCorrida as StatusCorrida,
                                     TOC.vcTipoOcorrenciaCorrida as DescricaoAtividade,
 	                                --EC.bitColetarAssinatura,
 									--EC.bitEntregarDocumento,
@@ -213,7 +216,7 @@ namespace BHJet_Repositorio.Admin
 								    --left join tblEnderecos EDC on (EC.idCorrida = edc.idEndereco)
                                     left join tblProtocoloEnderecoCorrida PT on (EC.idCorrida = PT.idEnderecoCorrida)
                                     left join tblDOMTipoOcorrenciaCorrida TOC on (EC.idTipoOcorrenciaCorrida = TOC.idTipoOcorrenciaCorrida)
-						        where CD.idCorrida = 17 order by EC.idEnderecoCorrida";
+						        where CD.idCorrida = @id order by EC.idEnderecoCorrida";
 
                 // Execução
                 return sqlConnection.Query<LogCorridaEntidade>(query, new
@@ -232,20 +235,36 @@ namespace BHJet_Repositorio.Admin
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
-                string query = @"INSERT INTO [dbo].[tblProtocoloEnderecoCorrida]
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    // Delete
+                    string query = @"delete tblProtocoloEnderecoCorrida
+                                                   where idEnderecoCorrida = @idEndCorrida";
+
+                    // Execução
+                    trans.Connection.Execute(query, new
+                    {
+                        idEndCorrida = idEnderecoCorrida
+                    }, trans);
+
+                    // Query
+                    query = @"INSERT INTO [dbo].[tblProtocoloEnderecoCorrida]
                                                    ([idEnderecoCorrida]
                                                    ,[vcCaminhoProtocolo])
                                       VALUES
                                                    (@idEndCorrida
                                                    ,@fotoProtocolo)";
 
-                // Execução
-                sqlConnection.Execute(query, new
-                {
-                    idEndCorrida = idEnderecoCorrida,
-                    fotoProtocolo = protocolo
-                });
+                    // Execução
+                    trans.Connection.Execute(query, new
+                    {
+                        idEndCorrida = idEnderecoCorrida,
+                        fotoProtocolo = protocolo
+                    }, trans);
+
+                    // Commit
+                    trans.Commit();
+                }
             }
         }
 
@@ -308,13 +327,14 @@ namespace BHJet_Repositorio.Admin
                         }, trans);
 
                         // Query
-                        query = @"update tblLogCorrida set idStatusCorrida = @status where idCorrida = @id";
+                        query = @"update tblLogCorrida set idStatusCorrida = @status where idCorrida = @id and idEnderecoCorrida = @ide";
 
                         // Execução
                         trans.Connection.Execute(query, new
                         {
                             id = idCorrida,
-                            status = ocorrencia
+                            status = ocorrencia,
+                            ide = idLogCorrida
                         }, trans);
 
                         // Commit
@@ -451,7 +471,7 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query STATUS
-                string queryCorrida = @"update tblCorridas set idUsuarioColaboradorEmpresa = @prof, idStatusCorrida  = 3 where idCorrida = @id";
+                string queryCorrida = @"update tblCorridas set idUsuarioColaboradorEmpresa = null, idStatusCorrida  = 3 where idCorrida = @id";
                 // Executa
                 sqlConnection.Execute(queryCorrida, new
                 {

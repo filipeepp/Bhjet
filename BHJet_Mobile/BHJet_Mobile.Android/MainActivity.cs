@@ -2,8 +2,11 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using BHJet_Mobile.Servico;
 using Plugin.Media;
 using Plugin.Permissions;
+using Xamarin.Forms.Background;
+using Xamarin.Forms.Background.Android;
 
 namespace BHJet_Mobile.Droid
 {
@@ -17,20 +20,12 @@ namespace BHJet_Mobile.Droid
 
             Instance = this;
 
+            BackgroundAggregator.Init(this);
+
             base.OnCreate(savedInstanceState);
 
             await CrossMedia.Current.Initialize();
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this.Application);
-
-            //MessagingCenter.Subscribe<StartLongRunningTaskMessage>(this, "StartLongRunningTaskMessage", message => {
-            //    var intent = new Intent(this, typeof(LongRunningTaskService));
-            //    StartService(intent);
-            //});
-
-            //MessagingCenter.Subscribe<StopLongRunningTaskMessage>(this, "StopLongRunningTaskMessage", message => {
-            //    var intent = new Intent(this, typeof(LongRunningTaskService));
-            //    StopService(intent);
-            //});
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -43,5 +38,7 @@ namespace BHJet_Mobile.Droid
         }
 
         public static Activity Instance { get; private set; }
+
+
     }
 }

@@ -16,7 +16,8 @@ namespace BHJet_Mobile.Droid.DependencyService
                 longitude = longitude.Replace(",", ".");
 
                 // Abre Waze
-                string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
+                //string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
+                string url = $"comgooglemaps-x-callback://?q=dessert&center={latitude},{longitude}&directionsmode=transit";
 
                 Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
                 MainActivity.Instance.StartActivity(intent);

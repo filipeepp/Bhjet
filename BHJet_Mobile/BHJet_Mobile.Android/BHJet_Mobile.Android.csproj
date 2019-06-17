@@ -73,6 +73,9 @@
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Forms.Background">
+      <Version>0.9.15</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyService\IntegracaoWaze.cs" />

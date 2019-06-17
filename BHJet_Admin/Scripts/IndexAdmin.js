@@ -1,4 +1,6 @@
-﻿
+﻿//const monthNames = ["January", "February", "March", "April", "May", "June",
+//    "July", "August", "September", "October", "November", "December"
+//];
 
 function buscaGraficoResumoSituacaoChamados() {
     $.ajax({
@@ -12,7 +14,8 @@ function buscaGraficoResumoSituacaoChamados() {
             var DataCh2 = [];
 
             $(dados).each(function (i) {
-                lbls.push(month[dados[i].Mes]);
+                lbls.push(dados[i].Mes);
+                //lbls.push(monthNames[parseInt(dados[i].Mes.split("/")[0])]);
                 DataCh1.push(dados[i].ChamadosConcluidos);
                 DataCh2.push(dados[i].ChamadosAdvertentes);
             });
@@ -77,7 +80,8 @@ function buscaGraficoResumoSituacaoAtendimentos() {
             var DataCarro = [];
 
             $(dados).each(function (i) {
-                lbls.push(month[dados[i].Mes]);
+                lbls.push(dados[i].Mes);
+                //lbls.push(monthNames[parseInt(dados[i].Mes.split("/")[0])]);
                 DataMoto.push(dados[i].QtdAtendimentoMotociclista);
                 DataCarro.push(dados[i].QtdAtendimentoMotorista);
             });

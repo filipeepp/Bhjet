@@ -5,6 +5,7 @@ using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
 using System.Threading;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -72,9 +73,11 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                     else
                         EfeitoPesquisaDesativada();
                 }
-
                 if (ViewModel.PermitePesquisaCorrida)
+                {
                     EfeitoPesquisaAtivada();
+                    DoWorkAsyncInfiniteLoop();
+                }
             }
             catch (Exception e)
             {
@@ -105,11 +108,19 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            {
                                Device.BeginInvokeOnMainThread(async () =>
                                {
+                                   // Vibracao
+                                   Xamarin.Essentials.Vibration.Vibrate(1000);
+                                   Xamarin.Essentials.TextToSpeech.SpeakAsync("Corrida Encontrada");
+
+                                   // Redireciona para o tipo de chamado
                                    if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
                                        App.Current.MainPage = new DiariaDeBordo();
                                    else
+                                   {
                                        // Atualiza tela
                                        await ChamadoEncontradoPainel();
+                                       Xamarin.Essentials.Vibration.Vibrate(1000);
+                                   }
                                });
 
                                // Encerra busca
@@ -200,7 +211,10 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             try
             {
                 ViewModel.Loading = true;
-                await ViewModel.LiberarCorrida();
+                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
+                UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
+                !UsuarioAutenticado.Instance.StatusAplicatico)
+                    await ViewModel.LiberarCorrida();
             }
             catch (Exception e)
             {

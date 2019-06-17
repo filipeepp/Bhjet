@@ -46,7 +46,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             {
                 // Carrega dados da corrida
                 await ViewModel.Carrega();
-
+      
                 // Inicia compartilhamento de localizacao
                 if (!CrossGeolocator.Current.IsListening)
                     StartListening();
