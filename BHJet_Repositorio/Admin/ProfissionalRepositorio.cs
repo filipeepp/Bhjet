@@ -214,9 +214,6 @@ namespace BHJet_Repositorio.Admin
         /// <returns>UsuarioEntidade</returns>
         public void AtualizaProfissional(ProfissionalCompletoEntidade profissional)
         {
-
-            var teste = new UsuarioRepositorio().RetornaSenhaEncriptada(profissional.Senha);
-
             using (var sqlConnection = this.InstanciaConexao())
             {
                 using (var trans = sqlConnection.BeginTransaction())
