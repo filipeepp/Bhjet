@@ -143,7 +143,8 @@ namespace BHJet_Repositorio.Admin
 								 where CD.idStatusCorrida = 3
 										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
                                         AND (CD.idUsuarioColaboradorEmpresa IS NULL or CD.idUsuarioColaboradorEmpresa = @profissional)
-                                        AND (CR.idCorrida IS NULL OR  CR.idCorrida != CD.idCorrida)
+                                        AND (CR.idCorrida IS NULL OR (CR.idCorrida != CD.idCorrida OR CR.idColaboradorEmpresaSistema != @profissional))
+                                        AND (EC.idCorrida = cd.idCorrida)
 										order by CD.dtDataHoraRegistroCorrida asc";
 
                     // Execução

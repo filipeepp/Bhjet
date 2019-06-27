@@ -17,7 +17,7 @@ namespace BHJet_Mobile.iOS.DependencyService
 
             // URL
             //string url = $"https://waze.com/ul?ll={latitude},{longitude}&navigate=yes";
-            string url = $"comgooglemaps-x-callback://?q=dessert&center={latitude},{longitude}&directionsmode=transit";
+            string url = $"http://maps.google.com/maps?daddr={latitude},{longitude}";
 
             // Requisição
             NSUrl request = new NSUrl(url);
@@ -27,11 +27,11 @@ namespace BHJet_Mobile.iOS.DependencyService
                 bool isOpened = UIApplication.SharedApplication.OpenUrl(request);
                
                 if (isOpened == false)
-                    UIApplication.SharedApplication.OpenUrl(new NSUrl("http://itunes.apple.com/us/app/id323229106"));
+                    UIApplication.SharedApplication.OpenUrl(new NSUrl("http://itunes.apple.com/us/app/id585027354"));
             }
             catch (Exception ex)
             {
-                UIApplication.SharedApplication.OpenUrl(new NSUrl("http://itunes.apple.com/us/app/id323229106"));
+                UIApplication.SharedApplication.OpenUrl(new NSUrl("http://itunes.apple.com/us/app/id585027354"));
             }
         }
     }

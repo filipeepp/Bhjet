@@ -41,10 +41,14 @@ namespace BHJet_Repositorio.Admin
                     // Return
                     return new ResumoDetalheEntidade()
                     {
-                        ChamadosAguardandoMotociclista = chamadosAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motociclista) ?? 0,
-                        ChamadosAguardandoMotorista = chamadosAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motorista) ?? 0,
-                        MotociclistaDisponiveis = motoristasAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motociclista) ?? 0,
-                        MotoristasDisponiveis = motoristasAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motorista) ?? 0
+                        //ChamadosAguardandoMotociclista = chamadosAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motociclista) ?? 0,
+                        //ChamadosAguardandoMotorista = chamadosAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motorista) ?? 0,
+                        ChamadosAguardandoMotorista = chamadosAguardando?.AsList().Where(ch => ch.TipoProfissional == TipoProfissional.Motorista).Sum(c => c.Quantidade) ?? 0,
+                        ChamadosAguardandoMotociclista = chamadosAguardando?.AsList().Where(ch => ch.TipoProfissional == TipoProfissional.Motociclista).Sum(c => c.Quantidade) ?? 0,
+                        //MotociclistaDisponiveis = motoristasAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motociclista) ?? 0,
+                        //MotoristasDisponiveis = motoristasAguardando?.AsList().Count(ch => ch.TipoProfissional == TipoProfissional.Motorista) ?? 0
+                        MotociclistaDisponiveis = motoristasAguardando?.AsList().Where(ch => ch.TipoProfissional == TipoProfissional.Motociclista).Sum(c => c.Quantidade) ?? 0,
+                        MotoristasDisponiveis = motoristasAguardando?.AsList()?.Where(ch => ch.TipoProfissional == TipoProfissional.Motorista).Sum(c => c.Quantidade) ?? 0
                     };
                 }
             }
