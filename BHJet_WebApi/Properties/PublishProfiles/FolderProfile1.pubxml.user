@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/BHJet_Core.dll">
-      <publishTime>06/13/2019 15:45:54</publishTime>
+      <publishTime>06/27/2019 08:58:10</publishTime>
     </File>
     <File Include="bin/BHJet_Core.pdb">
-      <publishTime>06/13/2019 15:45:54</publishTime>
+      <publishTime>06/27/2019 08:58:10</publishTime>
     </File>
     <File Include="bin/BHJet_CoreGlobal.dll">
       <publishTime>06/13/2019 13:37:12</publishTime>
@@ -28,10 +28,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/13/2019 13:37:12</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.dll">
-      <publishTime>06/17/2019 14:08:18</publishTime>
+      <publishTime>06/27/2019 08:58:11</publishTime>
     </File>
     <File Include="bin/BHJet_DTO.pdb">
-      <publishTime>06/17/2019 14:08:18</publishTime>
+      <publishTime>06/27/2019 08:58:11</publishTime>
     </File>
     <File Include="bin/BHJet_Enumeradores.dll">
       <publishTime>06/13/2019 13:37:12</publishTime>
@@ -40,16 +40,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/13/2019 13:37:12</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.dll">
-      <publishTime>06/17/2019 16:12:16</publishTime>
+      <publishTime>06/27/2019 09:39:11</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.pdb">
-      <publishTime>06/17/2019 16:12:16</publishTime>
+      <publishTime>06/27/2019 09:39:11</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>06/17/2019 16:12:20</publishTime>
+      <publishTime>06/27/2019 09:39:14</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>06/17/2019 16:12:20</publishTime>
+      <publishTime>06/27/2019 09:39:14</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>
