@@ -139,11 +139,13 @@ namespace BHJet_Repositorio.Admin
 								    join tblEnderecosCorrida as EC on (CD.idCorrida = CD.idCorrida)
 								    --join tblEnderecos as E on (EC.idEndereco = e.idEndereco)
                                     join tblClientes as C on (CD.idCliente = C.idCliente)
-                                    left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
+                                    --left join tblCorridasRecusadas as CR on (CR.idCorrida = CD.idCorrida )
+                                    left join (select * from tblCorridasRecusadas CRE where CRE.idColaboradorEmpresaSistema = @profissional) recusadas on (recusadas.idCorrida = CD.idCorrida)
 								 where CD.idStatusCorrida = 3
 										AND (CD.idTipoProfissional = @tp or CD.idTipoProfissional is null)
                                         AND (CD.idUsuarioColaboradorEmpresa IS NULL or CD.idUsuarioColaboradorEmpresa = @profissional)
-                                        AND (CR.idCorrida IS NULL OR (CR.idCorrida != CD.idCorrida OR CR.idColaboradorEmpresaSistema != @profissional))
+                                        --AND (CR.idCorrida IS NULL OR (CR.idCorrida != CD.idCorrida OR CR.idColaboradorEmpresaSistema != @profissional))
+                                        and recusadas.idRegistro is null
                                         AND (EC.idCorrida = cd.idCorrida)
 										order by CD.dtDataHoraRegistroCorrida asc";
 
@@ -189,7 +191,7 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select distinct ec.idEnderecoCorrida as fdfdsfsd,
                                     CD.idCorrida, 
 	                                CD.idUsuarioChamador as IDCliente,
-									LGCD.idStatusCorrida as Status,
+									--LGCD.idStatusCorrida as Status,
                                     EC.idEnderecoCorrida,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
@@ -206,10 +208,10 @@ namespace BHJet_Repositorio.Admin
 									EC.dtHoraChegada,
 		                            EC.dtHoraChegada - EC.dtHoraAtendido as TempoEspera,
                                     EC.vcObservacao,
-                                    PT.vcCaminhoProtocolo as CaminhoProtocolo,
+                                    (SELECT top (1) vcCaminhoProtocolo FROM tblProtocoloEnderecoCorrida WHERE idEnderecoCorrida = EC.idEnderecoCorrida) as CaminhoProtocolo,
                                     EC.geoPosicao.STY  as vcLatitude, 
-							        EC.geoPosicao.STX  as vcLongitude,
-                                    PT.vcCaminhoProtocolo as Foto
+							        EC.geoPosicao.STX  as vcLongitude
+                                    --PT.vcCaminhoProtocolo as Foto
 							    from tblCorridas CD
 								    left join tblColaboradoresEmpresaSistema as CLB on (CD.idUsuarioColaboradorEmpresa = CLB.idColaboradorEmpresaSistema)
 								    left join tblLogCorrida LGCD on (CD.idCorrida = LGCD.idCorrida)

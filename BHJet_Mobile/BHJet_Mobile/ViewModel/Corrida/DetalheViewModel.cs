@@ -65,6 +65,7 @@ namespace BHJet_Mobile.ViewModel.Corrida
 
                 // Binding
                 idCorrida = usuarioAutenticado.IDCorridaAtendimento ?? 0;
+                ListaLogs = new ObservableCollection<DetalheItemViewModel>();
                 ListaLogs = logCorrida.Select(lg => new DetalheItemViewModel()
                 {
                     idCorrida = lg.idCorrida,
