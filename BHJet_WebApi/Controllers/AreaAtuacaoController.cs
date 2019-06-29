@@ -15,7 +15,6 @@ namespace BHJet_WebApi.Controllers
 		/// Busca Areas de atuação
 		/// </summary>
 		/// <returns></returns>
-		[Authorize]
         [Route("")]
         [ResponseType(typeof(AreaAtuacaoDTO[]))]
         public IHttpActionResult GetAreaAtuacao()
@@ -62,12 +61,8 @@ namespace BHJet_WebApi.Controllers
             // Return
             return Ok();
         }
-
-
     }
 }
-
-
 
 
 public class Rootobject

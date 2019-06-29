@@ -84,7 +84,7 @@ function initAutocomplete() {
         componentRestrictions: { country: "BR" }
     };
     autocomplete = new google.maps.places.Autocomplete(input, options);
-
+    autocomplete.setComponentRestrictions({ 'country': 'br' });
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
         var location = place.geometry.location;

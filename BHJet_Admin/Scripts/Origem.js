@@ -30,6 +30,39 @@ function BuscaProfissionais() {
     });
 }
 
+var poligonos = new Array();
+
+function BuscaAreasCadastradas(idCom) {
+    $.ajax({
+        url: '../Atuacao/BuscaAreas',
+        dataType: "json",
+        type: "GET",
+        success: function (dados) {
+            var obj = JSON.parse(dados);
+            $.each(obj, function (index, value) {
+                var cords = [];
+                for (var i = 0; i < value.GeoVertices.length; i++) {
+                    var lat = value.GeoVertices[i].Latitude;
+                    var long = value.GeoVertices[i].Longitude;
+                    cords.push(new google.maps.LatLng(lat, long));
+                }
+                var myPolygon2 = new google.maps.Polygon({
+                    paths: cords,
+                    draggable: true,
+                    editable: true,
+                    strokeColor: '#ffeb3b',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#ffeb3b',
+                    fillOpacity: 0.35
+                });
+                poligonos.push(myPolygon2);
+            });
+        },
+        error: function (e) {}
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function (event) {
 
     $("#loading").hide();
@@ -57,13 +90,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
         componentRestrictions: { country: "BR" }
     };
     var autocomplete = new google.maps.places.Autocomplete(input, options);
+    autocomplete.setComponentRestrictions({ 'country': 'br' });
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
         var location = place.geometry.location;
+        var locationGM = new google.maps.LatLng(location.lat(), location.lng());
+
+        // Verifica se esta dentro da area de atuacao
+        $.each(poligonos, function (index, value) {
+
+            var existe = google.maps.geometry.poly.containsLocation(locationGM.LatLng, value);
+
+        });
 
         $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Latitude']").val(location.lat());
         $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Longitude']").val(location.lng());
-        var locationGM = new google.maps.LatLng(location.lat(), location.lng());
         marker.setPosition(locationGM);
         map.setCenter(locationGM);
         map.setZoom(16);

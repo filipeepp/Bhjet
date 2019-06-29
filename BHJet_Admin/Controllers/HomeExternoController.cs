@@ -1,9 +1,9 @@
 ﻿using BHJet_Admin.Infra;
 using BHJet_Admin.Models;
 using BHJet_Enumeradores;
+using BHJet_Servico.Area;
 using BHJet_Servico.Profissional;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,10 +12,12 @@ namespace BHJet_Admin.Controllers
     public class HomeExternoController : Controller
     {
         private readonly IProfissionalServico profissionalServico;
+        private readonly IAreaAtuacaoServico areaServico;
 
-        public HomeExternoController(IProfissionalServico _profServico)
+        public HomeExternoController(IProfissionalServico _profServico, IAreaAtuacaoServico _area)
         {
             profissionalServico = _profServico;
+            areaServico = _area;
         }
 
         #region Entregas Origem
@@ -72,6 +74,27 @@ namespace BHJet_Admin.Controllers
                 label = x.ID + " - " + x.NomeCompleto?.ToUpper(),
                 value = x.ID
             }), JsonRequestBehavior.AllowGet);
+        }
+
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        [HttpGet]
+        public JsonResult BuscaAreas()
+        {
+            try
+            {
+                // Busca area atuação
+                var areas = areaServico.BuscaAreaAtuacao();
+
+                // Serializa
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(areas);
+
+                // Return
+                return Json(json, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

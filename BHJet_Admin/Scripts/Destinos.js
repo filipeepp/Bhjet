@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             componentRestrictions: { country: "BR" }
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
-
+        autocomplete.setComponentRestrictions({ 'country': 'br' });
         autocomplete.parm = $(this);
         autocomplete.addListener('place_changed', function () {
             var place = autocomplete.getPlace();

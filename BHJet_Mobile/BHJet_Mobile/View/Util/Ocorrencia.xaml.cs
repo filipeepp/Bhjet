@@ -17,7 +17,7 @@ namespace BHJet_Mobile.View.Util
         public Ocorrencia(long idCorrida, long idLog)
         {
             InitializeComponent();
-            ViewModel = new OcorrenciaViewModel(new CorridaServico(), idCorrida, idLog);
+            ViewModel = new OcorrenciaViewModel(new CorridaServico(), idCorrida, idLog, UsuarioAutenticado.Instance);
             BindingContext = ViewModel;
         }
 

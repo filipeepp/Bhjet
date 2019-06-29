@@ -4,6 +4,7 @@ using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Servico.Motorista.Model;
 using Plugin.Geolocator;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,13 +22,17 @@ namespace BHJet_Mobile.Sessao
         bool StatusAplicatico { get; set; }
         void SetPerfil(PerfilMotoristaModel perfil);
         void FinalizaAtendimento();
+        //List<EsperaOcorrencia> TempoDeEspera { get; set; }
     }
 
     public sealed class UsuarioAutenticado : IUsuarioAutenticado
     {
         private static UsuarioAutenticado instance;
 
-        private UsuarioAutenticado() { }
+        private UsuarioAutenticado()
+        {
+           // TempoDeEspera = new List<EsperaOcorrencia>();
+        }
 
         public static UsuarioAutenticado Instance
         {
@@ -51,11 +56,13 @@ namespace BHJet_Mobile.Sessao
 
         public bool StatusAplicatico { get; set; }
 
-        public long? IDCorridaPesquisada{ get; set; }
+        public long? IDCorridaPesquisada { get; set; }
 
         public long? IDCorridaAtendimento { get; set; }
 
         public CancellationTokenSource CancelaPesquisa { get; set; }
+
+        //public List<EsperaOcorrencia> TempoDeEspera { get; set; }
 
         public void SetPerfil(PerfilMotoristaModel perfil)
         {
@@ -121,5 +128,11 @@ namespace BHJet_Mobile.Sessao
                 longitude = position.Longitude
             });
         }
+    }
+
+    public class EsperaOcorrencia
+    {
+        public long IDOcorrencia { get; set; }
+        public System.Timers.Timer MinutosEspera { get; set; }
     }
 }
