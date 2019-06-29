@@ -6,12 +6,12 @@ function BuscaProfissionais() {
     var urlInicio = "HomeExterno/BuscaProfissionais?trechoPesquisa=";
     if (window.location.href.indexOf("HomeExterno") > -1) {
         urlInicio = "../" + urlInicio;
-    } 
+    }
 
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: urlInicio  + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
+        url: urlInicio + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ProfissionalSelecionado").find('option').remove().end();
@@ -32,9 +32,14 @@ function BuscaProfissionais() {
 
 var poligonos = new Array();
 
-function BuscaAreasCadastradas(idCom) {
+function BuscaAreasCadastradas() {
+    var urlInicio = "HomeExterno/BuscaAreas";
+    if (window.location.href.indexOf("HomeExterno") > -1) {
+        urlInicio = "../" + urlInicio;
+    }
+
     $.ajax({
-        url: '../Atuacao/BuscaAreas',
+        url: urlInicio,
         dataType: "json",
         type: "GET",
         success: function (dados) {
@@ -59,7 +64,7 @@ function BuscaAreasCadastradas(idCom) {
                 poligonos.push(myPolygon2);
             });
         },
-        error: function (e) {}
+        error: function (e) { }
     });
 }
 
@@ -84,6 +89,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     var input = document.getElementById('txtEnderecoPartida');
 
+    BuscaAreasCadastradas();
+
     var options = {
         'address': ', Brasil',
         'region': 'PT',
@@ -96,18 +103,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
         var location = place.geometry.location;
         var locationGM = new google.maps.LatLng(location.lat(), location.lng());
 
-        // Verifica se esta dentro da area de atuacao
+        // VACT
+        var ectAt = false;
         $.each(poligonos, function (index, value) {
-
-            var existe = google.maps.geometry.poly.containsLocation(locationGM.LatLng, value);
-
+            var existe = google.maps.geometry.poly.containsLocation(locationGM, value);
+            if (existe) {
+                ectAt = true;
+            }
         });
 
-        $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Latitude']").val(location.lat());
-        $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Longitude']").val(location.lng());
-        marker.setPosition(locationGM);
-        map.setCenter(locationGM);
-        map.setZoom(16);
+        if (ectAt) {
+            $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Latitude']").val(location.lat());
+            $("input[id*='txtEnderecoPartida']").parent().find("input[id*='Longitude']").val(location.lng());
+            marker.setPosition(locationGM);
+            map.setCenter(locationGM);
+            map.setZoom(16);
+        }
+        else {
+            $("#txtEnderecoPartida").val("");
+            AdicionarErroCampo('txtEnderecoPartida', 'Endereço selecionado não está dentro da área de atuação da BHJet.', 10000);
+        }
     });
 
     carregaMapaDir();

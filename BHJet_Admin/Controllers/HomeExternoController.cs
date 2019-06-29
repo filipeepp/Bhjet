@@ -76,7 +76,6 @@ namespace BHJet_Admin.Controllers
             }), JsonRequestBehavior.AllowGet);
         }
 
-        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
         [HttpGet]
         public JsonResult BuscaAreas()
         {
