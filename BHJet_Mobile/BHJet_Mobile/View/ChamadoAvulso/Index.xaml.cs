@@ -4,7 +4,9 @@ using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
+using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -44,6 +46,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         }
 
         private bool Logando { get; set; }
+
+        public CancellationTokenSource CancelaEspera { get; set; }
 
         /// <summary>
         /// ViewModel da Pagina
@@ -110,7 +114,16 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                                {
                                    // Vibracao
                                    Xamarin.Essentials.Vibration.Vibrate(1000);
-                                   Xamarin.Essentials.TextToSpeech.SpeakAsync("Corrida Encontrada");
+                                   try
+                                   {
+                                       var settings = new SpeechOptions()
+                                       {
+                                           Volume = .75f,
+                                           Pitch = 1.0f
+                                       };
+                                       TextToSpeech.SpeakAsync($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.", settings);
+                                   }
+                                   catch { }
 
                                    // Redireciona para o tipo de chamado
                                    if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
@@ -180,6 +193,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             ViewModel.AceitarCorrida();
             // Troca de página após Login
             App.Current.MainPage = new Detalhe();
+            if (CancelaEspera != null)
+                CancelaEspera.Cancel();
         }
 
         public async void RecusarCorrida(object sender, EventArgs args)
@@ -195,6 +210,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             finally
             {
                 await FinalizaAtendimento();
+                if (CancelaEspera != null)
+                    CancelaEspera.Cancel();
             }
         }
 
@@ -208,13 +225,17 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         protected async override void OnDisappearing()
         {
+            bool finalizaAt = false;
             try
             {
                 ViewModel.Loading = true;
                 if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
                 UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
                 !UsuarioAutenticado.Instance.StatusAplicatico)
-                    await ViewModel.LiberarCorrida();
+                {
+                    finalizaAt = true;
+                    await ViewModel.RecusarCorrida();
+                }
             }
             catch (Exception e)
             {
@@ -222,7 +243,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             }
             finally
             {
-                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
+                if (finalizaAt)
                     await FinalizaAtendimento();
             }
         }
@@ -235,6 +256,18 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             await this.ctnEncontrado.TranslateTo(-500, -20, 400);
             this.ctnEncontrado.IsVisible = true;
             await this.ctnEncontrado.TranslateTo(0, 0, 400);
+
+            CancelaEspera = new CancellationTokenSource();
+            Task.Delay(40000).ContinueWith(t =>
+            {
+                if(UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
+                {
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        RecusarCorrida(null, new EventArgs());
+                    });
+                }
+            }, CancelaEspera.Token);
         }
 
         private async System.Threading.Tasks.Task ProcurandoChamadoPainel()

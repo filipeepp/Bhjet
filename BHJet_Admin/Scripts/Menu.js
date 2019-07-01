@@ -16,6 +16,29 @@
     });
 });
 
+function AdicionarErroCampo(idField, message, tempoAtivo) {
+    var para = document.createElement("p");
+    var node = document.createTextNode(message);
+    para.appendChild(node);
+    para.className = "msgDigitacao";
+    para.style.position = 'relative';
+    para.style.fontSize = '12px';
+    para.style.color = '#c33939';
+    para.style.display = 'inline';
+    if ($("#" + idField) != undefined) {
+        if ($("#" + idField).next().hasClass("msgDigitacao")) {
+            $("#" + idField).next().remove();
+        }
+        $("#" + idField).after(para);
+    }
+    var removeAfter = tempoAtivo;
+    (function (removeAfter) {
+        setTimeout(function () {
+            $("#" + idField).next().remove();
+        }, removeAfter);
+    })(removeAfter)
+}
+
 function delay(callback, ms) {
     var timer = 0;
     return function () {

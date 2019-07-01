@@ -5,22 +5,28 @@ using BHJet_Mobile.Infra.Database.Tabelas;
 using BHJet_Mobile.Infra.Extensao;
 using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Servico.Corrida.Model;
+using BHJet_Mobile.Sessao;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace BHJet_Mobile.ViewModel.Corrida
 {
     public class OcorrenciaViewModel : PropertyChangedClass
     {
-        public OcorrenciaViewModel(ICorridaServico _corridaServico, long idCorrida, long idLog)
+        public OcorrenciaViewModel(ICorridaServico _corridaServico, long idCorrida, long idLog, IUsuarioAutenticado usuario)
         {
             corridaServico = _corridaServico;
             IDCorrida = idCorrida;
             IDLog = idLog;
+            usuarioAutenticado = usuario;
         }
 
         private readonly ICorridaServico corridaServico;
+
+        private readonly IUsuarioAutenticado usuarioAutenticado;
 
         private long _IDCorrida;
         public long IDCorrida
@@ -112,6 +118,34 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 // Grava ocorrencia
                 await corridaServico.AtualizaOcorrenciaCorrida(idOcorrencia, IDLog, IDCorrida);
 
+                //if (ocorrencia.StatusCorrida == 2)
+                //{
+                //    usuarioAutenticado.TempoDeEspera.RemoveAll(c => c.IDOcorrencia == IDLog);
+
+                //    var timer = new EsperaOcorrencia()
+                //    {
+                //        IDOcorrencia = IDLog,
+                //        MinutosEspera = new System.Timers.Timer(2000)
+                //        {
+
+                //            AutoReset = true,
+                //            Enabled = true
+                //        }
+                //    };
+                //    timer.MinutosEspera.Elapsed += OnTimedEvent;
+                //    usuarioAutenticado.TempoDeEspera.Add(timer);
+                //    var tm = usuarioAutenticado.TempoDeEspera.Where(c => c.IDOcorrencia == IDLog).FirstOrDefault();
+                //    tm.MinutosEspera.Start();
+                //}
+                //else
+                //{
+                //    if (usuarioAutenticado.TempoDeEspera.Exists(c => c.IDOcorrencia == IDLog))
+                //    {
+                //        var tm = usuarioAutenticado.TempoDeEspera.Where(c => c.IDOcorrencia == IDLog).FirstOrDefault();
+                //        tm.MinutosEspera.Stop();
+                //    }
+                //}
+
                 // Verificacoes
                 if (ocorrencia.Finaliza || ocorrencia.Cancela)
                 {
@@ -129,6 +163,11 @@ namespace BHJet_Mobile.ViewModel.Corrida
                 // Off
                 Loading = false;
             }
+        }
+
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            var teste = e.SignalTime;
         }
 
         /// <summary>

@@ -92,7 +92,10 @@ namespace BHJet_Mobile.ViewModel
 
                 // Permite pesquisar corrida
                 if (usuarioAutenticado.StatusAplicatico)
+                {
                     PermitePesquisaCorrida = true;
+                    IDCorridaEncontrada = null;
+                }
                 else
                     PermitePesquisaCorrida = false;
             }

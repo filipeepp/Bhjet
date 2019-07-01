@@ -61,12 +61,12 @@ namespace BHJet_Mobile
                   UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
                   !UsuarioAutenticado.Instance.StatusAplicatico)
             {
-                BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
-                BackgroundAggregatorService.StartBackgroundService();
+                //BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
+                //BackgroundAggregatorService.StartBackgroundService();
                 UsuarioAutenticado.Instance.FinalizaAtendimento();
                 try
                 {
-                    new CorridaServico().LiberarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
+                    new CorridaServico().RecusarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
                 }
                 finally
                 {
