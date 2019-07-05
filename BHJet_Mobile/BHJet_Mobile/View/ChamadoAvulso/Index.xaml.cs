@@ -1,4 +1,5 @@
-﻿using BHJet_Mobile.Servico.Corrida;
+﻿using BHJet_Mobile.DependencyService;
+using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
@@ -80,15 +81,19 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                         EfeitoPesquisaDesativada();
                 }
                 // Permite Pesquisa Corrida
-                if (ViewModel.PermitePesquisaCorrida)
+                else if (ViewModel.PermitePesquisaCorrida)
                 {
                     EfeitoPesquisaAtivada();
                     DoWorkAsyncInfiniteLoop();
                 }
                 // Corrida encontrada
-                else if(!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
+                else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
                 {
                     await ChamadoEncontradoPainel();
+                }
+                else if (!UsuarioAutenticado.Instance.StatusAplicatico)
+                {
+                    EfeitoPesquisaDesativada();
                 }
             }
             catch (Exception e)
@@ -120,20 +125,10 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            {
                                Device.BeginInvokeOnMainThread(async () =>
                                {
-                                   // Vibracao
+                                   // Aviso Vibracao
                                    Xamarin.Essentials.Vibration.Vibrate(1000);
-                                   try
-                                   {
-                                       var locales = await TextToSpeech.GetLocalesAsync();
-                                       var settings = new SpeechOptions()
-                                       {
-                                           Volume = .75f,
-                                           Pitch = 1.0f,
-                                           Locale = locales.Where(l => l?.Country != null && l.Country?.ToUpper() == "BR").FirstOrDefault()
-                                       };
-                                       TextToSpeech.SpeakAsync($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.", settings);
-                                   }
-                                   catch { }
+                                   // Aviso Sonoro
+                                   TextSpeechUtil.ExecutarVoz($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.");
 
                                    // Redireciona para o tipo de chamado
                                    if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
@@ -141,7 +136,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                                    else
                                    {
                                        // Atualiza tela
-                                       await ChamadoEncontradoPainel();
+                                       await ChamadoEncontradoPainel(true);
                                        Xamarin.Essentials.Vibration.Vibrate(1000);
                                    }
                                });
@@ -258,34 +253,41 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             //}
         }
 
-        private async System.Threading.Tasks.Task ChamadoEncontradoPainel()
+        private async System.Threading.Tasks.Task ChamadoEncontradoPainel(bool cancelaTempo = false)
         {
-            await this.ctnProcurando.TranslateTo(-500, -20, 500);
+            //await this.ctnProcurando.TranslateTo(-500, -20, 500);
             this.ctnProcurando.IsVisible = false;
             this.imgLogo.IsVisible = false;
-            await this.ctnEncontrado.TranslateTo(-500, -20, 400);
+           // await this.ctnEncontrado.TranslateTo(-500, -20, 400);
             this.ctnEncontrado.IsVisible = true;
-            await this.ctnEncontrado.TranslateTo(0, 0, 400);
+            this.ctnEncontrado.FadeTo(0, 3000);
+            // await this.ctnEncontrado.TranslateTo(0, 0, 400);
 
-            CancelaEspera = new CancellationTokenSource();
-            Task.Delay(40000).ContinueWith(t =>
+            if (cancelaTempo)
             {
-                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
+                CancelaEspera = new CancellationTokenSource();
+                Task.Delay(40000).ContinueWith(t =>
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
                     {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                        // Recusa Corrida
                         RecusarCorrida(null, new EventArgs());
-                    });
-                }
-            }, CancelaEspera.Token);
+                        // Aviso Sonoro
+                        TextSpeechUtil.ExecutarVoz($"Corrida rejeitada por inativídade.");
+                        });
+                    }
+                }, CancelaEspera.Token);
+            }
         }
 
         private async System.Threading.Tasks.Task ProcurandoChamadoPainel()
         {
-            await this.ctnProcurando.TranslateTo(0, 0, 300);
+           // await this.ctnProcurando.TranslateTo(0, 0, 300);
             this.ctnProcurando.IsVisible = true;
             this.imgLogo.IsVisible = true;
-            await this.ctnEncontrado.TranslateTo(-500, -20, 300);
+            //await this.ctnEncontrado.TranslateTo(-500, -20, 300);
             this.ctnEncontrado.IsVisible = false;
         }
 

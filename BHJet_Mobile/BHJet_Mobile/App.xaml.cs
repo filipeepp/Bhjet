@@ -1,7 +1,4 @@
-﻿
-using BHJet_Mobile.Servico;
-using BHJet_Mobile.Servico.Autenticacao;
-using BHJet_Mobile.Servico.Corrida;
+﻿using BHJet_Mobile.Servico.Autenticacao;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View;
@@ -9,9 +6,7 @@ using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Background;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]

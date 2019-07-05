@@ -29,6 +29,9 @@ namespace BHJet_Mobile.View
 
                 // Estiliza o menu
                 EstiloMenu();
+
+                // Abre novamente a tela inicial
+                App.Current.MainPage = new Index();
             }
         }
 
@@ -55,7 +58,7 @@ namespace BHJet_Mobile.View
             if(UsuarioAutenticado.Instance.IDCorridaAtendimento != null ||
                 UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
                 this.btnStatus.BackgroundColor = Color.Green;
-            else if (!UsuarioAutenticado.Instance.StatusAplicatico)
+            else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada == null)
                 this.btnStatus.BackgroundColor = Color.Red;
             else
                 this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
