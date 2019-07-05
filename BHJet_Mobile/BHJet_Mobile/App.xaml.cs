@@ -57,28 +57,28 @@ namespace BHJet_Mobile
 
         protected override void OnSleep()
         {
-            if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
-                  UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
-                  !UsuarioAutenticado.Instance.StatusAplicatico)
-            {
-                //BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
-                //BackgroundAggregatorService.StartBackgroundService();
-                UsuarioAutenticado.Instance.FinalizaAtendimento();
-                try
-                {
-                    new CorridaServico().RecusarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
-                }
-                finally
-                {
-                    // finalizada
-                    MainPage = new Index();
-                }
-            }
+            //if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
+            //      UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
+            //      !UsuarioAutenticado.Instance.StatusAplicatico)
+            //{
+            //    //BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
+            //    //BackgroundAggregatorService.StartBackgroundService();
+            //    UsuarioAutenticado.Instance.FinalizaAtendimento();
+            //    try
+            //    {
+            //        new CorridaServico().RecusarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
+            //    }
+            //    finally
+            //    {
+            //        // finalizada
+            //        MainPage = new Index();
+            //    }
+            //}
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            
         }
     }
 }

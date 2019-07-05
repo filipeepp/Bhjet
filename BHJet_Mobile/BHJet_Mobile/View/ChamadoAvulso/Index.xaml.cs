@@ -4,6 +4,7 @@ using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,13 +58,14 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             get; set;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             try
             {
                 // Carrega Inicio
                 ViewModel.Carrega();
 
+                // Tratamento de Logon
                 if (Logando)
                 {
                     // Logado
@@ -77,10 +79,16 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                     else
                         EfeitoPesquisaDesativada();
                 }
+                // Permite Pesquisa Corrida
                 if (ViewModel.PermitePesquisaCorrida)
                 {
                     EfeitoPesquisaAtivada();
                     DoWorkAsyncInfiniteLoop();
+                }
+                // Corrida encontrada
+                else if(!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
+                {
+                    await ChamadoEncontradoPainel();
                 }
             }
             catch (Exception e)
@@ -116,10 +124,12 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                                    Xamarin.Essentials.Vibration.Vibrate(1000);
                                    try
                                    {
+                                       var locales = await TextToSpeech.GetLocalesAsync();
                                        var settings = new SpeechOptions()
                                        {
                                            Volume = .75f,
-                                           Pitch = 1.0f
+                                           Pitch = 1.0f,
+                                           Locale = locales.Where(l => l?.Country != null && l.Country?.ToUpper() == "BR").FirstOrDefault()
                                        };
                                        TextToSpeech.SpeakAsync($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.", settings);
                                    }
@@ -225,27 +235,27 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         protected async override void OnDisappearing()
         {
-            bool finalizaAt = false;
-            try
-            {
-                ViewModel.Loading = true;
-                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
-                UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
-                !UsuarioAutenticado.Instance.StatusAplicatico)
-                {
-                    finalizaAt = true;
-                    await ViewModel.RecusarCorrida();
-                }
-            }
-            catch (Exception e)
-            {
-                this.TrataExceptionMobile(e);
-            }
-            finally
-            {
-                if (finalizaAt)
-                    await FinalizaAtendimento();
-            }
+            //bool finalizaAt = false;
+            //try
+            //{
+            //    ViewModel.Loading = true;
+            //    if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
+            //    UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
+            //    !UsuarioAutenticado.Instance.StatusAplicatico)
+            //    {
+            //        finalizaAt = true;
+            //        await ViewModel.RecusarCorrida();
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    this.TrataExceptionMobile(e);
+            //}
+            //finally
+            //{
+            //    if (finalizaAt)
+            //        await FinalizaAtendimento();
+            //}
         }
 
         private async System.Threading.Tasks.Task ChamadoEncontradoPainel()
@@ -260,7 +270,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             CancelaEspera = new CancellationTokenSource();
             Task.Delay(40000).ContinueWith(t =>
             {
-                if(UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
+                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
                 {
                     Device.BeginInvokeOnMainThread(async () =>
                     {

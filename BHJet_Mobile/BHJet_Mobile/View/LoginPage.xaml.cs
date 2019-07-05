@@ -6,6 +6,7 @@ using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,8 +38,9 @@ namespace BHJet_Mobile.View
         /// <summary>
         /// Abrindo
         /// </summary>
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
+      
 
         }
 
