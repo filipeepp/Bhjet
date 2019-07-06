@@ -85,6 +85,7 @@ namespace BHJet_Mobile.Sessao
 
         public void FinalizaAtendimento()
         {
+            Instance.IDCorridaPesquisada = null;
             Instance.IDCorridaAtendimento = null;
             Instance.StatusAplicatico = true;
             GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, null);

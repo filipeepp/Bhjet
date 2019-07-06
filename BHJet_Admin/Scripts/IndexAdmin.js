@@ -185,24 +185,26 @@ $(document).ready(function ($) {
         }, 1000);
     });
 
-        //(function (delay, callback) {
-        //    var loop = function () {
-        //        callback();
-        //        setTimeout(loop, delay);
-        //    }; loop();
-        //})(2000, function () {
+        (function (delay, callback) {
+            var loop = function () {
+                callback();
+                setTimeout(loop, delay);
+            }; loop();
+        })(15000, function () {
+            $.ajax({
+                dataType: "json",
+                type: "GET",
+                url: "Home/DashDisp",
+                success: function (data) {
 
-        //    $.ajax({
-        //        type: "GET",
-        //        url: "Home/Index",
-        //        contentType: "application/json; charset=utf-8",
-        //        success: function (data) {
-        //            $(".breadcrumb").load(data);
-        //        }
-        //    });
+                    $("#ch_ac").text(data.ChamadosAvulsosAguardandoCarro);
+                    $("#ch_am").text(data.ChamadosAvulsosAguardandoMoto);
+                    $("#car_disp").text(data.CarrosDisponiveis);
+                    $("#mt_disp").text(data.MotociclistasDisponiveis);
 
-           
-        //});
+                }
+            });
+        });
 
     $("#pesquisaCliente").keyup(delay(function (e) {
         bsccli();
