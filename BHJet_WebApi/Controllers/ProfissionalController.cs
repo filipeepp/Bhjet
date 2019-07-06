@@ -75,7 +75,7 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult GetLocalizacaoMotoristaDisponivel(long idProfissional)
         {
             // Busca Dados resumidos
-            var entidade = new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
+            var entidade = new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponivel(idProfissional);
 
             // Validacao
             if (entidade == null)
@@ -100,7 +100,7 @@ namespace BHJet_WebApi.Controllers
         public IHttpActionResult PutlocalizacaoMotoristaDisponivel(long idProfissional)
         {
             // Busca Dados resumidos
-            new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponiveil(idProfissional);
+            new ProfissionalRepositorio().BuscaLocalizacaoProfissionalDisponivel(idProfissional);
 
             // Return
             return Ok();

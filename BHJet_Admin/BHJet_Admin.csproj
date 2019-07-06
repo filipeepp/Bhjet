@@ -249,6 +249,7 @@
     <Content Include="Images\logoLogisticaPreto.jpg" />
     <Content Include="Images\mapCar.png" />
     <Content Include="Images\mapCorrida.png" />
+    <Content Include="Images\question.png" />
     <Content Include="Images\sucesso.png" />
     <Content Include="Images\warming.png" />
     <Content Include="Scripts\AreaAtuacao.js" />

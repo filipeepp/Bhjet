@@ -9,6 +9,91 @@ namespace BHJet_Repositorio.Admin
     public class CorridaRepositorio : RepositorioBase
     {
         /// <summary>
+        /// Verifica CorridaPertenceUsuario
+        /// </summary>
+        /// <param name="idStatus"></param>
+        /// <param name="idCorrida"></param>
+        public bool CorridaPertenceUsuario(long idCorrida, long idUsuario)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select CAST(count(*) as bit) from tblCorridas C
+                                  where idCorrida =  @idCorrida and 
+                                        (idUsuarioChamador =  @idUsuario or (select idTipoUsuario from tblUsuarios where idUsuario = @idUsuario) = 1)";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<bool>(query, new
+                {
+                    idCorrida = idCorrida,
+                    idUsuario = idUsuario
+                });
+            }
+        }
+
+        /// <summary>
+        /// Verifica se corrida esta cancelada ou encerrada
+        /// </summary>
+        /// <param name="idStatus"></param>
+        /// <param name="idCorrida"></param>
+        public bool CorridaEncerrada(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query
+                string query = @"select CAST(count(*) as bit) from tblCorridas
+									where idCorrida = @idCorrida and idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitFinaliza = 1 or bitCancela = 1)";
+
+                // Execução
+                return sqlConnection.QueryFirstOrDefault<bool>(query, new
+                {
+                    idCorrida = idCorrida
+                });
+            }
+        }
+
+        /// <summary>
+        /// Cancela Corrida
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void CancelaCorrida(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                using (var trans = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Query
+                        string query = @"update tblCorridas set idStatusCorrida = 7 where idCorrida = @idCorrida";
+
+                        // Execução
+                        sqlConnection.Execute(query, new
+                        {
+                            idCorrida = idCorrida
+                        }, trans);
+
+                        // Query
+                        query = @"update tblLogCorrida set idStatusCorrida = 7 where idCorrida = @idCorrida";
+
+                        // Execução
+                        sqlConnection.Execute(query, new
+                        {
+                            idCorrida = idCorrida
+                        }, trans);
+
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Busca Profissionais Disponiveis
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
@@ -159,7 +244,7 @@ namespace BHJet_Repositorio.Admin
                     // Trava corrida temporariamente
                     if (corrida != null)
                     {
-                        string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 1, 
+                        string queryAceitaTemp = @"update tblCorridas set idStatusCorrida  = 12, 
                                                                       idUsuarioColaboradorEmpresa = @idCol
                                                                 where idCorrida = @corrida";
                         trans.Connection.Execute(queryAceitaTemp, new
@@ -280,14 +365,37 @@ namespace BHJet_Repositorio.Admin
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
-                string query = @"update tblEnderecosCorrida set dtHoraChegada = GETDATE() where idEnderecoCorrida = @id";
-
-                // Execução
-                sqlConnection.Execute(query, new
+                using (var trans = sqlConnection.BeginTransaction())
                 {
-                    id = idEnderecoCorrida
-                });
+                    try
+                    {
+                        // Query
+                        string query = @"update tblEnderecosCorrida set dtHoraChegada = GETDATE() where idEnderecoCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idEnderecoCorrida
+                        }, trans);
+
+                        // Query
+                        query = @"update tblLogCorrida set idStatusCorrida = 2 where idEnderecoCorrida = @id";
+
+                        // Execução
+                        trans.Connection.Execute(query, new
+                        {
+                            id = idEnderecoCorrida,
+                        }, trans);
+
+                        // Commit
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 
@@ -300,7 +408,7 @@ namespace BHJet_Repositorio.Admin
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
-                string query = @"select * from tblDOMStatusCorrida";
+                string query = @"select * from tblDOMStatusCorrida where bitExibeSistema = 1";
 
                 // Execução
                 return sqlConnection.Query<StatusEntidade>(query);

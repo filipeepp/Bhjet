@@ -1,4 +1,18 @@
 ﻿
+function cnchev() {
+    $.ajax({
+        dataType: "json",
+        type: "PATCH",
+        url: "../Dashboard/CnChEv",
+        success: function (data) {
+            MensagemSucesso(data);
+        },
+        error: function (e) {
+            MensagemAlerta(e.responseText);
+        }
+    });
+}
+
 var lines = [];
 var rotas = [];
 
@@ -16,6 +30,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     desenhaLinhas();
     carregaMapaDir();
+
+    $("#cnlch").click(function () { cnchev(); })
+
+    $("#cnch").click(function () {
+        $("#modalCancelamento").modal("show");
+        setTimeout(function () {
+            $('.modal-backdrop').remove();
+        }, 1000);
+    })
 
     $("#map_canvas").css("position", "absolute");
     $("#map_canvas").height($("#prContent").height() + 150);

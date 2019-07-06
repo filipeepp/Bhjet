@@ -16,6 +16,18 @@
     });
 });
 
+function MensagemAlerta(msg) {
+    $("#msgModal").text(msg)
+    $("#imgMensagem").attr("src", "..\\Images\\warming.png");
+    $('#myModal').modal('show')
+}
+
+function MensagemSucesso(msg) {
+    $("#msgModal").text(msg)
+    $("#imgMensagem").attr("src", "..\\Images\\sucesso.png");
+    $('#myModal').modal('show')
+}
+
 function AdicionarErroCampo(idField, message, tempoAtivo) {
     var para = document.createElement("p");
     var node = document.createTextNode(message);

@@ -47,33 +47,17 @@ namespace BHJet_Mobile
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()
         {
-            //if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
-            //      UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
-            //      !UsuarioAutenticado.Instance.StatusAplicatico)
-            //{
-            //    //BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
-            //    //BackgroundAggregatorService.StartBackgroundService();
-            //    UsuarioAutenticado.Instance.FinalizaAtendimento();
-            //    try
-            //    {
-            //        new CorridaServico().RecusarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
-            //    }
-            //    finally
-            //    {
-            //        // finalizada
-            //        MainPage = new Index();
-            //    }
-            //}
         }
 
         protected override void OnResume()
         {
-            
+            var mainType = App.Current.MainPage.GetType().Name;
+            if (mainType == typeof(Index).Name)
+                App.Current.MainPage = new Index();
         }
     }
 }

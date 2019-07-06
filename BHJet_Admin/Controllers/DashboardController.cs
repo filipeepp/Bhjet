@@ -2,6 +2,7 @@
 using BHJet_Admin.Models;
 using BHJet_Admin.Models.Dashboard;
 using BHJet_Core.Extension;
+using BHJet_Core.Variaveis;
 using BHJet_DTO.Diaria;
 using BHJet_Enumeradores;
 using BHJet_Servico.Cliente;
@@ -172,11 +173,24 @@ namespace BHJet_Admin.Controllers
             {
                 // Consiste Entrada
                 if (model == null)
-                    return null;
+                {
+                    if (TempData["idPesquisada"] == null)
+                        return null;
+                    else
+                    {
+                        model = new ResumoModel()
+                        {
+                            PesquisaOSCliente = TempData["idPesquisada"].ToString()
+                        };
+                    }
+                }
 
                 // chamado pesquisado
                 if (!long.TryParse(model.PesquisaOSCliente, out long osCliente))
                     return RedirectToAction("Index", "Home");
+
+                // ID Corrida
+                TempData["idPesquisada"] = osCliente;
 
                 // Busca Dados da OS
                 var entidade = corridaServico.BuscaDetalheCorrida(osCliente);
@@ -409,6 +423,7 @@ namespace BHJet_Admin.Controllers
             }
         }
 
+        // Busca tipos de veiculos
         [HttpGet]
         [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BcTpVec()
@@ -422,6 +437,33 @@ namespace BHJet_Admin.Controllers
                 label = x.ID + " - " + x.Descricao,
                 value = x.ID
             }), JsonRequestBehavior.AllowGet);
+        }
+
+        // Cancela chamado
+        [HttpPatch]
+        //[ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
+        public JsonResult CnChEv()
+        {
+            try
+            {
+                // Get 
+                if (TempData["idPesquisada"] == null)
+                    throw new Exception(Mensagem.Erro.ErroPadrao);
+
+                // Corrida
+                long osCliente = (long)TempData["idPesquisada"];
+                TempData["idPesquisada"] = osCliente;
+
+                // Recupera dados
+                corridaServico.CancelarCorrida(osCliente);
+
+                // Return
+                return Json("Corrida cancelada com sucesso");
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
         }
 
         private string MontaDescricaoProfissional(int id, string nomeMotorista, TipoProfissional tipo)

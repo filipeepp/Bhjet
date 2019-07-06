@@ -22,6 +22,8 @@ namespace BHJet_Mobile.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
+            if (UsuarioAutenticado.Instance.IDCorridaPesquisada != null || UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                return;
             if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
             {
                 // Envia ordem
@@ -55,9 +57,9 @@ namespace BHJet_Mobile.View
 
         private void EstiloMenu()
         {
-            if(UsuarioAutenticado.Instance.IDCorridaAtendimento != null ||
+            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null ||
                 UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                this.btnStatus.BackgroundColor = Color.Green;
+                this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
             else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada == null)
                 this.btnStatus.BackgroundColor = Color.Red;
             else

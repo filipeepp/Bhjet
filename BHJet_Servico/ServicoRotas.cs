@@ -27,6 +27,7 @@ namespace BHJet_Servico
             public const string GetOcorrencia = "api/Corrida/ocorrencias";
             public const string GetPreco = "api/Corrida/preco";
             public const string PostCorrida = "api/Corrida";
+            public const string PutCancelaCorrida = "api/Corrida/{0}/cancelar";
         }
 
         public class AreaAtuacao

@@ -28,7 +28,7 @@ namespace BHJet_Repositorio.Admin
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
-						                 CED.idTipoProfissional = @TipoProfissional";
+						                 CED.idTipoProfissional = @TipoProfissional and CED.dtUltimaAtualizacao >= DATEADD(minute, -5, GETDATE())";
 
                 // Execução
                 return sqlConnection.Query<ProfissionalDisponivelEntidade>(query, new
@@ -43,7 +43,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TipoProfissional</param>
         /// <returns>UsuarioEntidade</returns>
-        public ProfissionalDisponivelEntidade BuscaLocalizacaoProfissionalDisponiveil(long idProfissional)
+        public ProfissionalDisponivelEntidade BuscaLocalizacaoProfissionalDisponivel(long idProfissional)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -51,10 +51,9 @@ namespace BHJet_Repositorio.Admin
                 string query = @"select geoPosicao.STY  as vcLatitude, 
        geoPosicao.STX  as vcLongitude,
 	   idRegistro, CE.idColaboradorEmpresaSistema, CE.idTipoProfissional, vcNomeCompleto, bitDisponivel from tblColaboradoresEmpresaDisponiveis CED
-                                        join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
+                                        left join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
-					                     CED.geoPosicao is not null and
-						                 CED.idColaboradorEmpresaSistema = @id";
+					                     CED.geoPosicao is not null and CED.idColaboradorEmpresaSistema = @id";
 
                 // Execução
                 return sqlConnection.QueryFirstOrDefault<ProfissionalDisponivelEntidade>(query, new
@@ -676,7 +675,7 @@ namespace BHJet_Repositorio.Admin
 	                                       CE.vcEmail,
 	                                       CE.idTipoProfissional,
                                            (select top 1 idCorrida from tblCorridas where idUsuarioColaboradorEmpresa = CE.idColaboradorEmpresaSistema
-										    and idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitFinaliza = 0 and bitCancela = 0) order by dtDataHoraSolicitacao desc) IDCorrida
+										    and idStatusCorrida in (select idStatusCorrida from tblDOMStatusCorrida where bitFinaliza = 0 and bitCancela = 0 and idStatusCorrida != 12) order by dtDataHoraSolicitacao desc) IDCorrida
 	                                from tblUsuarios US
 		                               join tblDOMTiposUsuario TS on (US.idTipoUsuario = TS.idTipoUsuario)
 		                               join tblColaboradoresEmpresaSistema CE on (CE.idUsuario = US.idUsuario)
@@ -713,7 +712,8 @@ namespace BHJet_Repositorio.Admin
                     string query = @"update tblColaboradoresEmpresaDisponiveis 
 	                                set bitDisponivel = @disponivel, 
 	                                    geoPosicao = (select geometry::Point(@log, @lat, 4326)),
-		                                idTipoProfissional = @tipoProfissional1
+		                                idTipoProfissional = @tipoProfissional1,
+                                        dtUltimaAtualizacao = getdate() 
                                   where idColaboradorEmpresaSistema = @id";
 
                     // Query Multiple
@@ -733,12 +733,14 @@ namespace BHJet_Repositorio.Admin
                                                        ([idColaboradorEmpresaSistema]
                                                                   ,[idTipoProfissional]
                                                                   ,[geoPosicao]
-                                                                  ,[bitDisponivel])
+                                                                  ,[bitDisponivel]
+                                                                  ,[dtUltimaAtualizacao])
                                                             VALUES
                                                                   (@id
                                                                   ,@tipoProfissional1
                                                                   ,(select geometry::Point(@log, @lat, 4326))
-                                                                  ,@disponivel)";
+                                                                  ,@disponivel
+                                                                  ,getdate())";
 
                     // Query Multiple
                     sqlConnection.Execute(query, new

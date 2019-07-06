@@ -183,7 +183,26 @@ $(document).ready(function ($) {
         setTimeout(function () {
             $('.modal-backdrop').remove();
         }, 1000);
-    })
+    });
+
+        //(function (delay, callback) {
+        //    var loop = function () {
+        //        callback();
+        //        setTimeout(loop, delay);
+        //    }; loop();
+        //})(2000, function () {
+
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "Home/Index",
+        //        contentType: "application/json; charset=utf-8",
+        //        success: function (data) {
+        //            $(".breadcrumb").load(data);
+        //        }
+        //    });
+
+           
+        //});
 
     $("#pesquisaCliente").keyup(delay(function (e) {
         bsccli();

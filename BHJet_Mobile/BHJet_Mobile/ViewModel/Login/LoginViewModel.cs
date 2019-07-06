@@ -113,7 +113,7 @@ namespace BHJet_Mobile.ViewModel.Login
                         if (item == null || !item.Any())
                             return false;
 
-                        var usuario = item.FirstOrDefault();
+                        var usuario = item.LastOrDefault();
 
                         if (usuario != null)
                         {

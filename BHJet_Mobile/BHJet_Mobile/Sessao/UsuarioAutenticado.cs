@@ -1,4 +1,5 @@
 ﻿using BHJet_Enumeradores;
+using BHJet_Mobile.Infra;
 using BHJet_Mobile.Infra.Database;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Servico.Motorista.Model;
@@ -31,7 +32,7 @@ namespace BHJet_Mobile.Sessao
 
         private UsuarioAutenticado()
         {
-           // TempoDeEspera = new List<EsperaOcorrencia>();
+            // TempoDeEspera = new List<EsperaOcorrencia>();
         }
 
         public static UsuarioAutenticado Instance
@@ -78,12 +79,15 @@ namespace BHJet_Mobile.Sessao
         {
             if (Instance.CancelaPesquisa != null)
                 Instance.CancelaPesquisa.Cancel();
+            UsuarioAutenticado.Instance.AlteraDisponibilidade(false, false);
+            GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, null);
         }
 
         public void FinalizaAtendimento()
         {
             Instance.IDCorridaAtendimento = null;
             Instance.StatusAplicatico = true;
+            GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, null);
         }
 
         public async Task Sair()
@@ -105,7 +109,10 @@ namespace BHJet_Mobile.Sessao
                 Instance.StatusAplicatico = false;
 
                 //
-                await CancelarDisponibilidade();
+                await AlteraDisponibilidade();
+
+                //
+                GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, null);
             }
             finally
             {
@@ -113,20 +120,28 @@ namespace BHJet_Mobile.Sessao
             }
         }
 
-        public async Task CancelarDisponibilidade()
+        public async Task AlteraDisponibilidade(bool disponibilidade = false, bool lancarErro = true)
         {
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
-            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
-
-            // Atualiza
-            await new MotoristaServico().AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
+            try
             {
-                bitDisponivel = false,
-                idTipoProfissional = Instance.Tipo,
-                latitude = position.Latitude,
-                longitude = position.Longitude
-            });
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+                var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+
+                // Atualiza
+                await new MotoristaServico().AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
+                {
+                    bitDisponivel = disponibilidade,
+                    idTipoProfissional = Instance.Tipo,
+                    latitude = position.Latitude,
+                    longitude = position.Longitude
+                });
+            }
+            catch
+            {
+                if (lancarErro)
+                    throw;
+            }
         }
     }
 

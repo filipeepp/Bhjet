@@ -26,7 +26,7 @@ namespace BHJet_Repositorio.Admin
 
 		                        --- Quantidade de motorista e motociclista disponiveis
 		                               select idTipoProfissional as TipoProfissional, count(*) as Quantidade from tblColaboradoresEmpresaDisponiveis
-			                                where bitDisponivel = 1
+			                                where bitDisponivel = 1 and geoPosicao is not null and dtUltimaAtualizacao >= DATEADD(minute, -5, GETDATE())
 				                      group by idTipoProfissional";
 
                 // Query Multiple
