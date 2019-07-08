@@ -2,12 +2,12 @@
 using BHJet_Admin.Models;
 using BHJet_DTO.Corrida;
 using BHJet_Enumeradores;
+using BHJet_Servico.Area;
 using BHJet_Servico.Cliente;
 using BHJet_Servico.Corrida;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace BHJet_Admin.Controllers
 {
@@ -17,10 +17,13 @@ namespace BHJet_Admin.Controllers
 
         private readonly IClienteServico clienteServico;
 
-        public EntregasController(ICorridaServico _corridaServico, IClienteServico _clienteServico)
+        private readonly IAreaAtuacaoServico areaServico;
+
+        public EntregasController(ICorridaServico _corridaServico, IClienteServico _clienteServico, IAreaAtuacaoServico _area)
         {
             corridaServico = _corridaServico;
             clienteServico = _clienteServico;
+            areaServico = _area;
         }
 
         // Passo 1 - Destinos
@@ -169,6 +172,26 @@ namespace BHJet_Admin.Controllers
                 label = x.ID + " - " + x.Descricao,
                 value = x.ID
             }), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult BuscaAreas()
+        {
+            try
+            {
+                // Busca area atuação
+                var areas = areaServico.BuscaAreaAtuacao();
+
+                // Serializa
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(areas);
+
+                // Return
+                return Json(json, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }

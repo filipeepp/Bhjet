@@ -12,6 +12,7 @@ using BHJet_Servico.Usuario;
 using Newtonsoft.Json;
 using System;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -62,6 +63,37 @@ namespace BHJet_Admin.Controllers
                     ChamadosAvulsosAguardandoMoto = 0,
                     MotociclistasDisponiveis = 0
                 });
+            }
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
+        public JsonResult DashDisp()
+        {
+            try
+            {
+                // Busca dados Resumo
+                var modelResumo = resumoServico.BuscaResumo();
+
+                // Return
+                return Json(new ResumoModel()
+                {
+                    CarrosDisponiveis = modelResumo.MotoristasDisponiveis,
+                    ChamadosAvulsosAguardandoCarro = modelResumo.ChamadosAguardandoMotorista,
+                    ChamadosAvulsosAguardandoMoto = modelResumo.ChamadosAguardandoMotociclista,
+                    MotociclistasDisponiveis = modelResumo.MotociclistaDisponiveis
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                this.TrataErro(e);
+                return Json(new ResumoModel()
+                {
+                    CarrosDisponiveis = 0,
+                    ChamadosAvulsosAguardandoCarro = 0,
+                    ChamadosAvulsosAguardandoMoto = 0,
+                    MotociclistasDisponiveis = 0
+                }, JsonRequestBehavior.AllowGet);
             }
         }
 

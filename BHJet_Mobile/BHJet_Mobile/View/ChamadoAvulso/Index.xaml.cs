@@ -1,14 +1,13 @@
-﻿using BHJet_Mobile.Servico.Corrida;
+﻿using BHJet_Mobile.DependencyService;
+using BHJet_Mobile.Servico.Corrida;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
-using System.Linq;
-using System.Reflection;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -80,15 +79,19 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                         EfeitoPesquisaDesativada();
                 }
                 // Permite Pesquisa Corrida
-                if (ViewModel.PermitePesquisaCorrida)
+                else if (UsuarioAutenticado.Instance.StatusAplicatico)
                 {
                     EfeitoPesquisaAtivada();
                     DoWorkAsyncInfiniteLoop();
                 }
                 // Corrida encontrada
-                else if(!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
+                else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
                 {
                     await ChamadoEncontradoPainel();
+                }
+                else if (!UsuarioAutenticado.Instance.StatusAplicatico)
+                {
+                    EfeitoPesquisaDesativada();
                 }
             }
             catch (Exception e)
@@ -101,7 +104,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             try
             {
-                UsuarioAutenticado.Instance.CancelaPesquisaChamado();
+                if (UsuarioAutenticado.Instance.CancelaPesquisa != null)
+                    UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
                 UsuarioAutenticado.Instance.CancelaPesquisa = new CancellationTokenSource();
 
                 await System.Threading.Tasks.Task.Run(() =>
@@ -114,26 +118,19 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            // Cancela
                            if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
 
+                           // Envia localizacao e disponibilidade
+                           UsuarioAutenticado.Instance.AlteraDisponibilidade(true, false);
+
                            // Busca Corrida - Diaria
                            var resultado = ViewModel.BuscaCorrida();
                            if (resultado.Key)
                            {
                                Device.BeginInvokeOnMainThread(async () =>
                                {
-                                   // Vibracao
+                                   // Aviso Vibracao
                                    Xamarin.Essentials.Vibration.Vibrate(1000);
-                                   try
-                                   {
-                                       var locales = await TextToSpeech.GetLocalesAsync();
-                                       var settings = new SpeechOptions()
-                                       {
-                                           Volume = .75f,
-                                           Pitch = 1.0f,
-                                           Locale = locales.Where(l => l?.Country != null && l.Country?.ToUpper() == "BR").FirstOrDefault()
-                                       };
-                                       TextToSpeech.SpeakAsync($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.", settings);
-                                   }
-                                   catch { }
+                                   // Aviso Sonoro
+                                   TextSpeechUtil.ExecutarVoz($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.");
 
                                    // Redireciona para o tipo de chamado
                                    if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
@@ -141,7 +138,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                                    else
                                    {
                                        // Atualiza tela
-                                       await ChamadoEncontradoPainel();
+                                       await ChamadoEncontradoPainel(true);
                                        Xamarin.Essentials.Vibration.Vibrate(1000);
                                    }
                                });
@@ -201,8 +198,11 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         {
             // Controle
             ViewModel.AceitarCorrida();
+
             // Troca de página após Login
             App.Current.MainPage = new Detalhe();
+
+            //
             if (CancelaEspera != null)
                 CancelaEspera.Cancel();
         }
@@ -225,6 +225,24 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             }
         }
 
+        public async void LiberarCorrida()
+        {
+            try
+            {
+                await ViewModel.LiberarCorrida();
+            }
+            catch (Exception e)
+            {
+                this.TrataExceptionMobile(e);
+            }
+            finally
+            {
+                await FinalizaAtendimento();
+                if (CancelaEspera != null)
+                    CancelaEspera.Cancel();
+            }
+        }
+
         private async System.Threading.Tasks.Task FinalizaAtendimento()
         {
             UsuarioAutenticado.Instance.FinalizaAtendimento();
@@ -233,60 +251,45 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             DoWorkAsyncInfiniteLoop();
         }
 
-        protected async override void OnDisappearing()
+        private async System.Threading.Tasks.Task ChamadoEncontradoPainel(bool cancelaTempo = false)
         {
-            //bool finalizaAt = false;
-            //try
-            //{
-            //    ViewModel.Loading = true;
-            //    if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
-            //    UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
-            //    !UsuarioAutenticado.Instance.StatusAplicatico)
-            //    {
-            //        finalizaAt = true;
-            //        await ViewModel.RecusarCorrida();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    this.TrataExceptionMobile(e);
-            //}
-            //finally
-            //{
-            //    if (finalizaAt)
-            //        await FinalizaAtendimento();
-            //}
-        }
-
-        private async System.Threading.Tasks.Task ChamadoEncontradoPainel()
-        {
-            await this.ctnProcurando.TranslateTo(-500, -20, 500);
-            this.ctnProcurando.IsVisible = false;
-            this.imgLogo.IsVisible = false;
-            await this.ctnEncontrado.TranslateTo(-500, -20, 400);
-            this.ctnEncontrado.IsVisible = true;
-            await this.ctnEncontrado.TranslateTo(0, 0, 400);
-
-            CancelaEspera = new CancellationTokenSource();
-            Task.Delay(40000).ContinueWith(t =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
+                this.ViewModel.ChamadoEncontrado = true;
+            });
+            this.ViewModel.ChamadoEncontrado = true;
+            this.ViewModel.OnPropertyChanged("ChamadoEncontrado");
+            this.ApplyBindings();
+           
+            if (cancelaTempo)
+            {
+                CancelaEspera = new CancellationTokenSource();
+                Task.Delay(40000).ContinueWith(t =>
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
                     {
-                        RecusarCorrida(null, new EventArgs());
-                    });
-                }
-            }, CancelaEspera.Token);
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            // Recusa Corrida
+                            // RecusarCorrida(null, new EventArgs());
+                            LiberarCorrida();
+                            // Aviso Sonoro
+                            TextSpeechUtil.ExecutarVoz($"Corrida rejeitada por inativídade.");
+                        });
+                    }
+                }, CancelaEspera.Token);
+            }
         }
 
         private async System.Threading.Tasks.Task ProcurandoChamadoPainel()
         {
-            await this.ctnProcurando.TranslateTo(0, 0, 300);
-            this.ctnProcurando.IsVisible = true;
-            this.imgLogo.IsVisible = true;
-            await this.ctnEncontrado.TranslateTo(-500, -20, 300);
-            this.ctnEncontrado.IsVisible = false;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.ViewModel.ChamadoEncontrado = false;
+            });
+            this.ViewModel.ChamadoEncontrado = false;
+            this.ViewModel.OnPropertyChanged("ChamadoEncontrado");
+            this.ApplyBindings();
         }
 
         private void RegistrarBordo_Clicked(object sender, EventArgs e)

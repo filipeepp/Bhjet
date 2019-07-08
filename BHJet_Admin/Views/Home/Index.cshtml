@@ -37,7 +37,7 @@
                                 <a href="@Url.Action("ExibeLocalizacao", "Dashboard", new { tipoSolicitacao = BHJet_Enumeradores.DashboardTipoDisponivelEnum.ChamadoAguardandoMotociclista })">
                                     <div class="small-box bg-bhjet-blue-d">
                                         <div class="inner">
-                                            <h3><span class="counter"> @Html.Label(Model.ChamadosAvulsosAguardandoMoto.ToString())</span></h3>
+                                            <h3><span id="ch_am" class="counter"> @Html.Label(Model.ChamadosAvulsosAguardandoMoto.ToString())</span></h3>
                                             <h6>Chamados avulsos aguardando motociclistas</h6>
                                         </div>
                                         <div class="icon">
@@ -52,7 +52,7 @@
                                 <a href="@Url.Action("ExibeLocalizacao", "Dashboard", new { tipoSolicitacao = BHJet_Enumeradores.DashboardTipoDisponivelEnum.ChamadoAguardandoCarros })">
                                     <div class="small-box bg-bhjet-blue-l">
                                         <div class="inner">
-                                            <h3><span class="counter">@Html.Label(Model.ChamadosAvulsosAguardandoCarro.ToString())</span></h3>
+                                            <h3><span id="ch_ac" class="counter">@Html.Label(Model.ChamadosAvulsosAguardandoCarro.ToString())</span></h3>
                                             <h6>Chamados avulsos aguardando carros</h6>
                                         </div>
                                         <div class="icon">
@@ -67,7 +67,7 @@
                                 <a href="@Url.Action("ExibeLocalizacao", "Dashboard", new { tipoSolicitacao = BHJet_Enumeradores.DashboardTipoDisponivelEnum.MotociclistaDisponivel })">
                                     <div class="small-box bg-bhjet-blue-pu">
                                         <div class="inner">
-                                            <h3><span class="counter">@Html.Label(Model.MotociclistasDisponiveis.ToString())</span></h3>
+                                            <h3><span id="mt_disp" class="counter">@Html.Label(Model.MotociclistasDisponiveis.ToString())</span></h3>
                                             <h6>Motociclistas disponíveis</h6>
                                         </div>
                                         <div class="icon">
@@ -82,7 +82,7 @@
                                 <a href="@Url.Action("ExibeLocalizacao", "Dashboard", new { tipoSolicitacao = BHJet_Enumeradores.DashboardTipoDisponivelEnum.MotoristaDisponivel })">
                                     <div class="small-box bg-bhjet-blue-pi">
                                         <div class="inner">
-                                            <h3><span class="counter">@Html.Label(Model.CarrosDisponiveis.ToString())</span></h3>
+                                            <h3><span id="car_disp" class="counter">@Html.Label(Model.CarrosDisponiveis.ToString())</span></h3>
                                             <h6>Carros disponíveis</h6>
                                         </div>
                                         <div class="icon">

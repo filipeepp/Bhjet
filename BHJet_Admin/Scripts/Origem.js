@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         else {
             $("#txtEnderecoPartida").val("");
-            AdicionarErroCampo('txtEnderecoPartida', 'Endereço selecionado não está dentro da área de atuação da BHJet.', 10000);
+            AdicionarErroCampo('txtEnderecoPartida', 'Endereço selecionado não está dentro da área de atuação da BHJet.', 4500);
         }
     });
 

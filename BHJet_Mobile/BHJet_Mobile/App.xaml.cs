@@ -1,7 +1,4 @@
-﻿
-using BHJet_Mobile.Servico;
-using BHJet_Mobile.Servico.Autenticacao;
-using BHJet_Mobile.Servico.Corrida;
+﻿using BHJet_Mobile.Servico.Autenticacao;
 using BHJet_Mobile.Servico.Motorista;
 using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View;
@@ -9,9 +6,7 @@ using BHJet_Mobile.View.ChamadoAvulso;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.View.Util;
 using BHJet_Mobile.ViewModel.Login;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Background;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -52,33 +47,17 @@ namespace BHJet_Mobile
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()
         {
-            //if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null &&
-            //      UsuarioAutenticado.Instance.IDCorridaPesquisada != null &&
-            //      !UsuarioAutenticado.Instance.StatusAplicatico)
-            //{
-            //    //BackgroundAggregatorService.Add(() => new SomeBackgroundWork());
-            //    //BackgroundAggregatorService.StartBackgroundService();
-            //    UsuarioAutenticado.Instance.FinalizaAtendimento();
-            //    try
-            //    {
-            //        new CorridaServico().RecusarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
-            //    }
-            //    finally
-            //    {
-            //        // finalizada
-            //        MainPage = new Index();
-            //    }
-            //}
         }
 
         protected override void OnResume()
         {
-            
+            var mainType = App.Current.MainPage.GetType().Name;
+            if (mainType == typeof(Index).Name)
+                App.Current.MainPage = new Index();
         }
     }
 }

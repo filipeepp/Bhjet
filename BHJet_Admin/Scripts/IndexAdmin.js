@@ -183,7 +183,28 @@ $(document).ready(function ($) {
         setTimeout(function () {
             $('.modal-backdrop').remove();
         }, 1000);
-    })
+    });
+
+        (function (delay, callback) {
+            var loop = function () {
+                callback();
+                setTimeout(loop, delay);
+            }; loop();
+        })(15000, function () {
+            $.ajax({
+                dataType: "json",
+                type: "GET",
+                url: "Home/DashDisp",
+                success: function (data) {
+
+                    $("#ch_ac").text(data.ChamadosAvulsosAguardandoCarro);
+                    $("#ch_am").text(data.ChamadosAvulsosAguardandoMoto);
+                    $("#car_disp").text(data.CarrosDisponiveis);
+                    $("#mt_disp").text(data.MotociclistasDisponiveis);
+
+                }
+            });
+        });
 
     $("#pesquisaCliente").keyup(delay(function (e) {
         bsccli();

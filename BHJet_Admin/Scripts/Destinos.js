@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
             else {
                 autocomplete.parm.val("");
-                AdicionarErroCampo(autocomplete.parm[0].id, 'Endereço selecionado não está dentro da área de atuação da BHJet.', 10000);
+                AdicionarErroCampo(autocomplete.parm[0].id, 'Endereço selecionado não está dentro da área de atuação da BHJet.', 4500);
             }
         });
     })

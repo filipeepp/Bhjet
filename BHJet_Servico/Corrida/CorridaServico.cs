@@ -9,6 +9,7 @@ namespace BHJet_Servico.Corrida
         OcorrenciaDTO[] BuscaOcorrencias();
         PrecoCorridaDTO CalculoPrecoCorrida(CalculoCorridaDTO filtro);
         long IncluirCorrida(IncluirCorridaDTO filtro);
+        void CancelarCorrida(long idCorrida);
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -44,6 +45,11 @@ namespace BHJet_Servico.Corrida
         public long IncluirCorrida(IncluirCorridaDTO filtro)
         {
             return this.Post<IncluirCorridaDTO, long>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Corrida.PostCorrida}"), filtro);
+        }
+
+        public void CancelarCorrida(long idCorrida)
+        {
+            this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutCancelaCorrida, idCorrida)}"), "");
         }
     }
 }

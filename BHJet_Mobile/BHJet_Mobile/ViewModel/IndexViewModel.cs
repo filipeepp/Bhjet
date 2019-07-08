@@ -47,16 +47,30 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        private bool _PermitePesquisaCorrida;
-        public bool PermitePesquisaCorrida
+        private bool _ChamadoEncontrado;
+        public bool ChamadoEncontrado
         {
             get
             {
-                return _PermitePesquisaCorrida;
+                return _ChamadoEncontrado;
             }
             set
             {
-                _PermitePesquisaCorrida = value;
+                _ChamadoEncontrado = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _ExibeLogomarca;
+        public bool ExibeLogomarca
+        {
+            get
+            {
+                return _ExibeLogomarca;
+            }
+            set
+            {
+                _ExibeLogomarca = value;
                 OnPropertyChanged();
             }
         }
@@ -92,12 +106,12 @@ namespace BHJet_Mobile.ViewModel
 
                 // Permite pesquisar corrida
                 if (usuarioAutenticado.StatusAplicatico)
-                {
-                    PermitePesquisaCorrida = true;
-                    IDCorridaEncontrada = null;
-                }
-                else
-                    PermitePesquisaCorrida = false;
+                    IDCorridaEncontrada = null;       
+
+                // Busca Dados Corrida pesquisada
+                var dadosCorridaPesquisa = GlobalVariablesManager.GetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada) as ChamadoEncontradoItemViewModel;
+                if (dadosCorridaPesquisa != null)
+                    chamadoItem = dadosCorridaPesquisa;
             }
             finally
             {
@@ -147,6 +161,8 @@ namespace BHJet_Mobile.ViewModel
                             Comissao = corrida.Comissao.ToString("C"),
                             DestinoInicial = corrida.EnderecoCompleto
                         };
+                        GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, chamadoItem);
+
                         // Return
                         return new KeyValuePair<bool, TipoContrato>(true, TipoContrato.ChamadosAvulsos);
                     }
@@ -208,6 +224,7 @@ namespace BHJet_Mobile.ViewModel
         {
             if (IDCorridaEncontrada != null)
             {
+                usuarioAutenticado.IDCorridaPesquisada = null;
                 await corridaServico.LiberarOrdemServico(IDCorridaEncontrada ?? 0);
                 IDCorridaEncontrada = null;
             }

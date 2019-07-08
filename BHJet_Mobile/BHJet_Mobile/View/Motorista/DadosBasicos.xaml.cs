@@ -59,6 +59,7 @@ namespace BHJet_Mobile.View.Motorista
         {
             try
             {
+                UsuarioAutenticado.Instance.CancelaPesquisaChamado();
                 App.Current.MainPage = new TipoVeiculo();
             }
             catch (Exception ex)
