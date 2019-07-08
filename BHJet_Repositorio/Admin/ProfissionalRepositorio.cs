@@ -28,7 +28,7 @@ namespace BHJet_Repositorio.Admin
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
-						                 CED.idTipoProfissional = @TipoProfissional and CED.dtUltimaAtualizacao >= DATEADD(minute, -5, GETDATE())";
+						                 CED.idTipoProfissional = @TipoProfissional and CED.dtUltimaAtualizacao >= DATEADD(minute, -3, GETDATE())";
 
                 // Execução
                 return sqlConnection.Query<ProfissionalDisponivelEntidade>(query, new
