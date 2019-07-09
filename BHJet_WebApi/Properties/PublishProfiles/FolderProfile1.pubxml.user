@@ -40,16 +40,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/05/2019 13:31:28</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.dll">
-      <publishTime>07/06/2019 17:04:22</publishTime>
+      <publishTime>07/08/2019 22:11:51</publishTime>
     </File>
     <File Include="bin/BHJet_Repositorio.pdb">
-      <publishTime>07/06/2019 17:04:22</publishTime>
+      <publishTime>07/08/2019 22:11:51</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.dll">
-      <publishTime>07/06/2019 17:04:24</publishTime>
+      <publishTime>07/08/2019 22:11:52</publishTime>
     </File>
     <File Include="bin/BHJet_WebApi.pdb">
-      <publishTime>07/06/2019 17:04:24</publishTime>
+      <publishTime>07/08/2019 22:11:52</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
       <publishTime>05/16/2018 18:40:30</publishTime>
