@@ -248,7 +248,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             UsuarioAutenticado.Instance.FinalizaAtendimento();
             await ProcurandoChamadoPainel();
             EfeitoPesquisaAtivada();
-            DoWorkAsyncInfiniteLoop();
+            //DoWorkAsyncInfiniteLoop();
+            App.Current.MainPage = new Index();
         }
 
         private async System.Threading.Tasks.Task ChamadoEncontradoPainel(bool cancelaTempo = false)
