@@ -13,7 +13,7 @@ namespace BHJet_Mobile.Servico
 
         public async Task StartJob()
         {
-                await new CorridaServico().LiberarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
+                //await new CorridaServico().LiberarOrdemServico(UsuarioAutenticado.Instance.IDCorridaPesquisada ?? 0);
         }
     }
 }

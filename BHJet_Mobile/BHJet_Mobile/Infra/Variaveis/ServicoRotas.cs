@@ -34,6 +34,7 @@
             public const string PutEncerrarCorrida = "api/Corrida/encerrar/{0}/status/{1}";
             public const string PutOcorrenciaCorrida = "api/Corrida/status/{0}/log/{1}/corrida/{2}";
             public const string PostRecusarCorrida = "api/Corrida/recusar/{0}";
+            public const string PutAceitarCorrida = "api/Corrida/aceitar/{0}";
             public const string PostLiberarCorrida = "api/Corrida/liberar/{0}";
             public const string GetContatoCorrida = "api/Corrida/{0}/contato";
         }

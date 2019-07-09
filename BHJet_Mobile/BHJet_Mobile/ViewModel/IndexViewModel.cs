@@ -75,20 +75,6 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        private long? _IDCorridaEncontrada;
-        public long? IDCorridaEncontrada
-        {
-            get
-            {
-                return _IDCorridaEncontrada;
-            }
-            set
-            {
-                _IDCorridaEncontrada = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string NomeCompleto
         {
             get
@@ -99,25 +85,13 @@ namespace BHJet_Mobile.ViewModel
 
         public void Carrega()
         {
-            try
-            {
-                // Load
-                Loading = true;
+            // Load
+            Loading = true;
 
-                // Permite pesquisar corrida
-                if (usuarioAutenticado.StatusAplicatico)
-                    IDCorridaEncontrada = null;       
-
-                // Busca Dados Corrida pesquisada
-                var dadosCorridaPesquisa = GlobalVariablesManager.GetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada) as ChamadoEncontradoItemViewModel;
-                if (dadosCorridaPesquisa != null)
-                    chamadoItem = dadosCorridaPesquisa;
-            }
-            finally
-            {
-                // Load
-                Loading = false;
-            }
+            // Busca Dados Corrida pesquisada
+            var dadosCorridaPesquisa = GlobalVariablesManager.GetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada) as ChamadoEncontradoItemViewModel;
+            if (dadosCorridaPesquisa != null)
+                chamadoItem = dadosCorridaPesquisa;
         }
 
         public KeyValuePair<bool, TipoContrato> BuscaCorrida()
@@ -141,7 +115,6 @@ namespace BHJet_Mobile.ViewModel
                 {
                     // Busca Corrida
                     var corrida = new CorridaAbertaModel();
-                    IDCorridaEncontrada = null;
                     Task.Run(async () =>
                     {
                         corrida = await BuscaCorridaAberta();
@@ -151,8 +124,7 @@ namespace BHJet_Mobile.ViewModel
                     if (corrida != null)
                     {
                         // ID Corrida
-                        IDCorridaEncontrada = corrida.ID;
-                        usuarioAutenticado.IDCorridaPesquisada = corrida.ID;
+                        usuarioAutenticado.IDCorridaAtendimento = corrida.ID;
 
                         // Binding
                         chamadoItem = new ChamadoEncontradoItemViewModel()
@@ -168,7 +140,6 @@ namespace BHJet_Mobile.ViewModel
                     }
                     else
                     {
-                        IDCorridaEncontrada = null;
                         usuarioAutenticado.IDCorridaAtendimento = null;
                         return new KeyValuePair<bool, TipoContrato>(false, TipoContrato.ChamadosAvulsos);
                     }
@@ -180,10 +151,13 @@ namespace BHJet_Mobile.ViewModel
             }
         }
 
-        public void AceitarCorrida()
+        public async Task AceitarCorrida()
         {
-            usuarioAutenticado.IDCorridaPesquisada = null;
-            usuarioAutenticado.IDCorridaAtendimento = IDCorridaEncontrada;
+            // Aceitar
+            await corridaServico.AceitarOrdemServico(UsuarioAutenticado.Instance.IDCorridaAtendimento ?? 0);
+
+            // Atendimento
+            usuarioAutenticado.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.Atendimento;
         }
 
         private async Task<PerfilMotoristaModel> BuscaPerfilMotorista()
@@ -212,22 +186,12 @@ namespace BHJet_Mobile.ViewModel
 
         public async Task RecusarCorrida()
         {
-            if (IDCorridaEncontrada != null)
-            {
-                usuarioAutenticado.IDCorridaPesquisada = null;
-                await corridaServico.RecusarOrdemServico(IDCorridaEncontrada ?? 0);
-                IDCorridaEncontrada = null;
-            }
+            await corridaServico.RecusarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
         }
 
         public async Task LiberarCorrida()
         {
-            if (IDCorridaEncontrada != null)
-            {
-                usuarioAutenticado.IDCorridaPesquisada = null;
-                await corridaServico.LiberarOrdemServico(IDCorridaEncontrada ?? 0);
-                IDCorridaEncontrada = null;
-            }
+            await corridaServico.LiberarOrdemServico(usuarioAutenticado.IDCorridaAtendimento ?? 0);
         }
     }
 }

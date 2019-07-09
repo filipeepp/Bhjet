@@ -594,6 +594,25 @@ namespace BHJet_Repositorio.Admin
         }
 
         /// <summary>
+        ///  Liberar Ordem Servico
+        /// </summary>
+        /// <param name="idCorrida"></param>
+        public void AceitarOrdemServico(long idCorrida)
+        {
+            using (var sqlConnection = this.InstanciaConexao())
+            {
+                // Query STATUS
+                string queryCorrida = @"update tblCorridas set idStatusCorrida = 1 where idCorrida = @id";
+                // Executa
+                sqlConnection.Execute(queryCorrida, new
+                {
+                    id = idCorrida
+                });
+
+            }
+        }
+
+        /// <summary>
         /// Busca Ocorrencias
         /// </summary>
         /// <returns>OcorrenciaEntidade</returns>

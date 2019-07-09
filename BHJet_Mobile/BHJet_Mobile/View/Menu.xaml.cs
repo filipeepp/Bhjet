@@ -22,31 +22,39 @@ namespace BHJet_Mobile.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            if (UsuarioAutenticado.Instance.IDCorridaPesquisada != null || UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+            if (UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.Atendimento || UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
                 return;
-            if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null)
-            {
-                // Envia ordem
+
+            // Envia ordem
+            if (ViewExtension.VerificaMainPage(typeof(Index)))
                 MessagingCenter.Send<string, int>("ObservableChamada", "ObservableChamada", 1);
 
-                // Estiliza o menu
-                EstiloMenu();
+            // Estiliza o menu
+            EstiloMenu();
 
-                // Abre novamente a tela inicial
-                App.Current.MainPage = new Index();
-            }
+            // Abre novamente a tela inicial
+            App.Current.MainPage = new Index();
         }
 
         private void Home_Clicked(object sender, EventArgs e)
         {
-            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null)
-                App.Current.MainPage = new Detalhe();
-            else
+            switch (UsuarioAutenticado.Instance.StatusAplicatico)
             {
-                if (UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                    App.Current.MainPage = new DiariaDeBordo();
-                else
+                case BHJet_Enumeradores.StatusAplicativoEnum.Atendimento:
+                    App.Current.MainPage = new Detalhe();
+                    break;
+
+                case BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado:
                     App.Current.MainPage = new Index();
+                    break;
+
+                case BHJet_Enumeradores.StatusAplicativoEnum.Diarista:
+                    App.Current.MainPage = new DiariaDeBordo();
+                    break;
+
+                default:
+                    App.Current.MainPage = new Index();
+                    break;
             }
         }
 
@@ -57,13 +65,20 @@ namespace BHJet_Mobile.View
 
         private void EstiloMenu()
         {
-            if (UsuarioAutenticado.Instance.IDCorridaAtendimento != null ||
-                UsuarioAutenticado.Instance.Contrato == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
-            else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada == null)
-                this.btnStatus.BackgroundColor = Color.Red;
-            else
-                this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
+            switch (UsuarioAutenticado.Instance.StatusAplicatico)
+            {
+                case BHJet_Enumeradores.StatusAplicativoEnum.Atendimento:
+                    this.btnStatus.BackgroundColor = Color.FromRgb(0, 128, 0);
+                    break;
+
+                case BHJet_Enumeradores.StatusAplicativoEnum.Pausado:
+                    this.btnStatus.BackgroundColor = Color.Red;
+                    break;
+
+                default:
+                    this.btnStatus.BackgroundColor = Color.FromRgb(25, 54, 81);
+                    break;
+            }
         }
     }
 }

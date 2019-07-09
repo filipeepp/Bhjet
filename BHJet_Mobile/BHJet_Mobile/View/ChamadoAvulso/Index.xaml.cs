@@ -5,7 +5,6 @@ using BHJet_Mobile.Sessao;
 using BHJet_Mobile.View.Diaria;
 using BHJet_Mobile.ViewModel;
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -25,29 +24,32 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             MessagingCenter.Unsubscribe<string, int>("ObservableChamada", "ObservableChamada");
             MessagingCenter.Subscribe<string, int>("ObservableChamada", "ObservableChamada", async (s, a) =>
             {
-                // If Status Motoristas
-                if (UsuarioAutenticado.Instance.StatusAplicatico)
+                switch (UsuarioAutenticado.Instance.StatusAplicatico)
                 {
-                    // Cancela pesquisa
-                    UsuarioAutenticado.Instance.StatusAplicatico = false;
-                    UsuarioAutenticado.Instance.CancelaPesquisaChamado();
-                    // Desativa Efeito
-                    EfeitoPesquisaDesativada();
-                }
-                else
-                {
-                    // Ativa Efeito Pesquisa
-                    EfeitoPesquisaAtivada();
-
-                    // Ativa Infinite
-                    DoWorkAsyncInfiniteLoop();
+                    case BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado:
+                        await ChamadoEncontradoPainel();
+                        break;
+                    case BHJet_Enumeradores.StatusAplicativoEnum.Pausado:
+                        // Altera situacao
+                        UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.Pesquisando;
+                        // Ativa Efeito Pesquisa
+                        EfeitoPesquisaAtivada();
+                        // Ativa Infinite
+                        DoWorkAsyncInfiniteLoop();
+                        break;
+                    case BHJet_Enumeradores.StatusAplicativoEnum.Pesquisando:
+                        // Altera situacao
+                        UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.Pausado;
+                        // Cancela pesquisa
+                        UsuarioAutenticado.Instance.CancelaPesquisaChamado();
+                        // Desativa Efeito
+                        EfeitoPesquisaDesativada();
+                        break;
                 }
             });
         }
 
         private bool Logando { get; set; }
-
-        public CancellationTokenSource CancelaEspera { get; set; }
 
         /// <summary>
         /// ViewModel da Pagina
@@ -64,39 +66,50 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 // Carrega Inicio
                 ViewModel.Carrega();
 
-                // Tratamento de Logon
-                if (Logando)
+                // Configura Pagina
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-                    // Logado
-                    Logando = false;
-                    // Inicia Pesquisa
-                    if (UsuarioAutenticado.Instance.StatusAplicatico)
+                    // If Status Motoristas
+                    switch (UsuarioAutenticado.Instance.StatusAplicatico)
                     {
-                        EfeitoPesquisaAtivada();
-                        DoWorkAsyncInfiniteLoop();
+                        case BHJet_Enumeradores.StatusAplicativoEnum.Atendimento:
+                            App.Current.MainPage = new Detalhe();
+                            break;
+
+                        case BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado:
+                            await ChamadoEncontradoPainel();
+                            break;
+
+                        case BHJet_Enumeradores.StatusAplicativoEnum.Pausado:
+                            // Cancela pesquisa
+                            UsuarioAutenticado.Instance.CancelaPesquisaChamado();
+                            // Desativa Efeito
+                            EfeitoPesquisaDesativada();
+                            break;
+
+                        case BHJet_Enumeradores.StatusAplicativoEnum.Pesquisando:
+                            // Ativa Efeito Pesquisa
+                            EfeitoPesquisaAtivada();
+                            // Ativa Infinite
+                            DoWorkAsyncInfiniteLoop();
+                            break;
+
+                        default:
+                            // Ativa Efeito Pesquisa
+                            EfeitoPesquisaAtivada();
+                            // Ativa Infinite
+                            DoWorkAsyncInfiniteLoop();
+                            break;
                     }
-                    else
-                        EfeitoPesquisaDesativada();
-                }
-                // Permite Pesquisa Corrida
-                else if (UsuarioAutenticado.Instance.StatusAplicatico)
-                {
-                    EfeitoPesquisaAtivada();
-                    DoWorkAsyncInfiniteLoop();
-                }
-                // Corrida encontrada
-                else if (!UsuarioAutenticado.Instance.StatusAplicatico && UsuarioAutenticado.Instance.IDCorridaPesquisada != null)
-                {
-                    await ChamadoEncontradoPainel();
-                }
-                else if (!UsuarioAutenticado.Instance.StatusAplicatico)
-                {
-                    EfeitoPesquisaDesativada();
-                }
+                });
             }
             catch (Exception e)
             {
                 this.TrataExceptionMobile(e);
+            }
+            finally
+            {
+                ViewModel.Loading = false;
             }
         }
 
@@ -113,7 +126,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                     Device.StartTimer(TimeSpan.FromSeconds(10), () =>
                    {
                        // Verifica se pesquisa esta ativa
-                       if (UsuarioAutenticado.Instance.StatusAplicatico)
+                       if (UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.Pesquisando)
                        {
                            // Cancela
                            if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
@@ -144,7 +157,9 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                                });
 
                                // Encerra busca
-                               UsuarioAutenticado.Instance.StatusAplicatico = false;
+                               UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado;
+                               UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
+                               App.Current.MainPage = new Index();
                                return false;
                            }
                            return true;
@@ -163,7 +178,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
         private async void EfeitoPesquisaAtivada()
         {
             // Pesquisa Ativada
-            UsuarioAutenticado.Instance.StatusAplicatico = true;
             this.AbortAnimation("PesquisaIcon");
             new Animation {
                                  { 0, 0.5, new Animation (v => findIcon.Scale = v, 1, 2) },
@@ -181,9 +195,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
 
         private async void EfeitoPesquisaDesativada()
         {
-            // Pesquisa Ativada
-            UsuarioAutenticado.Instance.StatusAplicatico = false;
-
             // Cancela animação
             this.AbortAnimation("PesquisaIcon");
             // Altera Label
@@ -194,24 +205,48 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             await ProcurandoChamadoPainel();
         }
 
-        public void AceitarCorrida(object sender, EventArgs args)
+        public async void AceitarCorrida(object sender, EventArgs args)
         {
-            // Controle
-            ViewModel.AceitarCorrida();
+            try
+            {
+                // Loading on
+                ViewModel.Loading = true;
 
-            // Troca de página após Login
-            App.Current.MainPage = new Detalhe();
+                // Cancela por inatividade
+                if (UsuarioAutenticado.Instance.CancelaPorInatividade != null)
+                    UsuarioAutenticado.Instance.CancelaPorInatividade.Cancel();
 
-            //
-            if (CancelaEspera != null)
-                CancelaEspera.Cancel();
+                // Controle
+                await ViewModel.AceitarCorrida();
+
+                // Troca de página após Login
+                App.Current.MainPage = new Detalhe();
+            }
+            catch(Exception e)
+            {
+                // Libera OS
+                LiberarCorrida();
+
+                // Trata
+                this.TrataExceptionMobile(e);
+            }
+            finally
+            {
+                // Loading off
+                ViewModel.Loading = false;
+            }
         }
 
         public async void RecusarCorrida(object sender, EventArgs args)
         {
             try
             {
+                // Recusa
                 await ViewModel.RecusarCorrida();
+
+                // Cancela por inatividade
+                if (UsuarioAutenticado.Instance.CancelaPorInatividade != null)
+                    UsuarioAutenticado.Instance.CancelaPorInatividade.Cancel();
             }
             catch (Exception e)
             {
@@ -220,8 +255,6 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             finally
             {
                 await FinalizaAtendimento();
-                if (CancelaEspera != null)
-                    CancelaEspera.Cancel();
             }
         }
 
@@ -238,8 +271,8 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             finally
             {
                 await FinalizaAtendimento();
-                if (CancelaEspera != null)
-                    CancelaEspera.Cancel();
+                if (UsuarioAutenticado.Instance.CancelaPorInatividade != null)
+                    UsuarioAutenticado.Instance.CancelaPorInatividade.Cancel();
             }
         }
 
@@ -261,13 +294,13 @@ namespace BHJet_Mobile.View.ChamadoAvulso
             this.ViewModel.ChamadoEncontrado = true;
             this.ViewModel.OnPropertyChanged("ChamadoEncontrado");
             this.ApplyBindings();
-           
+
             if (cancelaTempo)
             {
-                CancelaEspera = new CancellationTokenSource();
+                UsuarioAutenticado.Instance.CancelaPorInatividade = new CancellationTokenSource();
                 Task.Delay(40000).ContinueWith(t =>
                 {
-                    if (UsuarioAutenticado.Instance.IDCorridaAtendimento == null && !UsuarioAutenticado.Instance.StatusAplicatico)
+                    if (UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.Atendimento)
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
@@ -278,7 +311,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                             TextSpeechUtil.ExecutarVoz($"Corrida rejeitada por inativídade.");
                         });
                     }
-                }, CancelaEspera.Token);
+                }, UsuarioAutenticado.Instance.CancelaPorInatividade.Token);
             }
         }
 

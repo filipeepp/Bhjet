@@ -19,6 +19,7 @@ namespace BHJet_Mobile.Servico.Corrida
         Task RecusarOrdemServico(long idCorrida);
         Task LiberarOrdemServico(long idCorrida);
         Task<string> BuscaTelefoneContato(long IDCorrida);
+        Task AceitarOrdemServico(long idCorrida);
     }
 
     public class CorridaServico : ServicoBase, ICorridaServico
@@ -97,6 +98,12 @@ namespace BHJet_Mobile.Servico.Corrida
         {
             // status/{idStatus:long}/{idCorrida:long}
             await this.Post(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PostRecusarCorrida, idCorrida)}"), "");
+        }
+
+        public async Task AceitarOrdemServico(long idCorrida)
+        {
+            // status/{idStatus:long}/{idCorrida:long}
+            await this.Put(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Corrida.PutAceitarCorrida, idCorrida)}"), "");
         }
 
         /// <summary>

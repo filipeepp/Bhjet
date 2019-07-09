@@ -88,48 +88,7 @@ namespace BHJet_WebApi.Controllers
             });
         }
 
-        /// <summary>
-        /// Busca localização de chamados de um tipo especifico para um tipo especifico de motorista
-        /// </summary>
-        /// <returns>List<LocalizacaoProfissional></returns>
-        [Route("{idOS:long}/cancelar")]
-        [Authorize]
-        [ResponseType(typeof(DetalheCorridaModel))]
-        public IHttpActionResult PutCancelarOS(int idOS)
-        {
-            try
-            {
-                // Busca Dados detalhados da corrida/OS
-                var corridaRep = new CorridaRepositorio();
 
-                // Verifica se corrida pertence ao usuario solicitado
-                var pertence = corridaRep.CorridaPertenceUsuario(idOS, long.Parse(UsuarioAutenticado.LoginID));
-                if (!pertence)
-                    return StatusCode(System.Net.HttpStatusCode.Unauthorized);
-
-                // Verifica se já foi cancelada
-                var corridaEncerrada = corridaRep.CorridaEncerrada(idOS);
-
-                if (corridaEncerrada)
-                    return ResponseMessage(new HttpResponseMessage(HttpStatusCode.BadRequest)
-                    {
-                        Content = new StringContent($"A corrida {idOS} já foi cancelada ou encerrada.")
-                    });
-
-                // Cancela corrida
-                corridaRep.CancelaCorrida(idOS);
-
-                // Return
-                return Ok();
-            }
-            catch
-            {
-                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent)
-                {
-                    Content = new StringContent($"Não foi possível cancelar a OS, por favor, entre em contato com a administração da BHJet.")
-                });
-            }
-        }
 
         /// <summary>
         /// Busca Corrida em aberto
@@ -431,6 +390,73 @@ namespace BHJet_WebApi.Controllers
 
             // Instancia
             new CorridaRepositorio().LiberarOrdemServico(idCorrida, perfil.idColaboradorEmpresaSistema);
+
+            // Return
+            return Ok();
+        }
+
+        /// <summary>
+        /// Busca localização de chamados de um tipo especifico para um tipo especifico de motorista
+        /// </summary>
+        /// <returns>List<LocalizacaoProfissional></returns>
+        [Route("{idOS:long}/cancelar")]
+        [Authorize]
+        [ResponseType(typeof(DetalheCorridaModel))]
+        public IHttpActionResult PutCancelarOS(int idOS)
+        {
+            try
+            {
+                // Busca Dados detalhados da corrida/OS
+                var corridaRep = new CorridaRepositorio();
+
+                // Verifica se corrida pertence ao usuario solicitado
+                var pertence = corridaRep.CorridaPertenceUsuario(idOS, long.Parse(UsuarioAutenticado.LoginID));
+                if (!pertence)
+                    return StatusCode(System.Net.HttpStatusCode.Unauthorized);
+
+                // Verifica se já foi cancelada
+                var corridaEncerrada = corridaRep.CorridaEncerrada(idOS);
+
+                if (corridaEncerrada)
+                    return ResponseMessage(new HttpResponseMessage(HttpStatusCode.BadRequest)
+                    {
+                        Content = new StringContent($"A corrida {idOS} já foi cancelada ou encerrada.")
+                    });
+
+                // Cancela corrida
+                corridaRep.CancelaCorrida(idOS);
+
+                // Return
+                return Ok();
+            }
+            catch
+            {
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent)
+                {
+                    Content = new StringContent($"Não foi possível cancelar a OS, por favor, entre em contato com a administração da BHJet.")
+                });
+            }
+        }
+
+        /// <summary>
+        /// LIBERAR OS
+        /// </summary>
+        /// /// <param name="idCorrida">long</param>
+        /// <returns></returns>
+        [Authorize]
+        [Route("aceitar/{idCorrida:long}")]
+        public IHttpActionResult PutAceitarOS(long idCorrida)
+        {
+            // Busca Dados detalhados da corrida/OS
+            var corridaRep = new CorridaRepositorio();
+
+            // Verifica se corrida pertence ao usuario solicitado
+            var pertence = corridaRep.CorridaPertenceUsuario(idCorrida, long.Parse(UsuarioAutenticado.LoginID));
+            if (!pertence)
+                return StatusCode(System.Net.HttpStatusCode.Unauthorized);
+
+            // Instancia
+            new CorridaRepositorio().AceitarOrdemServico(idCorrida);
 
             // Return
             return Ok();
