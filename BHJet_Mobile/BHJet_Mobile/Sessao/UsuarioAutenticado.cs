@@ -18,9 +18,9 @@ namespace BHJet_Mobile.Sessao
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
         long? IDCorridaAtendimento { get; set; }
-        long? IDCorridaPesquisada { get; set; }
         CancellationTokenSource CancelaPesquisa { get; set; }
-        bool StatusAplicatico { get; set; }
+        CancellationTokenSource CancelaPorInatividade { get; set; }
+        StatusAplicativoEnum StatusAplicatico { get; set; }
         void SetPerfil(PerfilMotoristaModel perfil);
         void FinalizaAtendimento();
         //List<EsperaOcorrencia> TempoDeEspera { get; set; }
@@ -55,13 +55,13 @@ namespace BHJet_Mobile.Sessao
 
         public string Nome { get; set; }
 
-        public bool StatusAplicatico { get; set; }
-
-        public long? IDCorridaPesquisada { get; set; }
+        public StatusAplicativoEnum StatusAplicatico { get; set; }
 
         public long? IDCorridaAtendimento { get; set; }
 
         public CancellationTokenSource CancelaPesquisa { get; set; }
+
+        public CancellationTokenSource CancelaPorInatividade { get; set; }
 
         //public List<EsperaOcorrencia> TempoDeEspera { get; set; }
 
@@ -73,6 +73,11 @@ namespace BHJet_Mobile.Sessao
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
             Instance.IDCorridaAtendimento = perfil.idCorrida;
+
+            if (Instance.Contrato == TipoContrato.ChamadosAvulsos && Instance.IDCorridaAtendimento != null)
+                Instance.StatusAplicatico = StatusAplicativoEnum.Atendimento;
+            else if (Instance.Contrato == TipoContrato.ContratoLocacao)
+                Instance.StatusAplicatico = StatusAplicativoEnum.Diarista;
         }
 
         public void CancelaPesquisaChamado()
@@ -85,9 +90,8 @@ namespace BHJet_Mobile.Sessao
 
         public void FinalizaAtendimento()
         {
-            Instance.IDCorridaPesquisada = null;
             Instance.IDCorridaAtendimento = null;
-            Instance.StatusAplicatico = true;
+            Instance.StatusAplicatico = StatusAplicativoEnum.Pesquisando;
             GlobalVariablesManager.SetApplicationCurrentProperty(GlobalVariablesManager.VariaveisGlobais.DadosCorridaPesquisada, null);
         }
 
@@ -107,7 +111,7 @@ namespace BHJet_Mobile.Sessao
                 // Variaveis
                 Instance.IDProfissional = null;
                 Instance.IDCorridaAtendimento = null;
-                Instance.StatusAplicatico = false;
+                Instance.StatusAplicatico = StatusAplicativoEnum.Pausado;
 
                 //
                 await AlteraDisponibilidade();

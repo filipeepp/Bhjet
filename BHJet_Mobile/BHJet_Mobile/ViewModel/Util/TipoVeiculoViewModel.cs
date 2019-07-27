@@ -45,7 +45,7 @@ namespace BHJet_Mobile.ViewModel.Util
                 });
 
                 // Status
-                UsuarioAutenticado.Instance.StatusAplicatico = true;
+                UsuarioAutenticado.Instance.StatusAplicatico = StatusAplicativoEnum.Pesquisando;
             }
             finally
             {

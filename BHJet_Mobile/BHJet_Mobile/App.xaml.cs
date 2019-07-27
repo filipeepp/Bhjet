@@ -55,8 +55,7 @@ namespace BHJet_Mobile
 
         protected override void OnResume()
         {
-            var mainType = App.Current.MainPage.GetType().Name;
-            if (mainType == typeof(Index).Name)
+            if (ViewExtension.VerificaMainPage(typeof(Index)))
                 App.Current.MainPage = new Index();
         }
     }
