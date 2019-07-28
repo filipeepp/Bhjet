@@ -20,8 +20,8 @@
         public class Diaria
         {
             public const string GetVerificacaoAberta = "api/Diaria/turno/verifica";
-            public const string GetTurno = "api/Diaria/turno";
-            public const string PostTurno = "api/Diaria/turno";
+            public const string GetTurno = "api/Diaria/{0}/turno";
+            public const string PostTurno = "api/Diaria/{0}/turno";
         }
 
         public class Corrida

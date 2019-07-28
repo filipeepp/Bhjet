@@ -17,6 +17,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr class="bg-light-gray">
+                    <th>Faturar</th>
                     <th>ID Cliente</th>
                     <th>Cliente</th>
                     <th>Apuração</th>
@@ -28,6 +29,7 @@
                 @foreach (FaturamentoModel fat in @Model)
                 {
                 <tr>
+                    <td>@Html.CheckBoxFor(model => fat.Selecionado)</td>
                     <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.IDCliente<a /></td>
                     <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.Cliente<a /></td>
                     <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = fat.IDCliente, periodo = @fat.Apuracao })">@fat.Apuracao<a /></td>

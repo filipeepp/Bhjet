@@ -37,14 +37,14 @@ namespace BHJet_Mobile.View.Motorista
             {
                 this.TrataExceptionMobile(e);
             }
-        } 
+        }
 
         private async void AtualizaDados_Clicked(object sender, EventArgs e)
         {
             try
             {
                 // Atualizado dados
-                await  ViewModel.AtualizarDados();
+                await ViewModel.AtualizarDados();
 
                 // Mensagem
                 await this.DisplayAlert("Atenção", Mensagem.Sucesso.OK, "OK");

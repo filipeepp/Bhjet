@@ -4,7 +4,7 @@
     $.ajax({
         dataType: "json",
         type: "GET",
-        url: "../Dashboard/BuscaProfissionais?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
+        url: "../Dashboard/BuscaProfissionaisTodo?trechoPesquisa=" + jqVariavel.val() + "&tipoProfissional=" + tipoVeiculo,
         success: function (data) {
             if (data !== "" && data !== undefined) {
                 $("#ProfissionalSelecionado").find('option').remove().end();

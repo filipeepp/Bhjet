@@ -9,7 +9,8 @@ namespace BHJet_DTO.Corrida
         public long IDCliente { get; set; }
         public long IDProfissional { get; set; }
 		public string NomeProfissional { get; set; }
-		public DateTime? DataInicio { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public DateTime? DataInicio { get; set; }
         public decimal? ValorEstimado { get; set; }
         public decimal? ValorFinalizado { get; set; }
         public DetalheOSEnderecoModel Origem { get; set; }

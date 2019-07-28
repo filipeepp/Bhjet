@@ -1,10 +1,14 @@
-﻿namespace BHJet_Admin.Models.Dashboard
+﻿using System;
+
+namespace BHJet_Admin.Models.Dashboard
 {
     public class OSClienteModel
     {
         public long NumeroOS { get; set; }
         public long Cliente { get; set; }
         public long Motorista { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public decimal? ValorEstimado { get; set; }
         public OSClienteEnderecoModel Origem { get; set; }
         public OSClienteEnderecoModel[] Desinos { get; set; }
     }

@@ -28,7 +28,7 @@ namespace BHJet_Admin.Models
         [Required(ErrorMessage = "Endereço obrigatório.")]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "Favor informar a pessoa a ser procurada.")]
+        //[Required(ErrorMessage = "Favor informar a pessoa a ser procurada.")]
         public string ProcurarPessoa { get; set; }
 
         [Required(ErrorMessage = "Informar o tipo de chamado a ser realizado.")]

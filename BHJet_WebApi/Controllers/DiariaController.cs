@@ -3,7 +3,9 @@ using BHJet_DTO.Diaria;
 using BHJet_Repositorio.Admin;
 using BHJet_Repositorio.Admin.Entidade;
 using BHJet_WebApi.Util;
+using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 
 namespace BHJet_WebApi.Controllers
@@ -116,17 +118,11 @@ namespace BHJet_WebApi.Controllers
         }
 
         [Authorize]
-        [Route("turno")]
-        public IHttpActionResult GetTurnoProfissional()
+        [Route("{idDiaria:long}/turno")]
+        public IHttpActionResult GetTurnoProfissional(int idDiaria)
         {
-            // Variaveis
-            var id = long.Parse(UsuarioAutenticado.LoginID);
-
-            // Busca ID Profissional
-            var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
-
             // Busca verificação
-            var turno = new DiariaRepositorio().BuscaDadosTurno(idProfissional);
+            var turno = new DiariaRepositorio().BuscaDadosTurno(idDiaria);
 
             if (turno == null)
                 return Ok(new TurnoEntidade()
@@ -140,21 +136,17 @@ namespace BHJet_WebApi.Controllers
         }
 
         [Authorize]
-        [Route("turno")]
-        public IHttpActionResult PostTurnoProfissional([FromBody]TurnoEntidade filtro)
+        [Route("{idDiaria:long}/turno")]
+        public IHttpActionResult PostTurnoProfissional(int idDiaria, [FromBody]TurnoEntidade filtro)
         {
             // Variaveis
-            var id = long.Parse(UsuarioAutenticado.LoginID);
             var diaria = new DiariaRepositorio();
 
-            // Busca ID Profissional
-            var idProfissional = new ProfissionalRepositorio().BuscaIDProfissional(id);
-
             // Cadastra turno
-            diaria.CadastraDadosTurno(filtro, id);
+            diaria.CadastraDadosTurno(filtro, idDiaria);
 
             // Busca verificação
-            var turno = diaria.BuscaDadosTurno(idProfissional);
+            var turno = diaria.BuscaDadosTurno(idDiaria);
 
             // Retorna
             return Ok(turno);

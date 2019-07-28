@@ -27,7 +27,7 @@ namespace BHJet_Admin.Controllers
             var controleOS =  this.RetornaOSAvulsa();
 
             // Cria Controle de OS Avulsa
-            var origem = this.CriaOSAvulsa(controleOS != null ? controleOS.IDCliente : null);
+            var origem = controleOS != null ? controleOS : this.CriaOSAvulsa(controleOS != null ? controleOS.IDCliente : null);
 
             // Return View
             return View(origem);
@@ -66,7 +66,7 @@ namespace BHJet_Admin.Controllers
         public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
         {
             // Recupera dados
-            var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa, tipoProfissional);
+            var entidade = profissionalServico.BuscaProfissionaisDisponiveis(trechoPesquisa, tipoProfissional != null ? (TipoProfissional)tipoProfissional.Value : (TipoProfissional?)null);
 
             // Return
             return Json(entidade.Select(x => new AutoCompleteModel()

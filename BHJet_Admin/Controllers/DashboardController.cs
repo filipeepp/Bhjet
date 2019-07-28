@@ -201,6 +201,8 @@ namespace BHJet_Admin.Controllers
                     Cliente = entidade.IDCliente,
                     Motorista = entidade.IDProfissional,
                     NumeroOS = entidade.NumeroOS,
+                    DataCriacao = entidade.DataCriacao,
+                    ValorEstimado = entidade.ValorEstimado,
                     Origem = new OSClienteEnderecoModel()
                     {
                         EnderecoOrigem = entidade.Origem.EnderecoCompleto,
@@ -355,6 +357,21 @@ namespace BHJet_Admin.Controllers
         [HttpGet]
         [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
         public JsonResult BuscaProfissionais(string trechoPesquisa, int? tipoProfissional)
+        {
+            // Recupera dados
+            var entidade = profissionalServico.BuscaProfissionaisDisponiveis(trechoPesquisa, tipoProfissional != null ? (TipoProfissional)tipoProfissional.Value : (TipoProfissional?)null);
+
+            // Return
+            return Json(entidade.Select(x => new AutoCompleteModel()
+            {
+                label = x.ID + " - " + x.NomeCompleto,
+                value = x.ID
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [ValidacaoUsuarioAttribute(TipoUsuario.Administrador, TipoUsuario.FuncionarioCliente)]
+        public JsonResult BuscaProfissionaisTodo(string trechoPesquisa, int? tipoProfissional)
         {
             // Recupera dados
             var entidade = profissionalServico.BuscaProfissionais(trechoPesquisa, tipoProfissional);

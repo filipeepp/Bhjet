@@ -28,7 +28,8 @@ namespace BHJet_Repositorio.Admin
                                         join tblColaboradoresEmpresaSistema CE ON(CED.idColaboradorEmpresaSistema = ce.idColaboradorEmpresaSistema)
 					                where CED.bitDisponivel = 1 and
 					                     CED.geoPosicao is not null and
-						                 CED.idTipoProfissional = @TipoProfissional and CED.dtUltimaAtualizacao >= DATEADD(minute, -3, GETDATE())";
+						                 CED.idTipoProfissional = @TipoProfissional and CED.dtUltimaAtualizacao >= DATEADD(minute, -3, GETDATE()) 
+                                         AND CEO.dtUltimaAtualizacao >= DATEADD(minute, -3, GETDATE())";
 
                 // Execução
                 return sqlConnection.Query<ProfissionalDisponivelEntidade>(query, new
@@ -176,8 +177,8 @@ namespace BHJet_Repositorio.Admin
 				                            TP.idTipoProfissional as TipoProfissional,
                                             USU.bitAtivo as StatusUsuario,
 				                   CASE (PRO.bitRegimeContratacaoCLT)
-                                     WHEN  0 THEN 'CLT'
-                                     WHEN 1 THEN 'MEI' END as TipoContrato
+                                     WHEN  1 THEN 'CLT'
+                                     WHEN 0 THEN 'MEI' END as TipoContrato
 			                            from tblColaboradoresEmpresaSistema as PRO
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)
@@ -245,7 +246,7 @@ namespace BHJet_Repositorio.Admin
                             TelefoneResidencial = profissional.TelefoneResidencial,
                             TelefoneCelular = profissional.TelefoneCelular,
                             CelularWpp = profissional.CelularWpp,
-                            TipoContrato = profissional.TipoRegime,
+                            TipoContrato = (int)profissional.TipoRegime,
                             Observacao = profissional.Observacao,
                             Email = profissional.Email,
                             ID = profissional.ID,

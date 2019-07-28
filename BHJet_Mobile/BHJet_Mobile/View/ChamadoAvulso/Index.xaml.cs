@@ -140,27 +140,35 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            {
                                Device.BeginInvokeOnMainThread(async () =>
                                {
-                                   // Aviso Vibracao
-                                   Xamarin.Essentials.Vibration.Vibrate(1000);
-                                   // Aviso Sonoro
-                                   TextSpeechUtil.ExecutarVoz($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.");
-
                                    // Redireciona para o tipo de chamado
-                                   if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
-                                       App.Current.MainPage = new DiariaDeBordo();
-                                   else
+                                   if (resultado.Value == BHJet_Enumeradores.TipoContrato.ChamadosAvulsos)
                                    {
+                                       // Aviso Vibracao
+                                       Xamarin.Essentials.Vibration.Vibrate(1000);
+                                       // Aviso Sonoro
+                                       TextSpeechUtil.ExecutarVoz($"Corrida encontrada. Endereço inícial, {ViewModel.chamadoItem.DestinoInicial}.");
                                        // Atualiza tela
                                        await ChamadoEncontradoPainel(true);
                                        Xamarin.Essentials.Vibration.Vibrate(1000);
                                    }
                                });
 
-                               // Encerra busca
-                               UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado;
-                               UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
-                               App.Current.MainPage = new Index();
-                               return false;
+                               // Redireciona para o tipo de chamado
+                               if (resultado.Value == BHJet_Enumeradores.TipoContrato.ContratoLocacao)
+                               {
+                                   UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.Diarista;
+                                   UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
+                                   App.Current.MainPage = new DiariaDeBordo();
+                                   return false;
+                               }
+                               else
+                               {
+                                   // Encerra busca
+                                   UsuarioAutenticado.Instance.StatusAplicatico = BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado;
+                                   UsuarioAutenticado.Instance.CancelaPesquisa.Cancel();
+                                   App.Current.MainPage = new Index();
+                                   return false;
+                               }
                            }
                            return true;
                        }
@@ -222,7 +230,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 // Troca de página após Login
                 App.Current.MainPage = new Detalhe();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // Libera OS
                 LiberarCorrida();

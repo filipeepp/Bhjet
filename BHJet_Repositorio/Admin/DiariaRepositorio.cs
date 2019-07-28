@@ -78,7 +78,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="idProfissional"></param>
         /// <returns></returns>
-        public TurnoEntidade BuscaDadosTurno(long idProfissional)
+        public TurnoEntidade BuscaDadosTurno(long idDiaria)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -96,12 +96,11 @@ namespace BHJet_Repositorio.Admin
 	 		                        from tblRegistroDiarias RD 
 							   left join tblClientes CLI on (RD.idCliente = cli.idCliente)
 							   left join tblEnderecos EN on (CLI.idEndereco = EN.idEndereco)
-				                        where idColaboradorEmpresaSistema = @id
-		     		                and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
+				                        where idRegistroDiaria = @id";
 
                 return sqlConnection.QueryFirstOrDefault<TurnoEntidade>(query, new
                 {
-                    id = idProfissional
+                    id = idDiaria
                 });
             }
         }
@@ -111,7 +110,7 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">TurnoEntidade</param>
         /// <returns></returns>
-        public void CadastraDadosTurno(TurnoEntidade filtro, long idProfissional)
+        public void CadastraDadosTurno(TurnoEntidade filtro, long idDiaria)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
@@ -125,8 +124,7 @@ namespace BHJet_Repositorio.Admin
 		                            intOdometroFimIntervalo = @KMFimInvervalo,    
 		                            dtDataHoraFimExpediente = @DataFim,
 		                            intOdometroFimExpediente = @KMFim
-	                        where idColaboradorEmpresaSistema = @IDProfissional
-		                          and convert(varchar(10), dtDataHoraInicioExpediente, 120)  = convert(varchar(10), getdate(), 120)";
+	                        where idRegistroDiaria = @idTurnoDiaria";
 
                 sqlConnection.Execute(query, new
                 {
@@ -138,7 +136,7 @@ namespace BHJet_Repositorio.Admin
                     KMFimInvervalo = filtro.KMFimInvervalo,
                     DataFim = BuscaDataTurno(filtro.DataFim),
                     KMFim = filtro.KMFim,
-                    IDProfissional = idProfissional
+                    idTurnoDiaria = idDiaria
                 });
             }
         }

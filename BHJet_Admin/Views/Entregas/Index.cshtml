@@ -26,6 +26,9 @@
             @using (Html.BeginForm("Index", "Entregas", FormMethod.Post, new { @id = "frmPc", @class = "form-horizontal" }))
             {
                 <div class="cts-titulo-side-bar">
+                    <a href="@Url.Action("Index", "HomeExterno")" style="float:left">
+                        <span><i class="fa fa-arrow-left" style="color: #cacc13" aria-hidden="true"> Revisar origem</i></span>
+                    </a>
                     <span class="titulo">Solicitar entrega / serviço</span>
                     <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
                 </div>
@@ -162,12 +165,18 @@
 
                 <div>
                     <input type="submit" class="btnPadrao btnConfirmacao" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Finalizar solicitação" />
+
                 </div>
 
             }
             @*@using (Html.BeginForm("Finaliza", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
-            {*@
-            <input type="submit" class="btnPadrao btnSolicitacao" onclick="changeButtonClicked();" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino" />
+        {*@
+            @*<input type="submit" class="btnPadrao btnSolicitacao" onclick="changeButtonClicked();" id="btnEnviar" name="btnEnviar" style="margin:10px" value="Adicionar destino">*@
+
+            <a class="btnPadrao btnSolicitacao"  style="margin:10px 0px" href="#" onclick="changeButtonClicked();">
+                <i class="fa fa-plus-square-o" aria-hidden="true"></i> Adicionar destino
+            </a>
+
             @*}*@
         </div>
 

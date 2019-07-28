@@ -15,10 +15,11 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ValidaUsuarioFiltro</param>
         /// <returns>UsuarioEntidade</returns>
-        public void GeraFaturamentoCorridas(long[] idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public List<ItemFaturamentoAgrupado> GeraFaturamentoCorridas(long[] idCliente, long[] idExcluirCliente, bool faturar, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             // Cadastra Periodo Faturamento
-            var idPeriodo = CadastraPeriodoFaturamento(periodoFatInico, periodoFatFim);
+            var idPeriodo = faturar ? CadastraPeriodoFaturamento(periodoFatInico, periodoFatFim) : 0;
+            var listaFat = new List<ItemFaturamentoAgrupado>();
 
             // Valida
             if (idPeriodo == null)
@@ -38,34 +39,43 @@ namespace BHJet_Repositorio.Admin
 	                                           --P.idTarifario,
 	                                           P.idUsuarioColaboradorEmpresa as idColaboradorEmpresaSistema,
 	                                           P.decValorFinalizado as decValor,
-	                                           P.decValorComissaoNegociado as decValorComissao
-	                                        from tblCorridas as P
+	                                           P.decValorComissaoNegociado as decValorComissao,
+                                                P.idCliente, 
+                                               C.vcNomeFantasia as NomeCliente
+	                                        from tblCorridas as P join tblClientes c on (P.idCliente = c.idCliente)
 	                                        where P.dtDataHoraTermino BETWEEN  @dataInicio AND @dataFim
                                         	  and P.idStatusCorrida IN (select idStatusCorrida from tblDOMStatusCorrida where bitCancela = 1 or bitFinaliza = 1) 
                                               and P.idCorrida not in (select idCorrida from tblItemFaturamento where idCorrida = P.idCorrida)
-                                              %clienteCondition%";
+                                              %clienteCondition% %clienteNotCondition%";
 
                         // Busca por cliente
                         if (idCliente != null && idCliente.Any())
-                            query = query.Replace("%clienteCondition%", " and  P.idCliente in @IDCliente");
+                            query = query.Replace("%clienteCondition%", " and P.idCliente in @IDCliente");
                         else
                             query = query.Replace("%clienteCondition%", "");
+
+                        if (idExcluirCliente != null && idExcluirCliente.Any())
+                            query = query.Replace("%clienteNotCondition%", " and P.idCliente not in @IDNotCliente");
+                        else
+                            query = query.Replace("%clienteNotCondition%", "");
 
                         // Query Multiple
                         using (var multi = sqlConnection.QueryMultiple(query, new
                         {
                             dataInicio = periodoFatInico,
                             dataFim = periodoFatFim,
-                            IDCliente = idCliente
+                            IDCliente = idCliente,
+                            IDNotCliente = idExcluirCliente,
                         }, trans))
                         {
                             // Corridas a faturar no periodo
                             var corridas = multi.Read<ItemFaturamentoEntidade>().AsList();
 
                             if (corridas == null || !corridas.Any())
-                                return;
+                                return listaFat;
 
                             // Cria Item Faturamento
+                            #region Insert Faturamento
                             string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
                                                          ([idCorrida]
                                                          ,[idRegistroDiaria]
@@ -86,22 +96,40 @@ namespace BHJet_Repositorio.Admin
                                                              ,@PbitFaturado) select @@IDENTITY";
                             foreach (var nvItemFat in corridas)
                             {
-                                // Execução 
-                                var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
+                                // Lista fat
+                                listaFat.Add(new ItemFaturamentoAgrupado()
                                 {
-                                    PidCorrida = nvItemFat.idCorrida,
-                                    PidRegistroDiaria = nvItemFat.idRegistroDiaria,
-                                    PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
-                                    PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
-                                    PidPeriodoFaturamento = idPeriodo,
-                                    PdecValor = nvItemFat.decValor,
-                                    PdecValorComissao = nvItemFat.decValorComissao,
-                                    PbitFaturado = false
-                                }, trans);
+                                    IDCliente = nvItemFat.idCliente ?? 0,
+                                    IDOS = nvItemFat.idCorrida ?? 0,
+                                    NomeCliente = nvItemFat.NomeCliente,
+                                    Periodo = $"{periodoFatInico.ToShortDateString()} até {periodoFatFim.ToShortDateString()}",
+                                    TipoContrato = TipoContrato.ContratoLocacao,
+                                    Valor = nvItemFat.decValor ?? 0
+                                });
+
+                                // Execução 
+                                if (faturar)
+                                {
+                                    var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
+                                    {
+                                        PidCorrida = nvItemFat.idCorrida,
+                                        PidRegistroDiaria = nvItemFat.idRegistroDiaria,
+                                        PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
+                                        PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
+                                        PidPeriodoFaturamento = idPeriodo,
+                                        PdecValor = nvItemFat.decValor,
+                                        PdecValorComissao = nvItemFat.decValorComissao,
+                                        PbitFaturado = false
+                                    }, trans);
+                                }
                             }
+                            #endregion
+
+                            // Commit
+                            trans.Commit();
+                            return listaFat;
                         }
 
-                        trans.Commit();
                     }
                     catch (Exception e)
                     {
@@ -117,10 +145,11 @@ namespace BHJet_Repositorio.Admin
         /// </summary>
         /// <param name="filtro">ValidaUsuarioFiltro</param>
         /// <returns>UsuarioEntidade</returns>
-        public void GeraFaturamentoDiarias(long[] idCliente, DateTime periodoFatInico, DateTime periodoFatFim)
+        public List<ItemFaturamentoAgrupado> GeraFaturamentoDiarias(long[] idCliente, long[] idExcluirCliente, bool faturar, DateTime periodoFatInico, DateTime periodoFatFim)
         {
             // Cadastra Periodo Faturamento
-            var idPeriodo = CadastraPeriodoFaturamento(periodoFatInico, periodoFatFim);
+            var idPeriodo = faturar ? CadastraPeriodoFaturamento(periodoFatInico, periodoFatFim) : 0;
+            var listaFat = new List<ItemFaturamentoAgrupado>();
 
             // Valida
             if (idPeriodo == null)
@@ -143,13 +172,14 @@ namespace BHJet_Repositorio.Admin
                                		   P.decValorDiariaNegociado as decValor,
 		                               P.decValorDiariaComissaoNegociado as decValorComissao,
                                         P.decFranquiaKMDiaria as intFranquiaKM,
-									   P.decValorKMAdicionalNegociado as decValorKMAdicional
-                                 from tblRegistroDiarias as P
+									   P.decValorKMAdicionalNegociado as decValorKMAdicional,
+                                        C.vcNomeFantasia as NomeCliente
+                                 from tblRegistroDiarias as P left join tblClientes c on (P.idCliente = c.idCliente)
 	                               where P.dtDataHoraInicioExpediente BETWEEN @dataInicio AND @dataFim
 		                             and P.intOdometroFimExpediente is not null
 		                             --and P.idCliente not in (select RD.idCliente from tblItemFaturamento as IT left join tblRegistroDiarias as RD ON (IT.idRegistroDiaria = RD.idRegistroDiaria))
                                      and P.idRegistroDiaria not in (select idRegistroDiaria from tblItemFaturamento where idRegistroDiaria = P.idRegistroDiaria)
-                                     %clienteCondition%";
+                                     %clienteCondition%  %clienteNotCondition%";
 
                         // Busca por cliente
                         if (idCliente != null && idCliente.Any())
@@ -157,21 +187,28 @@ namespace BHJet_Repositorio.Admin
                         else
                             query = query.Replace("%clienteCondition%", "");
 
+                        if (idExcluirCliente != null && idExcluirCliente.Any())
+                            query = query.Replace("%clienteNotCondition%", " and P.idCliente not in @IDNotCliente");
+                        else
+                            query = query.Replace("%clienteNotCondition%", "");
+
                         // Query Multiple
                         using (var multi = sqlConnection.QueryMultiple(query, new
                         {
                             dataInicio = periodoFatInico,
                             dataFim = periodoFatFim,
-                            IDCliente = idCliente
+                            IDCliente = idCliente,
+                            IDNotCliente = idExcluirCliente,
                         }, trans))
                         {
                             // Corridas a faturar no periodo
                             var diarias = multi.Read<ItemFaturamentoEntidade>().AsList();
 
                             if (diarias == null || !diarias.Any())
-                                return;
+                                return listaFat;
 
                             // Cria Item Faturamento
+                            #region Faturar diarias
                             string queryItem = @"INSERT INTO [dbo].[tblItemFaturamento]
                                                          ([idCorrida]
                                                          ,[idRegistroDiaria]
@@ -196,7 +233,7 @@ namespace BHJet_Repositorio.Admin
                                 var tarifa = new TarifaRepositorio().BuscaTarificaPorCliente(nvItemFat.idCliente, null);
 
                                 // Busca detalhe diario de bordo
-                                var diarioBordo = new DiariaRepositorio().BuscaDadosTurno(nvItemFat.idColaboradorEmpresaSistema);
+                                var diarioBordo = nvItemFat.idRegistroDiaria != null ? new DiariaRepositorio().BuscaDadosTurno(nvItemFat.idRegistroDiaria ?? 0) : new TurnoEntidade();
 
                                 // -> Variaveis
                                 // VALOR PADRAO
@@ -217,21 +254,38 @@ namespace BHJet_Repositorio.Admin
                                 var valorTotal = VB1 + VB4 + VB5;
 
                                 // Execução 
-                                var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
+                                listaFat.Add(new ItemFaturamentoAgrupado()
                                 {
-                                    PidCorrida = nvItemFat.idCorrida,
-                                    PidRegistroDiaria = nvItemFat.idRegistroDiaria,
-                                    PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
-                                    PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
-                                    PidPeriodoFaturamento = idPeriodo,
-                                    PdecValor = valorTotal,
-                                    PdecValorComissao = nvItemFat.decValorComissao,
-                                    PbitFaturado = false
-                                }, trans);
-                            }
-                        }
+                                    IDCliente = nvItemFat.idCliente ?? 0,
+                                    NomeCliente = nvItemFat.NomeCliente,
+                                    IDOS = nvItemFat.idRegistroDiaria ?? 0,
+                                    Periodo = $"{periodoFatInico.ToShortDateString()} até {periodoFatFim.ToShortDateString()}",
+                                    TipoContrato = TipoContrato.ContratoLocacao,
+                                    Valor = valorTotal ?? 0
+                                });
 
-                        trans.Commit();
+                                // Faturar
+                                if (faturar)
+                                {
+                                    var id = trans.Connection.ExecuteScalar<int?>(queryItem, new
+                                    {
+                                        PidCorrida = nvItemFat.idCorrida,
+                                        PidRegistroDiaria = nvItemFat.idRegistroDiaria,
+                                        PidColaboradorEmpresaSistema = nvItemFat.idColaboradorEmpresaSistema,
+                                        PidUsuarioFaturado = nvItemFat.idUsuarioFaturado,
+                                        PidPeriodoFaturamento = idPeriodo,
+                                        PdecValor = valorTotal,
+                                        PdecValorComissao = nvItemFat.decValorComissao,
+                                        PbitFaturado = false
+                                    }, trans);
+                                }
+                            }
+                            #endregion
+
+                            // Commit
+                            trans.Commit();
+                            return listaFat;
+                        }
                     }
                     catch (Exception e)
                     {
@@ -408,37 +462,37 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoDiaria(long idCliente, DateTime? periodoFatInico, DateTime? periodoFatFim)
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoDiaria(long idCliente, long[] os, DateTime? periodoFatInico, DateTime? periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
                 // Query
+    //            string queryDiarias = @"-- busca todas diarias		
+				//		  select
+    //                            it.idRegistroDiaria
+   	//                            from tblItemFaturamento IT
+				//		join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+				//		join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
+				//		join tblClientes CLI on (RG.idCliente = CLI.idCliente)
+				//where  it.idCorrida is null
+				//		 and IT.idRegistroDiaria is not null 
+				//		 and RG.idCliente = @idcli %datas%";
 
-                string queryDiarias = @"-- busca todas diarias		
-						  select
-                                it.idRegistroDiaria
-   	                            from tblItemFaturamento IT
-						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-						join tblRegistroDiarias RG on (RG.idRegistroDiaria = it.idRegistroDiaria)
-						join tblClientes CLI on (RG.idCliente = CLI.idCliente)
-				where  it.idCorrida is null
-						 and IT.idRegistroDiaria is not null 
-						 and RG.idCliente = @idcli %datas%";
+    //            string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
 
-                string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
+    //            queryDiarias = (periodoFatInico != null && periodoFatFim != null) ? queryDiarias.Replace("%datas%", datas) : queryDiarias.Replace("%datas%", string.Empty);
 
-                queryDiarias = (periodoFatInico != null && periodoFatFim != null) ? queryDiarias.Replace("%datas%", datas) : queryDiarias.Replace("%datas%", string.Empty);
+    //            // Retorno
+    //            var diarias = sqlConnection.Query<long>(queryDiarias, new
+    //            {
+    //                idcli = idCliente,
+    //                dtIni = periodoFatInico,
+    //                dtFim = periodoFatFim,
+    //                listaOS = os
+    //            });
 
-                // Retorno
-                var diarias = sqlConnection.Query<long>(queryDiarias, new
-                {
-                    idcli = idCliente,
-                    dtIni = periodoFatInico,
-                    dtFim = periodoFatFim
-                });
-
-                if (diarias == null || !diarias.Any())
-                    return new ItemFaturamentoDetalheEntidade[] { };
+    //            if (diarias == null || !diarias.Any())
+    //                return new ItemFaturamentoDetalheEntidade[] { };
 
                 string queryDetalheDiarias = @"	select
                                                         CLI.vcNomeFantasia as NomeCliente,
@@ -457,7 +511,7 @@ namespace BHJet_Repositorio.Admin
 
                 var diariasDetalhe = sqlConnection.Query<ItemFaturamentoDetalheEntidade>(queryDetalheDiarias, new
                 {
-                    ids = string.Join(",", diarias)
+                    ids = string.Join(",", os)
                 });
 
                 // Execução
@@ -465,37 +519,37 @@ namespace BHJet_Repositorio.Admin
             }
         }
 
-        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoCorrida(long idCliente, DateTime? periodoFatInico, DateTime? periodoFatFim)
+        public IEnumerable<ItemFaturamentoDetalheEntidade> BuscaDetalheItemFaturadoCorrida(long idCliente, long[] os, DateTime? periodoFatInico, DateTime? periodoFatFim)
         {
             using (var sqlConnection = this.InstanciaConexao())
             {
-                // Query
+    //            // Query
 
-                string queryCorridas = @"-- busca todas diarias		
-						    select
-                                it.idCorrida
-   	                            from tblItemFaturamento IT
-						join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
-						join tblCorridas CR on (CR.idCorrida = it.idCorrida)
-						join tblClientes CLI on (CR.idCliente = CLI.idCliente)
-				where  it.idRegistroDiaria is null
-						 and IT.idCorrida is not null
-						 and CR.idCliente = @idCliente %datas%";
+    //            string queryCorridas = @"-- busca todas diarias		
+				//		    select
+    //                            it.idCorrida
+   	//                            from tblItemFaturamento IT
+				//		join tblPeriodoFaturamento PF on (IT.idPeriodoFaturamento = pf.idPeriodoFaturamento)
+				//		join tblCorridas CR on (CR.idCorrida = it.idCorrida)
+				//		join tblClientes CLI on (CR.idCliente = CLI.idCliente)
+				//where  it.idRegistroDiaria is null
+				//		 and IT.idCorrida is not null
+				//		 and CR.idCliente = @idCliente %datas%";
 
-                string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
+    //            string datas = " and PF.dtDataInicioPeriodoFaturamento = @dtIni and PF.dtDataFimPeriodoFaturamento = @dtFim";
 
-                queryCorridas = (periodoFatInico != null && periodoFatFim != null) ? queryCorridas.Replace("%datas%", datas) : queryCorridas.Replace("%datas%", string.Empty);
+    //            queryCorridas = (periodoFatInico != null && periodoFatFim != null) ? queryCorridas.Replace("%datas%", datas) : queryCorridas.Replace("%datas%", string.Empty);
 
-                // Retorno
-                var corridas = sqlConnection.Query<long>(queryCorridas, new
-                {
-                    idCliente = idCliente,
-                    dtIni = periodoFatInico,
-                    dtFim = periodoFatFim
-                });
+    //            // Retorno
+    //            var corridas = sqlConnection.Query<long>(queryCorridas, new
+    //            {
+    //                idCliente = idCliente,
+    //                dtIni = periodoFatInico,
+    //                dtFim = periodoFatFim
+    //            });
 
-                if (corridas == null || !corridas.Any())
-                    return new ItemFaturamentoDetalheEntidade[] { };
+    //            if (corridas == null || !corridas.Any())
+    //                return new ItemFaturamentoDetalheEntidade[] { };
 
                 string queryDetalheDiarias = @"select
                                                 CLI.vcNomeFantasia as NomeCliente,
@@ -514,7 +568,7 @@ namespace BHJet_Repositorio.Admin
 
                 var diariasDetalhe = sqlConnection.Query<ItemFaturamentoDetalheEntidade>(queryDetalheDiarias, new
                 {
-                    ids = corridas
+                    ids = os
                 });
 
                 // Execução

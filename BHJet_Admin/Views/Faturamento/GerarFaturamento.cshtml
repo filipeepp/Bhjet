@@ -4,77 +4,132 @@
 <script src="@Url.Content("~/Scripts/GerarFaturamento.js")"></script>
 
 <ol class="breadcrumb">
-	<li><a href="@Url.Action("Index", "Home")">Home</a></li>
-	<li><a href="#map_canvas">Gerar Faturamento</a></li>
+    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+    <li><a href="#map_canvas">Gerar Faturamento</a></li>
 </ol>
 
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
 
-					<div class="titulo">
-						<h2>
-							<a href="@Url.Action("Index", "Faturamento")">
-								<i class="fa fa-arrow-left" aria-hidden="true"></i>
-							</a>
-							Gerar Faturamento
-						</h2>
-					</div>
+                    <div class="titulo">
+                        <h2>
+                            <a href="@Url.Action("Index", "Faturamento")">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            </a>
+                            Gerar Faturamento
+                        </h2>
+                    </div>
 
-					<div class="row">
+                    <div class="row">
 
-						@using (Html.BeginForm("GerarFaturamento", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
-						{
-							<div class="form-group ">
-								<label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o mês e ano:</label>
-								<div class="col-sm-2">
-									@Html.DropDownListFor(m => m.MesSelecionado, Model.Meses, new { @class = "form-control" })
-								</div>
-								<div class="col-sm-2">
-									@Html.DropDownListFor(m => m.AnoSelecionado, new SelectList(Model.ListaAno, @Model.AnoSelecionado), new { @class = "form-control" })
-								</div>
-							</div>
+                        @using (Html.BeginForm("GerarFaturamento", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            <div class="form-group ">
+                                <label class="control-label col-sm-5" for="email"><small class="obrigatorio">*</small>Selecione o mês e ano:</label>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(m => m.MesSelecionado, Model.Meses, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.DropDownListFor(m => m.AnoSelecionado, new SelectList(Model.ListaAno, @Model.AnoSelecionado), new { @class = "form-control" })
+                                </div>
+                            </div>
 
-							<div class="form-group">
-								<label class="control-label col-sm-5" for="email">Selecione o(s) cliente(s):</label>
-								<div class="col-sm-4">
-									<input id="pesquisaCliente" class="form-control input-sm" placeholder="Pesquisar por ID/Nome." />
-									@Html.ListBoxFor(m => m.ClienteSelecionado,
-										 new List<SelectListItem>(), new { @class = "form-control" })
-									<b><small>(Ctrl + Click) Para selecionar vários.</small></b>
-								</div>
-							</div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-5" for="email">Selecione o(s) cliente(s):</label>
+                                <div class="col-sm-4">
+                                    <input id="pesquisaCliente" class="form-control input-sm" placeholder="Pesquisar por ID/Nome." />
+                                    @Html.ListBoxFor(m => m.ClienteSelecionado,
+                                         new List<SelectListItem>(), new { @class = "form-control" })
+                                    <b><small>(Ctrl + Click) Para selecionar vários.</small></b>
+                                </div>
+                            </div>
 
-							<div class="row">
-								<div class="col-xs-12 col-md-12 text-center">
-									<button id="confirmaFaturamento" type="submit" class="btn btn-default" value="Pesquisar">
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>Gerar Faturamento
-									</button>
-								</div>
-							</div>
-						}
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 text-center">
+                                    <button id="confirmaFaturamento" type="submit" class="btn btn-default" value="Pesquisar">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>Consultar Faturamento
+                                    </button>
+                                </div>
+                            </div>
+                        }
 
-					</div>
+                    </div>
 
-					<div class="row">
-						@{
-							if (Model.ListaFaturamento != null)
-							{
-								Html.RenderPartial("_ListaFaturamento", Model.ListaFaturamento);
-							}
-						}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div class="row">
+                        @if (Model.ListaFaturamento != null)
+                        {
+                            using (Html.BeginForm("GerarFaturamento", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                <div class="panel panel-default" style="margin:30px">
+                                    <div class="panel-body">
+
+                                        <div class="titulo">
+                                            <h2>
+                                                <a onclick="history.go(-1);">
+                                                    <i class="fa fa-file" aria-hidden="true"></i>
+                                                </a>
+                                                Detalhe Faturamento
+                                            </h2>
+                                        </div>
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr class="bg-light-gray">
+                                                    <th>Faturar</th>
+                                                    <th>ID Cliente</th>
+                                                    <th>Cliente</th>
+                                                    <th>Apuração</th>
+                                                    <th class="text-right">Valor R$</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < Model.ListaFaturamento.Count(); i++)
+                                                {
+                                                <tr>
+                                                    @Html.HiddenFor(model => model.ListaFaturamento[i].IDCliente)
+                                                    @Html.HiddenFor(model => model.ListaFaturamento[i].Cliente)
+                                                    @Html.HiddenFor(model => model.ListaFaturamento[i].Apuracao)
+                                                    @Html.HiddenFor(model => model.ListaFaturamento[i].Valor)
+                                                    @Html.HiddenFor(model => model.ListaFaturamento[i].ListaOS)
+
+                                                    <td>
+                                                        <label class="label-cbx">
+                                                            @Html.CheckBoxFor(model => model.ListaFaturamento[i].Selecionado, new { @class = "checkbox" })
+                                                        </label>
+                                                    </td>
+                                                    <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = Model.ListaFaturamento[i].IDCliente, periodo = Model.ListaFaturamento[i].Apuracao, listaOS = string.Join(";", Model.ListaFaturamento[i].ListaOS) })">@Model.ListaFaturamento[i].IDCliente<a /></td>
+                                                    <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = Model.ListaFaturamento[i].IDCliente, periodo = Model.ListaFaturamento[i].Apuracao, listaOS = string.Join(";", Model.ListaFaturamento[i].ListaOS) })">@Model.ListaFaturamento[i].Cliente<a /></td>
+                                                    <td><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = Model.ListaFaturamento[i].IDCliente, periodo = Model.ListaFaturamento[i].Apuracao, listaOS = string.Join(";", Model.ListaFaturamento[i].ListaOS) })">@Model.ListaFaturamento[i].Apuracao<a /></td>
+                                                    <td class="text-right"><a href="@Url.Action("DetalheFaturamentoAvulso", "Faturamento", new { idCliente = Model.ListaFaturamento[i].IDCliente, periodo = Model.ListaFaturamento[i].Apuracao, listaOS = string.Join(";", Model.ListaFaturamento[i].ListaOS) })">@Model.ListaFaturamento[i].Valor<a /></td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12 text-center">
+                                        <button id="confirmaFaturamento" type="submit" class="btn btn-default" value="Pesquisar">
+                                            <i class="fa fa-file-text-o" aria-hidden="true"></i>Gerar Faturamento
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @if (TempData["mensagemGeral"] != null)
 {
-	<input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
-	<script type="text/javascript">
+    <input type="hidden" id="mensagemController" value="@TempData["mensagemGeral"].ToString()" />
+    <script type="text/javascript">
 
 		window.onload = function () {
 			var mensagem = $("#mensagemController").val();
@@ -82,5 +137,5 @@
             $("#imgMensagem").attr("src", "@TempData["imgMensagemGeral"]");
             $('#myModal').modal('show')
         };
-	</script>
+    </script>
 }
