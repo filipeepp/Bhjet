@@ -61,6 +61,10 @@ namespace BHJet_WebApi.Controllers
                 IDCliente = entidade.FirstOrDefault().IDCliente,
                 IDProfissional = entidade.FirstOrDefault().IDProfissional,
                 NumeroOS = entidade.FirstOrDefault().NumeroOS,
+                DataCriacao = entidade.FirstOrDefault().DataCriacao,
+                DataInicio = entidade.FirstOrDefault().DataHoraInicio,
+                NomeProfissional = entidade.FirstOrDefault().NomeProfissional,
+                ValorEstimado = entidade.FirstOrDefault().ValorEstimado,
                 Origem = new DetalheOSEnderecoModel()
                 {
                     EnderecoCompleto = entidade.FirstOrDefault().EnderecoCompleto,
@@ -539,6 +543,9 @@ namespace BHJet_WebApi.Controllers
             // Validacao
             if (distanciaKM == 0)
                 throw new NullReferenceException("Não foi possível calcular o preço da corrida. Tente novamente mais tarde.");
+
+            // Corrida simples (D1) ou complexa (D+2)
+            quantidadeDestinos = quantidadeDestinos >= 2 ? quantidadeDestinos - 1 : 0;
 
             // Total calculado
             var TOTALCORRIDA = valorPontoColeta + (valorPontoEntrega * quantidadeDestinos) + (valorKMAdc * distanciaKM) + valorPorMinutosEspera;

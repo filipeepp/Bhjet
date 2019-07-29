@@ -1,4 +1,6 @@
-﻿namespace BHJet_Repositorio.Admin.Entidade
+﻿using BHJet_Enumeradores;
+
+namespace BHJet_Repositorio.Admin.Entidade
 {
     public class ItemFaturamentoEntidade
     {
@@ -13,6 +15,7 @@
         public decimal? intFranquiaKM { get; set; }
         public decimal? decValorKMAdicional { get; set; }
         public bool? bitFaturado { get; set; }
+        public string NomeCliente { get; set; }
     }
 
     public class ItemFaturamentoResumidoEntidade
@@ -22,6 +25,17 @@
         public string NomeCliente { get; set; }
         public string Periodo { get; set; }
         public string TipoDescContrato { get; set; }
+        public decimal Valor { get; set; }
+    }
+
+    public class ItemFaturamentoAgrupado
+    {
+        public long ID { get; set; }
+        public long IDOS { get; set; }
+        public long IDCliente { get; set; }
+        public string NomeCliente { get; set; }
+        public string Periodo { get; set; }
+        public TipoContrato TipoContrato { get; set; }
         public decimal Valor { get; set; }
     }
 }

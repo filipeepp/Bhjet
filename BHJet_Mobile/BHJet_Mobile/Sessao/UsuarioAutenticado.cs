@@ -18,6 +18,7 @@ namespace BHJet_Mobile.Sessao
         TipoContrato Contrato { get; set; }
         string Nome { get; set; }
         long? IDCorridaAtendimento { get; set; }
+        long? IDDiaria { get; set; }
         CancellationTokenSource CancelaPesquisa { get; set; }
         CancellationTokenSource CancelaPorInatividade { get; set; }
         StatusAplicativoEnum StatusAplicatico { get; set; }
@@ -59,6 +60,8 @@ namespace BHJet_Mobile.Sessao
 
         public long? IDCorridaAtendimento { get; set; }
 
+        public long? IDDiaria { get; set; }
+
         public CancellationTokenSource CancelaPesquisa { get; set; }
 
         public CancellationTokenSource CancelaPorInatividade { get; set; }
@@ -71,7 +74,7 @@ namespace BHJet_Mobile.Sessao
             Instance.Nome = perfil.NomeCompleto;
             Instance.Tipo = perfil.TipoProfissional;
             Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
-            Instance.Contrato = perfil.idRegistroDiaria == null ? BHJet_Enumeradores.TipoContrato.ChamadosAvulsos : BHJet_Enumeradores.TipoContrato.ContratoLocacao;
+            Instance.IDDiaria = perfil.idRegistroDiaria;
             Instance.IDCorridaAtendimento = perfil.idCorrida;
 
             if (Instance.Contrato == TipoContrato.ChamadosAvulsos && Instance.IDCorridaAtendimento != null)

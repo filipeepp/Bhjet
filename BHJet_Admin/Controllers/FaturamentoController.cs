@@ -45,30 +45,42 @@ namespace BHJet_Admin.Controllers
                 // Datas
                 DateTime inicio = new DateTime(model.AnoSelecionado, model.MesSelecionado, 1);
                 DateTime fim = new DateTime(model.AnoSelecionado, model.MesSelecionado, DateTime.DaysInMonth(model.AnoSelecionado, model.MesSelecionado));
+                bool faturar = model.ListaFaturamento?.Exists(f => f.Selecionado) ?? false;
+
+                // Verificação
+                if (model.ListaFaturamento != null && !model.ListaFaturamento.Exists(f => f.Selecionado))
+                {
+                    faturar = false;
+                    this.MensagemAlerta("Favor selecionar algum faturamento na lista abaixo.");
+                    //return View(model);
+                }
 
                 // Gera Faturamento
                 var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
                 {
+                    Faturar = faturar,
+                    IdClienteNaoFaturar = model.ListaFaturamento?.Where(f => !f.Selecionado).Select(c => c.IDCliente) ?? new long[] { },
                     IdCliente = model.ClienteSelecionado,
                     DataInicioFaturamento = inicio,
                     DataFimFaturamento = fim
                 });
-
-                this.MensagemSucesso("Faturamento gerado com sucesso.");
+                this.MensagemSucesso("Faturamento " + (faturar ? "gerado" : "listado") + " com sucesso.");
 
                 // Return View
                 return View(new GerarFaturamantoModel()
                 {
                     ClienteSelecionado = model.ClienteSelecionado,
+
                     ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
                     {
                         ID = x.ID,
                         IDCliente = x.IDCliente,
                         Cliente = x.NomeCliente,
                         Apuracao = x.Periodo,
+                        ListaOS = x.IDOS,
                         DescContrato = x.TipoContrato,
                         Valor = x.Valor.ToString("C", new CultureInfo("pt-BR"))
-                    })
+                    }).ToList()
                 });
             }
             catch (Exception e)
@@ -250,7 +262,7 @@ namespace BHJet_Admin.Controllers
         }
 
         [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
-        public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo)
+        public ActionResult DetalheFaturamentoAvulso(long idCliente, string periodo, string listaOS)
         {
             try
             {
@@ -260,10 +272,18 @@ namespace BHJet_Admin.Controllers
                 // Datas pesquisa
                 var datIni = DateTime.Parse(periodo.Split(' ')[0].TrimStart().TrimEnd());
                 var datFim = DateTime.Parse(periodo.Split(' ')[2].TrimStart().TrimEnd());
+                long[] OSS = listaOS.Split(';').Select(c => long.Parse(c)).ToArray();
+
                 string periodoDesc = datIni.ToShortDateString() + " a " + datFim.ToShortDateString();
 
                 // Busca detalhe
-                resultado = faturamentoServico.GetFaturamentoDetalhe(idCliente, datIni, datFim);
+                resultado = faturamentoServico.PostFaturamentoDetalhe(new ConsultarFaturamentoDetalheDTO()
+                {
+                    IDCliente = idCliente,
+                    DataInicioFaturamentoFiltro = datIni,
+                    DataFimFaturamentoFiltro = datFim,
+                    IDOS = OSS
+                });
 
                 // Total
                 ViewBag.Total = resultado.Sum(x => x.Valor);

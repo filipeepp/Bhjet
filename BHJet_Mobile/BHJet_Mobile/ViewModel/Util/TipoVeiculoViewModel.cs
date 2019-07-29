@@ -38,7 +38,7 @@ namespace BHJet_Mobile.ViewModel.Util
                 // Altera situacao de pesquisa do aplicativo
                 await motoristaServico.AtualizaDisponibilidade(new Servico.Motorista.Model.MotoristaDisponivelModel()
                 {
-                    bitDisponivel = true,
+                    bitDisponivel = UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.Diarista ? false : true,
                     idTipoProfissional = usuarioAutenticado.Tipo,
                     latitude = position.Latitude,
                     longitude = position.Longitude

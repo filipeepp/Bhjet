@@ -135,6 +135,8 @@ namespace BHJet_Repositorio.Admin
                                     CD.idCorrida as NumeroOS, 
 	                                CD.idUsuarioChamador as IDCliente,
 		                            CD.idUsuarioColaboradorEmpresa as IDProfissional,
+                                    CD.dtDataHoraRegistroCorrida as DataCriacao,
+                                    CD.decValorEstimado as ValorEstimado,
 	                                --concat(EDC.vcRua, ', ', EDC.vcNumero, ' - ', EDC.vcBairro, '/' ,EDC.vcUF) as EnderecoCompleto,
                                     EC.vcEnderecoCompleto as EnderecoCompleto,
 		                            EC.vcPessoaContato as ProcurarPor,

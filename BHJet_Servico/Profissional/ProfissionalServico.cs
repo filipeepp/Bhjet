@@ -8,7 +8,7 @@ namespace BHJet_Servico.Profissional
     public interface IProfissionalServico
     {
         IEnumerable<ProfissionalModel> BuscaProfissionais(string trechoPesquisa, int? tipoVeiculo);
-        IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional tipoProfissional);
+        IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional? tipoProfissional);
         ProfissionalCompletoModel BuscaProfissional(long id);
         void AtualizaDadosProfissional(ProfissionalCompletoModel proModel);
         void IncluirProfissional(ProfissionalCompletoModel proModel);
@@ -50,9 +50,12 @@ namespace BHJet_Servico.Profissional
         /// Busca Lista de profissionais Disponiveis
         /// </summary>
         /// <returns>ResumoModel</returns>
-        public IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional tipoProfissional)
+        public IEnumerable<ProfissionalModel> BuscaProfissionaisDisponiveis(string trechoPesquisa, TipoProfissional? tipoProfissional)
         {
-            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionaisDisponiveis}?tipoProfissional={(int)tipoProfissional}&trecho={trechoPesquisa}"));
+            var tipoParam = tipoProfissional != null ? "tipoProfissional=" + (int)tipoProfissional : "";
+
+            return this.Get<IEnumerable<ProfissionalModel>>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Profissional.GetProfissionaisDisponiveis}" +
+                                            $"?trecho={trechoPesquisa}&{tipoParam}"));
         }
 
         /// <summary>

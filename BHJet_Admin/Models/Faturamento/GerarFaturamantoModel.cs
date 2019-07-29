@@ -67,7 +67,7 @@ namespace BHJet_Admin.Models.Faturamento
             }
         }
 
-        private IEnumerable<FaturamentoModel> _listaFaturamento = null;
-        public IEnumerable<FaturamentoModel> ListaFaturamento { get => _listaFaturamento; set => _listaFaturamento = value; }
+        private List<FaturamentoModel> _listaFaturamento = null;
+        public List<FaturamentoModel> ListaFaturamento { get => _listaFaturamento; set => _listaFaturamento = value; }
     }
 }

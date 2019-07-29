@@ -1,5 +1,6 @@
 ﻿using BHJet_Mobile.Infra.Variaveis;
 using BHJet_Mobile.Servico.Diaria.Model;
+using BHJet_Mobile.Sessao;
 using BHJet_Servico;
 using System;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace BHJet_Mobile.Servico.Diaria
         /// <returns>ResumoModel</returns>
         public async Task<TurnoModel> BuscaTurno()
         {
-            return await this.Get<TurnoModel>(new Uri($"{ServicoRotas.Base}{ServicoRotas.Diaria.GetTurno}"));
+            return await this.Get<TurnoModel>(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Diaria.GetTurno, UsuarioAutenticado.Instance.IDDiaria)}"));
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace BHJet_Mobile.Servico.Diaria
         /// <returns>ResumoModel</returns>
         public async Task AtualizaTurno(TurnoModel filtro)
         {
-            await this.Post(new Uri($"{ServicoRotas.Base}{ServicoRotas.Diaria.PostTurno}"), filtro);
+            await this.Post(new Uri($"{ServicoRotas.Base}{string.Format(ServicoRotas.Diaria.PostTurno, UsuarioAutenticado.Instance.IDDiaria)}"), filtro);
         }
     }
 }

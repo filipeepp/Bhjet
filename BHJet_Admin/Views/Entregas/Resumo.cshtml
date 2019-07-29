@@ -28,6 +28,9 @@
             @using (Html.BeginForm("Resumo", "Entregas", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 <div class="cts-titulo-side-bar">
+                    <a href="@Url.Action("Index", "HomeExterno")" style="float:left">
+                        <span><i class="fa fa-arrow-left" style="color: #cacc13" aria-hidden="true"> Cancelar</i></span>
+                    </a>
                     <span class="titulo">Solicitar entrega / serviço</span>
                     <span class="iconeLeft"><i class="fa fa-arrows-alt" aria-hidden="true"> Arraste o painel.</i></span>
                 </div>

@@ -25,30 +25,32 @@ namespace BHJet_WebApi.Controllers
                 // Busca Dados detalhados da corrida/OS
                 var fatRepositosio = new FaturamentoRepositorio();
                 var listaClientes = model.IdCliente != null ? model.IdCliente.ToArray() : new long[] { };
+                var listaEliminaClientes = model.IdClienteNaoFaturar != null ? model.IdClienteNaoFaturar.ToArray() : new long[] { };
 
                 // Gera faturamento corridas
-                fatRepositosio.GeraFaturamentoCorridas(listaClientes, model.DataInicioFaturamento, model.DataFimFaturamento);
+                var corridas = fatRepositosio.GeraFaturamentoCorridas(listaClientes, listaEliminaClientes, model.Faturar, model.DataInicioFaturamento, model.DataFimFaturamento);
 
                 // Gera taturamento diarias
-                fatRepositosio.GeraFaturamentoDiarias(listaClientes, model.DataInicioFaturamento, model.DataFimFaturamento);
+                var diarias = fatRepositosio.GeraFaturamentoDiarias(listaClientes, listaEliminaClientes, model.Faturar, model.DataInicioFaturamento, model.DataFimFaturamento);
 
-                // Busca Itens Faturamentos incluidos
-                var entidade = fatRepositosio.BuscaItemFaturamento(listaClientes, null, model.DataInicioFaturamento, model.DataFimFaturamento);
-
-                // valida retorno
-                if (entidade != null && !entidade.Any())
+                // Verifica
+                if ((corridas == null || !corridas.Any()) && (diarias == null || !diarias.Any()))
                     return StatusCode(System.Net.HttpStatusCode.NoContent);
 
-                // Return
-                return Ok(entidade.Select(x => new ItemFaturamentoDTO()
+                // Faturamentos gerados
+                var faturamentos = corridas.Union(diarias).GroupBy(c => c.IDCliente).Select(g => new ItemFaturamentoDTO()
                 {
-                    ID = x.ID,
-                    IDCliente = x.IDCliente,
-                    NomeCliente = x.NomeCliente,
-                    Periodo = x.Periodo,
-                    TipoContrato = x.TipoDescContrato,
-                    Valor = x.Valor
-                }));
+                    Valor = g.Sum(s => s.Valor),
+                    ID = g.First().ID,
+                    IDCliente = g.First().IDCliente,
+                    NomeCliente = g.First().NomeCliente,
+                    Periodo = g.First().Periodo,
+                    TipoContrato = "",
+                    IDOS = g.Select(c => c.IDOS).ToArray()
+                }).ToArray(); ;
+
+                // Return
+                return Ok(faturamentos);
             }
             catch (InvalidOperationException e)
             {
@@ -93,15 +95,17 @@ namespace BHJet_WebApi.Controllers
         /// <returns></returns>
         [Authorize]
         [Route("detalhe")]
-        public IHttpActionResult GetDetalheFaturamentoComum([FromUri]ConsultarFaturamentoDetalheDTO filtro)
+        public IHttpActionResult PostDetalheFaturamentoComum([FromBody]ConsultarFaturamentoDetalheDTO filtro)
         {
             // Busca Dados detalhados da corrida/OS
             var fatRepositosio = new FaturamentoRepositorio();
 
             // Busca  Diarias faturadas
-            var entidadeDiarias = fatRepositosio.BuscaDetalheItemFaturadoDiaria(filtro.IDCliente, filtro.DataInicioFaturamentoFiltro, filtro.DataFimFaturamentoFiltro);
+            var entidadeDiarias = fatRepositosio.BuscaDetalheItemFaturadoDiaria(filtro.IDCliente, filtro.IDOS, filtro.DataInicioFaturamentoFiltro, filtro.DataFimFaturamentoFiltro);
+            
             // Busca  Corridas faturadas
-            var entidadeCorridas = fatRepositosio.BuscaDetalheItemFaturadoCorrida(filtro.IDCliente, filtro.DataInicioFaturamentoFiltro, filtro.DataFimFaturamentoFiltro);
+            var entidadeCorridas = fatRepositosio.BuscaDetalheItemFaturadoCorrida(filtro.IDCliente, filtro.IDOS, filtro.DataInicioFaturamentoFiltro, filtro.DataFimFaturamentoFiltro);
+            
             // Uniao
             var resultado = entidadeDiarias.Union(entidadeCorridas);
 
