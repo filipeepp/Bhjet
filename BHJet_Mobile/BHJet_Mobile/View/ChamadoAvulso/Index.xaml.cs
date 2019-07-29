@@ -132,7 +132,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
 
                            // Envia localizacao e disponibilidade
-                           UsuarioAutenticado.Instance.AlteraDisponibilidade(true, false);
+                           UsuarioAutenticado.Instance.AlteraDisponibilidade(true, false).Wait();
 
                            // Busca Corrida - Diaria
                            var resultado = ViewModel.BuscaCorrida();
@@ -300,7 +300,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                 UsuarioAutenticado.Instance.CancelaPorInatividade = new CancellationTokenSource();
                 Task.Delay(40000).ContinueWith(t =>
                 {
-                    if (UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.Atendimento)
+                    if (UsuarioAutenticado.Instance.StatusAplicatico == BHJet_Enumeradores.StatusAplicativoEnum.ChamadoEncontrado)
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
