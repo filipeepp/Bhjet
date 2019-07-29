@@ -49,7 +49,11 @@ namespace BHJet_Admin.Controllers
 
                 // Verificação
                 if (model.ListaFaturamento != null && !model.ListaFaturamento.Exists(f => f.Selecionado))
-                    throw new Exception("Favor selecionar ao menos um cliente para faturamento.");
+                {
+                    faturar = false;
+                    this.MensagemAlerta("Favor selecionar algum faturamento na lista abaixo.");
+                    //return View(model);
+                }
 
                 // Gera Faturamento
                 var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
