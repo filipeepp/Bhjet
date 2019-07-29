@@ -177,7 +177,7 @@ namespace BHJet_Repositorio.Admin
                                             USU.bitAtivo as StatusUsuario,
 				                   CASE (PRO.bitRegimeContratacaoCLT)
                                      WHEN  1 THEN 'CLT'
-                                     WHEN 0 THEN 'MEI' END as TipoContrato
+                                     WHEN 0 THEN 'MEI' END as TipoRegime
 			                            from tblColaboradoresEmpresaSistema as PRO
 		    		                    join tblDOMTipoProfissional TP on (TP.idTipoProfissional = PRO.idTipoProfissional)
 		                                join tblEnderecos ED on (ED.idEndereco = pro.idEndereco)

@@ -61,7 +61,7 @@
                     <div class="row">
                         @if (Model.ListaFaturamento != null)
                         {
-                            using (Html.BeginForm("GerarFaturamento", "Faturamento", FormMethod.Post, new { @class = "form-horizontal" }))
+                            using (Html.BeginForm("GerarFaturamento", "Faturamento", new { salvarFaturamento  = true },FormMethod.Post, new { @class = "form-horizontal" }))
                             {
                                 <div class="panel panel-default" style="margin:30px">
                                     <div class="panel-body">

@@ -38,7 +38,7 @@ namespace BHJet_Admin.Controllers
 
         [HttpPost]
         [ValidacaoUsuarioAttribute(TipoUsuario.Administrador)]
-        public ActionResult GerarFaturamento(GerarFaturamantoModel model)
+        public ActionResult GerarFaturamento(GerarFaturamantoModel model, bool salvarFaturamento = false)
         {
             try
             {
@@ -48,30 +48,42 @@ namespace BHJet_Admin.Controllers
                 bool faturar = model.ListaFaturamento?.Exists(f => f.Selecionado) ?? false;
 
                 // Verificação
-                if (model.ListaFaturamento != null && !model.ListaFaturamento.Exists(f => f.Selecionado))
+                if (salvarFaturamento)
                 {
-                    faturar = false;
-                    this.MensagemAlerta("Favor selecionar algum faturamento na lista abaixo.");
-                    //return View(model);
+                    if (model.ListaFaturamento != null && !model.ListaFaturamento.Exists(f => f.Selecionado))
+                        faturar = false;
                 }
+
+                // Clientes a faturar
+                var clientesIgnorar = (faturar ? model.ListaFaturamento?.Where(f => !f.Selecionado).Select(c => c.IDCliente) 
+                                                : model.ListaFaturamento?.Where(f => f.Selecionado).Select(c => c.IDCliente)) ?? new long[] { };
 
                 // Gera Faturamento
                 var faturamentos = faturamentoServico.GerarFaturamento(new BHJet_DTO.Faturamento.GerarFaturamentoDTO()
                 {
                     Faturar = faturar,
-                    IdClienteNaoFaturar = model.ListaFaturamento?.Where(f => !f.Selecionado).Select(c => c.IDCliente) ?? new long[] { },
+                    IdClienteNaoFaturar = clientesIgnorar,
                     IdCliente = model.ClienteSelecionado,
                     DataInicioFaturamento = inicio,
                     DataFimFaturamento = fim
                 });
-                this.MensagemSucesso("Faturamento " + (faturar ? "gerado" : "listado") + " com sucesso.");
+
+                // Validacao
+                if (salvarFaturamento && !faturar)
+                    this.MensagemAlerta("Favor selecionar algum faturamento na lista abaixo.");
+                else
+                {
+                    if (faturar)
+                        faturamentos = null;
+                    this.MensagemSucesso("Faturamento " + (faturar ? "gerado" : "listado") + " com sucesso.");
+                }
 
                 // Return View
                 return View(new GerarFaturamantoModel()
                 {
                     ClienteSelecionado = model.ClienteSelecionado,
 
-                    ListaFaturamento = faturamentos.Select(x => new FaturamentoModel()
+                    ListaFaturamento = faturamentos?.Select(x => new FaturamentoModel()
                     {
                         ID = x.ID,
                         IDCliente = x.IDCliente,

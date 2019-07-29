@@ -132,7 +132,7 @@ namespace BHJet_Mobile.View.ChamadoAvulso
                            if (UsuarioAutenticado.Instance.CancelaPesquisa.IsCancellationRequested) return false;
 
                            // Envia localizacao e disponibilidade
-                           UsuarioAutenticado.Instance.AlteraDisponibilidade(true, false).Wait();
+                           UsuarioAutenticado.Instance.AlteraDisponibilidade(true, false);
 
                            // Busca Corrida - Diaria
                            var resultado = ViewModel.BuscaCorrida();
