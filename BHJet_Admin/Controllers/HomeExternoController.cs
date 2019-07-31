@@ -27,7 +27,10 @@ namespace BHJet_Admin.Controllers
             var controleOS =  this.RetornaOSAvulsa();
 
             // Cria Controle de OS Avulsa
-            var origem = controleOS != null ? controleOS : this.CriaOSAvulsa(controleOS != null ? controleOS.IDCliente : null);
+            var origem = controleOS != null ? controleOS : this.CriaOSAvulsa(controleOS != null ? controleOS.IDCliente : idCliente);
+
+            if(controleOS != null && idCliente != null && origem.IDCliente == null)
+                origem.IDCliente = idCliente;
 
             // Return View
             return View(origem);

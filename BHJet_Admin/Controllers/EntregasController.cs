@@ -115,6 +115,7 @@ namespace BHJet_Admin.Controllers
             if (string.IsNullOrWhiteSpace(UsuarioLogado.Instance.bhTkUsu) || osAvulsa.IDCliente == null)
             {
                 osAvulsa.SimulandoCorridaSemUsuario = true;
+                TempData["Error"] = "Favor realizar o login antes de continuar a solicitação do serviço.";
                 return RedirectToAction("Login", "Home");
             }
             else

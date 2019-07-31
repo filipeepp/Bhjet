@@ -32,7 +32,7 @@ function BuscaClientes(idPreCliente) {
 
 function necessarioCliente() {
     var $option = $("#TipoUser").prop('selectedIndex');
-    if ($option != undefined && ($option === 1)) {
+    if ($option != undefined && ($option === 2)) {
         $("#cliRefer").css("display", "unset")
         return true;
     }

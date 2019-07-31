@@ -244,7 +244,7 @@ namespace BHJet_Admin.Controllers
                 else if (UsuarioLogado.Instance.BhjTpUsu == TipoUsuario.Administrador)
                     return RedirectToAction("Index", "Home");
                 else
-                    return RedirectToAction("Index", "HomeExterno");
+                    return RedirectToAction("Index", "HomeExterno", new { idCliente = cliente});
 
             }
             else
